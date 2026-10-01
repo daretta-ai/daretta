@@ -34,8 +34,19 @@ I tre caratteri sono su Google Fonts (`family=Doto:wght@600;800;900&family=Geist
 - **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi, a volte sono intere aziende.». A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
 - **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con newsletter e rimandi ad altre pagine in card.
 - **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto escono dalla colonna. Sotto l'header una barra di avanzamento a punti: i punti letti in `arancio`, gli altri in `filetto`.
+- **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
 - **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `radius-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
 - Angoli morbidi e generosi, pallini e pill (`radius-pill`). Niente angoli vivi, niente ombre tranne quella della sfera.
+
+## Gli stati dei progetti
+
+Tre stati, dal più vivo al più lontano. Sempre segno e parola insieme, in Geist Mono maiuscolo.
+
+- **ONLINE:** pallino pieno in `arancio`. È l'unico stato acceso.
+- **IN SVILUPPO:** anello vuoto a tratto continuo in `inchiostro-muto`.
+- **CONCEPT:** anello tratteggiato in `inchiostro-muto`. È un'idea che si sta ancora disegnando: meno di un anello, non ancora un pallino.
+
+**Descrizione all'hover.** Al passaggio del mouse, e al focus da tastiera, accanto allo stato compare una frase breve in Geist, `inchiostro-muto`, senza box né arancio: ONLINE «Si può usare.», IN SVILUPPO «Ci sto lavorando.», CONCEPT «Per ora è un'idea.». La parola dello stato resta sempre visibile; la frase è un di più, e per gli screen reader è la descrizione dello stato (`aria-describedby`). Su touch non compare.
 
 ## La sfera
 
@@ -53,13 +64,15 @@ Implementazione: canvas 2D, nessuna libreria, pochi KB. Rispetta `prefers-reduce
 
 Un tabellone delle partenze, meccanico e sobrio. La meraviglia resta alla sfera: il tabellone è il dettaglio che fa sorridere.
 
-- **Tabellone** (home e pagina `/curiosita`): una testata a tessere (N°, TIPO, DEST.) che girano lettera per lettera, e un corpo a palette che girano una riga intera alla volta, dall'alto in basso. Cambia ogni 10 secondi, in ordine casuale a ogni visita.
+- **Tabellone** (home, pagina `/curiosita` e pagina 404): una testata a tessere (N°, TIPO, DEST.) che girano lettera per lettera, e un corpo a palette che girano una riga intera alla volta, dall'alto in basso. In ordine casuale a ogni visita.
+- **Durata variabile.** Ogni curiosità resta 4 secondi più 1 secondo ogni 30 battute del testo, con un minimo di 5 e un massimo di 12 (la 012 resta 5 secondi, una voce media circa 7,5, le più lunghe circa 10). Il conteggio parte quando le palette hanno finito di girare. La battuta sta quasi sempre in fondo: chi legge con calma deve arrivarci.
 - **Elenco** (solo pagina `/curiosita`): sotto il tabellone, il titolo «Se proprio non hai nulla da fare, leggile tutte.» e tutte le curiosità. Ogni riga ha N°, TIPO e DEST. in tessere, con le stesse etichette del tabellone, poi il testo. Niente filtri, niente binari.
+- **Ancore:** ogni riga dell'elenco ha un'ancora con il suo numero (`/curiosita#013`), così gli altri testi possono rimandare a una curiosità precisa. Chi arriva da un'ancora trova quella riga evidenziata per un istante in `cemento-incavo`, senza arancio.
 - **Materiali:** tessere e palette in `cemento-rilievo`, lettere in `inchiostro` (Geist Mono) e testo in `inchiostro-corpo` (Geist). La cerniera è una riga di `cemento` al 40%: si vede la piega, non taglia le lettere. Niente arancio, nemmeno sui pulsanti Pausa e Prossima: sono comandi, non CTA, e una curiosità non è «viva».
 - **Regole di scrittura:** testo di massimo ~200 battute (oltre è un post); destinazione ironica di massimo 15 caratteri; tipo di massimo 10. Al massimo cinque tipi, oggi CASSI MIEI, SPORT, SVAGHI, LAVORO e VIAGGI.
 - **Accessibilità:** pulsanti Pausa e Prossima; il tabellone si ferma al passaggio del mouse o del focus; il testo completo è annunciato solo quando lo chiede chi legge; con `prefers-reduced-motion` il cambio è istantaneo.
 
-La pagina `/curiosita` non è nel menu principale: ci si arriva da «VEDI TUTTE →» nel blocco in home e dal footer.
+La pagina `/curiosita` non è nel menu principale: ci si arriva da «VEDI TUTTE →» nel blocco in home, dal footer e dai rimandi nei testi.
 
 ## Logotipo
 
@@ -68,13 +81,15 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 ## Accessibilità
 
 - Testo ≥4.5:1 sul suo fondo (ogni token di testo dice su quali fondi è verificato); ≥3:1 per testo sopra i 24px, anelli e icone. Sui pulsanti arancio il testo è `cemento`.
-- Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, sempre con la parola accanto. La voce di menu attiva ha anche `aria-current`.
+- Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `inchiostro-muto` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
 - Pulsanti e chip alti almeno 44px su mobile.
 
 ## Da non fare
 
 - Tradurre o storpiare dàretta.
 - Usare l'arancio per link, hover, bordi, tag o decorazione.
+- Accendere di arancio uno stato che non sia ONLINE.
+- Mettere informazioni necessarie solo nell'hover: la descrizione degli stati è un di più.
 - Testo chiaro sopra l'arancio.
 - Dare al tabellone i colori delle ferrovie (giallo, blu) o l'arancio.
 - Gradienti viola-blu, card con bordo sinistro colorato, emoji.

@@ -222,7 +222,8 @@ const prima = dati[0];
 <script>
   type Curiosita = { n: string; cat: string; dest: string; text: string };
 
-  const INTERVALLO = 10000;
+  // Durata variabile: 4 s più 1 s ogni 30 battute, tra 5 e 12 s. Il conteggio parte a palette ferme.
+  const durata = (d: Curiosita) => Math.min(12000, Math.max(5000, 4000 + (d.text.length / 30) * 1000));
   const ALFABETO = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const ridotto = matchMedia('(prefers-reduced-motion: reduce)');
   const pad = (s: string, len: number) => (s + ' '.repeat(len)).slice(0, len);
@@ -443,9 +444,9 @@ const prima = dati[0];
       passo(dt: number) {
         if (!(pausaUtente || pausaHover || document.hidden || animando || !visibile)) {
           trascorso += dt;
-          if (trascorso >= INTERVALLO) prossima(false);
+          if (trascorso >= durata(ordine[indice])) prossima(false);
         }
-        barra.style.width = Math.min(100, (trascorso / INTERVALLO) * 100) + '%';
+        barra.style.width = Math.min(100, (trascorso / durata(ordine[indice])) * 100) + '%';
       },
     };
   }

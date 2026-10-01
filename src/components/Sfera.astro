@@ -48,27 +48,37 @@ const { misura = 540, class: classe } = Astro.props;
   const facile = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const mescola = (a: number[], b: number[], t: number) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
 
-  // Bersagli per la à: si disegna la lettera in Doto e se ne campionano i pixel
-  function puntiDellaA(lato: number, passo: number): { x: number; y: number }[] {
-    const c = document.createElement('canvas');
-    c.width = c.height = lato;
-    const g = c.getContext('2d')!;
-    g.fillStyle = '#fff';
-    g.textAlign = 'center';
-    g.textBaseline = 'middle';
-    g.font = `900 ${Math.round(lato * 0.78)}px Doto, monospace`;
-    g.fillText('à', lato / 2, lato * 0.47);
-    const dati = g.getImageData(0, 0, lato, lato).data;
-    const out: { x: number; y: number }[] = [];
-    for (let y = 0; y < lato; y += passo)
-      for (let x = 0; x < lato; x += passo) if (dati[(y * lato + x) * 4 + 3] > 128) out.push({ x: x / lato - 0.5, y: y / lato - 0.5 });
-    return out;
+  // Bersagli per la à: una matrice di punti sulla griglia della sfera (design/design-system/components/Sfera).
+  // Tratti spessi due o tre punti: un carattere Doto in grande, campionato, non si legge.
+  const MATRICE_A = [
+    '..###......',
+    '...###.....',
+    '....###....',
+    '...........',
+    '..######...',
+    '.########..',
+    '......###..',
+    '..#######..',
+    '.########..',
+    '###...###..',
+    '###..####..',
+    '.########..',
+    '..####.###.',
+  ];
+  const PASSO_A = 11 / 240; // passo della griglia in frazioni del diametro, come nella tavola
+  const RAGGIO_A = 4.3 / 240; // raggio dei punti accesi, in frazioni del diametro
+  function puntiDellaA(): { x: number; y: number }[] {
+    const accesi: { x: number; y: number }[] = [];
+    MATRICE_A.forEach((riga, y) => [...riga].forEach((ch, x) => ch === '#' && accesi.push({ x, y })));
+    const xs = accesi.map((p) => p.x), ys = accesi.map((p) => p.y);
+    const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+    return accesi.map((p) => ({ x: (p.x - cx) * PASSO_A, y: (p.y - cy) * PASSO_A }));
   }
 
   function avvia(contenitore: HTMLElement) {
     const canvas = contenitore.querySelector('canvas')!;
     const g = canvas.getContext('2d')!;
-    let lato = 0, dpr = 1, punti: Punto[] = [], passoA = 0;
+    let lato = 0, dpr = 1, punti: Punto[] = [];
     let angolo = 0, ultimo = performance.now();
     let cursore: { x: number; y: number } | null = null;
     let ascolto = 0; // 0 → 1, quanto la sfera sta ascoltando
@@ -94,8 +104,7 @@ const { misura = 540, class: classe } = Astro.props;
         return { x: Math.cos(oro * i) * r2, y, z: Math.sin(oro * i) * r2, tx: 0, ty: 0, ha: false };
       });
       // Assegna i bersagli della à ai punti della faccia visibile, i più vicini per primi
-      passoA = Math.max(5, Math.round(passo * 0.62));
-      const bersagli = puntiDellaA(Math.round(raggio * 2), passoA);
+      const bersagli = puntiDellaA();
       bersagli.forEach((b, i) => {
         const p = punti[Math.floor((i / bersagli.length) * punti.length)];
         if (p && !p.ha) {
@@ -216,6 +225,7 @@ const { misura = 540, class: classe } = Astro.props;
         if (p.ha && accesa > 0) {
           colore = mescola(colore, COLORI.arancio, accesa);
           alfa += (1 - alfa) * accesa;
+          r += (RAGGIO_A * raggio * 2 - r) * forma; // i punti accesi crescono, come nella tavola
         }
 
         g.globalAlpha = alfa;
@@ -276,9 +286,9 @@ const { misura = 540, class: classe } = Astro.props;
     riparti();
   }
 
-  // Parte dopo i font (serve Doto per la à) e dopo il primo disegno della pagina
+  // Parte dopo il primo disegno della pagina
   const parti = () => document.querySelectorAll<HTMLElement>('[data-sfera]').forEach(avvia);
-  const dopo = () => (document.fonts?.ready ?? Promise.resolve()).then(parti);
+  const dopo = () => parti();
   if ('requestIdleCallback' in window) requestIdleCallback(dopo, { timeout: 800 });
   else setTimeout(dopo, 200);
 </script>

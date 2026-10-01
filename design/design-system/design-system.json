@@ -12,9 +12,9 @@
   },
   "groups": [],
   "lastChange": {
-    "at": "2026-09-30T09:01:00Z",
+    "at": "2026-10-01T23:35:00Z",
     "by": "Papi",
-    "note": "Arancio anche su CTA e dettagli di stato; Doto per i titoli delle pagine interne e i numeri; sfera piccola nelle interne solo su desktop; composizione delle pagine interne. Pulsante, Newsletter e Sfera allineati.",
+    "note": "Sfera: la à al clic è disegnata con i punti della sfera (matrice 11×13 sulla stessa griglia), al posto del carattere Doto che in grande non si leggeva.",
     "via": "Claude (chat)"
   },
   "layout": "files",

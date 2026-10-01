@@ -1,4 +1,4 @@
-<!-- @dsCard group="Racconto" height=470 subtitle="Una curiosità ogni 10 secondi" -->
+<!-- @dsCard group="Racconto" height=470 subtitle="Durata variabile, da 5 a 12 secondi" -->
 <!doctype html>
 <html lang="it">
 <head>
@@ -63,8 +63,9 @@ function show(x){var v={n:x[0],c:pad(x[1],10),d:pad(x[2],15)},jobs=[],base=0;
 jobs.push(wait(base+i*35).then(function(){var s=2+Math.floor(Math.random()*5);for(var j=0;j<s;j++)f.flip(AB[Math.floor(Math.random()*AB.length)],70);return f.flip(t,90)}))});base+=120});
 R.forEach(function(f,r){var t=x[3][r];if(t===f.v)return;if(rid){f.set(t);return}jobs.push(wait(260+r*120).then(function(){return f.flip(t,380)}))});
 return Promise.all(jobs)}
+function durata(x){var l=x[3].join(" ").trim().length;return Math.min(12000,Math.max(5000,4000+l/30*1000))}
 var idx=0,bar=document.querySelector(".bar span");
-function ciclo(){show(D[idx]).then(function(){var t0=performance.now();(function tick(t){var p=Math.min(1,(t-t0)/10000);bar.style.width=p*100+"%";if(p<1)requestAnimationFrame(tick);else{idx=(idx+1)%D.length;bar.style.width="0";ciclo()}})(t0)})}
+function ciclo(){show(D[idx]).then(function(){var t0=performance.now();(function tick(t){var p=Math.min(1,(t-t0)/durata(D[idx]));bar.style.width=p*100+"%";if(p<1)requestAnimationFrame(tick);else{idx=(idx+1)%D.length;bar.style.width="0";ciclo()}})(t0)})}
 (document.fonts?document.fonts.ready:Promise.resolve()).then(ciclo);
 })();
 </script>
