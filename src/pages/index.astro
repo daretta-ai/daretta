@@ -1,19 +1,14 @@
 ---
 // Home, dalle tavole Main (desktop) e Home-Mobile.
-// Sfera e tabellone sono ancora fermi: diventano vivi nel passo 3.
 import Base from '../layouts/Base.astro';
 import Modulo from '../components/Modulo.astro';
 import Sezione from '../components/Sezione.astro';
 import Stato from '../components/Stato.astro';
 import CardProgetto from '../components/CardProgetto.astro';
 import Newsletter from '../components/Newsletter.astro';
-import SferaStatica from '../components/SferaStatica.astro';
+import Sfera from '../components/Sfera.astro';
+import Tabellone from '../components/Tabellone.astro';
 import { progetti } from '../data/progetti';
-import { getCollection } from 'astro:content';
-
-const curiosita = await getCollection('curiosita');
-const prima = curiosita.find((c) => c.id === '007') ?? curiosita[0];
-const tessere = (testo: string, lunghezza: number) => testo.padEnd(lunghezza, ' ').slice(0, lunghezza).split('');
 ---
 
 <Base home>
@@ -29,7 +24,7 @@ const tessere = (testo: string, lunghezza: number) => testo.padEnd(lunghezza, ' 
       <a class="cta-hero" href="#newsletter">Una mail al mese →</a>
     </div>
     <div class="hero-sfera">
-      <SferaStatica />
+      <Sfera />
     </div>
   </Modulo>
 
@@ -85,14 +80,7 @@ const tessere = (testo: string, lunghezza: number) => testo.padEnd(lunghezza, ' 
         <Sezione numero={5}>Curiosità</Sezione>
         <a class="link-etichetta" href="/curiosita">Vedi tutte →</a>
       </div>
-      <div class="tabellone" aria-label={`Curiosità ${prima.id}: ${prima.data.testo}`} role="group">
-        <div class="testata" aria-hidden="true">
-          <span class="campo"><span class="meta">N°</span><span class="tessere">{tessere(prima.id, 3).map((c) => <span class="tessera">{c}</span>)}</span></span>
-          <span class="campo"><span class="meta">Tipo</span><span class="tessere">{tessere(prima.data.tipo, 10).map((c) => <span class="tessera">{c}</span>)}</span></span>
-          <span class="campo"><span class="meta">Dest.</span><span class="tessere">{tessere(prima.data.destinazione, 15).map((c) => <span class="tessera">{c}</span>)}</span></span>
-        </div>
-        <p class="paletta-testo" aria-hidden="true">{prima.data.testo}</p>
-      </div>
+      <Tabellone />
     </div>
     <div class="nl-home"><Newsletter /></div>
   </section>
@@ -265,63 +253,6 @@ const tessere = (testo: string, lunghezza: number) => testo.padEnd(lunghezza, ' 
   .nl-home > :global(*) {
     flex: 1;
   }
-  .tabellone {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-  .testata {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3) var(--space-6);
-  }
-  .campo {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-  .campo .meta {
-    min-width: 32px;
-  }
-  .tessere {
-    display: flex;
-    gap: 2px;
-  }
-  .tessera {
-    position: relative;
-    width: 21px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    background: var(--cemento-rilievo);
-    font-family: var(--font-mono);
-    font-weight: 500;
-    font-size: 15px;
-    white-space: pre;
-  }
-  .tessera::after,
-  .paletta-testo::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    height: 1px;
-    background: var(--cemento);
-    opacity: 0.4;
-  }
-  .paletta-testo {
-    position: relative;
-    margin: 0;
-    padding: 12px 16px;
-    border-radius: 10px;
-    background: var(--cemento-rilievo);
-    font-size: 22px;
-    line-height: 1.6;
-    color: var(--inchiostro-corpo);
-  }
 
   /* Tablet: la griglia si stringe */
   @media (max-width: 1200px) {
@@ -417,14 +348,6 @@ const tessere = (testo: string, lunghezza: number) => testo.padEnd(lunghezza, ' 
     }
     .curiosita-testa {
       padding: 0 var(--space-3);
-    }
-    .tessera {
-      width: 16px;
-      height: 26px;
-      font-size: 13px;
-    }
-    .paletta-testo {
-      font-size: 17px;
     }
   }
 </style>

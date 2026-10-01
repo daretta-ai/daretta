@@ -1,0 +1,284 @@
+---
+// La sfera: l'unico momento «wow» del sito (design/design-system/components/Sfera).
+// Tre stati: a riposo ruota piano; in ascolto i punti vibrano in onde dal cursore;
+// al clic i punti formano la à arancio, poi tornano sfera.
+// Canvas 2D, nessuna libreria. Con prefers-reduced-motion resta ferma.
+interface Props {
+  misura?: number; // diametro massimo in px, anelli compresi
+  class?: string;
+}
+const { misura = 540, class: classe } = Astro.props;
+---
+
+<div class:list={['sfera', classe]} style={`--d: ${misura}px`} data-sfera>
+  <canvas aria-hidden="true"></canvas>
+</div>
+
+<style>
+  .sfera {
+    position: relative;
+    width: min(var(--d), 100%);
+    aspect-ratio: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  type Punto = { x: number; y: number; z: number; tx: number; ty: number; ha: boolean };
+
+  const COLORI = {
+    fondo: '#14292c',
+    fondoSpento: '#121e20',
+    luce: '#2f6a71',
+    ombra: '#0b1112',
+    punti: [44, 138, 147], // --punti
+    onda: [108, 203, 211], // --onda
+    arancio: [255, 79, 26], // --arancio
+    anelloEsterno: '#1f5a61',
+    anelloInterno: '#2c7c84',
+  };
+
+  const ridotto = matchMedia('(prefers-reduced-motion: reduce)');
+  const facile = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const mescola = (a: number[], b: number[], t: number) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+
+  // Bersagli per la à: si disegna la lettera in Doto e se ne campionano i pixel
+  function puntiDellaA(lato: number, passo: number): { x: number; y: number }[] {
+    const c = document.createElement('canvas');
+    c.width = c.height = lato;
+    const g = c.getContext('2d')!;
+    g.fillStyle = '#fff';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.font = `900 ${Math.round(lato * 0.78)}px Doto, monospace`;
+    g.fillText('à', lato / 2, lato * 0.47);
+    const dati = g.getImageData(0, 0, lato, lato).data;
+    const out: { x: number; y: number }[] = [];
+    for (let y = 0; y < lato; y += passo)
+      for (let x = 0; x < lato; x += passo) if (dati[(y * lato + x) * 4 + 3] > 128) out.push({ x: x / lato - 0.5, y: y / lato - 0.5 });
+    return out;
+  }
+
+  function avvia(contenitore: HTMLElement) {
+    const canvas = contenitore.querySelector('canvas')!;
+    const g = canvas.getContext('2d')!;
+    let lato = 0, dpr = 1, punti: Punto[] = [], passoA = 0;
+    let angolo = 0, ultimo = performance.now();
+    let cursore: { x: number; y: number } | null = null;
+    let ascolto = 0; // 0 → 1, quanto la sfera sta ascoltando
+    let clic = -1; // momento del clic, -1 se nessuno
+    let visibile = true, giro = 0;
+
+    const DURATA = { raccolta: 650, sosta: 750, ritorno: 650 };
+
+    function prepara() {
+      const r = contenitore.getBoundingClientRect();
+      lato = Math.round(r.width);
+      dpr = Math.min(2, devicePixelRatio || 1);
+      canvas.width = lato * dpr;
+      canvas.height = lato * dpr;
+      // Densità come nelle tavole: un punto ogni ~16px sulla sfera grande, ~12px su mobile
+      const raggio = lato * 0.41;
+      const passo = lato > 400 ? 16 : 12;
+      const n = Math.round((4 * Math.PI * raggio * raggio) / (passo * passo) / 1.15);
+      const oro = Math.PI * (3 - Math.sqrt(5));
+      punti = Array.from({ length: n }, (_, i) => {
+        const y = 1 - (i / (n - 1)) * 2;
+        const r2 = Math.sqrt(1 - y * y);
+        return { x: Math.cos(oro * i) * r2, y, z: Math.sin(oro * i) * r2, tx: 0, ty: 0, ha: false };
+      });
+      // Assegna i bersagli della à ai punti della faccia visibile, i più vicini per primi
+      passoA = Math.max(5, Math.round(passo * 0.62));
+      const bersagli = puntiDellaA(Math.round(raggio * 2), passoA);
+      bersagli.forEach((b, i) => {
+        const p = punti[Math.floor((i / bersagli.length) * punti.length)];
+        if (p && !p.ha) {
+          p.tx = b.x;
+          p.ty = b.y;
+          p.ha = true;
+        }
+      });
+      disegna(performance.now());
+    }
+
+    function disegna(ora: number) {
+      const dt = Math.min(64, ora - ultimo);
+      ultimo = ora;
+      const muovi = !ridotto.matches;
+      if (muovi) angolo += dt * 0.00012;
+
+      // Ascolto: sale quando il cursore è vicino, scende quando si allontana
+      const obiettivo = cursore ? 1 : 0;
+      ascolto += (obiettivo - ascolto) * Math.min(1, dt / 220);
+
+      // Fase del clic: 0 sfera, 1 à completa
+      let forma = 0, accesa = 0;
+      if (clic >= 0) {
+        const t = ora - clic;
+        const { raccolta, sosta, ritorno } = DURATA;
+        if (ridotto.matches) {
+          forma = t < raccolta + sosta ? 1 : 0;
+        } else if (t < raccolta) forma = facile(t / raccolta);
+        else if (t < raccolta + sosta) forma = 1;
+        else if (t < raccolta + sosta + ritorno) forma = 1 - facile((t - raccolta - sosta) / ritorno);
+        else clic = -1;
+        accesa = forma;
+      }
+
+      const c = lato / 2, raggio = lato * 0.41;
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, lato, lato);
+
+      // Anelli puntinati: compaiono quando la sfera ascolta
+      if (ascolto > 0.02 && forma < 1) {
+        g.save();
+        g.globalAlpha = ascolto * (1 - forma);
+        g.lineWidth = 2;
+        g.setLineDash([2, 4]);
+        g.strokeStyle = COLORI.anelloEsterno;
+        g.beginPath();
+        g.arc(c, c, lato * 0.495, 0, Math.PI * 2);
+        g.stroke();
+        g.strokeStyle = COLORI.anelloInterno;
+        g.beginPath();
+        g.arc(c, c, lato * 0.455, 0, Math.PI * 2);
+        g.stroke();
+        g.restore();
+      }
+
+      // Il corpo della sfera, con l'ombra del design system: luce in alto a sinistra
+      g.save();
+      g.beginPath();
+      g.arc(c, c, raggio, 0, Math.PI * 2);
+      g.fillStyle = forma > 0.5 ? COLORI.fondoSpento : COLORI.fondo;
+      g.fill();
+      g.clip();
+      const luce = g.createRadialGradient(c - raggio * 0.55, c - raggio * 0.55, 0, c - raggio * 0.55, c - raggio * 0.55, raggio * 1.1);
+      luce.addColorStop(0, `rgba(47,106,113,${0.75 * (1 - forma * 0.7)})`);
+      luce.addColorStop(1, 'rgba(47,106,113,0)');
+      g.fillStyle = luce;
+      g.fillRect(0, 0, lato, lato);
+      const buio = g.createRadialGradient(c + raggio * 0.7, c + raggio * 0.75, 0, c + raggio * 0.7, c + raggio * 0.75, raggio * 1.25);
+      buio.addColorStop(0, 'rgba(11,17,18,0.95)');
+      buio.addColorStop(1, 'rgba(11,17,18,0)');
+      g.fillStyle = buio;
+      g.fillRect(0, 0, lato, lato);
+      g.restore();
+
+      // I punti
+      const cos = Math.cos(angolo), sin = Math.sin(angolo);
+      const inclinazione = 0.35, ci = Math.cos(inclinazione), si = Math.sin(inclinazione);
+      const raggioPunto = lato > 400 ? 2.6 : 2;
+      for (const p of punti) {
+        // rotazione attorno all'asse Y, poi una leggera inclinazione
+        let x = p.x * cos + p.z * sin;
+        let z = -p.x * sin + p.z * cos;
+        let y = p.y * ci - z * si;
+        z = p.y * si + z * ci;
+
+        let sx = c + x * raggio, sy = c + y * raggio;
+        let profondita = (z + 1) / 2; // 0 dietro, 1 davanti
+
+        if (forma > 0) {
+          if (p.ha) {
+            sx += (c + p.tx * raggio * 2 - sx) * forma;
+            sy += (c + p.ty * raggio * 2 - sy) * forma;
+            profondita += (1 - profondita) * forma;
+          } else {
+            profondita *= 1 - forma * 0.85;
+          }
+        }
+        if (profondita < 0.42 && !(p.ha && forma > 0.3)) continue; // la faccia nascosta non si vede
+
+        let colore = COLORI.punti;
+        let r = raggioPunto * (0.45 + 0.55 * profondita);
+        let alfa = 0.25 + 0.75 * Math.pow(profondita, 1.6);
+
+        // Onde che partono dal cursore, come un suono
+        if (ascolto > 0.01 && cursore && muovi) {
+          const d = Math.hypot(sx - cursore.x, sy - cursore.y) / raggio;
+          const fase = d * 9 - ora * 0.006;
+          const onda = Math.pow(Math.max(0, Math.sin(fase)), 6) * Math.max(0, 1 - d / 2.2) * ascolto * (1 - forma);
+          if (onda > 0.01) {
+            colore = mescola(colore, COLORI.onda, onda);
+            r *= 1 + onda * 0.7;
+            alfa = Math.min(1, alfa + onda * 0.5);
+            sx += ((sx - cursore.x) / raggio) * onda * 3;
+            sy += ((sy - cursore.y) / raggio) * onda * 3;
+          }
+        }
+        if (p.ha && accesa > 0) {
+          colore = mescola(colore, COLORI.arancio, accesa);
+          alfa += (1 - alfa) * accesa;
+        }
+
+        g.globalAlpha = alfa;
+        g.fillStyle = `rgb(${colore[0]},${colore[1]},${colore[2]})`;
+        g.beginPath();
+        g.arc(sx, sy, r, 0, Math.PI * 2);
+        g.fill();
+      }
+      g.globalAlpha = 1;
+    }
+
+    function ciclo(ora: number) {
+      disegna(ora);
+      const serve = !ridotto.matches || clic >= 0 || Math.abs((cursore ? 1 : 0) - ascolto) > 0.01;
+      giro = visibile && !document.hidden && serve ? requestAnimationFrame(ciclo) : 0;
+    }
+    const riparti = () => {
+      if (!giro && visibile && !document.hidden) {
+        ultimo = performance.now();
+        giro = requestAnimationFrame(ciclo);
+      }
+    };
+
+    // In ascolto quando il cursore entra in un raggio di 1,6 volte la sfera
+    addEventListener(
+      'pointermove',
+      (e) => {
+        if (e.pointerType !== 'mouse') return;
+        const r = canvas.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        const vicino = Math.hypot(x - r.width / 2, y - r.height / 2) < r.width * 0.41 * 1.6;
+        cursore = vicino ? { x, y } : null;
+        riparti();
+      },
+      { passive: true },
+    );
+    document.addEventListener('pointerleave', () => (cursore = null));
+    contenitore.addEventListener('click', () => {
+      if (clic < 0) {
+        clic = performance.now();
+        riparti();
+      }
+    });
+
+    new IntersectionObserver(([e]) => {
+      visibile = e.isIntersecting;
+      riparti();
+    }).observe(contenitore);
+    document.addEventListener('visibilitychange', riparti);
+    ridotto.addEventListener('change', riparti);
+    let attesa = 0;
+    new ResizeObserver(() => {
+      clearTimeout(attesa);
+      attesa = window.setTimeout(prepara, 120);
+    }).observe(contenitore);
+
+    prepara();
+    riparti();
+  }
+
+  // Parte dopo i font (serve Doto per la à) e dopo il primo disegno della pagina
+  const parti = () => document.querySelectorAll<HTMLElement>('[data-sfera]').forEach(avvia);
+  const dopo = () => (document.fonts?.ready ?? Promise.resolve()).then(parti);
+  if ('requestIdleCallback' in window) requestIdleCallback(dopo, { timeout: 800 });
+  else setTimeout(dopo, 200);
+</script>

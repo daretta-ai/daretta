@@ -1,0 +1,478 @@
+---
+// Il tabellone delle curiosità (design/design-system/components/Tabellone).
+// Portato dal prototipo approvato «Tabellone curiosità».
+import { getCollection } from 'astro:content';
+
+interface Props {
+  class?: string;
+}
+const { class: classe } = Astro.props;
+
+const dati = (await getCollection('curiosita'))
+  .sort((a, b) => a.id.localeCompare(b.id))
+  .map((c) => ({ n: c.id, cat: c.data.tipo, dest: c.data.destinazione, text: c.data.testo }));
+const prima = dati[0];
+---
+
+<div class:list={['tabellone', classe]} data-tabellone data-curiosita={JSON.stringify(dati)}>
+  <div class="testata" aria-hidden="true">
+    <div class="campo"><span class="meta">N°</span><div class="tessere" data-campo="n" data-len="3"></div></div>
+    <div class="campo"><span class="meta">Tipo</span><div class="tessere" data-campo="cat" data-len="10"></div></div>
+    <div class="campo"><span class="meta">Dest.</span><div class="tessere" data-campo="dest" data-len="15"></div></div>
+  </div>
+  <div class="palette" aria-hidden="true"></div>
+  <div class="avanzamento" aria-hidden="true"><span></span></div>
+  <div class="comandi">
+    <button class="pulsante b-pausa" type="button" aria-pressed="false">
+      <span class="icona pausa" aria-hidden="true"></span><span class="t-pausa">Pausa</span>
+    </button>
+    <button class="pulsante b-prossima" type="button">Prossima</button>
+    <span class="meta contatore"></span>
+  </div>
+  <p class="solo-lettori annuncio" aria-live="off">Curiosità {prima.n}, {prima.cat.toLowerCase()}: {prima.text}</p>
+</div>
+
+<style>
+  .tabellone {
+    --tw: 21px;
+    --th: 32px;
+    --tfs: 15px;
+    --rfs: 22px;
+    --rh: 52px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  @media (max-width: 720px) {
+    .tabellone {
+      --tw: 16px;
+      --th: 26px;
+      --tfs: 13px;
+      --rfs: 17px;
+      --rh: 40px;
+    }
+  }
+  .testata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    align-items: center;
+  }
+  .campo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .campo .meta {
+    min-width: 32px;
+  }
+  .tessere {
+    display: flex;
+    gap: 2px;
+  }
+  .palette {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .avanzamento {
+    height: 2px;
+    border-radius: 2px;
+    background: var(--filetto);
+    overflow: hidden;
+  }
+  .avanzamento span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--inchiostro-muto);
+  }
+  .comandi {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .pulsante {
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--bordo);
+    background: transparent;
+    color: var(--inchiostro);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .pulsante:hover {
+    background: var(--cemento-alto);
+  }
+  .icona {
+    flex: none;
+  }
+  .icona.pausa {
+    width: 10px;
+    height: 12px;
+    border-left: 3px solid currentColor;
+    border-right: 3px solid currentColor;
+  }
+  .icona.play {
+    width: 0;
+    height: 0;
+    border-left: 10px solid currentColor;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+  }
+  .contatore {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Tessere e palette: elementi creati dallo script, quindi stili globali dentro il tabellone */
+  .tabellone :global(.flap) {
+    position: relative;
+    perspective: 400px;
+    flex: none;
+  }
+  .tabellone :global(.flap.tessera) {
+    width: var(--tw);
+    height: var(--th);
+  }
+  .tabellone :global(.flap.paletta) {
+    width: 100%;
+    height: var(--rh);
+  }
+  /* La cerniera: la piega si vede, ma sottovoce */
+  .tabellone :global(.flap::after) {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+    background: var(--cemento);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .tabellone :global(.meta-half) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50%;
+    overflow: hidden;
+    background: var(--cemento-rilievo);
+    backface-visibility: hidden;
+  }
+  .tabellone :global(.meta-half.su) {
+    top: 0;
+    border-radius: 4px 4px 0 0;
+    transform-origin: 50% 100%;
+  }
+  .tabellone :global(.meta-half.giu) {
+    bottom: 0;
+    border-radius: 0 0 4px 4px;
+    transform-origin: 50% 0%;
+  }
+  .tabellone :global(.paletta .meta-half.su) {
+    border-radius: 10px 10px 0 0;
+  }
+  .tabellone :global(.paletta .meta-half.giu) {
+    border-radius: 0 0 10px 10px;
+  }
+  .tabellone :global(.faccia) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 200%;
+    display: flex;
+    align-items: center;
+    white-space: pre;
+    color: var(--inchiostro);
+  }
+  .tabellone :global(.meta-half.giu .faccia) {
+    top: auto;
+    bottom: 0;
+  }
+  .tabellone :global(.tessera .faccia) {
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--tfs);
+  }
+  .tabellone :global(.paletta .faccia) {
+    padding-inline: var(--space-4);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--rfs);
+    color: var(--inchiostro-corpo);
+  }
+  .tabellone :global(.foglia) {
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  type Curiosita = { n: string; cat: string; dest: string; text: string };
+
+  const INTERVALLO = 10000;
+  const ALFABETO = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const ridotto = matchMedia('(prefers-reduced-motion: reduce)');
+  const pad = (s: string, len: number) => (s + ' '.repeat(len)).slice(0, len);
+  const attesa = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const mescola = <T,>(arr: T[]) => arr.map((v) => [Math.random(), v] as const).sort((x, y) => x[0] - y[0]).map((x) => x[1]);
+  const aCaso = () => ALFABETO[Math.floor(Math.random() * ALFABETO.length)];
+
+  class Flap {
+    el: HTMLDivElement;
+    su: HTMLDivElement;
+    giu: HTMLDivElement;
+    fSu: HTMLDivElement;
+    fGiu: HTMLDivElement;
+    valore = '';
+    coda: Promise<void> = Promise.resolve();
+
+    constructor(tipo: string) {
+      this.el = document.createElement('div');
+      this.el.className = 'flap ' + tipo;
+      const meta = (cls: string) => {
+        const h = document.createElement('div');
+        h.className = 'meta-half ' + cls;
+        const f = document.createElement('div');
+        f.className = 'faccia';
+        h.appendChild(f);
+        this.el.appendChild(h);
+        return h;
+      };
+      this.su = meta('su');
+      this.giu = meta('giu');
+      this.fSu = meta('su foglia');
+      this.fGiu = meta('giu foglia');
+    }
+    scrivi(h: HTMLDivElement, v: string) {
+      h.firstChild!.textContent = v;
+    }
+    imposta(v: string) {
+      [this.su, this.giu, this.fSu, this.fGiu].forEach((h) => this.scrivi(h, v));
+      this.valore = v;
+    }
+    gira(v: string, durata: number) {
+      this.coda = this.coda.then(async () => {
+        if (v === this.valore) return;
+        const vecchio = this.valore;
+        this.scrivi(this.su, v);
+        this.scrivi(this.giu, vecchio);
+        this.scrivi(this.fSu, vecchio);
+        this.scrivi(this.fGiu, v);
+        this.fSu.style.visibility = 'visible';
+        const a = this.fSu.animate(
+          [
+            { transform: 'rotateX(0deg)', filter: 'brightness(1)' },
+            { transform: 'rotateX(-90deg)', filter: 'brightness(.55)' },
+          ],
+          { duration: durata / 2, easing: 'ease-in', fill: 'forwards' },
+        );
+        await a.finished;
+        this.fSu.style.visibility = 'hidden';
+        a.cancel();
+        this.fGiu.style.visibility = 'visible';
+        const b = this.fGiu.animate(
+          [
+            { transform: 'rotateX(90deg)', filter: 'brightness(1.4)' },
+            { transform: 'rotateX(0deg)', filter: 'brightness(1)' },
+          ],
+          { duration: durata / 2, easing: 'cubic-bezier(.3,1.6,.6,1)', fill: 'forwards' },
+        );
+        await b.finished;
+        this.scrivi(this.giu, v);
+        this.fGiu.style.visibility = 'hidden';
+        b.cancel();
+        this.valore = v;
+      });
+      return this.coda;
+    }
+  }
+
+  const misuratore = document.createElement('canvas').getContext('2d')!;
+  function aCapo(testo: string, larghezza: number, font: string) {
+    misuratore.font = font;
+    const out: string[] = [];
+    let riga = '';
+    for (const p of testo.split(' ')) {
+      const prova = riga ? riga + ' ' + p : p;
+      if (misuratore.measureText(prova).width > larghezza && riga) {
+        out.push(riga);
+        riga = p;
+      } else riga = prova;
+    }
+    if (riga) out.push(riga);
+    return out;
+  }
+
+  function crea(root: HTMLElement) {
+    const DATI: Curiosita[] = JSON.parse(root.dataset.curiosita || '[]');
+    const q = <T extends Element>(sel: string) => root.querySelector<T>(sel)!;
+    const ordine = mescola(DATI);
+    const campi: Record<string, Flap[]> = {};
+    root.querySelectorAll<HTMLElement>('.testata .tessere').forEach((box) => {
+      campi[box.dataset.campo!] = Array.from({ length: +box.dataset.len! }, () => {
+        const f = new Flap('tessera');
+        f.imposta(' ');
+        box.appendChild(f.el);
+        return f;
+      });
+    });
+    const paletteBox = q<HTMLElement>('.palette');
+    const barra = q<HTMLElement>('.avanzamento span');
+    const annuncio = q<HTMLElement>('.annuncio');
+    const contatore = q<HTMLElement>('.contatore');
+    let righe: Flap[] = [];
+    let misura: (t: string) => string[] = (t) => [t];
+    let indice = 0, trascorso = 0, animando = false, pausaUtente = false, pausaHover = false;
+
+    function costruisciRighe() {
+      const campione = new Flap('paletta');
+      paletteBox.innerHTML = '';
+      paletteBox.appendChild(campione.el);
+      const faccia = campione.su.firstChild as HTMLElement;
+      const cs = getComputedStyle(faccia);
+      const larghezza = faccia.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2;
+      const font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      misura = (t) => aCapo(t, larghezza, font);
+      // Tante righe quante servono alla curiosità più lunga: il tabellone non cambia altezza
+      const n = Math.max(3, ...DATI.map((d) => misura(d.text).length));
+      paletteBox.innerHTML = '';
+      righe = Array.from({ length: n }, () => {
+        const f = new Flap('paletta');
+        f.imposta('');
+        paletteBox.appendChild(f.el);
+        return f;
+      });
+    }
+    const valoriDi = (d: Curiosita) => ({ n: d.n, cat: pad(d.cat, 10), dest: pad(d.dest, 15) });
+    function mostraSubito(d: Curiosita) {
+      const v = valoriDi(d) as Record<string, string>;
+      for (const k in campi) campi[k].forEach((f, i) => f.imposta(v[k][i]));
+      const linee = misura(d.text);
+      righe.forEach((f, i) => f.imposta(linee[i] || ''));
+    }
+    async function mostra(d: Curiosita, manuale: boolean) {
+      contatore.textContent = `${String(indice + 1).padStart(3, '0')} / ${String(DATI.length).padStart(3, '0')}`;
+      // Il testo completo si annuncia solo quando lo chiede chi legge
+      annuncio.setAttribute('aria-live', manuale ? 'polite' : 'off');
+      annuncio.textContent = `Curiosità ${d.n}, ${d.cat.toLowerCase()}: ${d.text}`;
+      if (ridotto.matches) {
+        mostraSubito(d);
+        return;
+      }
+      animando = true;
+      const lavori: Promise<void>[] = [];
+      const v = valoriDi(d) as Record<string, string>;
+      let base = 0;
+      for (const k of ['n', 'cat', 'dest']) {
+        campi[k].forEach((f, i) => {
+          const obiettivo = v[k][i];
+          if (obiettivo === f.valore) return;
+          const passi = 2 + Math.floor(Math.random() * 5);
+          lavori.push(
+            (async () => {
+              await attesa(base + i * 35);
+              for (let s = 0; s < passi; s++) f.gira(aCaso(), 70);
+              await f.gira(obiettivo, 90);
+            })(),
+          );
+        });
+        base += 120;
+      }
+      const linee = misura(d.text);
+      righe.forEach((f, r) => {
+        const obiettivo = linee[r] || '';
+        if (obiettivo === f.valore) return;
+        lavori.push(
+          (async () => {
+            await attesa(260 + r * 120);
+            await f.gira(obiettivo, 380);
+          })(),
+        );
+      });
+      await Promise.all(lavori);
+      animando = false;
+    }
+    function prossima(manuale: boolean) {
+      indice = (indice + 1) % ordine.length;
+      trascorso = 0;
+      mostra(ordine[indice], manuale);
+    }
+
+    root.addEventListener('mouseenter', () => (pausaHover = true));
+    root.addEventListener('mouseleave', () => (pausaHover = false));
+    root.addEventListener('focusin', () => (pausaHover = true));
+    root.addEventListener('focusout', (e) => {
+      if (!root.contains(e.relatedTarget as Node)) pausaHover = false;
+    });
+    const btnPausa = q<HTMLButtonElement>('.b-pausa');
+    btnPausa.addEventListener('click', () => {
+      pausaUtente = !pausaUtente;
+      btnPausa.setAttribute('aria-pressed', String(pausaUtente));
+      q('.t-pausa').textContent = pausaUtente ? 'Riprendi' : 'Pausa';
+      q('.icona').className = 'icona ' + (pausaUtente ? 'play' : 'pausa');
+    });
+    q('.b-prossima').addEventListener('click', () => {
+      if (!animando) prossima(true);
+    });
+
+    let visibile = true;
+    new IntersectionObserver(([e]) => (visibile = e.isIntersecting)).observe(root);
+
+    return {
+      avvia() {
+        costruisciRighe();
+        mostra(ordine[0], false);
+      },
+      ridimensiona() {
+        costruisciRighe();
+        mostraSubito(ordine[indice]);
+      },
+      passo(dt: number) {
+        if (!(pausaUtente || pausaHover || document.hidden || animando || !visibile)) {
+          trascorso += dt;
+          if (trascorso >= INTERVALLO) prossima(false);
+        }
+        barra.style.width = Math.min(100, (trascorso / INTERVALLO) * 100) + '%';
+      },
+    };
+  }
+
+  const tabelloni = Array.from(document.querySelectorAll<HTMLElement>('[data-tabellone]')).map(crea);
+  if (tabelloni.length) {
+    let ultimo = performance.now();
+    const giro = (ora: number) => {
+      const dt = ora - ultimo;
+      ultimo = ora;
+      tabelloni.forEach((t) => t.passo(dt));
+      requestAnimationFrame(giro);
+    };
+    let timer = 0;
+    let larghezza = innerWidth;
+    addEventListener('resize', () => {
+      if (innerWidth === larghezza) return; // su mobile la barra degli indirizzi cambia solo l'altezza
+      larghezza = innerWidth;
+      clearTimeout(timer);
+      timer = window.setTimeout(() => tabelloni.forEach((t) => t.ridimensiona()), 150);
+    });
+    (document.fonts?.ready ?? Promise.resolve()).then(() => {
+      tabelloni.forEach((t) => t.avvia());
+      requestAnimationFrame((t) => {
+        ultimo = t;
+        requestAnimationFrame(giro);
+      });
+    });
+  }
+</script>
