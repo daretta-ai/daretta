@@ -1,0 +1,137 @@
+---
+import Base from '../../layouts/Base.astro';
+import TestataProgetto from '../../components/TestataProgetto.astro';
+import Blocco from '../../components/Blocco.astro';
+import BloccoFigura from '../../components/BloccoFigura.astro';
+import Citazione from '../../components/Citazione.astro';
+import Stato from '../../components/Stato.astro';
+import Chiusura from '../../components/Chiusura.astro';
+import { progetti } from '../../data/progetti';
+
+const progetto = progetti.find((p) => p.slug === 'concorsi-in-regola')!;
+const regole = [
+  'Dati immutabili',
+  'Regole per partecipare chiare e verificabili',
+  'Regole per vincere chiare e verificabili',
+  'Vincite più semplici da certificare per il notaio',
+];
+---
+
+<Base titolo={progetto.nome} descrizione={progetto.card} attiva="progetti">
+  <TestataProgetto
+    progetto={progetto}
+    titolo="il problema sono le regole intorno."
+    fase="Alpha interna"
+    credito="Con Alberto Colella"
+  />
+
+  <Blocco numero={1} etichetta="Da dove nasce">
+    <p>
+      In Codever di concorsi, instant win e giochi a premi ne abbiamo seguiti diversi. E quasi sempre, a un certo punto, il
+      cliente si è scontrato con regolamenti e vincoli che non si aspettava. I dati devono essere immutabili, le regole per
+      partecipare e per vincere chiare e verificabili. Il problema non è mai il gioco, sono le regole intorno.
+    </p>
+  </Blocco>
+
+  <Citazione testo="il problema non è mai il gioco." didascalia="Sono le regole intorno" />
+
+  <BloccoFigura numero={2} etichetta="Il servizio">
+    <p>
+      Per questo con Alberto stiamo costruendo un servizio pensato per i reparti marketing, facile da attivare e da
+      gestire. Copre il grosso delle logiche e dei vincoli di questi giochi, e rende più semplice la certificazione delle
+      vincite da parte del notaio.
+    </p>
+    <figure slot="figura" class="regole">
+      <figcaption>Le regole intorno</figcaption>
+      <ul>
+        {
+          regole.map((r, i) => (
+            <li class:list={{ ultima: i === regole.length - 1 }}>
+              <span class="pallino" aria-hidden="true" />
+              {r}
+            </li>
+          ))
+        }
+      </ul>
+      <span class="nota">Già risolte, per i reparti marketing</span>
+    </figure>
+  </BloccoFigura>
+
+  <Blocco numero={3} etichetta="A che punto è">
+    <p>
+      Il progetto è in alpha interna. Speriamo di andare online presto e di trovare i primi clienti… magari tra chi sta
+      leggendo.
+    </p>
+    <Stato stato={progetto.stato} focusabile />
+  </Blocco>
+
+  <Chiusura
+    rimandi={[
+      { etichetta: '[ 004 ] Altri progetti', testo: 'Quello che porto avanti la sera.', href: '/#progetti' },
+      { etichetta: '[ 002 ] Chi sono', testo: 'Uno scalino più su.', href: '/chi-sono' },
+    ]}
+  />
+</Base>
+
+<style>
+  .regole {
+    margin: 0;
+    padding: var(--space-10);
+    border-radius: var(--radius-modulo);
+    background: var(--cemento-rilievo);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  figcaption,
+  .nota {
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  figcaption {
+    font-size: 13px;
+  }
+  .nota {
+    font-size: 12px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--filetto-neutro);
+  }
+  li {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--filetto-neutro);
+    font-size: 18px;
+    color: var(--inchiostro-corpo);
+  }
+  li.ultima {
+    color: var(--inchiostro);
+  }
+  .pallino {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-pill);
+    background-color: var(--cemento-incavo);
+    background-image: radial-gradient(circle, #3a9ca5 1.6px, transparent 2px);
+    background-size: 5px 5px;
+  }
+  @media (max-width: 720px) {
+    .regole {
+      padding: var(--space-6);
+      border-radius: var(--radius-modulo-mobile);
+      gap: var(--space-4);
+    }
+    li {
+      font-size: 16px;
+      padding: 14px 0;
+    }
+  }
+</style>

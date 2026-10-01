@@ -1,0 +1,248 @@
+---
+// /curiosita: non è nel menu. Ci si arriva da «Vedi tutte», dal footer e dai rimandi nei testi.
+// Tavole Curiosita e Curiosita-Mobile; componente Elenco del design system.
+import Base from '../layouts/Base.astro';
+import Sezione from '../components/Sezione.astro';
+import Sfera from '../components/Sfera.astro';
+import Tabellone from '../components/Tabellone.astro';
+import { getCollection } from 'astro:content';
+
+const curiosita = (await getCollection('curiosita')).sort((a, b) => a.id.localeCompare(b.id));
+const lettere = (s: string) => s.split('');
+---
+
+<Base titolo="Curiosità" descrizione="Cose che non servono a niente, ma raccontano qualcosa.">
+  <section class="griglia apertura">
+    <div class="testo">
+      <Sezione numero={5} as="p">Curiosità</Sezione>
+      <h1 class="punti-titolo">tutte le curiosità.</h1>
+      <p class="attacco">Cose che non servono a niente, ma raccontano qualcosa.</p>
+      <Tabellone />
+    </div>
+    <div class="lato">
+      <Sfera misura={240} />
+    </div>
+  </section>
+
+  <section class="elenco" aria-labelledby="elenco-titolo">
+    <h2 class="titolo-lista" id="elenco-titolo">Se proprio non hai nulla da fare, leggile tutte.</h2>
+    <div>
+      <div class="intestazione meta" aria-hidden="true"><span>N°</span><span>Tipo</span><span>Dest.</span><span></span></div>
+      <ol>
+        {
+          curiosita.map((c) => (
+            <li class="riga" id={c.id}>
+              <a class="cella c-num" href={`#${c.id}`} aria-label={`Curiosità ${c.id}, link diretto`}>
+                <span class="meta lab" aria-hidden="true">N°</span>
+                <span class="tessere" aria-hidden="true">{lettere(c.id).map((l, i) => <span class="t" style={`--i: ${i}`}>{l}</span>)}</span>
+              </a>
+              <span class="cella c-tipo">
+                <span class="meta lab" aria-hidden="true">Tipo</span>
+                <span class="solo-lettori">Tipo {c.data.tipo.toLowerCase()}.</span>
+                <span class="tessere" aria-hidden="true">{lettere(c.data.tipo).map((l, i) => <span class="t" style={`--i: ${i + 3}`}>{l === ' ' ? '' : l}</span>)}</span>
+              </span>
+              <span class="cella c-dest">
+                <span class="meta lab" aria-hidden="true">Dest.</span>
+                <span class="solo-lettori">Destinazione {c.data.destinazione.toLowerCase()}.</span>
+                <span class="tessere" aria-hidden="true">{lettere(c.data.destinazione).map((l, i) => <span class="t" style={`--i: ${i + 13}`}>{l === ' ' ? '' : l}</span>)}</span>
+                <span class="guida" aria-hidden="true" />
+              </span>
+              <p class="c-testo">{c.data.testo}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .apertura {
+    padding: 48px var(--space-2) 0;
+  }
+  .testo {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .attacco {
+    margin: 0 0 var(--space-6);
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--inchiostro-corpo);
+  }
+  .lato {
+    grid-column: span 4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: var(--space-2);
+  }
+
+  .elenco {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding: 72px var(--space-2) 0;
+  }
+  .intestazione,
+  .riga {
+    display: grid;
+    grid-template-columns: 56px 176px 280px minmax(0, 1fr);
+    column-gap: var(--space-6);
+    align-items: start;
+  }
+  .intestazione {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--filetto-neutro);
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .riga {
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--filetto);
+    scroll-margin-top: 120px;
+  }
+  /* Chi arriva da un'ancora trova la riga evidenziata per un istante, senza arancio */
+  .riga:target {
+    animation: evidenzia 2.4s ease-out;
+  }
+  @keyframes evidenzia {
+    0%,
+    40% {
+      background: var(--cemento-incavo);
+      box-shadow: 0 0 0 12px var(--cemento-incavo);
+    }
+    100% {
+      background: transparent;
+      box-shadow: 0 0 0 12px transparent;
+    }
+  }
+  .cella {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 24px;
+    min-width: 0;
+    text-decoration: none;
+  }
+  .lab {
+    display: none;
+    min-width: 2.5em;
+  }
+  .tessere {
+    display: flex;
+    gap: 2px;
+  }
+  .t {
+    position: relative;
+    width: 15px;
+    height: 24px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: var(--cemento-rilievo);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--inchiostro);
+  }
+  .t::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--cemento);
+    opacity: 0.4;
+  }
+  /* Al passaggio del mouse o del focus le tessere della riga girano e tornano al loro posto */
+  .riga:hover .t,
+  .riga:focus-within .t {
+    animation: gira 0.5s calc(var(--i) * 25ms) ease-in-out;
+  }
+  @keyframes gira {
+    0%,
+    100% {
+      transform: perspective(200px) rotateX(0);
+    }
+    50% {
+      transform: perspective(200px) rotateX(-180deg);
+      filter: brightness(0.6);
+    }
+  }
+  .guida {
+    flex: 1;
+    min-width: var(--space-4);
+    border-bottom: 2px dotted var(--bordo);
+    transform: translateY(4px);
+  }
+  .c-testo {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--inchiostro-corpo);
+  }
+
+  @media (max-width: 1100px) {
+    .testo {
+      grid-column: span 12;
+    }
+    .lato {
+      display: none;
+    }
+  }
+  @media (max-width: 720px) {
+    .apertura {
+      padding-top: var(--space-6);
+    }
+    .attacco {
+      font-size: 18px;
+      margin-bottom: var(--space-2);
+    }
+    .elenco {
+      padding-top: var(--space-10);
+      gap: var(--space-4);
+    }
+    .intestazione {
+      display: none;
+    }
+    /* Su mobile ogni riga ripete le etichette accanto alle tessere */
+    .riga {
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: 'num tipo' 'dest dest' 'testo testo';
+      row-gap: var(--space-3);
+    }
+    .c-num {
+      grid-area: num;
+    }
+    .c-tipo {
+      grid-area: tipo;
+    }
+    .c-dest {
+      grid-area: dest;
+    }
+    .c-testo {
+      grid-area: testo;
+      font-size: 17px;
+    }
+    .lab {
+      display: inline;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .riga:hover .t,
+    .riga:focus-within .t,
+    .riga:target {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,118 @@
+---
+// Testata di una pagina progetto (tavole Progetto*).
+import Testata from './Testata.astro';
+import Stato from './Stato.astro';
+import type { Progetto } from '../data/progetti';
+
+interface Props {
+  progetto: Progetto;
+  titolo: string; // la frase in Doto
+  fase?: string; // es. "Alpha", accanto allo stato
+  credito?: string; // es. "Con Gianpaolo Ansalone"
+  link?: string; // il sito del progetto, quando è online
+}
+const { progetto, titolo, fase, credito, link } = Astro.props;
+---
+
+<Testata titolo={titolo}>
+  <Fragment slot="etichetta">
+    <a class="etichetta torna" href="/#progetti">[ 004 ] Progetti</a>
+    <span class="stato-riga">
+      <Stato stato={progetto.stato} focusabile />
+      {fase && <span class="fase">· {fase}</span>}
+    </span>
+  </Fragment>
+  <div class="identita">
+    <span class="nome">
+      {link ? <a href={link}>{progetto.nome}</a> : progetto.nome}
+      {progetto.provvisorio && <span class="provvisorio">(nome provvisorio)</span>}
+    </span>
+    <p class="attacco">{progetto.card}</p>
+  </div>
+  {credito && <span class="credito">{credito}</span>}
+</Testata>
+
+<style>
+  .torna {
+    text-decoration: none;
+  }
+  .torna:hover {
+    color: var(--inchiostro);
+  }
+  .stato-riga {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+  .stato-riga :global(.stato) {
+    font-size: 14px;
+  }
+  .fase {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .identita {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .nome {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .nome a {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 6px;
+  }
+  .provvisorio {
+    margin-left: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .attacco {
+    margin: 0;
+    max-width: 680px;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+    color: var(--inchiostro-corpo);
+  }
+  .credito {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  @media (max-width: 720px) {
+    .stato-riga :global(.stato),
+    .fase {
+      font-size: 12px;
+    }
+    .nome {
+      font-size: 24px;
+    }
+    .provvisorio {
+      display: block;
+      margin: 6px 0 0;
+      font-size: 11px;
+    }
+    .attacco {
+      font-size: 20px;
+      line-height: 1.35;
+    }
+    .credito {
+      font-size: 12px;
+    }
+  }
+</style>

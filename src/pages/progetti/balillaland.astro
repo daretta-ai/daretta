@@ -1,0 +1,78 @@
+---
+import Base from '../../layouts/Base.astro';
+import TestataProgetto from '../../components/TestataProgetto.astro';
+import Blocco from '../../components/Blocco.astro';
+import BloccoFigura from '../../components/BloccoFigura.astro';
+import ModuloNumero from '../../components/ModuloNumero.astro';
+import Citazione from '../../components/Citazione.astro';
+import FiguraBarre from '../../components/FiguraBarre.astro';
+import Stato from '../../components/Stato.astro';
+import Chiusura from '../../components/Chiusura.astro';
+import { progetti } from '../../data/progetti';
+
+const progetto = progetti.find((p) => p.slug === 'balillaland')!;
+---
+
+<Base titolo={progetto.nome} descrizione={progetto.card} attiva="progetti">
+  <TestataProgetto progetto={progetto} titolo="chi perde se la ricorda diversa." />
+
+  <Blocco numero={1} etichetta="Il tavolo">
+    <p>
+      Gioco a calcio balilla (anzi a calcino) <a class="rimando-curiosita" href="/curiosita#013">da sempre</a>, e sono
+      super competitivo. Come tutti quelli che ho incrociato al tavolo, del resto. Solo che a fine partita resta la parola
+      di chi ha vinto… e chi ha perso se la ricorda sempre diversa.
+    </p>
+  </Blocco>
+
+  <BloccoFigura numero={2} etichetta="La community">
+    <p>
+      L'idea di BalillaLand è nata da un brainstorming in Codever. Una community online per gli appassionati, con le
+      statistiche di ognuno, le squadre che funzionano meglio e una leaderboard. Sarebbe molto divertente, e parecchio
+      pericoloso per le amicizie.
+    </p>
+    <FiguraBarre
+      slot="figura"
+      didascalia="La classifica · da sogno"
+      nota="Statistiche, squadre, leaderboard"
+      righe={[
+        { etichetta: '1° · [Squadra]', destra: '[Punti]', larghezza: 100, tono: 3, accesa: true },
+        { etichetta: '2° · [Squadra]', destra: '[Punti]', larghezza: 74, tono: 2 },
+        { etichetta: '3° · [Squadra]', destra: '[Punti]', larghezza: 51, tono: 1 },
+      ]}
+    />
+  </BloccoFigura>
+
+  <Citazione testo="parecchio pericoloso per le amicizie." didascalia="La leaderboard, secondo me" />
+
+  <Blocco numero={3} etichetta="Sul calcino" spazio="medio">
+    <p>
+      Poi c'è la parte fisica, sui calcini. Appoggi il telefono o un token sul tuo lato del tavolo e la partita registra
+      chi gioca, alla fine si segna il punteggio. E se proprio vogliamo sognare, un sistema di sensori e telecamere segna i
+      gol da solo e li mostra nell'app e su uno schermo sopra il calcino, con i replay dei momenti salienti.
+    </p>
+  </Blocco>
+
+  <ModuloNumero numero={4} etichetta="A che punto è" cifra="30%" didascalia="Dei sogni · e sarà una festa">
+    <p>
+      Per ora siamo al concept, e non tutti i sogni verranno esauditi. Ma se ne realizziamo anche solo il 30%… sarà una
+      vera festa.
+    </p>
+    <Stato stato={progetto.stato} focusabile />
+  </ModuloNumero>
+
+  <Chiusura
+    rimandi={[
+      { etichetta: '[ 004 ] Altri progetti', testo: 'Quello che porto avanti la sera.', href: '/#progetti' },
+      { etichetta: '[ 005 ] Curiosità', testo: 'Il resto, quello che non va nel curriculum.', href: '/curiosita' },
+    ]}
+  />
+</Base>
+
+<style>
+  .rimando-curiosita {
+    color: var(--inchiostro);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
+  }
+</style>

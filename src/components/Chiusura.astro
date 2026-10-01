@@ -1,0 +1,103 @@
+---
+// Chiusura delle pagine interne: newsletter a sinistra, due rimandi in card a destra.
+import Newsletter from './Newsletter.astro';
+
+interface Rimando {
+  etichetta: string; // es. "[ 004 ] Progetti"
+  testo: string;
+  href: string;
+}
+interface Props {
+  rimandi: [Rimando, Rimando];
+}
+const { rimandi } = Astro.props;
+---
+
+<section class="griglia chiusura">
+  <div class="nl"><Newsletter /></div>
+  <div class="rimandi">
+    {
+      rimandi.map((r, i) => (
+        <a class:list={['rimando', i === 0 ? 'velo' : 'contorno']} href={r.href}>
+          <span class="etichetta-rimando">{r.etichetta} →</span>
+          <span class="testo-rimando">{r.testo}</span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .chiusura {
+    padding-top: 112px;
+  }
+  .nl {
+    grid-column: span 7;
+    display: flex;
+  }
+  .nl > :global(*) {
+    flex: 1;
+  }
+  .rimandi {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .rimando {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    padding: var(--space-10);
+    border-radius: var(--radius-modulo);
+    text-decoration: none;
+    transition: background-color 0.15s;
+  }
+  .velo {
+    background: radial-gradient(700px 400px at 90% -20%, #16292c 0%, var(--cemento-rilievo) 70%);
+  }
+  .contorno {
+    border: 1px solid var(--filetto-neutro);
+  }
+  .contorno:hover {
+    background: var(--cemento-rilievo);
+  }
+  .velo:hover {
+    background: radial-gradient(700px 400px at 90% -20%, #1b3236 0%, var(--cemento-alto) 70%);
+  }
+  .etichetta-rimando {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .testo-rimando {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  @media (max-width: 720px) {
+    .chiusura {
+      padding-top: var(--space-10);
+    }
+    .rimandi {
+      gap: var(--space-3);
+    }
+    .rimando {
+      padding: var(--space-6);
+      gap: 14px;
+      border-radius: var(--radius-modulo-mobile);
+    }
+    .etichetta-rimando {
+      font-size: 12px;
+    }
+    .testo-rimando {
+      font-size: 22px;
+      line-height: 1.25;
+    }
+  }
+</style>

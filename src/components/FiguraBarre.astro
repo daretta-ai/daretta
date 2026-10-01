@@ -1,0 +1,128 @@
+---
+// Figura a barre puntinate (tavole: il flusso di valdinievole, la routine di Skill Bloom,
+// la classifica di BalillaLand, la scala dei ruoli in Chi sono).
+// Le barre sono decorative: le etichette restano leggibili per tutti.
+interface Riga {
+  etichetta: string;
+  destra?: string;
+  larghezza: number; // percentuale
+  accesa?: boolean; // etichetta in inchiostro pieno
+  tono?: 1 | 2 | 3; // densità e colore dei punti, dal più spento al più acceso
+}
+interface Props {
+  didascalia: string;
+  nota?: string;
+  righe: Riga[];
+}
+const { didascalia, nota, righe } = Astro.props;
+const toni = {
+  1: { colore: '#276b73', passo: 9 },
+  2: { colore: '#2c7c84', passo: 11 },
+  3: { colore: '#3a9ca5', passo: 13 },
+};
+---
+
+<figure class="figura-barre">
+  <figcaption>{didascalia}</figcaption>
+  <ol>
+    {
+      righe.map((r) => {
+        const t = toni[r.tono ?? 2];
+        return (
+          <li>
+            <div class="intestazione">
+              <span class:list={['etichetta-riga', { accesa: r.accesa }]}>{r.etichetta}</span>
+              {r.destra && <span class="destra">{r.destra}</span>}
+            </div>
+            <span
+              class="barra"
+              aria-hidden="true"
+              style={`width: ${r.larghezza}%; --c: ${t.colore}; --p: ${t.passo}px`}
+            />
+          </li>
+        );
+      })
+    }
+  </ol>
+  {nota && <span class="nota">{nota}</span>}
+</figure>
+
+<style>
+  .figura-barre {
+    margin: 0;
+    padding: var(--space-10);
+    border-radius: var(--radius-modulo);
+    background: var(--cemento-rilievo);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  figcaption,
+  .etichetta-riga,
+  .destra,
+  .nota {
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  figcaption,
+  .etichetta-riga {
+    font-size: 13px;
+  }
+  .destra,
+  .nota {
+    font-size: 12px;
+  }
+  .accesa {
+    color: var(--inchiostro);
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .intestazione {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .barra {
+    display: block;
+    height: 44px;
+    border-radius: 14px;
+    background-color: var(--cemento-incavo);
+    background-image: radial-gradient(circle, var(--c) 1.8px, transparent 2.3px);
+    background-size: var(--p) var(--p);
+  }
+  @media (max-width: 720px) {
+    .figura-barre {
+      padding: var(--space-6);
+      border-radius: var(--radius-modulo-mobile);
+      gap: var(--space-4);
+    }
+    ol {
+      gap: var(--space-4);
+    }
+    figcaption,
+    .etichetta-riga,
+    .destra {
+      font-size: 12px;
+    }
+    .nota {
+      font-size: 11px;
+    }
+    .barra {
+      height: 32px;
+      border-radius: 10px;
+    }
+  }
+</style>

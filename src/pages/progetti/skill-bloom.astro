@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import TestataProgetto from '../../components/TestataProgetto.astro';
+import Blocco from '../../components/Blocco.astro';
+import BloccoFigura from '../../components/BloccoFigura.astro';
+import ModuloNumero from '../../components/ModuloNumero.astro';
+import FiguraBarre from '../../components/FiguraBarre.astro';
+import Stato from '../../components/Stato.astro';
+import Chiusura from '../../components/Chiusura.astro';
+import { progetti } from '../../data/progetti';
+
+const progetto = progetti.find((p) => p.slug === 'skill-bloom')!;
+// Progetto delicato: niente battute, tono asciutto (regola della voce in testi.md)
+---
+
+<Base titolo={progetto.nome} descrizione={progetto.card} attiva="progetti">
+  <TestataProgetto
+    progetto={progetto}
+    titolo="la terapia continua a casa."
+    fase="Alpha"
+    credito="Con Elisa Niccolai ed Enzo Antonino"
+  />
+
+  <Blocco numero={1} etichetta="Dopo il centro">
+    <p>
+      La terapia ABA non finisce quando si esce dal centro. Buona parte va avanti a casa, ed è portata avanti dalle
+      famiglie, con grande fatica. Ogni giorno, e con feedback che dipendono molto da chi guarda.
+    </p>
+  </Blocco>
+
+  <BloccoFigura numero={2} etichetta="L'app">
+    <p>
+      Per questo stiamo sviluppando un'app che migliori lo scambio fra ragazzi, famiglie e terapisti. Alcuni ragazzi, per
+      esempio, hanno routine da eseguire passo per passo. Le fanno partire su un device e confermano ogni step, così
+      sappiamo quanto dura ogni azione e dove, eventualmente, si fermano. Anche la famiglia ha il suo accesso, per
+      segnalare le criticità e raccontare le attività con più dettaglio.
+    </p>
+    <FiguraBarre
+      slot="figura"
+      didascalia="Una routine · passo per passo"
+      nota="Ogni step ha il suo tempo"
+      righe={[
+        { etichetta: '01 · Avvio', destra: 'Confermato', larghezza: 100, tono: 1 },
+        { etichetta: '02 · Step', destra: 'Confermato', larghezza: 72, tono: 2 },
+        { etichetta: '03 · Step', destra: 'In corso', larghezza: 38, tono: 3, accesa: true },
+      ]}
+    />
+  </BloccoFigura>
+
+  <ModuloNumero numero={3} etichetta="Chi c'è" cifra="5" didascalia="Centri strabiliABA · dove faremo i primi test">
+    <p>
+      Il progetto è con Elisa Niccolai, psicologa e analista del comportamento certificata, spesso relatrice a convegni
+      internazionali. Ha fondato strabiliABA, cinque centri per l'autismo in tutta Italia, e ne è la direttrice
+      scientifica. Con noi c'è Enzo Antonino, socio e sviluppatore. Elisa studia le funzionalità, Enzo sviluppa, e i primi
+      test li faremo nei centri strabiliABA.
+    </p>
+  </ModuloNumero>
+
+  <Blocco numero={4} etichetta="A che punto è">
+    <p>
+      Vogliamo rendere i ragazzi più autonomi, dare un po' di respiro alle famiglie e avere risultati misurabili su alcuni
+      esercizi. Sarà difficile. Per ora l'app è in alpha e la stiamo rivedendo fra noi, poi toccherà ai centri.
+    </p>
+    <Stato stato={progetto.stato} focusabile />
+  </Blocco>
+
+  <Chiusura
+    rimandi={[
+      { etichetta: '[ 004 ] Altri progetti', testo: 'Quello che porto avanti la sera.', href: '/#progetti' },
+      { etichetta: '[ 002 ] Chi sono', testo: 'Uno scalino più su.', href: '/chi-sono' },
+    ]}
+  />
+</Base>

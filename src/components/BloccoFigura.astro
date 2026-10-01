@@ -1,0 +1,58 @@
+---
+// Blocco con figura: etichetta e testo a sinistra (6 colonne), figura a destra (5 colonne).
+// La figura va nello slot "figura".
+import Sezione from './Sezione.astro';
+
+interface Props {
+  numero: number;
+  etichetta: string;
+}
+const { numero, etichetta } = Astro.props;
+---
+
+<section class="griglia blocco-figura">
+  <div class="testo">
+    <Sezione numero={numero} cifre={2}>{etichetta}</Sezione>
+    <slot />
+  </div>
+  <div class="figura">
+    <slot name="figura" />
+  </div>
+</section>
+
+<style>
+  .blocco-figura {
+    align-items: start;
+    padding: 72px var(--space-2) 0;
+  }
+  .testo {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .testo :global(p) {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--inchiostro-corpo);
+  }
+  .figura {
+    grid-column: 8 / span 5;
+  }
+  @media (max-width: 720px) {
+    .blocco-figura {
+      padding: var(--space-8) var(--space-2) 0;
+    }
+    .testo {
+      gap: 14px;
+    }
+    .testo :global(p) {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+    .figura {
+      margin: 0 calc(var(--space-2) * -1);
+    }
+  }
+</style>

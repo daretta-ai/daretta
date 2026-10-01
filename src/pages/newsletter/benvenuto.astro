@@ -1,0 +1,42 @@
+---
+// Pagina di conferma dell'iscrizione, aperta dal link nella mail (tavola Microtesti, punto 05).
+// Diventa l'indirizzo di ritorno quando colleghiamo Kit (passo 6).
+import Base from '../../layouts/Base.astro';
+import Modulo from '../../components/Modulo.astro';
+---
+
+<Base titolo="Benvenuto">
+  <Modulo luce="pieno" class="benvenuto">
+    <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>
+    <h1 class="punti-pagina">benvenuto.</h1>
+    <p>Da adesso, una mail al mese. In fondo a ognuna c'è il modo per andartene… senza rancore.</p>
+  </Modulo>
+</Base>
+
+<style>
+  .benvenuto {
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-6);
+  }
+  .etichetta-nl {
+    color: var(--carta);
+  }
+  p {
+    margin: 0;
+    max-width: 640px;
+    font-size: 24px;
+    line-height: 1.45;
+  }
+  @media (max-width: 720px) {
+    .benvenuto {
+      min-height: 0;
+      gap: var(--space-4);
+    }
+    p {
+      font-size: 18px;
+    }
+  }
+</style>

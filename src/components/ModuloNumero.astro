@@ -1,0 +1,93 @@
+---
+// Modulo con un numero vero in evidenza (punti-numero), luce da sinistra.
+// Tavole: Chi sono (1/10), valdinievole (11), Skill Bloom (5), BalillaLand (30%).
+import Modulo from './Modulo.astro';
+import Sezione from './Sezione.astro';
+
+interface Props {
+  numero: number;
+  etichetta: string;
+  cifra: string;
+  didascalia: string;
+}
+const { numero, etichetta, cifra, didascalia } = Astro.props;
+---
+
+<Modulo luce="sinistra" class="griglia modulo-numero">
+  <div class="sinistra">
+    <Sezione numero={numero} cifre={2} class="etichetta-numero">{etichetta}</Sezione>
+    <span class="cifra">{cifra}</span>
+    <span class="didascalia">{didascalia}</span>
+  </div>
+  <div class="destra">
+    <slot />
+  </div>
+</Modulo>
+
+<style>
+  .modulo-numero {
+    margin-top: var(--space-14);
+    align-items: center;
+  }
+  .sinistra {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .sinistra :global(.etichetta-numero) {
+    margin-bottom: var(--space-3);
+  }
+  .cifra {
+    font-family: var(--font-punti);
+    font-weight: 900;
+    font-size: 168px;
+    line-height: 0.85;
+    letter-spacing: -6px;
+  }
+  .didascalia {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-corpo);
+  }
+  .destra {
+    grid-column: 7 / span 6;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .destra :global(p) {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--inchiostro-corpo);
+  }
+  @media (max-width: 720px) {
+    .modulo-numero {
+      margin-top: var(--space-8);
+      gap: 14px;
+    }
+    .sinistra {
+      gap: 14px;
+    }
+    .sinistra :global(.etichetta-numero) {
+      margin-bottom: var(--space-2);
+    }
+    .cifra {
+      font-size: 104px;
+      letter-spacing: -4px;
+    }
+    .didascalia {
+      font-size: 12px;
+    }
+    .destra {
+      margin-top: var(--space-2);
+    }
+    .destra :global(p) {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+  }
+</style>

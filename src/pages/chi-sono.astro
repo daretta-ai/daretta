@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import Testata from '../components/Testata.astro';
+import Sezione from '../components/Sezione.astro';
+import Blocco from '../components/Blocco.astro';
+import ModuloNumero from '../components/ModuloNumero.astro';
+import Citazione from '../components/Citazione.astro';
+import Chiusura from '../components/Chiusura.astro';
+
+// La scala dei ruoli: ogni gradino è più alto e più acceso del precedente
+const ruoli = [
+  { nome: 'Sviluppatore', colore: '#1f4a50' },
+  { nome: 'Team leader', colore: '#235a61' },
+  { nome: 'Project manager', colore: '#276b73' },
+  { nome: 'Product manager', colore: '#2c7c84' },
+  { nome: 'CEO', colore: '#3a9ca5' },
+];
+---
+
+<Base
+  titolo="Chi sono"
+  descrizione="Sviluppatore, team leader, project manager, product manager, CEO. Non è ambizione, è che ogni volta il problema stava uno scalino più su."
+  attiva="chi-sono"
+>
+  <Testata titolo="uno scalino più su.">
+    <span slot="etichetta" class="etichetta">[ 002 ] Chi sono</span>
+    <p class="attacco">
+      Sviluppatore, team leader, project manager, product manager, CEO. Non è ambizione, è che ogni volta il problema
+      stava uno scalino più su.
+    </p>
+  </Testata>
+
+  <section class="percorso">
+    <Sezione>Il percorso</Sezione>
+    <ol>
+      {
+        ruoli.map((r, i) => (
+          <li style={`--h: ${(i + 1) * 64}px; --w: ${(i + 1) * 20}%; --c: ${r.colore}`}>
+            <span class:list={['ruolo', { ultimo: i === ruoli.length - 1 }]}>
+              {String(i + 1).padStart(2, '0')} · {r.nome}
+            </span>
+            <span class="gradino" aria-hidden="true" />
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <Blocco numero={1} etichetta="La versione breve" spazio="piccolo">
+    <p>
+      La versione breve è che ho un'azienda di software a Firenze. Per i più curiosi, l'azienda si chiama Codever, l'ho
+      fondata con Alberto e ne sono amministratore delegato. Siamo system integrator specializzati in sviluppo web e
+      mobile, con il pallino per le prestazioni. Dal 2026 facciamo parte di Mirror, dove sono service leader dello
+      sviluppo digital e system administrator. Se sono a una cena, però, mi fermo alla versione breve, perché dopo
+      «service leader» nessuno mi passa più il vino.
+    </p>
+  </Blocco>
+
+  <Blocco numero={2} etichetta="Il filo" spazio="piccolo">
+    <p>
+      Una cosa sola mi ha guidato in tutto il percorso, la soddisfazione di usare la logica per risolvere un problema.
+      Prima un bug da fixare, poi le specifiche di un cliente da trasformare in prodotto, fino agli scazzi nei gruppi di
+      lavoro e agli stipendi da pagare. Cambiava la scala del problema. Non la soddisfazione nel lavorarci.
+    </p>
+  </Blocco>
+
+  <ModuloNumero numero={3} etichetta="Un lavoro" cifra="1/10" didascalia="Del costo · MongoDB → Elasticsearch">
+    <p>
+      Quando posso concentrarmi su un solo task e sviscerarlo per bene, do il meglio di me. Come con il portale delle auto
+      usate di Quattroruote, che su MongoDB non reggeva più le query paginate. L'abbiamo migrato su Elasticsearch, con
+      prestazioni migliori a un decimo del costo. Un lavorone pieno di insidie, che è andato liscio come l'olio.
+    </p>
+  </ModuloNumero>
+
+  <Blocco numero={4} etichetta="Sull'AI" spazio="grande">
+    <p>
+      Sull'AI sto dalla parte di chi la apprezza. C'è ancora chi si sente sminuito, o chi non vuole mollare la scrittura a
+      mano. Sbagliano entrambi, perché scrivere codice non è mai stato il punto, il punto era risolvere il puzzle. Dare
+      istruzioni alle AI su un task o un progetto mi dà lo stesso gusto della scrittura. Chi si sente sminuito, a mio
+      parere, non ha colto l'essenza del suo mestiere.
+    </p>
+  </Blocco>
+
+  <Citazione testo="scrivere codice non è mai stato il punto." didascalia="Il punto era risolvere il puzzle" />
+
+  <section class="griglia perche-ora">
+    <div class="testo">
+      <Sezione numero={5} cifre={2}>Perché ora</Sezione>
+      <p>
+        Grazie alle AI ora riesco a portare avanti i miei side project e perfino questo sito, finalmente. Prima, con
+        un'azienda da mandare avanti, al resto rimanevano i ritagli e i weekend. Ma il resto non ha mai vinto sulla voglia
+        di passare del tempo con mio figlio e gli amici. Adesso, parlando con un agente prima di addormentarmi, faccio le
+        cose a cui prima dovevo rinunciare.
+      </p>
+    </div>
+    <div class="foto" role="img" aria-label="Foto di Patrizio, in arrivo">[ Foto spontanea ]</div>
+  </section>
+
+  <Chiusura
+    rimandi={[
+      { etichetta: '[ 004 ] Progetti', testo: 'Quello che porto avanti la sera.', href: '/#progetti' },
+      { etichetta: '[ 005 ] Curiosità', testo: 'Il resto, quello che non va nel curriculum.', href: '/curiosita' },
+    ]}
+  />
+</Base>
+
+<style>
+  .attacco {
+    margin: 0;
+    max-width: 680px;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+
+  .percorso {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: 72px var(--space-2) var(--space-6);
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-3);
+    align-items: end;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .ruolo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .ruolo.ultimo {
+    color: var(--inchiostro);
+  }
+  .gradino {
+    height: var(--h);
+    border-radius: 16px;
+    background-color: var(--cemento-rilievo);
+    background-image: radial-gradient(circle, var(--c) 1.8px, transparent 2.3px);
+    background-size: 12px 12px;
+  }
+
+  .perche-ora {
+    align-items: stretch;
+    padding: 72px var(--space-2) 0;
+  }
+  .perche-ora .testo {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .perche-ora p {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--inchiostro-corpo);
+  }
+  .foto {
+    grid-column: 9 / span 4;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-modulo);
+    background: linear-gradient(180deg, #21525a 0%, #1c2d30 55%, #1e2224 100%);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+
+  @media (max-width: 720px) {
+    .attacco {
+      font-size: 21px;
+      line-height: 1.35;
+    }
+    .percorso {
+      padding: var(--space-10) var(--space-2) var(--space-2);
+      gap: 20px;
+    }
+    /* Su mobile la scala si sdraia: barre orizzontali sempre più lunghe */
+    ol {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    li {
+      gap: 6px;
+    }
+    .ruolo {
+      font-size: 12px;
+    }
+    .gradino {
+      width: var(--w);
+      height: 28px;
+      border-radius: 10px;
+      background-image: radial-gradient(circle, var(--c) 1.6px, transparent 2.1px);
+      background-size: 10px 10px;
+    }
+    .perche-ora {
+      padding-top: var(--space-8);
+      gap: var(--space-4);
+    }
+    .perche-ora .testo {
+      gap: 14px;
+    }
+    .perche-ora p {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+    .foto {
+      min-height: 360px;
+      border-radius: var(--radius-modulo-mobile);
+    }
+  }
+</style>

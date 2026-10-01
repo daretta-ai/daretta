@@ -1,0 +1,57 @@
+---
+// Citazione in Doto a tutta griglia, con una riga in mono sotto.
+interface Props {
+  testo: string;
+  didascalia: string;
+}
+const { testo, didascalia } = Astro.props;
+---
+
+<blockquote class="citazione">
+  <p class="frase">{testo}</p>
+  <p class="didascalia">— {didascalia}</p>
+</blockquote>
+
+<style>
+  .citazione {
+    margin: 0;
+    padding: 72px var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-bottom: 1px solid var(--filetto);
+  }
+  p {
+    margin: 0;
+  }
+  .frase {
+    max-width: 1200px;
+    font-family: var(--font-punti);
+    font-weight: 900;
+    font-size: 96px;
+    line-height: 0.98;
+    letter-spacing: -3px;
+    text-wrap: balance;
+  }
+  .didascalia {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  @media (max-width: 720px) {
+    .citazione {
+      padding: var(--space-10) var(--space-2);
+      gap: 14px;
+    }
+    .frase {
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .didascalia {
+      font-size: 12px;
+    }
+  }
+</style>
