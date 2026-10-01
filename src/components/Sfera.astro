@@ -49,17 +49,28 @@ const { misura = 540, class: classe } = Astro.props;
   const mescola = (a: number[], b: number[], t: number) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
 
   // Bersagli per la à: la stessa à del logotipo, cella per cella (Doto 900, matrice 5×8),
-  // ridisegnata con i punti della sfera (design/design-system/components/Sfera).
-  // Non si campiona il carattere: in grande i suoi quadrati non si leggono.
+  // fatta con i punti della sfera che, mentre si raccolgono, diventano i quadrati del logotipo
+  // (design/design-system/components/Sfera). A forma completa è sovrapponibile al carattere.
   const MATRICE_A = ['.#...', '..#..', '.....', '.###.', '....#', '.####', '#...#', '.####'];
   const PASSO_A = 19 / 240; // passo della griglia in frazioni del diametro, come nella tavola
-  const RAGGIO_A = 7.6 / 240; // raggio dei punti accesi, in frazioni del diametro
+  // Nel logotipo ogni cella è un quadrato pieno, a spigolo vivo, largo 9/10 del passo (Doto 900).
+  const LATO_A = PASSO_A * 0.9;
   function puntiDellaA(): { x: number; y: number }[] {
     const accesi: { x: number; y: number }[] = [];
     MATRICE_A.forEach((riga, y) => [...riga].forEach((ch, x) => ch === '#' && accesi.push({ x, y })));
     const xs = accesi.map((p) => p.x), ys = accesi.map((p) => p.y);
     const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
     return accesi.map((p) => ({ x: (p.x - cx) * PASSO_A, y: (p.y - cy) * PASSO_A }));
+  }
+
+  function quadrato(g: CanvasRenderingContext2D, x: number, y: number, l: number, s: number) {
+    if (s <= 0.01) return g.rect(x, y, l, l);
+    g.moveTo(x + s, y);
+    g.arcTo(x + l, y, x + l, y + l, s);
+    g.arcTo(x + l, y + l, x, y + l, s);
+    g.arcTo(x, y + l, x, y, s);
+    g.arcTo(x, y, x + l, y, s);
+    g.closePath();
   }
 
   function avvia(contenitore: HTMLElement) {
@@ -212,13 +223,20 @@ const { misura = 540, class: classe } = Astro.props;
         if (p.ha && accesa > 0) {
           colore = mescola(colore, COLORI.arancio, accesa);
           alfa += (1 - alfa) * accesa;
-          r += (RAGGIO_A * raggio * 2 - r) * forma; // i punti accesi crescono, come nella tavola
         }
 
         g.globalAlpha = alfa;
         g.fillStyle = `rgb(${colore[0]},${colore[1]},${colore[2]})`;
         g.beginPath();
-        g.arc(sx, sy, r, 0, Math.PI * 2);
+        if (p.ha && forma > 0) {
+          // Il punto diventa il quadrato del logotipo: cresce fino al lato della cella
+          // e lo spigolo si chiude, finché a forma completa la à è identica a quella di Doto 900
+          const meta = (r + (LATO_A * raggio * 2 / 2 - r) * forma);
+          const spigolo = meta * (1 - forma);
+          quadrato(g, sx - meta, sy - meta, meta * 2, spigolo);
+        } else {
+          g.arc(sx, sy, r, 0, Math.PI * 2);
+        }
         g.fill();
       }
       g.globalAlpha = 1;

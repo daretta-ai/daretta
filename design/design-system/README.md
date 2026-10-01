@@ -54,7 +54,7 @@ L'unico momento «wow» del sito, ed è legato al nome: la sfera *ascolta*.
 
 1. **A riposo** ruota piano su se stessa.
 2. **In ascolto:** quando il cursore si avvicina, i punti vibrano in onde (`onda`) che partono dal cursore, come un suono.
-3. **Al clic** i punti si raccolgono a formare la à, che si accende di `arancio` per un istante, poi tornano sfera. La à è quella del logotipo, cella per cella (la matrice di 5×8 della à di Doto 900), fatta con i punti tondi della sfera: non è il carattere Doto sovrapposto, che in grande non si legge.
+3. **Al clic** i punti si raccolgono a formare la à, che si accende di `arancio` per un istante, poi tornano sfera. La à è quella del logotipo e deve essere sovrapponibile al carattere (la matrice di 5×8 della à di Doto 900, con le stesse proporzioni): mentre si raccolgono, i punti tondi della sfera diventano quadrati pieni a spigolo vivo, come le celle di Doto. Il logotipo non si storpia mai.
 
 **Dove sta.** In home è grande, nella hero. Nelle pagine interne, solo su desktop, torna piccola (150–320px) nel modulo-testata o accanto al titolo: è la stessa sfera che ti segue, non un secondo effetto, e la luce della pagina parte da lei. Su mobile compare solo in home; nelle pagine interne la luce parte dal modulo-testata.
 
