@@ -1,0 +1,93 @@
+/*
+  Token del design system di dàretta.
+  I nomi vengono da claude/design-system-daretta.md.
+  I valori sono una prima taratura: si verificano col contrasto nel passo 9.
+*/
+:root {
+  /* Fondi */
+  --cemento: #16191a;
+  --cemento-rilievo: #1e2223;
+  --cemento-incavo: #25292b;
+
+  /* Testo */
+  --inchiostro: #eef0ee;
+  --inchiostro-corpo: #c9cdcb;
+  --inchiostro-muto: #8e9593;
+  --filetto: #33393a;
+
+  /* Petrolio: luce, non vernice */
+  --petrolio-luce: #2f8c8f;
+  --petrolio-acceso: #1f6f73;
+  --petrolio-scuro: #0f3a3d;
+  --petrolio-alone: rgb(47 140 143 / 0.22);
+
+  /* L'unico colore acceso */
+  --arancio: #ff6b1f;
+
+  /* Caratteri */
+  --punti: 'Doto', monospace;
+  --sans: 'Geist', system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+
+  --punti-hero: clamp(64px, 11vw, 168px);
+  --punti-motto: clamp(28px, 3.6vw, 52px);
+  --punti-pagina: clamp(40px, 6vw, 88px);
+  --punti-numero: clamp(56px, 8vw, 120px);
+
+  /* Spazi (multipli di 8) */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-14: 112px;
+
+  /* Angoli */
+  --radius-modulo: 32px;
+  --radius-modulo-mobile: 24px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--cemento);
+  color: var(--inchiostro);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+}
+
+.etichetta {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--inchiostro-muto);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

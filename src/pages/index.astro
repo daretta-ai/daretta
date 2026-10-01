@@ -1,0 +1,60 @@
+---
+// Pagina provvisoria dello scheletro: verifica font, token e contenuti.
+// La home vera arriva al passo 3 del piano.
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const curiosita = (await getCollection('curiosita')).sort((a, b) => a.id.localeCompare(b.id));
+---
+
+<Base>
+  <main>
+    <p class="logo">d<span>à</span>retta</p>
+    <p class="motto">risolvo problemi, a volte sono intere aziende.</p>
+    <p class="etichetta">[ 000 ] SCHELETRO · {curiosita.length} CURIOSITÀ CARICATE</p>
+    <ul>
+      {curiosita.map((c) => (
+        <li id={c.id}>
+          <span class="etichetta">{c.id} · {c.data.tipo} · {c.data.destinazione}</span>
+          <span>{c.data.testo}</span>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+<style>
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-3);
+  }
+  .logo {
+    font-family: var(--punti);
+    font-weight: 900;
+    font-size: var(--punti-hero);
+    line-height: 1;
+    margin: 0;
+  }
+  .logo span {
+    color: var(--arancio);
+  }
+  .motto {
+    font-family: var(--punti);
+    font-weight: 800;
+    font-size: var(--punti-motto);
+    line-height: 1.1;
+    margin: var(--space-3) 0 var(--space-8);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--filetto);
+    color: var(--inchiostro-corpo);
+  }
+</style>
