@@ -1,0 +1,100 @@
+---
+// Modulo newsletter, l'unico in petrolio pieno (tavole Main, ChiSono, Progetto).
+// Il collegamento a Kit arriva al passo 6: per ora il modulo non invia.
+import Modulo from './Modulo.astro';
+
+interface Props {
+  etichetta?: boolean;
+  class?: string;
+}
+const { etichetta = true, class: classe } = Astro.props;
+---
+
+<Modulo as="form" luce="pieno" id="newsletter" class:list={['newsletter', classe]} aria-labelledby="newsletter-titolo" data-newsletter>
+  {etichetta && <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>}
+  <h2 class="punti-titolo" id="newsletter-titolo">una mail al mese.</h2>
+  <p>Dentro c'è qualche spunto dai miei progetti, gli articoli e qualche opinione… se mi scappa.</p>
+  <p>Non ti vendo niente, ma se leggendo ti viene voglia di fare qualcosa insieme, rispondi alla mail, vediamo cosa ne esce.</p>
+  <div class="riga">
+    <label class="solo-lettori" for="newsletter-mail">La tua email</label>
+    <input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder="la tua email" />
+    <button type="submit">Iscrivimi</button>
+  </div>
+</Modulo>
+
+<style>
+  .newsletter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .etichetta-nl {
+    color: var(--carta);
+  }
+  p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.45;
+  }
+  .riga {
+    display: flex;
+    gap: var(--space-3);
+  }
+  input {
+    flex-grow: 1;
+    min-width: 0;
+    height: 56px;
+    padding: 0 var(--space-6);
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--carta);
+    color: var(--cemento);
+    font: inherit;
+    font-size: 17px;
+  }
+  input::placeholder {
+    color: #5c6466;
+  }
+  button {
+    height: 56px;
+    padding: 0 28px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--arancio);
+    color: var(--cemento);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  input:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--carta);
+    outline-offset: 3px;
+  }
+  @media (max-width: 720px) {
+    .newsletter {
+      gap: 14px;
+    }
+    /* Nella tavola mobile la newsletter non ha l'etichetta */
+    .etichetta-nl {
+      display: none;
+    }
+    p {
+      font-size: 16px;
+    }
+    .riga {
+      flex-direction: column;
+    }
+    input,
+    button {
+      height: 52px;
+    }
+    input {
+      font-size: 16px;
+      padding: 0 20px;
+    }
+  }
+</style>

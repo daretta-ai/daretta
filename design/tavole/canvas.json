@@ -1,0 +1,180 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Articolo.dc.html": {
+      "h": 3300,
+      "title": "Articolo",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "ChiSono-Mobile.dc.html": {
+      "h": 4700,
+      "title": "Chi sono mobile",
+      "w": 390,
+      "x": 470,
+      "y": 4320
+    },
+    "ChiSono.dc.html": {
+      "h": 3900,
+      "title": "Chi sono",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Curiosita-Mobile.dc.html": {
+      "h": 5000,
+      "title": "Curiosità mobile",
+      "w": 390,
+      "x": 940,
+      "y": 4320
+    },
+    "Curiosita.dc.html": {
+      "h": 3500,
+      "title": "Curiosità",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "Home-Mobile.dc.html": {
+      "h": 3240,
+      "title": "Home mobile",
+      "w": 390,
+      "x": 0,
+      "y": 4320
+    },
+    "Main.dc.html": {
+      "h": 3000,
+      "title": "Home",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Microtesti.dc.html": {
+      "h": 2000,
+      "title": "Microtesti — newsletter e stati",
+      "w": 1440,
+      "x": 15200,
+      "y": 0
+    },
+    "Pagina404-Mobile.dc.html": {
+      "h": 1500,
+      "title": "404 mobile",
+      "w": 390,
+      "x": 3400,
+      "y": 4320
+    },
+    "Pagina404.dc.html": {
+      "h": 1900,
+      "title": "404",
+      "w": 1440,
+      "x": 13680,
+      "y": 0
+    },
+    "Progetto-BalillaLand.dc.html": {
+      "h": 3700,
+      "title": "Progetto — BalillaLand",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "Progetto-Concorsi.dc.html": {
+      "h": 3300,
+      "title": "Progetto — Concorsi in Regola",
+      "w": 1440,
+      "x": 10640,
+      "y": 0
+    },
+    "Progetto-Mobile.dc.html": {
+      "h": 4300,
+      "title": "Progetto mobile — valdinievole.online",
+      "w": 390,
+      "x": 1410,
+      "y": 4320
+    },
+    "Progetto-SkillBloom.dc.html": {
+      "h": 3500,
+      "title": "Progetto — Skill Bloom",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "Progetto.dc.html": {
+      "h": 3700,
+      "title": "Progetto — valdinievole.online",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "Scritti.dc.html": {
+      "h": 1760,
+      "title": "Scritti — vuoto",
+      "w": 1440,
+      "x": 12160,
+      "y": 0
+    },
+    "Sfera.dc.html": {
+      "h": 700,
+      "title": "La sfera — i tre stati",
+      "w": 1440,
+      "x": 1880,
+      "y": 4320
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-30T09:06:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/Mwghe5AN1donvDG3hcgEPy",
+      "copiedAt": "2026-09-30T09:06:00Z",
+      "namespace": "daretta",
+      "title": "dàretta",
+      "version": null
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "desktop": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Desktop",
+      "w": 240,
+      "x": 0,
+      "y": -320
+    },
+    "mobile": {
+      "kind": "title1",
+      "maxW": 3790,
+      "text": "Mobile e sfera",
+      "w": 240,
+      "x": 0,
+      "y": 4020
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "ChiSono.dc.html",
+    "Articolo.dc.html",
+    "Curiosita.dc.html",
+    "Progetto.dc.html",
+    "Home-Mobile.dc.html",
+    "ChiSono-Mobile.dc.html",
+    "Curiosita-Mobile.dc.html",
+    "Progetto-Mobile.dc.html",
+    "Sfera.dc.html",
+    "Progetto-SkillBloom.dc.html",
+    "Progetto-BalillaLand.dc.html",
+    "Progetto-Concorsi.dc.html",
+    "Scritti.dc.html",
+    "Pagina404.dc.html",
+    "Microtesti.dc.html",
+    "Pagina404-Mobile.dc.html"
+  ],
+  "pages": [],
+  "title": "dàretta — tavole"
+}

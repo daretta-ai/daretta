@@ -1,21 +1,25 @@
 ---
-// Header. In home il logotipo compare solo dopo la hero (logoDopoHero).
+// Header, dalle tavole Main/ChiSono (desktop) e *-Mobile (mobile).
+// In home il logotipo compare solo quando la hero esce dallo schermo.
 interface Props {
-  attiva?: 'chi-sono' | 'progetti' | 'scritti';
-  logoDopoHero?: boolean;
+  attiva?: 'scritti' | 'progetti' | 'chi-sono' | 'curiosita';
+  home?: boolean;
 }
-const { attiva, logoDopoHero = false } = Astro.props;
+const { attiva, home = false } = Astro.props;
 
+// Non c'è una pagina indice dei progetti nelle tavole: PROGETTI porta al blocco in home.
 const voci = [
-  { id: 'chi-sono', etichetta: 'Chi sono', href: '/chi-sono' },
-  { id: 'progetti', etichetta: 'Progetti', href: '/progetti' },
   { id: 'scritti', etichetta: 'Scritti', href: '/scritti' },
+  { id: 'progetti', etichetta: 'Progetti', href: '/#progetti' },
+  { id: 'chi-sono', etichetta: 'Chi sono', href: '/chi-sono' },
+  { id: 'curiosita', etichetta: 'Curiosità', href: '/curiosita' },
 ] as const;
 ---
 
-<header class="header" data-logo-dopo-hero={logoDopoHero ? '' : undefined}>
-  <a class="logo" href="/" aria-label="dàretta, torna alla home">d<span>à</span>retta</a>
-  <nav aria-label="Principale">
+<header class:list={['header', { 'in-home': home }]}>
+  <a class="logo" href="/" aria-label="dàretta, home">d<span>à</span>retta</a>
+
+  <nav class="menu" id="menu" aria-label="Principale">
     <ul>
       {voci.map((v) => (
         <li>
@@ -24,16 +28,53 @@ const voci = [
       ))}
     </ul>
   </nav>
-  <a class="cta" href="/#newsletter">Iscriviti</a>
+
+  <div class="azioni">
+    <a class="cta" href="/#newsletter">Iscriviti</a>
+    <button class="panino" type="button" aria-controls="menu" aria-expanded="false" aria-label="Apri il menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <line class="l1" x1="3" y1="7" x2="17" y2="7"></line>
+        <line class="l2" x1="3" y1="13" x2="17" y2="13"></line>
+      </svg>
+    </button>
+  </div>
 </header>
 
 <script>
-  // In home: il logotipo dell'header appare quando la hero esce dallo schermo.
-  const header = document.querySelector<HTMLElement>('.header[data-logo-dopo-hero]');
-  const hero = document.querySelector('[data-hero]');
-  if (header && hero) {
-    header.classList.add('logo-nascosto');
-    new IntersectionObserver(([e]) => header.classList.toggle('logo-nascosto', e.isIntersecting)).observe(hero);
+  const header = document.querySelector<HTMLElement>('.header');
+  if (header) {
+    // Logotipo nascosto finché la hero è in vista (solo home)
+    const hero = document.querySelector('[data-hero]');
+    if (header.classList.contains('in-home') && hero) {
+      header.classList.add('senza-logo');
+      new IntersectionObserver(([e]) => header.classList.toggle('senza-logo', e.isIntersecting), {
+        rootMargin: '-80px 0px 0px 0px',
+      }).observe(hero);
+    }
+    // Fondo dell'header solo quando la pagina scorre
+    const segna = () => header.classList.toggle('staccato', scrollY > 8);
+    segna();
+    addEventListener('scroll', segna, { passive: true });
+
+    // Menu mobile
+    const bottone = header.querySelector<HTMLButtonElement>('.panino');
+    const chiudi = () => {
+      header.classList.remove('aperto');
+      bottone?.setAttribute('aria-expanded', 'false');
+      bottone?.setAttribute('aria-label', 'Apri il menu');
+    };
+    bottone?.addEventListener('click', () => {
+      const aperto = header.classList.toggle('aperto');
+      bottone.setAttribute('aria-expanded', String(aperto));
+      bottone.setAttribute('aria-label', aperto ? 'Chiudi il menu' : 'Apri il menu');
+    });
+    header.querySelectorAll('.menu a').forEach((a) => a.addEventListener('click', chiudi));
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && header.classList.contains('aperto')) {
+        chiudi();
+        bottone?.focus();
+      }
+    });
   }
 </script>
 
@@ -41,18 +82,24 @@ const voci = [
   .header {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-2) var(--margine);
-    background: rgb(22 25 26 / 0.85);
-    backdrop-filter: blur(12px);
+    gap: var(--space-8);
+    min-height: 48px;
+    margin: 0 calc(var(--margine) * -1);
+    padding: var(--space-6) calc(var(--margine) + var(--space-2)) var(--space-4);
+    transition: background-color 0.2s;
+  }
+  .header.staccato {
+    background: rgb(17 19 20 / 0.86);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
   .logo {
-    font-family: var(--punti);
+    font-family: var(--font-punti);
     font-weight: 900;
-    font-size: 28px;
+    font-size: 34px;
     line-height: 1;
     text-decoration: none;
     transition: opacity 0.2s;
@@ -60,71 +107,127 @@ const voci = [
   .logo span {
     color: var(--arancio);
   }
-  .logo-nascosto .logo {
+  .senza-logo .logo {
     opacity: 0;
-    pointer-events: none;
+    visibility: hidden;
   }
-  nav {
+  .menu {
     margin-left: auto;
   }
-  ul {
+  .menu ul {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-8);
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  nav a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    min-height: 44px;
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--inchiostro-muto);
-  }
-  nav a:hover,
-  nav a[aria-current] {
-    color: var(--inchiostro);
-  }
-  /* Il pallino della voce attiva: uno dei pochi dettagli di stato in arancio */
-  nav a[aria-current]::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--arancio);
-  }
+  .menu a,
   .cta {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
-    padding: 0 var(--space-3);
-    border-radius: var(--radius-pill);
-    background: var(--arancio);
-    color: var(--cemento);
-    font-family: var(--mono);
-    font-weight: 500;
-    font-size: 13px;
-    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration: none;
   }
-  @media (max-width: 720px) {
+  .menu a {
+    gap: var(--space-2);
+    min-height: 44px;
+  }
+  .menu a:hover {
+    color: var(--inchiostro-secondario);
+  }
+  /* Pallino della voce attiva: uno dei pochi dettagli di stato in arancio */
+  .menu a[aria-current]::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--arancio);
+  }
+  .azioni {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+  .cta {
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    background: var(--arancio);
+    color: var(--cemento);
+  }
+  .panino {
+    display: none;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--bordo);
+    background: transparent;
+    color: var(--inchiostro);
+    cursor: pointer;
+  }
+  .panino line {
+    transition: transform 0.2s;
+    transform-origin: 10px 10px;
+  }
+  .aperto .l1 {
+    transform: translateY(3px) rotate(45deg);
+  }
+  .aperto .l2 {
+    transform: translateY(-3px) rotate(-45deg);
+  }
+
+  @media (max-width: 900px) {
     .header {
-      flex-wrap: wrap;
-      gap: 0 var(--space-2);
+      justify-content: space-between;
+      padding: var(--space-4) calc(var(--margine) + var(--space-2)) var(--space-2);
     }
-    nav {
-      order: 3;
-      width: 100%;
-      margin: 0;
+    .logo {
+      font-size: 30px;
     }
     .cta {
-      margin-left: auto;
+      height: 48px;
+      padding: 0 18px;
+      font-size: 13px;
+    }
+    .panino {
+      display: inline-flex;
+    }
+    /* In home, finché la hero è in vista, su mobile resta solo il menu (tavola Home-Mobile) */
+    .senza-logo .cta {
+      visibility: hidden;
+    }
+    .menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: var(--margine);
+      right: var(--margine);
+      margin: 0;
+      padding: var(--space-4) var(--space-6);
+      border-radius: var(--modulo-raggio);
+      background: var(--cemento-rilievo);
+    }
+    .aperto .menu {
+      display: block;
+    }
+    .menu ul {
+      flex-direction: column;
+      gap: 0;
+    }
+    .menu li + li {
+      border-top: 1px solid var(--filetto);
+    }
+    .menu a {
+      width: 100%;
+      min-height: 56px;
+      font-size: 15px;
+    }
+    .aperto.header {
+      background: rgb(17 19 20 / 0.94);
     }
   }
 </style>

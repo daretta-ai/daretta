@@ -1,75 +1,84 @@
 ---
-// Footer, con i microtesti approvati il 30 settembre 2026.
+// Footer, dalle tavole: testi a sinistra, link e copyright a destra.
 // TODO: indirizzo del profilo LinkedIn da avere da Patrizio.
-const linkedin = 'https://www.linkedin.com/';
+const linkedin = '#';
 ---
 
 <footer class="footer">
   <div class="testi">
-    <p class="firma"><span class="logo">d<span>à</span>retta.</span> Fatto con passione, nei ritagli di tempo.</p>
-    <p>Niente cookie. Ti conto, ma non ti seguo.</p>
+    <span><strong>dàretta.</strong> Fatto con passione, nei ritagli di tempo.</span>
+    <span>Niente cookie. Ti conto, ma non ti seguo.</span>
   </div>
-  <nav aria-label="Secondaria">
-    <a href="/curiosita">Curiosità</a>
-    <a href="/#newsletter">Newsletter</a>
-    <a href={linkedin} rel="me noopener">LinkedIn</a>
-    <a href="mailto:dimmipure@daretta.it">Mail</a>
-  </nav>
-  <p class="copy">© 2026 Patrizio Bartolozzi</p>
+  <div class="link">
+    <nav aria-label="Link del footer">
+      <a href="/curiosita">Curiosità</a>
+      <span aria-hidden="true">·</span>
+      <a href="/#newsletter">Newsletter</a>
+      <span aria-hidden="true">·</span>
+      <a href={linkedin} rel="me noopener">LinkedIn</a>
+      <span aria-hidden="true">·</span>
+      <a href="mailto:dimmipure@daretta.it">Mail</a>
+    </nav>
+    <span>© 2026 Patrizio Bartolozzi</span>
+  </div>
 </footer>
 
 <style>
   .footer {
-    display: grid;
-    gap: var(--space-3);
-    margin-top: var(--space-14);
-    padding: var(--space-6) var(--margine);
-    border-top: 1px solid var(--filetto);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 20px var(--space-2) var(--space-10);
+    border-top: 1px solid var(--filetto-neutro);
+    font-size: 14px;
+    line-height: 1.5;
     color: var(--inchiostro-muto);
-    font-size: 15px;
   }
-  p {
-    margin: 0;
+  .testi,
+  .link {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
-  .firma {
-    color: var(--inchiostro-corpo);
+  .link {
+    align-items: flex-end;
   }
-  .logo {
-    font-family: var(--sans);
+  strong {
     font-weight: 600;
     color: var(--inchiostro);
-  }
-  .logo span {
-    color: var(--arancio);
   }
   nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 var(--space-3);
-  }
-  nav a,
-  .copy {
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.06em;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
     text-transform: uppercase;
   }
   nav a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
     text-decoration: none;
   }
   nav a:hover {
     color: var(--inchiostro);
   }
-  @media (min-width: 900px) {
+  @media (max-width: 720px) {
     .footer {
-      grid-template-columns: 1fr auto;
-      align-items: end;
+      flex-direction: column;
+      font-size: 13px;
     }
-    .copy {
-      grid-column: 1 / -1;
+    .link {
+      align-items: flex-start;
+    }
+    /* Su touch i link devono essere alti almeno 44px */
+    nav {
+      gap: 0 var(--space-3);
+    }
+    nav a,
+    nav span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
     }
   }
 </style>

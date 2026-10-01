@@ -1,0 +1,31 @@
+<!-- @dsCard group="Azioni" height=380 subtitle="L'invito principale" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Newsletter — anteprima</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@900&amp;family=Geist:wght@400&amp;family=Geist+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0;background:var(--cemento)}
+.wrap{padding:24px 40px}
+form{max-width:720px;border-radius:var(--radius-modulo);background:linear-gradient(135deg,var(--petrolio-acceso) 0%,var(--petrolio-scuro) 100%);color:var(--carta);padding:40px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box}
+.t{font-family:var(--font-punti);font-weight:900;font-size:52px;line-height:1}
+p{margin:0;font-family:var(--font-sans);font-size:18px;line-height:1.45}
+label{font-family:var(--font-mono);font-size:13px;letter-spacing:1px}
+.riga{display:flex;gap:12px}
+input{flex-grow:1;height:56px;padding:0 24px;border-radius:var(--radius-pill);border:none;background:var(--carta);color:var(--cemento);font-size:17px;font-family:var(--font-sans)}
+button{height:56px;padding:0 28px;border-radius:var(--radius-pill);border:none;background:var(--arancio);color:var(--cemento);font-family:var(--font-mono);font-size:14px;letter-spacing:1px}
+input:focus-visible,button:focus-visible{outline:2px solid var(--carta);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<form onsubmit="return false">
+<span class="t">una mail al mese.</span>
+<p>Cosa ho imparato, cosa ho sbagliato, a che punto sono i progetti. Niente di più.</p>
+<label for="nl-mail">LA TUA EMAIL</label>
+<div class="riga"><input id="nl-mail" type="email" placeholder="nome@azienda.it"><button type="submit">ISCRIVIMI</button></div>
+</form>
+</div>
+</body>
+</html>

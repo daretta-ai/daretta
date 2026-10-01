@@ -1,0 +1,27 @@
+<!-- @dsCard group="Azioni" height=120 subtitle="CTA e fantasma" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Pulsante — anteprima</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0;background:var(--cemento)}
+.row{display:flex;gap:16px;align-items:center;padding:32px 40px}
+.btn{height:48px;padding:0 24px;border-radius:var(--radius-pill);font-family:var(--font-mono);font-size:14px;letter-spacing:1px;cursor:pointer}
+.primario{background:var(--arancio);color:var(--cemento);border:none}
+.fantasma{background:transparent;color:var(--inchiostro);border:1px solid var(--bordo)}
+.su-petrolio{background:var(--arancio);color:var(--cemento);border:none}
+.box{padding:16px;border-radius:var(--radius-card);background:var(--petrolio)}
+.btn:focus-visible{outline:2px solid var(--onda);outline-offset:3px}
+.box .btn:focus-visible{outline-color:var(--carta)}
+</style>
+</head>
+<body>
+<div class="row">
+<button class="btn primario" type="button">ISCRIVITI</button>
+<button class="btn fantasma" type="button">TUTTI GLI SCRITTI</button>
+<div class="box"><button class="btn su-petrolio" type="button">ISCRIVIMI</button></div>
+</div>
+</body>
+</html>

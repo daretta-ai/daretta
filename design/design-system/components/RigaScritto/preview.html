@@ -1,0 +1,24 @@
+<!-- @dsCard group="Racconto" height=280 subtitle="Lista posata sul fondo" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Riga scritto — anteprima</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500&amp;family=Geist+Mono:wght@400&amp;display=swap">
+<style>
+body{margin:0;background:var(--cemento);color:var(--inchiostro)}
+.lista{display:flex;flex-direction:column;padding:24px 40px}
+.riga{display:flex;justify-content:space-between;gap:24px;align-items:baseline;padding:24px 0;border-top:1px solid var(--filetto);color:inherit;text-decoration:none}
+.riga:last-child{border-bottom:1px solid var(--filetto)}
+.titolo{font-family:var(--font-sans);font-size:36px;font-weight:500;letter-spacing:-1px;line-height:1.1}
+.riga:hover .titolo{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.data{font-family:var(--font-mono);font-size:13px;color:var(--inchiostro-muto);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="lista">
+<a class="riga" href="#"><span class="titolo">Il database non è lento. La tua query sì.</span><span class="data">[DATA]</span></a>
+<a class="riga" href="#"><span class="titolo">I progetti muoiono prima della prima riga di codice.</span><span class="data">[DATA]</span></a>
+</div>
+</body>
+</html>

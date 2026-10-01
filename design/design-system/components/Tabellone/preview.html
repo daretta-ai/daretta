@@ -1,0 +1,72 @@
+<!-- @dsCard group="Racconto" height=470 subtitle="Una curiosità ogni 10 secondi" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Tabellone — anteprima</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:var(--cemento);color:var(--inchiostro);font-family:var(--font-sans)}
+.tab{display:flex;flex-direction:column;gap:16px;padding:32px 40px;max-width:900px}
+.testata{display:flex;flex-wrap:wrap;gap:12px 24px}
+.campo{display:flex;align-items:center;gap:8px}
+.meta{font-family:var(--font-mono);font-size:12px;letter-spacing:.5px;color:var(--inchiostro-muto);text-transform:uppercase}
+.campo .meta{min-width:32px}
+.tessere{display:flex;gap:2px}
+.flap{position:relative;perspective:400px;flex:none}
+.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;transform:translateY(-50%);background:var(--cemento);opacity:.4}
+.t{width:21px;height:32px}.p{width:100%;height:52px}
+.h{position:absolute;left:0;right:0;height:50%;overflow:hidden;background:var(--cemento-rilievo);backface-visibility:hidden}
+.su{top:0;border-radius:4px 4px 0 0;transform-origin:50% 100%}.giu{bottom:0;border-radius:0 0 4px 4px;transform-origin:50% 0}
+.p .su{border-radius:10px 10px 0 0}.p .giu{border-radius:0 0 10px 10px}
+.f{position:absolute;left:0;right:0;top:0;height:200%;display:flex;align-items:center;white-space:pre}
+.giu .f{top:auto;bottom:0}
+.t .f{justify-content:center;font-family:var(--font-mono);font-weight:500;font-size:15px}
+.p .f{padding:0 16px;font-size:22px;color:var(--inchiostro-corpo)}
+.leaf{visibility:hidden}
+.palette{display:flex;flex-direction:column;gap:3px}
+.bar{height:2px;background:var(--filetto);border-radius:2px;overflow:hidden}.bar span{display:block;height:100%;width:0;background:var(--inchiostro-muto)}
+</style>
+</head>
+<body>
+<div class="tab" aria-hidden="true">
+<div class="testata">
+<div class="campo"><span class="meta">N°</span><div class="tessere" data-k="n" data-l="3"></div></div>
+<div class="campo"><span class="meta">Tipo</span><div class="tessere" data-k="c" data-l="10"></div></div>
+<div class="campo"><span class="meta">Dest.</span><div class="tessere" data-k="d" data-l="15"></div></div>
+</div>
+<div class="palette"></div>
+<div class="bar"><span></span></div>
+</div>
+<script>
+(function(){
+var D=[
+["003","SPORT","CROCIATO X2",["Se solo non avessi rotto due volte il crociato, avrei","continuato a giocare a calcetto con amici e colleghi.","",""]],
+["009","VIAGGI","GATE CHIUSO",["Ho perso un volo addormentandomi sulle sedie di","fronte al gate aperto.","",""]],
+["005","CASSI MIEI","OCCHIAIE",["Dal 2020 ho un figlio, quindi non chiedetemi come","mai ora ho le occhiaie e la buzza.","",""]]
+];
+var AB="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",rid=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function pad(s,l){return (s+"               ").slice(0,l)}
+function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function Flap(cls){var el=document.createElement("div");el.className="flap "+cls;var hs=["su","giu","su leaf","giu leaf"].map(function(c){var h=document.createElement("div");h.className="h "+c;var f=document.createElement("div");f.className="f";h.appendChild(f);el.appendChild(h);return h});
+var o={el:el,v:"",q:Promise.resolve()};
+o.set=function(v){hs.forEach(function(h){h.firstChild.textContent=v});o.v=v};
+o.flip=function(v,d){o.q=o.q.then(function(){if(v===o.v)return;var old=o.v;hs[0].firstChild.textContent=v;hs[1].firstChild.textContent=old;hs[2].firstChild.textContent=old;hs[3].firstChild.textContent=v;
+hs[2].style.visibility="visible";var a=hs[2].animate([{transform:"rotateX(0)"},{transform:"rotateX(-90deg)",filter:"brightness(.55)"}],{duration:d/2,easing:"ease-in",fill:"forwards"});
+return a.finished.then(function(){hs[2].style.visibility="hidden";a.cancel();hs[3].style.visibility="visible";var b=hs[3].animate([{transform:"rotateX(90deg)",filter:"brightness(1.4)"},{transform:"rotateX(0)"}],{duration:d/2,easing:"cubic-bezier(.3,1.6,.6,1)",fill:"forwards"});
+return b.finished.then(function(){hs[1].firstChild.textContent=v;hs[3].style.visibility="hidden";b.cancel();o.v=v})})});return o.q};
+return o}
+var F={};document.querySelectorAll(".tessere").forEach(function(b){F[b.dataset.k]=[];for(var i=0;i<+b.dataset.l;i++){var f=Flap("t");f.set(" ");b.appendChild(f.el);F[b.dataset.k].push(f)}});
+var R=[],pal=document.querySelector(".palette");for(var i=0;i<4;i++){var f=Flap("p");f.set("");pal.appendChild(f.el);R.push(f)}
+function show(x){var v={n:x[0],c:pad(x[1],10),d:pad(x[2],15)},jobs=[],base=0;
+["n","c","d"].forEach(function(k){F[k].forEach(function(f,i){var t=v[k][i];if(t===f.v)return;if(rid){f.set(t);return}
+jobs.push(wait(base+i*35).then(function(){var s=2+Math.floor(Math.random()*5);for(var j=0;j<s;j++)f.flip(AB[Math.floor(Math.random()*AB.length)],70);return f.flip(t,90)}))});base+=120});
+R.forEach(function(f,r){var t=x[3][r];if(t===f.v)return;if(rid){f.set(t);return}jobs.push(wait(260+r*120).then(function(){return f.flip(t,380)}))});
+return Promise.all(jobs)}
+var idx=0,bar=document.querySelector(".bar span");
+function ciclo(){show(D[idx]).then(function(){var t0=performance.now();(function tick(t){var p=Math.min(1,(t-t0)/10000);bar.style.width=p*100+"%";if(p<1)requestAnimationFrame(tick);else{idx=(idx+1)%D.length;bar.style.width="0";ciclo()}})(t0)})}
+(document.fonts?document.fonts.ready:Promise.resolve()).then(ciclo);
+})();
+</script>
+</body>
+</html>

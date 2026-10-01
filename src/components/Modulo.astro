@@ -1,11 +1,15 @@
 ---
 // Modulo: il box del sistema. La luce dice quanto petrolio prende dalla sfera.
-// forte = hero, foto · media = Chi sono · velo = Progetti · nessuna
-// pieno = newsletter, l'unico modulo petrolio pieno.
+// Gradienti copiati dalle tavole (design/tavole/).
+//   forte    hero della home e testata delle pagine interne
+//   media    Chi sono in home (luce da destra, centro fuori dal modulo)
+//   sinistra modulo con il numero in Chi sono (luce da sinistra)
+//   velo     Progetti in home
+//   pieno    newsletter, l'unico modulo petrolio pieno
+//   contorno card di rimando senza fondo
 interface Props {
-  luce?: 'forte' | 'media' | 'velo' | 'nessuna' | 'pieno';
-  as?: 'section' | 'div' | 'article' | 'aside';
-  id?: string;
+  luce?: 'forte' | 'media' | 'sinistra' | 'velo' | 'pieno' | 'contorno' | 'nessuna';
+  as?: string;
   class?: string;
   [attr: string]: unknown;
 }
@@ -22,25 +26,48 @@ const { luce = 'nessuna', as: Tag = 'section', class: classe, ...resto } = Astro
     padding: var(--space-10);
     border-radius: var(--radius-modulo);
     background: var(--cemento-rilievo);
-    overflow: hidden;
   }
-  /* Il gradiente va sempre da petrolio verso cemento, mai il contrario */
   .luce-forte {
-    background: radial-gradient(circle at 75% 45%, var(--petrolio-luce) 0%, var(--petrolio-scuro) 38%, var(--cemento-rilievo) 78%);
+    padding: var(--space-14);
+    background: radial-gradient(760px 640px at 79% 50%, var(--petrolio-luce) 0%, #173134 45%, var(--cemento-rilievo) 85%);
   }
   .luce-media {
-    background: radial-gradient(circle at 90% 0%, rgb(47 140 143 / 0.45) 0%, var(--cemento-rilievo) 60%);
+    background: radial-gradient(1000px 520px at 84% -12%, #1a444a 0%, #1a1f21 62%, var(--cemento-rilievo) 100%);
+  }
+  .luce-sinistra {
+    padding: var(--space-14) 48px;
+    background: radial-gradient(900px 520px at 12% 0%, #1a444a 0%, #1a1f21 60%, var(--cemento-rilievo) 100%);
   }
   .luce-velo {
-    background: radial-gradient(circle at 100% 0%, rgb(47 140 143 / 0.18) 0%, var(--cemento-rilievo) 55%);
+    background: radial-gradient(1100px 420px at 92% -40%, #16292c 0%, var(--cemento-rilievo) 70%);
   }
   .luce-pieno {
-    background: linear-gradient(135deg, var(--petrolio-acceso), var(--petrolio-scuro));
+    padding: 48px;
+    background: linear-gradient(135deg, var(--petrolio-acceso) 0%, var(--petrolio-scuro) 100%);
+    color: var(--carta);
   }
+  .luce-contorno {
+    background: transparent;
+    border: 1px solid var(--filetto-neutro);
+  }
+
   @media (max-width: 720px) {
-    .modulo {
-      padding: var(--space-4) var(--space-3);
+    .modulo,
+    .luce-forte,
+    .luce-sinistra,
+    .luce-pieno {
+      padding: 28px var(--space-6) var(--space-8);
       border-radius: var(--radius-modulo-mobile);
+    }
+    .luce-forte {
+      background: radial-gradient(420px 360px at 80% 20%, var(--petrolio-luce) 0%, #173134 45%, var(--cemento-rilievo) 90%);
+    }
+    .luce-media,
+    .luce-sinistra {
+      background: radial-gradient(420px 320px at 10% 0%, #1a444a 0%, #1a1f21 60%, var(--cemento-rilievo) 100%);
+    }
+    .luce-velo {
+      background: radial-gradient(400px 260px at 90% -20%, #16292c 0%, var(--cemento-rilievo) 70%);
     }
   }
 </style>

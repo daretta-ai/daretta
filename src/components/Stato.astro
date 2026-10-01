@@ -1,69 +1,73 @@
 ---
-// Stato di un progetto: segno e parola sempre insieme.
+// Stato di un progetto: segno e parola sempre insieme (misure dalle tavole).
 // La frase compare all'hover e al focus; per gli screen reader è la descrizione.
 interface Props {
   stato: 'online' | 'in-sviluppo' | 'concept';
+  frase?: boolean; // false nella legenda, dove la frase non serve
+  focusabile?: boolean; // true solo se lo stato non sta dentro un link
 }
-const { stato } = Astro.props;
+const { stato, frase = true, focusabile = false } = Astro.props;
 
 const stati = {
-  online: { parola: 'ONLINE', frase: 'Si può usare.' },
-  'in-sviluppo': { parola: 'IN SVILUPPO', frase: 'Ci sto lavorando.' },
-  concept: { parola: 'CONCEPT', frase: "Per ora è un'idea." },
+  online: { parola: 'ONLINE', descrizione: 'Si può usare.' },
+  'in-sviluppo': { parola: 'IN SVILUPPO', descrizione: 'Ci sto lavorando.' },
+  concept: { parola: 'CONCEPT', descrizione: "Per ora è un'idea." },
 };
-const { parola, frase } = stati[stato];
-const idFrase = `stato-${stato}-${Math.random().toString(36).slice(2, 8)}`;
+const { parola, descrizione } = stati[stato];
+const id = `stato-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<span class={`stato stato-${stato}`} tabindex="0" aria-describedby={idFrase}>
-  <svg class="segno" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-    {stato === 'online' && <circle cx="6" cy="6" r="5" />}
-    {stato === 'in-sviluppo' && <circle cx="6" cy="6" r="4.75" />}
-    {stato === 'concept' && <circle cx="6" cy="6" r="4.75" pathLength="12" stroke-dasharray="2 1" />}
+<span
+  class={`stato stato-${stato}`}
+  tabindex={frase && focusabile ? 0 : undefined}
+  aria-describedby={frase ? id : undefined}
+>
+  <svg class="segno" width="8" height="8" viewBox="0 0 8 8" aria-hidden="true">
+    {stato === 'online' && <circle cx="4" cy="4" r="4" />}
+    {stato === 'in-sviluppo' && <circle cx="4" cy="4" r="3.25" />}
+    {stato === 'concept' && <circle cx="4" cy="4" r="3.25" stroke-dasharray="2 1.6" />}
   </svg>
-  <span class="parola">{parola}</span>
-  <span class="frase" id={idFrase}>{frase}</span>
+  <span>{parola}</span>
+  {frase && <span class="frase" id={id}>{descrizione}</span>}
 </span>
 
 <style>
   .stato {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: var(--space-1);
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.06em;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
     color: var(--inchiostro-muto);
-    border-radius: var(--radius-pill);
   }
-  .stato:focus-visible {
-    outline: 2px solid var(--inchiostro);
-    outline-offset: 4px;
+  .segno {
+    flex: none;
   }
   .segno circle {
     fill: none;
-    stroke: var(--inchiostro-muto);
+    stroke: var(--stato-spento);
     stroke-width: 1.5;
   }
   .stato-online .segno circle {
     fill: var(--arancio);
     stroke: none;
   }
-  .stato-online .parola {
-    color: var(--inchiostro);
-  }
   .frase {
-    font-family: var(--sans);
+    font-family: var(--font-sans);
+    font-size: 13px;
     letter-spacing: 0;
     margin-left: var(--space-1);
     opacity: 0;
     transition: opacity 0.15s;
   }
   .stato:hover .frase,
-  .stato:focus-visible .frase {
+  .stato:focus-visible .frase,
+  :global(a:hover) .stato .frase,
+  :global(a:focus-visible) .stato .frase {
     opacity: 1;
   }
-  /* Su touch la frase non compare: resta solo per gli screen reader */
   @media (hover: none) {
     .frase {
       position: absolute;

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Articolo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800;900&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 3300px; box-sizing: border-box; padding: 32px 56px 48px; background: radial-gradient(1200px 900px at 1200px 260px, #17393E 0%, #121617 45%, #111314 70%); color: #ECECE7; font-family: 'Geist', sans-serif; display: flex; flex-direction: column; gap: 24px">
+
+<header style="display: flex; flex-direction: column; gap: 12px; padding: 8px 8px 16px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<a href="Main.dc.html" style="color: inherit; text-decoration: none; font-family: 'Doto', monospace; font-weight: 900; font-size: 34px">d<span style="color: {{signal}}">à</span>retta</a>
+<nav style="display: flex; gap: 32px; align-items: center; font-family: 'Geist Mono', monospace; font-size: 14px; letter-spacing: 1px">
+<a href="Scritti.dc.html" aria-current="page" style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 8px"><span style="width: 6px; height: 6px; border-radius: 999px; background: {{mark}}"></span>SCRITTI</a>
+<a href="Main.dc.html" style="color: inherit; text-decoration: none">PROGETTI</a>
+<a href="ChiSono.dc.html" style="color: inherit; text-decoration: none">CHI SONO</a>
+<a href="Curiosita.dc.html" style="color: inherit; text-decoration: none">CURIOSITÀ</a>
+<a href="#" style="text-decoration: none; padding: 12px 20px; border-radius: 999px; background: {{ctaHeadBg}}; color: #111314">ISCRIVITI</a>
+</nav>
+</div>
+<div role="progressbar" aria-label="Avanzamento della lettura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="34" style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="72">
+<span style="width: 5px; height: 5px; border-radius: 999px; background: {{d.color}}"></span>
+</sc-for>
+</div>
+</header>
+
+<section style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding: 72px 8px 0; align-items: start">
+<div style="grid-column: span 3; display: flex; flex-direction: column; gap: 14px; padding-top: 12px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #9AA3A4">
+<a href="#" style="color: #9AA3A4; text-decoration: none; margin-bottom: 20px">← SCRITTI</a>
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; border: 1px solid #3E5558; color: #ECECE7">PERFORMANCE</span>
+<span>[DATA]</span>
+<span>[N] MIN DI LETTURA</span>
+</div>
+<div style="grid-column: 4 / span 7; display: flex; flex-direction: column; gap: 32px">
+<h1 style="margin: 0; font-size: 80px; font-weight: 600; line-height: 1.02; letter-spacing: -2.5px">Il database non è lento. La tua query sì.</h1>
+<p style="margin: 0; font-size: 26px; line-height: 1.45; color: #D2D4CE">Ogni volta che un'applicazione rallenta, qualcuno propone di cambiare database. Quasi sempre il database sta benissimo.</p>
+</div>
+<div style="grid-column: span 2; display: flex; justify-content: flex-end">
+<sc-if value="{{sfera}}" hint-placeholder-val="{{ true }}">
+<div style="width: 150px; height: 150px; border-radius: 999px; border: 2px dotted #2C7C84; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<div style="width: 124px; height: 124px; border-radius: 999px; background-color: #14292C; background-image: radial-gradient(circle, #2C8A93 1.6px, transparent 2.1px); background-size: 9px 9px; box-shadow: inset -22px -26px 44px #0B1112, inset 12px 12px 30px #2F6A71; display: flex; align-items: center; justify-content: center">
+<div style="width: 80px; height: 80px; border-radius: 999px; border: 2px dotted #6CCBD3; box-sizing: border-box"></div>
+</div>
+</div>
+</sc-if>
+</div>
+</section>
+
+<div style="margin: 72px 8px 0; height: 1px; background: #2E3A3C"></div>
+
+<section style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding: 56px 8px 0; align-items: start">
+<h2 style="grid-column: span 3; margin: 0; padding-top: 6px; font-family: 'Geist Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 1px; color: #9AA3A4">[ 01 ] LA DOMANDA NOIOSA</h2>
+<div style="grid-column: 4 / span 7; display: flex; flex-direction: column; gap: 32px">
+<p style="margin: 0; font-size: 21px; line-height: 1.7; color: #D2D4CE">Prima di migrare, aggiungere una cache o comprare un server più grosso, c'è una domanda noiosa da fare: cosa sta facendo esattamente questa query?</p>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 12px">
+<pre style="margin: 0; padding: 28px 32px; border-radius: 20px; background: linear-gradient(160deg, #17383D 0%, #1A1D1F 60%); font-family: 'Geist Mono', monospace; font-size: 16px; line-height: 1.7; color: #ECECE7; white-space: pre">EXPLAIN ANALYZE
+SELECT * FROM ordini
+WHERE cliente_id = 42
+ORDER BY creato_il DESC
+LIMIT 10;</pre>
+<figcaption style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 1px; color: #9AA3A4">POSTGRESQL · SQL</figcaption>
+</figure>
+<p style="margin: 0; font-size: 21px; line-height: 1.7; color: #D2D4CE">Se nel piano compare una scansione sequenziale su una tabella da milioni di righe, il problema non è il motore. È che gli stiamo chiedendo di leggere tutto per restituire dieci righe.</p>
+</div>
+</section>
+
+<blockquote style="margin: 72px 8px 0; padding: 64px 0; border-top: 1px solid #2E3A3C; border-bottom: 1px solid #2E3A3C; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: end">
+<span style="grid-column: span 10; font-family: 'Doto', monospace; font-weight: 900; font-size: 104px; line-height: 0.95; letter-spacing: -3px">un indice costa meno di una migrazione.</span>
+<span style="grid-column: span 2; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #9AA3A4; text-align: right">— DA RICORDARE</span>
+</blockquote>
+
+<section style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding: 72px 8px 0; align-items: start">
+<h2 style="grid-column: span 3; margin: 0; padding-top: 6px; font-family: 'Geist Mono', monospace; font-weight: 500; font-size: 14px; letter-spacing: 1px; color: #9AA3A4">[ 02 ] [TITOLO SEZIONE]</h2>
+<div style="grid-column: 4 / span 7; display: flex; flex-direction: column; gap: 32px">
+<p style="margin: 0; font-size: 21px; line-height: 1.7; color: #9AA3A4">[IL RESTO DELL'ARTICOLO]</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div style="border-radius: 20px; background: #1A1D1F; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 1px; color: #9AA3A4">PRIMA</span><span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 56px; line-height: 1">[N] ms</span></div>
+<div style="border-radius: 20px; background: #1A1D1F; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 1px; color: #9AA3A4">DOPO L'INDICE</span><span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 56px; line-height: 1">[N] ms</span></div>
+</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding: 72px 8px 0">
+<div style="grid-column: 4 / span 7; padding-top: 32px; border-top: 1px solid #2E3A3C; display: flex; gap: 20px; align-items: center">
+<div style="width: 72px; height: 72px; border-radius: 999px; background: linear-gradient(180deg, #21525A 0%, #1E2224 100%); display: flex; align-items: center; justify-content: center; font-family: 'Geist Mono', monospace; font-size: 10px; color: #9AA3A4">[FOTO]</div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 18px; font-weight: 600">Patrizio Bartolozzi</span><span style="font-size: 16px; color: #B9BDB8">[UNA RIGA SU CHI SCRIVE]</span></div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding-top: 96px">
+<form style="grid-column: span 7; border-radius: 32px; background: linear-gradient(135deg, #22767E 0%, #134349 100%); color: #F4F4EF; padding: 48px; display: flex; flex-direction: column; gap: 18px">
+<span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 56px; line-height: 1">ti è servito?</span>
+<p style="margin: 0; font-size: 19px; line-height: 1.45">Il prossimo arriva via mail, una volta al mese.</p>
+<div style="display: flex; gap: 12px">
+<input id="c4a-mail" type="email" aria-label="La tua email" placeholder="la tua email" style="flex-grow: 1; height: 56px; padding: 0 24px; border-radius: 999px; border: none; background: #F4F4EF; color: #111314; font-size: 17px; font-family: inherit">
+<button type="submit" style="height: 56px; padding: 0 28px; border-radius: 999px; border: none; background: {{ctaBg}}; color: {{ctaFg}}; font-family: 'Geist Mono', monospace; font-size: 14px; letter-spacing: 1px">ISCRIVIMI</button>
+</div>
+</form>
+<a href="#" style="grid-column: span 5; color: inherit; text-decoration: none; border-radius: 32px; background: radial-gradient(700px 400px at 90% -20%, #16292C 0%, #1A1D1F 70%); padding: 48px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 1px; color: #9AA3A4">PROSSIMO →</span>
+<span style="font-size: 34px; font-weight: 500; line-height: 1.2; letter-spacing: -0.5px">I progetti muoiono prima della prima riga di codice.</span>
+</a>
+</section>
+
+<footer style="margin-top: auto; padding: 20px 8px 0; border-top: 1px solid #2A2F31; display: flex; flex-direction: row; justify-content: space-between; gap: 16px; font-size: 14px; line-height: 1.5; color: #9AA3A4">
+<div style="display: flex; flex-direction: column; gap: 6px"><span><span style="font-weight: 600; color: #ECECE7">dàretta.</span> Fatto con passione, nei ritagli di tempo.</span><span>Niente cookie. Ti conto, ma non ti seguo.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end"><nav aria-label="Link del footer" style="display: flex; gap: 12px; flex-wrap: wrap; font-family: 'Geist Mono', monospace; letter-spacing: 1px"><a href="Curiosita.dc.html" style="color: inherit; text-decoration: none">CURIOSITÀ</a><span aria-hidden="true">·</span><a href="#" style="color: inherit; text-decoration: none">NEWSLETTER</a><span aria-hidden="true">·</span><a href="#" style="color: inherit; text-decoration: none">LINKEDIN</a><span aria-hidden="true">·</span><a href="mailto:dimmipure@daretta.it" style="color: inherit; text-decoration: none">MAIL</a></nav><span>© 2026 Patrizio Bartolozzi</span></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"signal":{"editor":"color","default":"#FF4F1A","options":["#FF4F1A","#FF6A3D","#F2C94C"]},"$preview":{"width":1440,"height":3300}}'>
+class Component extends DCLogic {
+renderVals() {
+const signal = this.props.signal ?? '#FF4F1A';
+const acceso = true;
+const dots = [];
+for (let i = 0; i < 72; i++) {
+dots.push({ color: i < 24 ? (acceso ? signal : '#ECECE7') : '#2E3A3C' });
+}
+return {
+signal: signal,
+sfera: true,
+ctaHeadBg: acceso ? signal : '#ECECE7',
+ctaBg: acceso ? signal : '#111314',
+ctaFg: acceso ? '#111314' : '#F4F4EF',
+mark: acceso ? signal : '#ECECE7',
+dots: dots
+};
+}
+}
+</script>
+</body>
+</html>

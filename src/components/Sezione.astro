@@ -1,25 +1,14 @@
 ---
-// Etichetta di sezione: [ 003 ] SCRITTI in home, [ 01 ] ... dentro una pagina.
+// Etichetta di sezione: [ 003 ] SCRITTI in home, [ 01 ] LA VERSIONE BREVE dentro una pagina.
+// Senza numero diventa un'etichetta semplice (es. IL PERCORSO).
 interface Props {
-  numero: number;
+  numero?: number;
   cifre?: 2 | 3;
-  as?: 'h2' | 'h3' | 'p';
+  as?: string;
   id?: string;
+  class?: string;
 }
-const { numero, cifre = 3, as: Tag = 'h2', id } = Astro.props;
+const { numero, cifre = 3, as: Tag = 'h2', id, class: classe } = Astro.props;
 ---
 
-<Tag class="sezione" id={id}>[ {String(numero).padStart(cifre, '0')} ] <slot /></Tag>
-
-<style>
-  .sezione {
-    margin: 0 0 var(--space-3);
-    font-family: var(--mono);
-    font-weight: 400;
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--inchiostro-muto);
-    white-space: pre;
-  }
-</style>
+<Tag class:list={['etichetta', classe]} id={id}>{numero !== undefined && `[ ${String(numero).padStart(cifre, '0')} ] `}<slot /></Tag>

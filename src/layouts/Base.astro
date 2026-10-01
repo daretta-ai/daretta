@@ -7,7 +7,7 @@ import { ANTEPRIMA } from '../sito';
 interface Props {
   titolo?: string;
   descrizione?: string;
-  attiva?: 'chi-sono' | 'progetti' | 'scritti';
+  attiva?: 'scritti' | 'progetti' | 'chi-sono' | 'curiosita';
   home?: boolean;
 }
 
@@ -38,26 +38,33 @@ const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
   </head>
   <body>
     <a class="salta" href="#contenuto">Vai al contenuto</a>
-    <Header attiva={attiva} logoDopoHero={home} />
-    <main id="contenuto">
-      <slot />
-    </main>
-    <Footer />
+    <div class="pagina">
+      <Header attiva={attiva} home={home} />
+      <main id="contenuto" class="contenuto">
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
 
 <style>
+  .contenuto {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
   .salta {
     position: absolute;
-    left: var(--space-2);
+    left: var(--space-4);
     top: -100px;
-    z-index: 20;
-    padding: var(--space-1) var(--space-2);
+    z-index: 30;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
     background: var(--inchiostro);
     color: var(--cemento);
-    border-radius: var(--radius-pill);
   }
   .salta:focus {
-    top: var(--space-2);
+    top: var(--space-4);
   }
 </style>

@@ -1,68 +1,116 @@
 /*
   Token del design system di dàretta.
-  I nomi vengono da claude/design-system-daretta.md.
-  I valori sono una prima taratura: si verificano col contrasto nel passo 9.
+  Fonte: design/design-system/tokens.json (copiato dall'artifact «dàretta»).
+  Le misure dei componenti vengono dalle tavole in design/tavole/.
+  Se un valore qui non torna con quei file, hanno ragione loro.
 */
 :root {
-  /* Fondi */
-  --cemento: #16191a;
-  --cemento-rilievo: #1e2223;
-  --cemento-incavo: #25292b;
+  /* Colori */
+  --cemento: #111314;
+  --cemento-rilievo: #1a1d1f;
+  --cemento-alto: #22272a;
+  --cemento-incavo: #131617;
+  --petrolio-notte: #0b2429;
+  --petrolio-alone: #17393e;
+  --petrolio-luce: #1e4f56;
+  --petrolio: #1f6b73;
+  --petrolio-acceso: #22767e;
+  --petrolio-scuro: #134349;
+  --punti: #2c8a93;
+  --onda: #6ccbd3;
+  --inchiostro: #ecece7;
+  --inchiostro-corpo: #d2d4ce;
+  --inchiostro-secondario: #b9bdb8;
+  --inchiostro-muto: #9aa3a4;
+  --stato-spento: #7d8788;
+  --filetto: #2e3a3c;
+  --filetto-neutro: #2a2f31;
+  --bordo: #3e5558;
+  --arancio: #ff4f1a;
+  --carta: #f4f4ef;
 
-  /* Testo */
-  --inchiostro: #eef0ee;
-  --inchiostro-corpo: #c9cdcb;
-  --inchiostro-muto: #8e9593;
-  --filetto: #33393a;
+  /* Famiglie */
+  --font-punti: 'Doto', ui-monospace, monospace;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  /* Petrolio: luce, non vernice */
-  --petrolio-luce: #2f8c8f;
-  --petrolio-acceso: #1f6f73;
-  --petrolio-scuro: #0f3a3d;
-  --petrolio-alone: rgb(47 140 143 / 0.22);
-
-  /* L'unico colore acceso */
-  --arancio: #ff6b1f;
-
-  /* Caratteri */
-  --punti: 'Doto', monospace;
-  --sans: 'Geist', system-ui, sans-serif;
-  --mono: 'Geist Mono', ui-monospace, monospace;
-
-  --punti-hero: clamp(64px, 11vw, 168px);
-  --punti-motto: clamp(28px, 3.6vw, 52px);
-  --punti-pagina: clamp(40px, 6vw, 88px);
-  --punti-numero: clamp(56px, 8vw, 120px);
-
-  /* Spazi (multipli di 8) */
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-6: 48px;
-  --space-8: 64px;
-  --space-10: 80px;
-  --space-14: 112px;
+  /* Spazi */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-14: 56px;
 
   /* Angoli */
-  --radius-modulo: 32px;
-  --radius-modulo-mobile: 24px;
   --radius-card: 20px;
+  --radius-modulo-mobile: 24px;
+  --radius-modulo: 32px;
   --radius-pill: 999px;
 
-  /* Griglia: 12 colonne su desktop, una su mobile */
+  --ombra-sfera: inset -60px -70px 120px #0b1112, inset 30px 30px 80px #2f6a71;
+
+  /* Griglia */
   --margine: var(--space-14);
   --gap: var(--space-6);
+  --modulo-raggio: var(--radius-modulo);
 }
 
 @media (max-width: 720px) {
   :root {
     --margine: var(--space-3);
     --gap: var(--space-3);
+    --modulo-raggio: var(--radius-modulo-mobile);
   }
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* L'alone della sfera si allarga sul fondo della pagina e sfuma nel cemento */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(1400px 1100px at 72% 440px, var(--petrolio-alone) 0%, #121617 45%, var(--cemento) 70%) no-repeat,
+    var(--cemento);
+  color: var(--inchiostro);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 720px) {
+  body {
+    background:
+      radial-gradient(520px 700px at 50% 260px, var(--petrolio-alone) 0%, #121617 50%, var(--cemento) 75%) no-repeat,
+      var(--cemento);
+  }
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--onda);
+  outline-offset: 3px;
+}
+
+/* Contenitore di pagina: margini laterali e ritmo verticale come nelle tavole */
 .pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
   padding: 0 var(--margine);
 }
 
@@ -81,13 +129,85 @@
   }
 }
 
-/* Titoli in Doto: minuscoli, finiscono con il punto, mai sotto i 28px */
-.titolo-pagina {
+/* Stili di testo (nomi da tokens.json) */
+.etichetta {
   margin: 0;
-  font-family: var(--punti);
-  font-weight: 800;
-  font-size: var(--punti-pagina);
-  line-height: 1.05;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--inchiostro-muto);
+}
+.meta {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--inchiostro-muto);
+}
+.punti-pagina {
+  margin: 0;
+  font-family: var(--font-punti);
+  font-weight: 900;
+  font-size: 104px;
+  line-height: 0.92;
+  letter-spacing: -3px;
+}
+.punti-titolo {
+  margin: 0;
+  font-family: var(--font-punti);
+  font-weight: 900;
+  font-size: 60px;
+  line-height: 1;
+}
+.titolo-modulo {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+.titolo-lista {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+.corpo {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.7;
+  color: var(--inchiostro-corpo);
+}
+
+@media (max-width: 720px) {
+  .etichetta {
+    font-size: 13px;
+  }
+  .punti-pagina {
+    font-size: 56px;
+    line-height: 0.95;
+    letter-spacing: -2px;
+  }
+  .punti-titolo {
+    font-size: 40px;
+  }
+  .titolo-modulo {
+    font-size: 21px;
+    line-height: 1.35;
+  }
+  .titolo-lista {
+    font-size: 24px;
+  }
+  .corpo {
+    font-size: 18px;
+    line-height: 1.65;
+  }
 }
 
 .solo-lettori {
@@ -97,43 +217,6 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-}
-
-:focus-visible {
-  outline: 2px solid var(--inchiostro);
-  outline-offset: 3px;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  color-scheme: dark;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  margin: 0;
-  background: var(--cemento);
-  color: var(--inchiostro);
-  font-family: var(--sans);
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-a {
-  color: inherit;
-}
-
-.etichetta {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--inchiostro-muto);
 }
 
 @media (prefers-reduced-motion: reduce) {

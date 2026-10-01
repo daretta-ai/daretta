@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>La sfera</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800;900&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1440px; height: 700px; box-sizing: border-box; padding: 56px; background: #111314; color: #ECECE7; font-family: 'Geist', sans-serif; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-size: 32px; font-weight: 600; letter-spacing: -0.5px">La sfera ti ascolta</h2>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #9AA3A4">TRE STATI · CANVAS 2D, NESSUNA LIBRERIA</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+
+<div style="border-radius: 32px; background: #1A1D1F; padding: 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 28px">
+<div style="width: 280px; height: 280px; display: flex; align-items: center; justify-content: center">
+<div style="width: 240px; height: 240px; border-radius: 999px; background-color: #14292C; background-image: radial-gradient(circle, #2C8A93 1.8px, transparent 2.3px); background-size: 11px 11px; box-shadow: inset -34px -40px 70px #0B1112, inset 18px 18px 46px #2F6A71"></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; align-self: stretch">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #9AA3A4">01 · A RIPOSO</span>
+<span style="font-size: 18px; line-height: 1.45; color: #D2D4CE">Ruota piano su se stessa. Nessuna fretta.</span>
+</div>
+</div>
+
+<div style="border-radius: 32px; background: #1A1D1F; padding: 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 28px">
+<div style="width: 280px; height: 280px; border-radius: 999px; border: 2px dotted #1F5A61; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<div style="width: 258px; height: 258px; border-radius: 999px; border: 2px dotted #2C7C84; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<div style="width: 236px; height: 236px; border-radius: 999px; background-color: #14292C; background-image: radial-gradient(circle, #2C8A93 1.8px, transparent 2.3px); background-size: 11px 11px; box-shadow: inset -34px -40px 70px #0B1112, inset 18px 18px 46px #2F6A71; display: flex; align-items: center; justify-content: center">
+<div style="width: 160px; height: 160px; border-radius: 999px; border: 3px dotted #6CCBD3; box-sizing: border-box"></div>
+</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; align-self: stretch">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #9AA3A4">02 · IN ASCOLTO</span>
+<span style="font-size: 18px; line-height: 1.45; color: #D2D4CE">Quando il cursore si avvicina, i punti vibrano in onde che partono dal cursore, come un suono.</span>
+</div>
+</div>
+
+<div style="border-radius: 32px; background: #1A1D1F; padding: 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 28px">
+<div style="width: 280px; height: 280px; display: flex; align-items: center; justify-content: center">
+<div style="width: 240px; height: 240px; border-radius: 999px; background-color: #121E20; background-image: radial-gradient(circle, #1B4F55 1.6px, transparent 2.1px); background-size: 11px 11px; box-shadow: inset -34px -40px 70px #0B1112; display: flex; align-items: center; justify-content: center">
+<span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 170px; line-height: 1; color: {{signal}}">à</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; align-self: stretch">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #9AA3A4">03 · AL CLIC</span>
+<span style="font-size: 18px; line-height: 1.45; color: #D2D4CE">I punti si raccolgono e formano la à, che si accende di arancio per un istante. Poi tornano sfera.</span>
+</div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"signal":{"editor":"color","default":"#FF4F1A","options":["#FF4F1A","#FF6A3D","#F2C94C"]},"$preview":{"width":1440,"height":700}}'>
+class Component extends DCLogic {
+renderVals() {
+return { signal: this.props.signal ?? '#FF4F1A' };
+}
+}
+</script>
+</body>
+</html>

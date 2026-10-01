@@ -1,102 +1,430 @@
 ---
-// Pagina provvisoria: mostra i componenti base (passo 2 del piano).
-// La home vera arriva al passo 3.
+// Home, dalle tavole Main (desktop) e Home-Mobile.
+// Sfera e tabellone sono ancora fermi: diventano vivi nel passo 3.
 import Base from '../layouts/Base.astro';
 import Modulo from '../components/Modulo.astro';
-import Stato from '../components/Stato.astro';
 import Sezione from '../components/Sezione.astro';
+import Stato from '../components/Stato.astro';
+import CardProgetto from '../components/CardProgetto.astro';
+import Newsletter from '../components/Newsletter.astro';
+import SferaStatica from '../components/SferaStatica.astro';
+import { progetti } from '../data/progetti';
 import { getCollection } from 'astro:content';
 
 const curiosita = await getCollection('curiosita');
+const prima = curiosita.find((c) => c.id === '007') ?? curiosita[0];
+const tessere = (testo: string, lunghezza: number) => testo.padEnd(lunghezza, ' ').slice(0, lunghezza).split('');
 ---
 
-<Base>
-  <div class="pagina vetrina">
-    <Modulo luce="forte" class="griglia hero">
-      <div class="testo-hero">
-        <p class="logo">d<span>à</span>retta</p>
-        <p class="motto">risolvo problemi, a volte sono intere aziende.</p>
-      </div>
-    </Modulo>
-
-    <div class="griglia">
-      <Modulo luce="media" class="meta">
-        <Sezione numero={1}>Modulo, luce media</Sezione>
-        <p>Chi sono prende una dose media di petrolio.</p>
-      </Modulo>
-      <Modulo luce="velo" class="meta">
-        <Sezione numero={2}>Modulo, un velo</Sezione>
-        <p>Progetti ne prende appena un velo.</p>
-      </Modulo>
+<Base home>
+  <!-- Hero -->
+  <Modulo luce="forte" class="griglia hero" data-hero>
+    <div class="hero-testo">
+      <h1 class="logo">d<span>à</span>retta</h1>
+      <p class="motto">risolvo problemi, a volte sono intere aziende.</p>
+      <p class="presentazione">
+        Sono amministratore delegato di Codever e service leader dello sviluppo digital di Mirror. Qui racconto i
+        side project che porto avanti la sera, e condivido con voi un po' di me.
+      </p>
+      <a class="cta-hero" href="#newsletter">Una mail al mese →</a>
     </div>
+    <div class="hero-sfera">
+      <SferaStatica />
+    </div>
+  </Modulo>
 
-    <section>
-      <Sezione numero={3}>Stati dei progetti</Sezione>
-      <ul class="stati">
-        <li><Stato stato="online" /></li>
-        <li><Stato stato="in-sviluppo" /></li>
-        <li><Stato stato="concept" /></li>
-      </ul>
-    </section>
+  <!-- Chi sono -->
+  <Modulo luce="media" class="griglia chi-sono">
+    <div class="chi-sinistra">
+      <Sezione numero={2}>Chi sono</Sezione>
+      <p class="titolo-modulo">
+        Sviluppatore, team leader, project manager, product manager, CEO. Non è ambizione, è che ogni volta il
+        problema stava uno scalino più su.
+      </p>
+    </div>
+    <div class="chi-destra">
+      <p class="breve">
+        La versione breve è che ho un'azienda di software a Firenze. Per i più curiosi, l'azienda si chiama Codever,
+        l'ho fondata con Alberto e ne sono amministratore delegato. Siamo system integrator specializzati in sviluppo
+        web e mobile, con il pallino per le prestazioni. Dal 2026 facciamo parte di Mirror, dove sono service leader
+        dello sviluppo digital e system administrator. Se sono a una cena, però, mi fermo alla versione breve, perché
+        dopo «service leader» nessuno mi passa più il vino.
+      </p>
+      <a class="link-etichetta" href="/chi-sono">Tutta la storia →</a>
+    </div>
+  </Modulo>
 
-    <Modulo luce="pieno" id="newsletter">
-      <Sezione numero={4}>Newsletter</Sezione>
-      <p class="titolo-pagina">una mail al mese.</p>
-    </Modulo>
+  <!-- Scritti e foto -->
+  <section class="griglia scritti-foto">
+    <div class="scritti">
+      <Sezione numero={3}>Scritti</Sezione>
+      <p class="titolo-lista vuoto">Ancora niente. Il primo articolo arriva presto… l'ho promesso a me stesso.</p>
+    </div>
+    <div class="foto" role="img" aria-label="Foto di Patrizio, in arrivo">[ Foto spontanea ]</div>
+  </section>
 
-    <p class="nota">Scheletro in anteprima · {curiosita.length} curiosità caricate</p>
-  </div>
+  <!-- Progetti -->
+  <Modulo luce="velo" class="progetti" id="progetti">
+    <div class="progetti-testa">
+      <Sezione numero={4}>Progetti</Sezione>
+      <div class="legenda" aria-hidden="true">
+        <Stato stato="online" frase={false} />
+        <Stato stato="in-sviluppo" frase={false} />
+        <Stato stato="concept" frase={false} />
+      </div>
+    </div>
+    <div class="card">
+      {progetti.map((p) => <CardProgetto progetto={p} />)}
+    </div>
+  </Modulo>
+
+  <!-- Curiosità e newsletter -->
+  <section class="griglia curiosita-newsletter">
+    <div class="curiosita">
+      <div class="curiosita-testa">
+        <Sezione numero={5}>Curiosità</Sezione>
+        <a class="link-etichetta" href="/curiosita">Vedi tutte →</a>
+      </div>
+      <div class="tabellone" aria-label={`Curiosità ${prima.id}: ${prima.data.testo}`} role="group">
+        <div class="testata" aria-hidden="true">
+          <span class="campo"><span class="meta">N°</span><span class="tessere">{tessere(prima.id, 3).map((c) => <span class="tessera">{c}</span>)}</span></span>
+          <span class="campo"><span class="meta">Tipo</span><span class="tessere">{tessere(prima.data.tipo, 10).map((c) => <span class="tessera">{c}</span>)}</span></span>
+          <span class="campo"><span class="meta">Dest.</span><span class="tessere">{tessere(prima.data.destinazione, 15).map((c) => <span class="tessera">{c}</span>)}</span></span>
+        </div>
+        <p class="paletta-testo" aria-hidden="true">{prima.data.testo}</p>
+      </div>
+    </div>
+    <div class="nl-home"><Newsletter /></div>
+  </section>
 </Base>
 
 <style>
-  .vetrina {
-    display: grid;
-    gap: var(--gap);
-    padding-top: var(--space-3);
-  }
+  /* Hero */
   .hero {
-    min-height: 60vh;
+    min-height: 780px;
     align-items: center;
   }
-  .testo-hero {
-    grid-column: 1 / 9;
+  .hero-testo {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .hero-sfera {
+    grid-column: span 5;
+    display: flex;
+    justify-content: center;
   }
   .logo {
     margin: 0;
-    font-family: var(--punti);
+    font-family: var(--font-punti);
     font-weight: 900;
-    font-size: var(--punti-hero);
-    line-height: 1;
+    font-size: 136px;
+    line-height: 0.9;
+    letter-spacing: -4px;
   }
   .logo span {
     color: var(--arancio);
   }
   .motto {
-    margin: var(--space-3) 0 0;
-    font-family: var(--punti);
-    font-weight: 800;
-    font-size: var(--punti-motto);
-    line-height: 1.1;
-  }
-  .meta {
-    grid-column: span 6;
-  }
-  .meta p {
     margin: 0;
+    font-family: var(--font-punti);
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    text-wrap: balance;
+  }
+  .presentazione {
+    margin: 0;
+    max-width: 620px;
+    font-size: 24px;
+    line-height: 1.45;
     color: var(--inchiostro-corpo);
   }
-  .stati {
+  .cta-hero {
+    align-self: flex-start;
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    align-items: center;
+    height: 56px;
+    padding: 0 28px;
+    border-radius: var(--radius-pill);
+    background: var(--arancio);
+    color: var(--cemento);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
-  .nota {
-    font-family: var(--mono);
+
+  /* Chi sono */
+  .chi-sono {
+    align-items: start;
+  }
+  .chi-sinistra {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .chi-destra {
+    grid-column: 8 / span 5;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 38px;
+  }
+  .breve {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--inchiostro-corpo);
+  }
+  .link-etichetta {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--inchiostro-muto);
+  }
+  .link-etichetta:hover {
+    color: var(--inchiostro);
+  }
+
+  /* Scritti e foto */
+  .scritti-foto {
+    padding-top: var(--space-8);
+  }
+  .scritti {
+    grid-column: span 8;
+    padding: var(--space-2) var(--space-2) 0;
+  }
+  .scritti :global(.etichetta) {
+    padding-bottom: 20px;
+  }
+  .vuoto {
+    padding: 40px 0;
+    border-top: 1px solid var(--filetto);
+    border-bottom: 1px solid var(--filetto);
+    color: var(--inchiostro-corpo);
+  }
+  .foto {
+    grid-column: span 4;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-modulo);
+    background: linear-gradient(180deg, #21525a 0%, #1c2d30 55%, #1e2224 100%);
+    font-family: var(--font-mono);
     font-size: 13px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
+  }
+
+  /* Progetti */
+  .progetti {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .progetti-testa,
+  .curiosita-testa {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+  .legenda {
+    display: flex;
+    gap: 20px;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+
+  /* Curiosità e newsletter */
+  .curiosita-newsletter {
+    padding-top: var(--space-8);
+  }
+  .curiosita {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding: var(--space-2) var(--space-2) 0;
+  }
+  .nl-home {
+    grid-column: 7 / span 6;
+    display: flex;
+  }
+  .nl-home > :global(*) {
+    flex: 1;
+  }
+  .tabellone {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .testata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+  }
+  .campo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .campo .meta {
+    min-width: 32px;
+  }
+  .tessere {
+    display: flex;
+    gap: 2px;
+  }
+  .tessera {
+    position: relative;
+    width: 21px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: var(--cemento-rilievo);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 15px;
+    white-space: pre;
+  }
+  .tessera::after,
+  .paletta-testo::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--cemento);
+    opacity: 0.4;
+  }
+  .paletta-testo {
+    position: relative;
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: var(--cemento-rilievo);
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--inchiostro-corpo);
+  }
+
+  /* Tablet: la griglia si stringe */
+  @media (max-width: 1200px) {
+    .card {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .curiosita,
+    .nl-home {
+      grid-column: 1 / -1;
+    }
+    .logo {
+      font-size: 104px;
+    }
+  }
+
+  /* Mobile, dalla tavola Home-Mobile */
+  @media (max-width: 720px) {
+    .hero {
+      min-height: 0;
+      gap: 20px;
+    }
+    .hero-testo {
+      display: contents;
+    }
+    .logo {
+      font-size: 72px;
+      letter-spacing: -2px;
+    }
+    .motto {
+      font-size: 34px;
+      line-height: 1.08;
+    }
+    .hero-sfera {
+      order: 3;
+    }
+    .hero-sfera :global(.sfera) {
+      width: 300px;
+    }
+    .presentazione {
+      order: 4;
+      font-size: 19px;
+    }
+    .cta-hero {
+      order: 5;
+      align-self: stretch;
+      justify-content: center;
+      height: 52px;
+    }
+    .chi-destra .breve {
+      display: none;
+    }
+    .chi-destra {
+      padding-top: 0;
+    }
+    .link-etichetta {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      font-size: 12px;
+    }
+    .scritti-foto,
+    .curiosita-newsletter {
+      padding-top: var(--space-4);
+    }
+    .scritti {
+      padding: var(--space-3) var(--space-3) 0;
+    }
+    .vuoto {
+      padding: 20px 0;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+    .foto {
+      min-height: 300px;
+      border-radius: var(--radius-modulo-mobile);
+    }
+    .progetti {
+      gap: var(--space-3);
+    }
+    .progetti-testa {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .legenda {
+      gap: var(--space-3);
+    }
+    .card {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+    .curiosita {
+      padding: var(--space-4) 0;
+    }
+    .curiosita-testa {
+      padding: 0 var(--space-3);
+    }
+    .tessera {
+      width: 16px;
+      height: 26px;
+      font-size: 13px;
+    }
+    .paletta-testo {
+      font-size: 17px;
+    }
   }
 </style>

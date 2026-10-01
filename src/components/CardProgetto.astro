@@ -1,0 +1,66 @@
+---
+// Card di un progetto, dentro il modulo Progetti (tavola Main).
+import Stato from './Stato.astro';
+import type { Progetto } from '../data/progetti';
+
+interface Props {
+  progetto: Progetto;
+}
+const { progetto } = Astro.props;
+---
+
+<a class="card" href={`/progetti/${progetto.slug}`}>
+  <Stato stato={progetto.stato} />
+  <span class="nome">
+    <span class="titolo">{progetto.nome}</span>
+    {progetto.provvisorio && <span class="provvisorio">(nome provvisorio)</span>}
+  </span>
+  <span class="descrizione">{progetto.card}</span>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 240px;
+    padding: 28px;
+    border-radius: var(--radius-card);
+    background: var(--cemento-incavo);
+    text-decoration: none;
+    transition: background-color 0.15s;
+  }
+  .card:hover {
+    background: #161a1b;
+  }
+  .nome {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .titolo {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .provvisorio {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .descrizione {
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--inchiostro-secondario);
+  }
+  @media (max-width: 720px) {
+    .card {
+      min-height: 0;
+      padding: 20px;
+      border-radius: 16px;
+    }
+  }
+</style>
