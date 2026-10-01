@@ -48,25 +48,12 @@ const { misura = 540, class: classe } = Astro.props;
   const facile = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const mescola = (a: number[], b: number[], t: number) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
 
-  // Bersagli per la à: una matrice di punti sulla griglia della sfera (design/design-system/components/Sfera).
-  // Tratti spessi due o tre punti: un carattere Doto in grande, campionato, non si legge.
-  const MATRICE_A = [
-    '..###......',
-    '...###.....',
-    '....###....',
-    '...........',
-    '..######...',
-    '.########..',
-    '......###..',
-    '..#######..',
-    '.########..',
-    '###...###..',
-    '###..####..',
-    '.########..',
-    '..####.###.',
-  ];
-  const PASSO_A = 11 / 240; // passo della griglia in frazioni del diametro, come nella tavola
-  const RAGGIO_A = 4.3 / 240; // raggio dei punti accesi, in frazioni del diametro
+  // Bersagli per la à: la stessa à del logotipo, cella per cella (Doto 900, matrice 5×8),
+  // ridisegnata con i punti della sfera (design/design-system/components/Sfera).
+  // Non si campiona il carattere: in grande i suoi quadrati non si leggono.
+  const MATRICE_A = ['.#...', '..#..', '.....', '.###.', '....#', '.####', '#...#', '.####'];
+  const PASSO_A = 19 / 240; // passo della griglia in frazioni del diametro, come nella tavola
+  const RAGGIO_A = 7.6 / 240; // raggio dei punti accesi, in frazioni del diametro
   function puntiDellaA(): { x: number; y: number }[] {
     const accesi: { x: number; y: number }[] = [];
     MATRICE_A.forEach((riga, y) => [...riga].forEach((ch, x) => ch === '#' && accesi.push({ x, y })));

@@ -12,9 +12,9 @@
   },
   "groups": [],
   "lastChange": {
-    "at": "2026-10-01T23:35:00Z",
+    "at": "2026-10-01T23:25:00Z",
     "by": "Papi",
-    "note": "Sfera: la à al clic è disegnata con i punti della sfera (matrice 11×13 sulla stessa griglia), al posto del carattere Doto che in grande non si leggeva.",
+    "note": "Sfera: al clic la à è quella del logotipo, cella per cella (matrice 5×8 di Doto 900), con i punti tondi della sfera.",
     "via": "Claude (chat)"
   },
   "layout": "files",
