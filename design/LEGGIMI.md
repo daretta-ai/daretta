@@ -10,3 +10,7 @@ Copia di lavoro dei materiali approvati, presa il 2 ottobre 2026. Il sito si cos
 
 Regola: misure, colori e testi si prendono dalle tavole. Se una tavola e il README del design
 system non sono d'accordo, si chiede a Patrizio. Se gli originali cambiano, si ricopiano qui.
+
+## Decisioni prese dopo le tavole
+
+- 2 ottobre 2026: CURIOSITÀ non va nel menu principale, anche se le tavole ce la mettono. Ci si arriva da «VEDI TUTTE →» in home, dal footer e dai rimandi nei testi.
