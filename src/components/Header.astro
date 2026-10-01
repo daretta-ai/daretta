@@ -2,17 +2,17 @@
 // Header, dalle tavole Main/ChiSono (desktop) e *-Mobile (mobile).
 // In home il logotipo compare solo quando la hero esce dallo schermo.
 interface Props {
-  attiva?: 'scritti' | 'progetti' | 'chi-sono' | 'curiosita';
+  attiva?: 'scritti' | 'progetti' | 'chi-sono';
   home?: boolean;
 }
 const { attiva, home = false } = Astro.props;
 
 // Non c'è una pagina indice dei progetti nelle tavole: PROGETTI porta al blocco in home.
+// Curiosità non sta nel menu (decisione di Patrizio, 2 ott 2026): ci si arriva da «Vedi tutte» e dal footer.
 const voci = [
   { id: 'scritti', etichetta: 'Scritti', href: '/scritti' },
   { id: 'progetti', etichetta: 'Progetti', href: '/#progetti' },
   { id: 'chi-sono', etichetta: 'Chi sono', href: '/chi-sono' },
-  { id: 'curiosita', etichetta: 'Curiosità', href: '/curiosita' },
 ] as const;
 ---
 
