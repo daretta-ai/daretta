@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.3",
@@ -19,5 +20,8 @@
     "react-dom": "^19.3.0"
   },
   "type": "module",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "wrangler": "^4.146.0"
+  }
 }
