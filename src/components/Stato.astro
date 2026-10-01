@@ -1,0 +1,76 @@
+---
+// Stato di un progetto: segno e parola sempre insieme.
+// La frase compare all'hover e al focus; per gli screen reader è la descrizione.
+interface Props {
+  stato: 'online' | 'in-sviluppo' | 'concept';
+}
+const { stato } = Astro.props;
+
+const stati = {
+  online: { parola: 'ONLINE', frase: 'Si può usare.' },
+  'in-sviluppo': { parola: 'IN SVILUPPO', frase: 'Ci sto lavorando.' },
+  concept: { parola: 'CONCEPT', frase: "Per ora è un'idea." },
+};
+const { parola, frase } = stati[stato];
+const idFrase = `stato-${stato}-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<span class={`stato stato-${stato}`} tabindex="0" aria-describedby={idFrase}>
+  <svg class="segno" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+    {stato === 'online' && <circle cx="6" cy="6" r="5" />}
+    {stato === 'in-sviluppo' && <circle cx="6" cy="6" r="4.75" />}
+    {stato === 'concept' && <circle cx="6" cy="6" r="4.75" pathLength="12" stroke-dasharray="2 1" />}
+  </svg>
+  <span class="parola">{parola}</span>
+  <span class="frase" id={idFrase}>{frase}</span>
+</span>
+
+<style>
+  .stato {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--inchiostro-muto);
+    border-radius: var(--radius-pill);
+  }
+  .stato:focus-visible {
+    outline: 2px solid var(--inchiostro);
+    outline-offset: 4px;
+  }
+  .segno circle {
+    fill: none;
+    stroke: var(--inchiostro-muto);
+    stroke-width: 1.5;
+  }
+  .stato-online .segno circle {
+    fill: var(--arancio);
+    stroke: none;
+  }
+  .stato-online .parola {
+    color: var(--inchiostro);
+  }
+  .frase {
+    font-family: var(--sans);
+    letter-spacing: 0;
+    margin-left: var(--space-1);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .stato:hover .frase,
+  .stato:focus-visible .frase {
+    opacity: 1;
+  }
+  /* Su touch la frase non compare: resta solo per gli screen reader */
+  @media (hover: none) {
+    .frase {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+  }
+</style>

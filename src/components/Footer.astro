@@ -1,0 +1,75 @@
+---
+// Footer, con i microtesti approvati il 30 settembre 2026.
+// TODO: indirizzo del profilo LinkedIn da avere da Patrizio.
+const linkedin = 'https://www.linkedin.com/';
+---
+
+<footer class="footer">
+  <div class="testi">
+    <p class="firma"><span class="logo">d<span>à</span>retta.</span> Fatto con passione, nei ritagli di tempo.</p>
+    <p>Niente cookie. Ti conto, ma non ti seguo.</p>
+  </div>
+  <nav aria-label="Secondaria">
+    <a href="/curiosita">Curiosità</a>
+    <a href="/#newsletter">Newsletter</a>
+    <a href={linkedin} rel="me noopener">LinkedIn</a>
+    <a href="mailto:dimmipure@daretta.it">Mail</a>
+  </nav>
+  <p class="copy">© 2026 Patrizio Bartolozzi</p>
+</footer>
+
+<style>
+  .footer {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-14);
+    padding: var(--space-6) var(--margine);
+    border-top: 1px solid var(--filetto);
+    color: var(--inchiostro-muto);
+    font-size: 15px;
+  }
+  p {
+    margin: 0;
+  }
+  .firma {
+    color: var(--inchiostro-corpo);
+  }
+  .logo {
+    font-family: var(--sans);
+    font-weight: 600;
+    color: var(--inchiostro);
+  }
+  .logo span {
+    color: var(--arancio);
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+  }
+  nav a,
+  .copy {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: var(--inchiostro);
+  }
+  @media (min-width: 900px) {
+    .footer {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+    .copy {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

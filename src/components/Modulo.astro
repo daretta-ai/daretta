@@ -1,0 +1,46 @@
+---
+// Modulo: il box del sistema. La luce dice quanto petrolio prende dalla sfera.
+// forte = hero, foto · media = Chi sono · velo = Progetti · nessuna
+// pieno = newsletter, l'unico modulo petrolio pieno.
+interface Props {
+  luce?: 'forte' | 'media' | 'velo' | 'nessuna' | 'pieno';
+  as?: 'section' | 'div' | 'article' | 'aside';
+  id?: string;
+  class?: string;
+  [attr: string]: unknown;
+}
+const { luce = 'nessuna', as: Tag = 'section', class: classe, ...resto } = Astro.props;
+---
+
+<Tag class:list={['modulo', `luce-${luce}`, classe]} {...resto}>
+  <slot />
+</Tag>
+
+<style>
+  .modulo {
+    position: relative;
+    padding: var(--space-10);
+    border-radius: var(--radius-modulo);
+    background: var(--cemento-rilievo);
+    overflow: hidden;
+  }
+  /* Il gradiente va sempre da petrolio verso cemento, mai il contrario */
+  .luce-forte {
+    background: radial-gradient(circle at 75% 45%, var(--petrolio-luce) 0%, var(--petrolio-scuro) 38%, var(--cemento-rilievo) 78%);
+  }
+  .luce-media {
+    background: radial-gradient(circle at 90% 0%, rgb(47 140 143 / 0.45) 0%, var(--cemento-rilievo) 60%);
+  }
+  .luce-velo {
+    background: radial-gradient(circle at 100% 0%, rgb(47 140 143 / 0.18) 0%, var(--cemento-rilievo) 55%);
+  }
+  .luce-pieno {
+    background: linear-gradient(135deg, var(--petrolio-acceso), var(--petrolio-scuro));
+  }
+  @media (max-width: 720px) {
+    .modulo {
+      padding: var(--space-4) var(--space-3);
+      border-radius: var(--radius-modulo-mobile);
+    }
+  }
+</style>

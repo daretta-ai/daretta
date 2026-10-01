@@ -49,6 +49,59 @@
   --radius-modulo-mobile: 24px;
   --radius-card: 20px;
   --radius-pill: 999px;
+
+  /* Griglia: 12 colonne su desktop, una su mobile */
+  --margine: var(--space-14);
+  --gap: var(--space-6);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --margine: var(--space-3);
+    --gap: var(--space-3);
+  }
+}
+
+.pagina {
+  padding: 0 var(--margine);
+}
+
+.griglia {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+@media (max-width: 720px) {
+  .griglia {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .griglia > * {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* Titoli in Doto: minuscoli, finiscono con il punto, mai sotto i 28px */
+.titolo-pagina {
+  margin: 0;
+  font-family: var(--punti);
+  font-weight: 800;
+  font-size: var(--punti-pagina);
+  line-height: 1.05;
+}
+
+.solo-lettori {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--inchiostro);
+  outline-offset: 3px;
 }
 
 *,

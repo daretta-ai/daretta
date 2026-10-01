@@ -1,15 +1,24 @@
 ---
 import '../styles/token.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ANTEPRIMA } from '../sito';
 
 interface Props {
   titolo?: string;
   descrizione?: string;
+  attiva?: 'chi-sono' | 'progetti' | 'scritti';
+  home?: boolean;
 }
 
 const {
-  titolo = 'dàretta',
+  titolo,
   descrizione = 'Il sito di Patrizio Bartolozzi. Risolvo problemi, a volte sono intere aziende.',
+  attiva,
+  home = false,
 } = Astro.props;
+
+const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
 ---
 
 <!doctype html>
@@ -17,8 +26,9 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titolo}</title>
+    <title>{titoloCompleto}</title>
     <meta name="description" content={descrizione} />
+    {ANTEPRIMA && <meta name="robots" content="noindex, nofollow" />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,6 +37,27 @@ const {
     />
   </head>
   <body>
-    <slot />
+    <a class="salta" href="#contenuto">Vai al contenuto</a>
+    <Header attiva={attiva} logoDopoHero={home} />
+    <main id="contenuto">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
+
+<style>
+  .salta {
+    position: absolute;
+    left: var(--space-2);
+    top: -100px;
+    z-index: 20;
+    padding: var(--space-1) var(--space-2);
+    background: var(--inchiostro);
+    color: var(--cemento);
+    border-radius: var(--radius-pill);
+  }
+  .salta:focus {
+    top: var(--space-2);
+  }
+</style>

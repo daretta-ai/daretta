@@ -1,0 +1,130 @@
+---
+// Header. In home il logotipo compare solo dopo la hero (logoDopoHero).
+interface Props {
+  attiva?: 'chi-sono' | 'progetti' | 'scritti';
+  logoDopoHero?: boolean;
+}
+const { attiva, logoDopoHero = false } = Astro.props;
+
+const voci = [
+  { id: 'chi-sono', etichetta: 'Chi sono', href: '/chi-sono' },
+  { id: 'progetti', etichetta: 'Progetti', href: '/progetti' },
+  { id: 'scritti', etichetta: 'Scritti', href: '/scritti' },
+] as const;
+---
+
+<header class="header" data-logo-dopo-hero={logoDopoHero ? '' : undefined}>
+  <a class="logo" href="/" aria-label="dàretta, torna alla home">d<span>à</span>retta</a>
+  <nav aria-label="Principale">
+    <ul>
+      {voci.map((v) => (
+        <li>
+          <a href={v.href} aria-current={attiva === v.id ? 'page' : undefined}>{v.etichetta}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+  <a class="cta" href="/#newsletter">Iscriviti</a>
+</header>
+
+<script>
+  // In home: il logotipo dell'header appare quando la hero esce dallo schermo.
+  const header = document.querySelector<HTMLElement>('.header[data-logo-dopo-hero]');
+  const hero = document.querySelector('[data-hero]');
+  if (header && hero) {
+    header.classList.add('logo-nascosto');
+    new IntersectionObserver(([e]) => header.classList.toggle('logo-nascosto', e.isIntersecting)).observe(hero);
+  }
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--margine);
+    background: rgb(22 25 26 / 0.85);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: var(--punti);
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 1;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .logo span {
+    color: var(--arancio);
+  }
+  .logo-nascosto .logo {
+    opacity: 0;
+    pointer-events: none;
+  }
+  nav {
+    margin-left: auto;
+  }
+  ul {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: 44px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--inchiostro-muto);
+  }
+  nav a:hover,
+  nav a[aria-current] {
+    color: var(--inchiostro);
+  }
+  /* Il pallino della voce attiva: uno dei pochi dettagli di stato in arancio */
+  nav a[aria-current]::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--arancio);
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--arancio);
+    color: var(--cemento);
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  @media (max-width: 720px) {
+    .header {
+      flex-wrap: wrap;
+      gap: 0 var(--space-2);
+    }
+    nav {
+      order: 3;
+      width: 100%;
+      margin: 0;
+    }
+    .cta {
+      margin-left: auto;
+    }
+  }
+</style>
