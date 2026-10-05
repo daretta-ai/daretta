@@ -36,26 +36,24 @@ I numeri `[ 01 ]`, `[ 02 ]` li mette il sito, in ordine: spostando un blocco si 
 
 Per aggiungere un tipo di blocco servono tre posti: `keystatic.config.ts` (il modulo nell'editor), `src/markdoc.ts` (gli attributi) e `src/components/Corpo.astro` (come si disegna).
 
-## Accesso online: la GitHub App (da fare una volta)
+## Accesso online: la GitHub App
 
-Keystatic entra in GitHub attraverso una GitHub App.
+Keystatic entra in GitHub attraverso la GitHub App **daretta-cms**, creata il 5 ottobre 2026 sull'account daretta-ai (Settings → Developer settings → GitHub Apps) e installata solo sul repository `daretta-ai/daretta`.
 
-1. Su GitHub, nelle impostazioni dell'organizzazione **daretta-ai** → Developer settings → GitHub Apps → New GitHub App.
-   - Nome: per esempio `daretta-cms`. Il nome in minuscolo, con i trattini, è lo **slug** dell'app.
-   - Homepage URL: `https://daretta.it`
-   - Callback URL, una per dominio:
-     `https://daretta.dimmipure.workers.dev/api/keystatic/github/oauth/callback` e
-     `https://daretta.it/api/keystatic/github/oauth/callback`
-   - Spuntare «Request user authorization (OAuth) during installation». Webhook spento.
-   - Permessi del repository: Contents **Read and write**, Metadata **Read-only**, Pull requests **Read and write**.
-   - Installabile solo su questo account.
-2. Dopo la creazione: «Generate a new client secret», e annotare Client ID e client secret.
-3. «Install App» → solo il repository `daretta-ai/daretta`.
-4. Su Cloudflare, nel Worker `daretta` → Settings → Variables and Secrets:
-   - `KEYSTATIC_GITHUB_CLIENT_ID` (secret): il Client ID
-   - `KEYSTATIC_GITHUB_CLIENT_SECRET` (secret): il client secret
-   - `KEYSTATIC_SECRET` (secret): una stringa casuale lunga, per esempio il risultato di `openssl rand -hex 32`
-   - `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`: lo slug dell'app. Questa serve **anche nelle variabili di build** (Settings → Build → Variables), perché finisce nella pagina dell'admin.
-5. Rilanciare il deploy. Da quel momento `/keystatic` chiede l'accesso a GitHub.
+- Redirect URI: `https://daretta.dimmipure.workers.dev/api/keystatic/github/oauth/callback` e `https://daretta.it/api/keystatic/github/oauth/callback`. Un dominio nuovo va aggiunto qui.
+- Permessi del repository: Contents **Read and write**, Metadata **Read-only**, Pull requests **Read and write**. Webhook spento.
+
+Dove stanno i valori:
+
+| Valore | Dove | Perché |
+| --- | --- | --- |
+| `KEYSTATIC_GITHUB_CLIENT_ID` | `wrangler.jsonc` | Pubblico: compare nell'indirizzo del login di GitHub |
+| `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` | `wrangler.jsonc` e `.env.production` | Pubblico: serve anche alla build, finisce nella pagina dell'admin |
+| `KEYSTATIC_GITHUB_CLIENT_SECRET` | Cloudflare, Worker `daretta` → Settings → Variables and Secrets, tipo **Secret** | Segreto |
+| `KEYSTATIC_SECRET` | Cloudflare, come sopra, tipo **Secret** (una stringa casuale, es. `openssl rand -hex 32`) | Segreto |
+
+Le variabili in chiaro aggiunte dal pannello di Cloudflare spariscono al deploy successivo, perché il deploy usa quelle di `wrangler.jsonc`. I Secret invece restano. Per questo i valori pubblici stanno nel repository e nel pannello solo i segreti.
+
+Se il client secret va rigenerato su GitHub, va aggiornato anche su Cloudflare.
 
 Possono scrivere solo gli account GitHub con accesso in scrittura al repository.
