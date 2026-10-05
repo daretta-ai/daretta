@@ -1,0 +1,42 @@
+---
+// Informativa privacy della newsletter (approvata da Patrizio il 5 ottobre 2026).
+// Stesso ritmo delle pagine interne: testata compatta, sezioni con l'etichetta nel margine. Niente sfera:
+// è una pagina di servizio. I testi stanno in Keystatic, pagina Privacy.
+import Base from '../layouts/Base.astro';
+import Testata from '../components/Testata.astro';
+import Blocco from '../components/Blocco.astro';
+import { getPrivacy } from '../cms';
+
+const pagina = await getPrivacy();
+---
+
+<Base titolo="Privacy" descrizione="Come dàretta tratta la tua email, se ti iscrivi alla newsletter.">
+  <Testata titolo={pagina.titolo} sfera={false} compatta>
+    <span slot="etichetta" class="etichetta">Privacy</span>
+    <p class="attacco">{pagina.attacco}</p>
+  </Testata>
+
+  {
+    pagina.sezioni.map((s, i) => (
+      <Blocco numero={i + 1} etichetta={s.titolo} spazio={i === 0 ? 'medio' : 'piccolo'}>
+        <p set:html={s.testo.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!).replace(/dimmipure@daretta\.it/g, '<a href="mailto:dimmipure@daretta.it">dimmipure@daretta.it</a>')} />
+      </Blocco>
+    ))
+  }
+</Base>
+
+<style>
+  .attacco {
+    margin: 0;
+    max-width: 680px;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+  @media (max-width: 720px) {
+    .attacco {
+      font-size: 20px;
+    }
+  }
+</style>

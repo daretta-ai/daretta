@@ -171,7 +171,7 @@ export default config({
   ui: {
     brand: { name: 'dàretta' },
     navigation: {
-      Pagine: ['home', 'chiSono', 'newsletter', 'microtesti'],
+      Pagine: ['home', 'chiSono', 'newsletter', 'microtesti', 'privacy'],
       Contenuti: ['progetti', 'articoli', 'curiosita'],
     },
   },
@@ -212,6 +212,7 @@ export default config({
         testo: testoLungo('Testo', 'Una riga vuota separa i paragrafi.'),
         segnaposto: riga('Segnaposto del campo'),
         pulsante: riga('Pulsante'),
+        privacy: riga('Link all\'informativa', 'Sotto il campo, porta alla pagina Privacy.'),
         inviato: testoLungo('Dopo l\'invio del modulo'),
         giaIscritto: testoLungo('Già iscritto'),
         mailNonValida: testoLungo('Email non valida'),
@@ -256,6 +257,22 @@ export default config({
             concept: riga('CONCEPT'),
           },
           { label: 'Stati dei progetti', description: 'La frase che compare al passaggio del mouse.' }
+        ),
+      },
+    }),
+    privacy: singleton({
+      label: 'Privacy',
+      path: 'src/content/pagine/privacy',
+      format: { data: 'yaml' },
+      schema: {
+        titolo: titoloDoto(),
+        attacco: testoLungo('Frase d\'attacco'),
+        sezioni: fields.array(
+          fields.object({
+            titolo: riga('Etichetta', 'Nel margine, in maiuscolo.'),
+            testo: testoLungo('Testo'),
+          }),
+          { label: 'Sezioni', itemLabel: (s) => s.fields.titolo.value || 'Sezione' }
         ),
       },
     }),

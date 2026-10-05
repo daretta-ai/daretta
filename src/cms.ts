@@ -36,6 +36,7 @@ export interface Newsletter {
   testo: string;
   segnaposto: string;
   pulsante: string;
+  privacy: string;
   inviato: string;
   giaIscritto: string;
   mailNonValida: string;
@@ -54,6 +55,12 @@ export interface Microtesti {
   stati: { online: string; inSviluppo: string; concept: string };
 }
 
+export interface Privacy {
+  titolo: string;
+  attacco: string;
+  sezioni: { titolo: string; testo: string }[];
+}
+
 // ── Pagine singole ──────────────────────────────────────────────────────────
 
 async function pagina<T>(id: string): Promise<T> {
@@ -65,6 +72,7 @@ async function pagina<T>(id: string): Promise<T> {
 export const getHome = () => pagina<Home>('home');
 export const getNewsletter = () => pagina<Newsletter>('newsletter');
 export const getMicrotesti = () => pagina<Microtesti>('microtesti');
+export const getPrivacy = () => pagina<Privacy>('privacy');
 
 export async function getChiSono() {
   const voce = await getEntry('testiPagine', 'chi-sono');

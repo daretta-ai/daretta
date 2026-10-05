@@ -42,6 +42,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   <!-- Trappola per i bot: nascosta a chi legge e a chi usa lo screen reader -->
   <input class="trappola" name="sito" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <p class="esito" role="status" aria-live="polite" data-esito></p>
+  <a class="privacy" href="/privacy">{nl.privacy}</a>
 </Modulo>
 
 <script>
@@ -118,6 +119,16 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   }
   .riga[hidden] {
     display: none;
+  }
+  .privacy {
+    align-self: flex-start;
+    color: var(--carta);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
   }
   .esito {
     font-size: 17px;
