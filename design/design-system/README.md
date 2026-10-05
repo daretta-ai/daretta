@@ -74,6 +74,19 @@ Un tabellone delle partenze, meccanico e sobrio. La meraviglia resta alla sfera:
 
 La pagina `/curiosita` non è nel menu principale: ci si arriva da «VEDI TUTTE →» nel blocco in home, dal footer e dai rimandi nei testi.
 
+## Le foto
+
+Foto spontanee, scattate da Patrizio, mai in posa da studio. Tutte hanno lo stesso trattamento, **luce petrolio**: foto di anni e luci diverse sembrano un unico rullino, e anche quelle con colori strani in originale (un tramonto rosa, una maglia arancio) tornano utilizzabili.
+
+- **Il trattamento.** La foto diventa monocroma e si rimappa su tre punti: le ombre in `cemento` (#111314), i mezzitoni in `petrolio-luce` (#1E4F56) al 45%, le luci in `inchiostro` (#ECECE7). Prima, contrasto automatico con l'1% tagliato agli estremi e gamma 0,9 (0,85 per l'avatar, che schiarisce il viso). Sopra, una grana leggera uguale per tutte, che uniforma anche le foto più rumorose. Il petrolio sta nel buio e il viso resta neutro: è la regola «il petrolio è luce, non vernice» applicata alle foto.
+- **Uno strumento solo.** Il trattamento si fa con `scripts/tratta-foto.py` nel repository, mai a occhio con un filtro. I valori stanno lì e qui; se cambiano, cambiano in tutti e due i posti e si ritrattano tutte le foto.
+- **Niente ritocchi al viso.** Se un'espressione o un dettaglio non convince, si cambia foto, non si corregge.
+- **Solo Patrizio.** Foto in cui è da solo: niente altre persone riconoscibili, e niente figlio.
+- **Moduli foto.** Formato 4:5 verticale, il viso nel terzo alto. Nel sito in webp a 480 e 800px, con `srcset`, `loading="lazy"`, `object-fit: cover` e `object-position` puntato sul viso, così il taglio regge anche su mobile. Angoli `radius-modulo` (`radius-modulo-mobile` su mobile), nessun bordo, nessuna didascalia. Peso indicativo sotto i 150 KB.
+- **Avatar.** Quadrato 1024px, viso al centro e testa intera dentro il cerchio. Si controlla a 40px: se il viso non si riconosce, si stringe il taglio. Niente occhiali da sole nell'avatar, perché da piccoli diventano due macchie.
+- **Testo alternativo** breve e descrittivo, senza battute: «Patrizio di notte, davanti a un paese illuminato».
+- **Dove sono oggi.** Home, accanto a Scritti: la foto con i pini e gli occhiali da sole. Chi sono, accanto a «Perché ora»: la foto di notte. Avatar (LinkedIn, newsletter): la foto di notte, tagliata stretta.
+
 ## Logotipo
 
 Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `arancio`. Il simbolo, da solo, è la à arancio. Niente asterisco. Niente contenitori (quadrati, cerchi) attorno al segno.
@@ -97,3 +110,4 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Un box attorno a ogni sezione.
 - Una pagina interna fatta solo di una colonna di testo.
 - La sfera nelle pagine interne su mobile.
+- Foto a colori, ritoccate, o con un trattamento diverso da luce petrolio.
