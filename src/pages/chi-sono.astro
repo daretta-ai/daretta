@@ -93,7 +93,7 @@ const ruoli = [
         cose a cui prima dovevo rinunciare.
       </p>
     </div>
-    <img class="foto" src="/foto/notte-800.webp" srcset="/foto/notte-480.webp 480w, /foto/notte-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="1000" alt="Patrizio di notte, davanti a un paese illuminato" loading="lazy" decoding="async" style="object-position: 70% 45%" />
+    <img class="foto" src="/foto/notte-800.webp" srcset="/foto/notte-480.webp 480w, /foto/notte-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="800" alt="Patrizio di notte, davanti a un paese illuminato" loading="lazy" decoding="async" style="object-position: 70% 45%" />
   </section>
 
   <Chiusura
@@ -176,7 +176,10 @@ const ruoli = [
     justify-content: center;
     border-radius: var(--radius-modulo);
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1;
+    height: auto;
+    min-height: 0;
+    align-self: start;
     object-fit: cover;
     background: var(--cemento-alto);
     font-family: var(--font-mono);
