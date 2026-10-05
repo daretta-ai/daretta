@@ -50,7 +50,7 @@
   --smusso-modulo-mobile: 30px;
   --smusso-card: 20px;
   --smusso-card-mobile: 12px;
-  --smusso-azione: 12px;
+  --smusso-azione: 12px; /* su un pulsante alto 56px: lo smusso dei pulsanti è sempre 3/14 dell'altezza */
   --smusso-campo: 6px;
   --radius-tondo: 50%;
 
@@ -85,7 +85,8 @@
   L'elemento non viene ritagliato: il fondo sta in ::before, smussato, e l'anello di focus
   in ::after, che segue lo smusso (2px staccati di 3px). clip-path taglierebbe outline e border.
   Chi lo usa imposta:
-    --s        lo smusso (default smusso-azione)
+    --h        l'altezza del pulsante: lo smusso è 3/14 dell'altezza, come 12px su 56px (default 56px)
+    --s        lo smusso, da impostare solo per ciò che non è un pulsante (card, rimandi, campi)
     --fondo    il fondo (colore o gradiente)
     --anello   il colore dell'anello (default onda; carta sul modulo newsletter)
   Con .contornato il ::before disegna solo il contorno di 1px, in --contorno (default bordo).
@@ -93,7 +94,8 @@
 */
 @layer smusso {
   .smussato {
-    --s: var(--smusso-azione);
+    --h: 56px;
+    --s: calc(var(--h) * 3 / 14);
     --fondo: transparent;
     --anello: var(--onda);
     --contorno: var(--bordo);
