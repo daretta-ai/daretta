@@ -30,8 +30,8 @@ const voci = [
   </nav>
 
   <div class="azioni">
-    <a class="cta" href="/#newsletter">Iscriviti</a>
-    <button class="panino" type="button" aria-controls="menu" aria-expanded="false" aria-label="Apri il menu">
+    <a class="cta smussato" href="/#newsletter">Iscriviti</a>
+    <button class="panino smussato contornato" type="button" aria-controls="menu" aria-expanded="false" aria-label="Apri il menu">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <line class="l1" x1="3" y1="7" x2="17" y2="7"></line>
         <line class="l2" x1="3" y1="13" x2="17" y2="13"></line>
@@ -143,7 +143,7 @@ const voci = [
     content: '';
     width: 6px;
     height: 6px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-tondo);
     background: var(--arancio);
   }
   .azioni {
@@ -153,8 +153,7 @@ const voci = [
   }
   .cta {
     padding: 12px 20px;
-    border-radius: var(--radius-pill);
-    background: var(--arancio);
+    --fondo: var(--arancio);
     color: var(--cemento);
   }
   .panino {
@@ -163,9 +162,6 @@ const voci = [
     height: 48px;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--bordo);
-    background: transparent;
     color: var(--inchiostro);
     cursor: pointer;
   }
@@ -208,7 +204,7 @@ const voci = [
       right: var(--margine);
       margin: 0;
       padding: var(--space-4) var(--space-6);
-      border-radius: var(--modulo-raggio);
+      clip-path: var(--ritaglio-modulo);
       background: var(--cemento-rilievo);
     }
     .aperto .menu {

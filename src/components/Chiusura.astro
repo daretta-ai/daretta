@@ -18,7 +18,7 @@ const { rimandi } = Astro.props;
   <div class="rimandi">
     {
       rimandi.map((r, i) => (
-        <a class:list={['rimando', i === 0 ? 'velo' : 'contorno']} href={r.href}>
+        <a class:list={['rimando', 'smussato', i === 0 ? 'velo' : 'contorno contornato']} href={r.href}>
           <span class="etichetta-rimando">{r.etichetta} →</span>
           <span class="testo-rimando">{r.testo}</span>
         </a>
@@ -51,21 +51,22 @@ const { rimandi } = Astro.props;
     justify-content: space-between;
     gap: 20px;
     padding: var(--space-10);
-    border-radius: var(--radius-modulo);
+    --s: var(--modulo-smusso);
     text-decoration: none;
-    transition: background-color 0.15s;
   }
   .velo {
-    background: radial-gradient(700px 400px at 90% -20%, #16292c 0%, var(--cemento-rilievo) 70%);
+    --fondo: radial-gradient(700px 400px at 90% -20%, #16292c 0%, var(--cemento-rilievo) 70%);
   }
   .contorno {
-    border: 1px solid var(--filetto-neutro);
+    --contorno: var(--filetto-neutro);
   }
-  .contorno:hover {
+  /* All'hover il contorno diventa un fondo pieno */
+  .contorno:hover::before {
     background: var(--cemento-rilievo);
+    clip-path: var(--forma);
   }
   .velo:hover {
-    background: radial-gradient(700px 400px at 90% -20%, #1b3236 0%, var(--cemento-alto) 70%);
+    --fondo: radial-gradient(700px 400px at 90% -20%, #1b3236 0%, var(--cemento-alto) 70%);
   }
   .etichetta-rimando {
     font-family: var(--font-mono);
@@ -90,7 +91,6 @@ const { rimandi } = Astro.props;
     .rimando {
       padding: var(--space-6);
       gap: 14px;
-      border-radius: var(--radius-modulo-mobile);
     }
     .etichetta-rimando {
       font-size: 12px;

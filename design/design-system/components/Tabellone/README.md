@@ -7,6 +7,7 @@ Il tabellone delle partenze che mostra una curiosità alla volta, in home e in c
 - **Cerniera:** riga di 1px in `cemento` al 40% su tessere e palette.
 - **Animazione:** ogni tessera che cambia gira da 2 a 6 lettere a caso prima di fermarsi, sfalsata da sinistra; poi le palette girano dall'alto in basso, 120ms l'una dall'altra. Gira solo ciò che cambia.
 - **Ritmo:** durata variabile, 4 secondi più 1 secondo ogni 30 battute del testo, con un minimo di 5 e un massimo di 12 (la 012 resta 5 secondi, una voce media circa 7,5, le più lunghe circa 10). Il conteggio parte quando le palette hanno finito di girare. Ordine casuale a ogni visita, barra di avanzamento di 2px in `inchiostro-muto` su `filetto`, che si riempie nella durata della curiosità.
-- **Comandi:** Pausa/Riprendi e Prossima (pill, 44px), contatore `meta` a destra. Si ferma al passaggio del mouse, al focus e con la scheda nascosta.
+- **Forma:** tessere e palette tengono il raggio di 4px degli oggetti veri, anche se il resto del sito è smussato: il tabellone è un oggetto, non layout.
+- **Comandi:** Pausa/Riprendi e Prossima (pulsanti fantasma smussati con `smusso-azione`, 44px), contatore `meta` a destra. Si ferma al passaggio del mouse, al focus e con la scheda nascosta.
 - **Accessibilità:** il tabellone è `aria-hidden`; accanto c'è il testo completo in una regione `aria-live`, spenta durante la rotazione automatica e accesa quando chi legge preme Prossima. Con `prefers-reduced-motion` il cambio è istantaneo.
 - Implementazione: HTML, CSS e poco JS, nessuna libreria. Il consumatore fornisce l'elenco delle curiosità (numero, tipo, destinazione, testo).

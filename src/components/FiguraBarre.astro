@@ -51,7 +51,7 @@ const toni = {
   .figura-barre {
     margin: 0;
     padding: var(--space-10);
-    border-radius: var(--radius-modulo);
+    clip-path: var(--ritaglio-modulo);
     background: var(--cemento-rilievo);
     display: flex;
     flex-direction: column;
@@ -98,7 +98,7 @@ const toni = {
   .barra {
     display: block;
     height: 44px;
-    border-radius: 14px;
+    clip-path: var(--ritaglio-campo);
     background-color: var(--cemento-incavo);
     background-image: radial-gradient(circle, var(--c) 1.8px, transparent 2.3px);
     background-size: var(--p) var(--p);
@@ -106,7 +106,6 @@ const toni = {
   @media (max-width: 720px) {
     .figura-barre {
       padding: var(--space-6);
-      border-radius: var(--radius-modulo-mobile);
       gap: var(--space-4);
     }
     ol {
@@ -122,7 +121,6 @@ const toni = {
     }
     .barra {
       height: 32px;
-      border-radius: 10px;
     }
   }
 </style>

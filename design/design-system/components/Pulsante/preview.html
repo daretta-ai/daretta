@@ -1,4 +1,4 @@
-<!-- @dsCard group="Azioni" height=120 subtitle="CTA e fantasma" -->
+<!-- @dsCard group="Azioni" height=140 subtitle="CTA e fantasma, smussati" -->
 <!doctype html>
 <html lang="it">
 <head>
@@ -8,20 +8,27 @@
 <style>
 body{margin:0;background:var(--cemento)}
 .row{display:flex;gap:16px;align-items:center;padding:32px 40px}
-.btn{height:48px;padding:0 24px;border-radius:var(--radius-pill);font-family:var(--font-mono);font-size:14px;letter-spacing:1px;cursor:pointer}
-.primario{background:var(--arancio);color:var(--cemento);border:none}
-.fantasma{background:transparent;color:var(--inchiostro);border:1px solid var(--bordo)}
-.su-petrolio{background:var(--arancio);color:var(--cemento);border:none}
-.box{padding:16px;border-radius:var(--radius-card);background:var(--petrolio)}
-.btn:focus-visible{outline:2px solid var(--onda);outline-offset:3px}
-.box .btn:focus-visible{outline-color:var(--carta)}
+/* Smusso a 45°: --s è lo smusso */
+.sm{clip-path:polygon(0 var(--s),var(--s) 0,calc(100% - var(--s)) 0,100% var(--s),100% calc(100% - var(--s)),calc(100% - var(--s)) 100%,var(--s) 100%,0 calc(100% - var(--s)))}
+/* Anello di focus: contenitore (anello, smusso +3) > stacco (fondo, smusso +2) > pulsante */
+.anello{--s:15px;display:inline-flex;padding:2px}
+.stacco{--s:14px;display:inline-flex;padding:3px;background:var(--fondo,var(--cemento))}
+.anello:has(:focus-visible){background:var(--onda)}
+.btn{--s:12px;height:48px;padding:0 24px;border:none;display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:14px;letter-spacing:1px;cursor:pointer;outline:none}
+.primario{background:var(--arancio);color:var(--cemento)}
+/* Fantasma: fuori il bordo, dentro il fondo a 1px */
+.fantasma{background:var(--bordo);padding:1px}
+.fantasma span{--s:12px;display:inline-flex;align-items:center;height:100%;padding:0 23px;background:var(--cemento);color:var(--inchiostro)}
+.box{--s:20px;padding:16px;background:var(--petrolio)}
+.box .stacco{--fondo:var(--petrolio)}
+.box .anello:has(:focus-visible){background:var(--carta)}
 </style>
 </head>
 <body>
 <div class="row">
-<button class="btn primario" type="button">ISCRIVITI</button>
-<button class="btn fantasma" type="button">TUTTI GLI SCRITTI</button>
-<div class="box"><button class="btn su-petrolio" type="button">ISCRIVIMI</button></div>
+<span class="anello sm"><span class="stacco sm"><button class="btn primario sm" type="button">ISCRIVITI</button></span></span>
+<span class="anello sm"><span class="stacco sm"><button class="btn fantasma sm" type="button"><span class="sm">TUTTI GLI SCRITTI</span></button></span></span>
+<div class="box sm"><span class="anello sm"><span class="stacco sm"><button class="btn primario sm" type="button">ISCRIVIMI</button></span></span></div>
 </div>
 </body>
 </html>

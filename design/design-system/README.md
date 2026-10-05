@@ -30,13 +30,33 @@ I tre caratteri sono su Google Fonts (`family=Doto:wght@600;800;900&family=Geist
 
 ## Composizione
 
-- **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`radius-modulo`, padding `space-10`); Scritti e Curiosità sono posate direttamente sul fondo. Scritti è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
+- **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`smusso-modulo`, padding `space-10`); Scritti e Curiosità sono posate direttamente sul fondo. Scritti è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
 - **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi, a volte sono intere aziende.». A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
 - **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con newsletter e rimandi ad altre pagine in card.
 - **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto escono dalla colonna. Sotto l'header una barra di avanzamento a punti: i punti letti in `arancio`, gli altri in `filetto`.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
-- **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `radius-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
-- Angoli morbidi e generosi, pallini e pill (`radius-pill`). Niente angoli vivi, niente ombre tranne quella della sfera.
+- **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `smusso-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
+- Angoli smussati a 45°, mai arrotondati, tranne la sfera e gli stati (vedi «Angoli»). Niente ombre tranne quella della sfera.
+
+## Angoli: il tondo ascolta, il quadrato dice
+
+Nel sito convivono due materiali, e il contrasto tra i due racconta il nome.
+
+- **Tondo è ciò che ascolta.** La sfera e i segni degli stati (il pallino ONLINE, gli anelli IN SVILUPPO e CONCEPT). Solo loro, con `radius-tondo`.
+- **Smussato è ciò che dice.** Moduli, foto, card, blocchi di codice, pulsanti, chip e campi hanno gli angoli tagliati a 45°, parenti delle celle quadrate di Doto. Il passaggio tra i due materiali è il clic sulla sfera, quando i punti tondi diventano le celle della à.
+- **Le misure.**
+
+| Cosa | Desktop | Mobile |
+| --- | --- | --- |
+| Moduli e foto | `smusso-modulo` 32px | `smusso-modulo-mobile` 30px |
+| Card e blocchi di codice | `smusso-card` 20px | `smusso-card-mobile` 12px |
+| Pulsanti e chip | `smusso-azione` 12px | `smusso-azione` 12px |
+| Campi dei form | `smusso-campo` 6px | `smusso-campo` 6px |
+
+- **Pulsanti e chip hanno lo smusso più forte in proporzione.** Su 48px di altezza, 12px di taglio per angolo: sono ciò che agisce, e devono avere carattere. I campi invece restano appena accennati, altrimenti sembrano pulsanti.
+- **Il tabellone resta com'è.** Tessere e palette hanno gli angoli arrotondati degli oggetti veri: è un oggetto, non layout. I suoi comandi (Pausa, Prossima) invece sono pulsanti, e sono smussati.
+- **Costruzione: `clip-path`, ovunque.** Lo smusso è un segno d'identità e deve vedersi uguale su ogni browser: niente `corner-shape` (oggi solo sui browser basati su Chromium) e niente ripiego su `border-radius`. Il taglio è un poligono a otto punti, con `S` lo smusso: `polygon(0 S, S 0, calc(100% - S) 0, 100% S, 100% calc(100% - S), calc(100% - S) 100%, S 100%, 0 calc(100% - S))`.
+- **Bordi e focus seguono lo smusso.** `clip-path` taglia `border` e `outline` sulle diagonali, quindi non si usano. Un contorno (pulsante fantasma, chip spenti) si fa con due strati smussati: fuori il colore del bordo, dentro il fondo, 1px più in dentro. L'anello di focus si fa allo stesso modo, con un contenitore attorno all'elemento: 2px di `onda` (`carta` sul modulo newsletter) staccati di 3px. Perché le diagonali restino parallele, lo strato dello stacco ha smusso `S + 2px` e quello dell'anello `S + 3px` (per ogni pixel di distanza lo smusso cresce di circa 0,6px) (vedi l'anteprima del Pulsante).
 
 ## Gli stati dei progetti
 
@@ -82,7 +102,7 @@ Foto spontanee, scattate da Patrizio, mai in posa da studio. Tutte hanno lo stes
 - **Uno strumento solo.** Il trattamento si fa con `scripts/tratta-foto.py` nel repository, mai a occhio con un filtro. I valori stanno lì e qui; se cambiano, cambiano in tutti e due i posti e si ritrattano tutte le foto.
 - **Niente ritocchi al viso.** Se un'espressione o un dettaglio non convince, si cambia foto, non si corregge.
 - **Solo Patrizio.** Foto in cui è da solo: niente altre persone riconoscibili, e niente figlio.
-- **Moduli foto.** Formato quadrato, il viso nel terzo alto. Le foto di Patrizio sono quasi tutte orizzontali: il quadrato ne tiene tre quarti, e con loro il posto (il mare, il paese di notte), mentre un verticale ne butterebbe via metà. Non orizzontale vero, perché nella colonna da quattro su desktop il viso diventerebbe troppo piccolo. Nel sito in webp a 480 e 800px, con `srcset`, `loading="lazy"`, `aspect-ratio: 1`, `object-fit: cover` e `object-position` puntato sul viso. Angoli `radius-modulo` (`radius-modulo-mobile` su mobile), nessun bordo, nessuna didascalia. Peso indicativo sotto i 150 KB.
+- **Moduli foto.** Formato quadrato, il viso nel terzo alto. Le foto di Patrizio sono quasi tutte orizzontali: il quadrato ne tiene tre quarti, e con loro il posto (il mare, il paese di notte), mentre un verticale ne butterebbe via metà. Non orizzontale vero, perché nella colonna da quattro su desktop il viso diventerebbe troppo piccolo. Nel sito in webp a 480 e 800px, con `srcset`, `loading="lazy"`, `aspect-ratio: 1`, `object-fit: cover` e `object-position` puntato sul viso. Angoli `smusso-modulo` (`smusso-modulo-mobile` su mobile), nessun bordo, nessuna didascalia. Peso indicativo sotto i 150 KB.
 - **Avatar.** Quadrato 1024px, viso al centro e testa intera dentro il cerchio. Si controlla a 40px: se il viso non si riconosce, si stringe il taglio. Niente occhiali da sole nell'avatar, perché da piccoli diventano due macchie.
 - **Testo alternativo** breve e descrittivo, senza battute: «Patrizio di notte, davanti a un paese illuminato».
 - **Dove sono oggi.** Home, accanto a Scritti: la foto con i pini e gli occhiali da sole. Chi sono, accanto a «Perché ora»: la foto di notte. Avatar (LinkedIn, newsletter): la foto di notte, tagliata stretta.
@@ -96,6 +116,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Testo ≥4.5:1 sul suo fondo (ogni token di testo dice su quali fondi è verificato); ≥3:1 per testo sopra i 24px, anelli e icone. Sui pulsanti arancio il testo è `cemento`.
 - Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `inchiostro-muto` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
 - Pulsanti e chip alti almeno 44px su mobile.
+- L'anello di focus segue lo smusso (vedi «Angoli»): mai un `outline` rettangolare tagliato dal `clip-path`, e mai un elemento senza anello.
 
 ## Da non fare
 
@@ -110,4 +131,6 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Un box attorno a ogni sezione.
 - Una pagina interna fatta solo di una colonna di testo.
 - La sfera nelle pagine interne su mobile.
+- Angoli arrotondati su moduli, card, pulsanti o campi: tondi sono solo la sfera e gli stati.
+- Smussi fatti con `corner-shape` o `border-radius` di ripiego: il segno deve essere uguale su ogni browser.
 - Foto a colori, ritoccate, o con un trattamento diverso da luce petrolio.

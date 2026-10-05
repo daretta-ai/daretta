@@ -23,10 +23,10 @@ const prima = dati[0];
   <div class="palette" aria-hidden="true"></div>
   <div class="avanzamento" aria-hidden="true"><span></span></div>
   <div class="comandi">
-    <button class="pulsante b-pausa" type="button" aria-pressed="false">
+    <button class="pulsante b-pausa smussato contornato" type="button" aria-pressed="false">
       <span class="icona pausa" aria-hidden="true"></span><span class="t-pausa">Pausa</span>
     </button>
-    <button class="pulsante b-prossima" type="button">Prossima</button>
+    <button class="pulsante b-prossima smussato contornato" type="button">Prossima</button>
     <span class="meta contatore"></span>
   </div>
   <p class="solo-lettori annuncio" aria-live="off">Curiosità {prima.n}, {prima.cat.toLowerCase()}: {prima.text}</p>
@@ -99,9 +99,6 @@ const prima = dati[0];
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    border-radius: var(--radius-pill);
-    border: 1px solid var(--bordo);
-    background: transparent;
     color: var(--inchiostro);
     font-family: var(--font-mono);
     font-size: 13px;
@@ -110,8 +107,10 @@ const prima = dati[0];
     text-transform: uppercase;
     cursor: pointer;
   }
-  .pulsante:hover {
+  /* All'hover il contorno diventa un fondo pieno */
+  .pulsante:hover::before {
     background: var(--cemento-alto);
+    clip-path: var(--forma);
   }
   .icona {
     flex: none;

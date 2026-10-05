@@ -8,9 +8,9 @@
 <style>
 body{margin:0;background:var(--cemento-rilievo);color:var(--inchiostro)}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:32px 40px;max-width:720px}
-.card{border-radius:var(--radius-card);background:var(--cemento-incavo);padding:28px;display:flex;flex-direction:column;gap:14px;min-height:200px;box-sizing:border-box}
+.card{--s:var(--smusso-card);clip-path:polygon(0 var(--s),var(--s) 0,calc(100% - var(--s)) 0,100% var(--s),100% calc(100% - var(--s)),calc(100% - var(--s)) 100%,var(--s) 100%,0 calc(100% - var(--s)));background:var(--cemento-incavo);padding:28px;display:flex;flex-direction:column;gap:14px;min-height:200px;box-sizing:border-box}
 .stato{display:flex;gap:8px;align-items:center;font-family:var(--font-mono);font-size:12px;letter-spacing:.5px;color:var(--inchiostro-muto)}
-.dot{width:8px;height:8px;border-radius:var(--radius-pill);box-sizing:border-box}
+.dot{width:8px;height:8px;border-radius:var(--radius-tondo);box-sizing:border-box}
 .online{background:var(--arancio)}
 .sviluppo{border:1.5px solid var(--stato-spento)}
 .nome{font-family:var(--font-sans);font-size:24px;font-weight:600;line-height:1.25}
