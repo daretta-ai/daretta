@@ -50,13 +50,13 @@ Nel sito convivono due materiali, e il contrasto tra i due racconta il nome.
 | --- | --- | --- |
 | Moduli e foto | `smusso-modulo` 32px | `smusso-modulo-mobile` 30px |
 | Card e blocchi di codice | `smusso-card` 20px | `smusso-card-mobile` 12px |
-| Pulsanti e chip | `smusso-azione` 12px | `smusso-azione` 12px |
+| Pulsanti e chip | 3/14 dell'altezza (`smusso-azione`, 12px su 56px) | 3/14 dell'altezza |
 | Campi dei form | `smusso-campo` 6px | `smusso-campo` 6px |
 
-- **Pulsanti e chip hanno lo smusso più forte in proporzione.** Su 48px di altezza, 12px di taglio per angolo: sono ciò che agisce, e devono avere carattere. I campi invece restano appena accennati, altrimenti sembrano pulsanti.
+- **Pulsanti e chip hanno lo smusso più forte, e sempre nella stessa proporzione.** Lo smusso è 3/14 dell'altezza, come 12px su un pulsante da 56px: così un pulsante piccolo ha lo stesso carattere di uno grande, senza sembrare tagliato a metà. Per esempio 9,4px su 44px (ISCRIVITI in testata, comandi del tabellone, chip), 10,3px su 48px (menu), 11,1px su 52px (pulsanti su mobile). Sono ciò che agisce, e devono avere carattere. I campi invece restano a 6px fissi, appena accennati, altrimenti sembrano pulsanti.
 - **Il tabellone resta com'è.** Tessere e palette hanno gli angoli arrotondati degli oggetti veri: è un oggetto, non layout. I suoi comandi (Pausa, Prossima) invece sono pulsanti, e sono smussati.
 - **Costruzione: `clip-path`, ovunque.** Lo smusso è un segno d'identità e deve vedersi uguale su ogni browser: niente `corner-shape` (oggi solo sui browser basati su Chromium) e niente ripiego su `border-radius`. Il taglio è un poligono a otto punti, con `S` lo smusso: `polygon(0 S, S 0, calc(100% - S) 0, 100% S, 100% calc(100% - S), calc(100% - S) 100%, S 100%, 0 calc(100% - S))`.
-- **Bordi e focus seguono lo smusso.** `clip-path` taglia `border` e `outline` sulle diagonali, quindi non si usano. Un contorno (pulsante fantasma, chip spenti) si fa con due strati smussati: fuori il colore del bordo, dentro il fondo, 1px più in dentro. L'anello di focus si fa allo stesso modo, con un contenitore attorno all'elemento: 2px di `onda` (`carta` sul modulo newsletter) staccati di 3px. Perché le diagonali restino parallele, lo strato dello stacco ha smusso `S + 2px` e quello dell'anello `S + 3px` (per ogni pixel di distanza lo smusso cresce di circa 0,6px) (vedi l'anteprima del Pulsante).
+- **Bordi e focus seguono lo smusso.** `clip-path` taglia `border` e `outline` sulle diagonali, quindi non si usano. Un contorno (pulsante fantasma, chip spenti) si fa con due strati smussati: fuori il colore del bordo, dentro il fondo, 1px più in dentro. L'anello di focus si fa allo stesso modo, con un contenitore attorno all'elemento: 2px di `onda` (`carta` sul modulo newsletter) staccati di 3px. Perché le diagonali restino parallele, lo strato dello stacco ha smusso `S + 2px` e quello dell'anello `S + 3px` (per ogni pixel di distanza lo smusso cresce di circa 0,6px; vedi l'anteprima del Pulsante).
 
 ## Gli stati dei progetti
 

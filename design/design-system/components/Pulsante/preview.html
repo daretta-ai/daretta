@@ -10,15 +10,15 @@ body{margin:0;background:var(--cemento)}
 .row{display:flex;gap:16px;align-items:center;padding:32px 40px}
 /* Smusso a 45°: --s è lo smusso */
 .sm{clip-path:polygon(0 var(--s),var(--s) 0,calc(100% - var(--s)) 0,100% var(--s),100% calc(100% - var(--s)),calc(100% - var(--s)) 100%,var(--s) 100%,0 calc(100% - var(--s)))}
-/* Anello di focus: contenitore (anello, smusso +3) > stacco (fondo, smusso +2) > pulsante */
-.anello{--s:15px;display:inline-flex;padding:2px}
-.stacco{--s:14px;display:inline-flex;padding:3px;background:var(--fondo,var(--cemento))}
+/* Smusso dei pulsanti: 3/14 dell'altezza (48px → 10px). Anello di focus: anello (smusso +3) > stacco (fondo, smusso +2) > pulsante */
+.anello{--s:13px;display:inline-flex;padding:2px}
+.stacco{--s:12px;display:inline-flex;padding:3px;background:var(--fondo,var(--cemento))}
 .anello:has(:focus-visible){background:var(--onda)}
-.btn{--s:12px;height:48px;padding:0 24px;border:none;display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:14px;letter-spacing:1px;cursor:pointer;outline:none}
+.btn{--s:10px;height:48px;padding:0 24px;border:none;display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:14px;letter-spacing:1px;cursor:pointer;outline:none}
 .primario{background:var(--arancio);color:var(--cemento)}
 /* Fantasma: fuori il bordo, dentro il fondo a 1px */
 .fantasma{background:var(--bordo);padding:1px}
-.fantasma span{--s:12px;display:inline-flex;align-items:center;height:100%;padding:0 23px;background:var(--cemento);color:var(--inchiostro)}
+.fantasma span{--s:10px;display:inline-flex;align-items:center;height:100%;padding:0 23px;background:var(--cemento);color:var(--inchiostro)}
 .box{--s:20px;padding:16px;background:var(--petrolio)}
 .box .stacco{--fondo:var(--petrolio)}
 .box .anello:has(:focus-visible){background:var(--carta)}
