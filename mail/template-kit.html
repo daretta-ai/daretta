@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it" xmlns="http://www.w3.org/1999/xhtml">
+<!--
+  Template dàretta per Kit (passo 6). Lo usano la mail di conferma e le newsletter.
+  Si incolla in Kit come template HTML e si imposta come predefinito dell'account.
+  Variabili di Kit obbligatorie: {{ message_content }}, {{ unsubscribe_url }}, {{ address }}.
+
+  Regole del design system adattate alla posta:
+  - fondo cemento, testo inchiostro, link spenti (sottolineati, mai arancio);
+  - l'arancio solo per il pulsante (testo cemento sopra) e per la à del logotipo;
+  - il logotipo è un'immagine, perché Doto e Geist nelle mail non si caricano in modo affidabile;
+  - niente smusso: i programmi di posta non supportano clip-path. Pulsante ad angoli vivi, mai tondi.
+  Il colore del pulsante si sceglie anche nell'editor di Kit: arancio #FF4F1A, testo #111314.
+-->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="supported-color-schemes" content="dark" />
+  <title>dàretta</title>
+  <style>
+    :root { color-scheme: dark; supported-color-schemes: dark; }
+    body { margin: 0; padding: 0; background: #111314; }
+    .corpo { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.6; color: #D2D4CE; }
+    .corpo p { margin: 0 0 20px; }
+    .corpo h1, .corpo h2, .corpo h3 { color: #ECECE7; font-weight: 600; line-height: 1.25; margin: 32px 0 12px; }
+    .corpo h1 { font-size: 28px; }
+    .corpo h2 { font-size: 22px; }
+    .corpo h3 { font-size: 18px; }
+    .corpo a { color: #ECECE7; text-decoration: underline; text-underline-offset: 3px; }
+    .corpo strong { color: #ECECE7; }
+    .corpo blockquote { margin: 24px 0; padding: 0 0 0 20px; border-left: 2px solid #2E3A3C; color: #ECECE7; }
+    .corpo img { max-width: 100%; height: auto; }
+    .corpo hr { border: 0; border-top: 1px solid #2A2F31; margin: 32px 0; }
+    /* Pulsanti dell'editor di Kit: arancio pieno, testo cemento, angoli vivi */
+    .corpo a.btn, .corpo a.button, .corpo .btn a, .corpo .button a, .corpo a[class*="button"] {
+      background: #FF4F1A !important; color: #111314 !important; border-radius: 0 !important;
+      font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important;
+      font-size: 14px !important; letter-spacing: 1px !important; text-transform: uppercase !important;
+      text-decoration: none !important; padding: 16px 28px !important; display: inline-block !important;
+    }
+    .piede { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 12px; line-height: 1.7; letter-spacing: 0.5px; color: #9AA3A4; }
+    .piede a { color: #9AA3A4; text-decoration: underline; }
+    @media (max-width: 620px) {
+      .contenitore { padding: 32px 20px !important; }
+      .corpo { font-size: 16px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background:#111314;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#111314;" bgcolor="#111314">
+    <tr>
+      <td align="center" style="padding:0;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;">
+          <tr>
+            <td class="contenitore" style="padding:48px 40px;">
+              <!-- Logotipo -->
+              <a href="https://daretta.it" style="text-decoration:none;">
+                <img src="https://daretta.dimmipure.workers.dev/mail/logotipo.png" width="150" height="31" alt="dàretta" style="display:block; border:0; width:150px; height:auto; color:#ECECE7; font-size:24px; font-weight:600;" />
+              </a>
+              <div style="height:40px; line-height:40px;">&nbsp;</div>
+
+              <!-- Contenuto scritto nell'editor di Kit -->
+              <div class="corpo" style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:17px; line-height:1.6; color:#D2D4CE;">
+                {{ message_content }}
+              </div>
+
+              <!-- Piede -->
+              <div style="height:24px; line-height:24px;">&nbsp;</div>
+              <div style="border-top:1px solid #2A2F31; height:24px; line-height:24px;">&nbsp;</div>
+              <div class="piede" style="font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size:12px; line-height:1.7; letter-spacing:0.5px; color:#9AA3A4;">
+                <a href="{{ unsubscribe_url }}" style="color:#9AA3A4; text-decoration:underline;">Vuoi andartene? Basta un clic, senza rancore.</a><br />
+                <a href="https://daretta.it/privacy" style="color:#9AA3A4; text-decoration:underline;">Come tratto la tua email</a><br />
+                {{ address }}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
