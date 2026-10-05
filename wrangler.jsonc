@@ -3,6 +3,8 @@
 // e KIT_API_KEY restano nel pannello di Cloudflare come Secret, che il deploy non tocca.
 {
   "name": "daretta",
+  // Log del Worker visibili nel pannello (Workers → daretta → Logs): servono per capire cosa risponde Kit
+  "observability": { "enabled": true },
   "vars": {
     // GitHub App «daretta-cms» per l'admin di Keystatic (vedi CMS.md)
     "KEYSTATIC_GITHUB_CLIENT_ID": "Iv23liZYazGmHKRbXtRb",
