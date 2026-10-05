@@ -93,7 +93,7 @@ const ruoli = [
         cose a cui prima dovevo rinunciare.
       </p>
     </div>
-    <div class="foto" role="img" aria-label="Foto di Patrizio, in arrivo">[ Foto spontanea ]</div>
+    <img class="foto" src="/foto/notte-800.webp" srcset="/foto/notte-480.webp 480w, /foto/notte-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="1000" alt="Patrizio di notte, davanti a un paese illuminato" loading="lazy" decoding="async" style="object-position: 70% 45%" />
   </section>
 
   <Chiusura
@@ -175,7 +175,10 @@ const ruoli = [
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-modulo);
-    background: linear-gradient(180deg, #21525a 0%, #1c2d30 55%, #1e2224 100%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--cemento-alto);
     font-family: var(--font-mono);
     font-size: 13px;
     text-transform: uppercase;
