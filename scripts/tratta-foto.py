@@ -8,8 +8,8 @@ Uso:
   python3 scripts/tratta-foto.py FOTO.jpg avatar --avatar --viso 0.665,0.44 --taglio 0.58
 
   --viso X,Y   centro del viso, in frazioni della foto (0–1, da sinistra e dall'alto)
-  --avatar     quadrato 1024px, gamma 0.85; altrimenti 4:5 per i moduli foto
-  --taglio F   quanta altezza della foto tenere (default 1 per il 4:5, 0.55 per l'avatar)
+  --avatar     quadrato 1024px stretto sul viso, gamma 0.85; altrimenti quadrato largo per i moduli foto
+  --taglio F   quanta altezza della foto tenere (default 1 per i moduli, 0.55 per l'avatar)
   --uscita D   cartella di uscita (default public/foto)
 
 Esce: NOME-480.webp e NOME-800.webp per il sito. Per l'avatar: NOME.jpg e NOME.webp a 1024px,
@@ -77,9 +77,9 @@ def main():
         print("avatar:", base + ".jpg", base + ".webp")
         return
 
-    out = tratta(taglia(im, vx, vy, 0.8, o.taglio or 1, 1200), gamma=0.9)
+    out = tratta(taglia(im, vx, vy, 1, o.taglio or 1, 1200), gamma=0.9)
     for w in (480, 800):
-        out.resize((w, int(w * 1.25)), Image.LANCZOS).save(f"{base}-{w}.webp", quality=78)
+        out.resize((w, w), Image.LANCZOS).save(f"{base}-{w}.webp", quality=78)
     print("foto:", f"{base}-480.webp", f"{base}-800.webp")
 
 
