@@ -9,7 +9,7 @@ interface Props {
 const { progetto } = Astro.props;
 ---
 
-<a class="card" href={`/progetti/${progetto.slug}`}>
+<a class="card smussato" href={`/progetti/${progetto.slug}`}>
   <Stato stato={progetto.stato} />
   <span class="nome">
     <span class="titolo">{progetto.nome}</span>
@@ -25,13 +25,12 @@ const { progetto } = Astro.props;
     gap: 14px;
     min-height: 240px;
     padding: 28px;
-    border-radius: var(--radius-card);
-    background: var(--cemento-incavo);
+    --s: var(--card-smusso);
+    --fondo: var(--cemento-incavo);
     text-decoration: none;
-    transition: background-color 0.15s;
   }
   .card:hover {
-    background: #161a1b;
+    --fondo: #161a1b;
   }
   .nome {
     display: flex;
@@ -60,7 +59,6 @@ const { progetto } = Astro.props;
     .card {
       min-height: 0;
       padding: 20px;
-      border-radius: 16px;
     }
   }
 </style>

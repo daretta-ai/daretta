@@ -17,8 +17,8 @@ const { etichetta = true, class: classe } = Astro.props;
   <p>Non ti vendo niente, ma se leggendo ti viene voglia di fare qualcosa insieme, rispondi alla mail, vediamo cosa ne esce.</p>
   <div class="riga">
     <label class="solo-lettori" for="newsletter-mail">La tua email</label>
-    <input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder="la tua email" />
-    <button type="submit">Iscrivimi</button>
+    <span class="campo smussato"><input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder="la tua email" /></span>
+    <button class="smussato" type="submit">Iscrivimi</button>
   </div>
 </Modulo>
 
@@ -41,14 +41,23 @@ const { etichetta = true, class: classe } = Astro.props;
     display: flex;
     gap: var(--space-3);
   }
+  /* Il campo è smussato appena (smusso-campo), altrimenti sembra un pulsante.
+     La forma sta sul contenitore: un input non ha ::before e ::after. */
+  .campo {
+    flex-grow: 1;
+    min-width: 0;
+    display: flex;
+    --s: var(--smusso-campo);
+    --fondo: var(--carta);
+    --anello: var(--carta);
+  }
   input {
     flex-grow: 1;
     min-width: 0;
     height: 56px;
     padding: 0 var(--space-6);
     border: none;
-    border-radius: var(--radius-pill);
-    background: var(--carta);
+    background: transparent;
     color: var(--cemento);
     font: inherit;
     font-size: 17px;
@@ -59,20 +68,14 @@ const { etichetta = true, class: classe } = Astro.props;
   button {
     height: 56px;
     padding: 0 28px;
-    border: none;
-    border-radius: var(--radius-pill);
-    background: var(--arancio);
+    --fondo: var(--arancio);
+    --anello: var(--carta);
     color: var(--cemento);
     font-family: var(--font-mono);
     font-size: 14px;
     letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
-  }
-  input:focus-visible,
-  button:focus-visible {
-    outline: 2px solid var(--carta);
-    outline-offset: 3px;
   }
   @media (max-width: 720px) {
     .newsletter {

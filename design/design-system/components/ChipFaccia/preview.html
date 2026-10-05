@@ -7,20 +7,26 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap">
 <style>
 body{margin:0;background:var(--cemento-rilievo);color:var(--inchiostro)}
-.row{display:flex;flex-wrap:wrap;gap:10px;padding:32px 40px}
-.chip{min-height:44px;box-sizing:border-box;padding:10px 18px;border-radius:var(--radius-pill);font-family:var(--font-sans);font-size:17px;cursor:pointer}
-.attiva{background:var(--inchiostro);color:var(--cemento);border:1px solid var(--inchiostro);font-weight:500}
-.spenta{background:transparent;color:var(--inchiostro);border:1px solid var(--bordo)}
-.chip:focus-visible{outline:2px solid var(--onda);outline-offset:3px}
+.row{display:flex;flex-wrap:wrap;gap:6px;padding:32px 40px}
+.sm{clip-path:polygon(0 var(--s),var(--s) 0,calc(100% - var(--s)) 0,100% var(--s),100% calc(100% - var(--s)),calc(100% - var(--s)) 100%,var(--s) 100%,0 calc(100% - var(--s)))}
+/* Anello di focus che segue lo smusso: anello (12+3) > stacco (12+2) > chip (12) */
+.anello{--s:15px;display:inline-flex;padding:2px}
+.stacco{--s:14px;display:inline-flex;padding:3px;background:var(--cemento-rilievo)}
+.anello:has(:focus-visible){background:var(--onda)}
+.chip{--s:12px;min-height:44px;box-sizing:border-box;border:none;padding:0;font-family:var(--font-sans);font-size:17px;cursor:pointer;display:inline-flex;outline:none}
+.chip span{--s:12px;display:inline-flex;align-items:center;padding:10px 18px}
+.attiva{background:var(--inchiostro);color:var(--cemento);font-weight:500}
+.spenta{background:var(--bordo);padding:1px}
+.spenta span{background:var(--cemento-rilievo);color:var(--inchiostro);padding:9px 17px}
 </style>
 </head>
 <body>
 <div class="row" role="group" aria-label="Le facce">
-<button class="chip attiva" type="button" aria-pressed="true">Imprenditore</button>
-<button class="chip spenta" type="button" aria-pressed="false">Product manager</button>
-<button class="chip spenta" type="button" aria-pressed="false">Team leader</button>
-<button class="chip spenta" type="button" aria-pressed="false">Developer</button>
-<button class="chip spenta" type="button" aria-pressed="false">Videogiocatore</button>
+<span class="anello sm"><span class="stacco sm"><button class="chip attiva sm" type="button" aria-pressed="true"><span>Imprenditore</span></button></span></span>
+<span class="anello sm"><span class="stacco sm"><button class="chip spenta sm" type="button" aria-pressed="false"><span class="sm">Product manager</span></button></span></span>
+<span class="anello sm"><span class="stacco sm"><button class="chip spenta sm" type="button" aria-pressed="false"><span class="sm">Team leader</span></button></span></span>
+<span class="anello sm"><span class="stacco sm"><button class="chip spenta sm" type="button" aria-pressed="false"><span class="sm">Developer</span></button></span></span>
+<span class="anello sm"><span class="stacco sm"><button class="chip spenta sm" type="button" aria-pressed="false"><span class="sm">Videogiocatore</span></button></span></span>
 </div>
 </body>
 </html>

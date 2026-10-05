@@ -1,6 +1,6 @@
 # Modulo
 
-Il contenitore dei blocchi principali della pagina: `cemento-rilievo`, `radius-modulo` (32px; 24px su mobile), padding `space-10`.
+Il contenitore dei blocchi principali della pagina: `cemento-rilievo`, smussato a 45° con `smusso-modulo` (32px; `smusso-modulo-mobile`, 30px, su mobile), padding `space-10`. Lo smusso si fa con `clip-path`, mai con `border-radius` (vedi «Angoli» nel README).
 
 La luce petrolio che riceve dipende da quanto è vicino alla sfera:
 

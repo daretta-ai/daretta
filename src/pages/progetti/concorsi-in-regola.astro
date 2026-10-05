@@ -77,7 +77,7 @@ const regole = [
   .regole {
     margin: 0;
     padding: var(--space-10);
-    border-radius: var(--radius-modulo);
+    clip-path: var(--ritaglio-modulo);
     background: var(--cemento-rilievo);
     display: flex;
     flex-direction: column;
@@ -118,7 +118,7 @@ const regole = [
     flex-shrink: 0;
     width: 14px;
     height: 14px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-tondo);
     background-color: var(--cemento-incavo);
     background-image: radial-gradient(circle, #3a9ca5 1.6px, transparent 2px);
     background-size: 5px 5px;
@@ -126,7 +126,6 @@ const regole = [
   @media (max-width: 720px) {
     .regole {
       padding: var(--space-6);
-      border-radius: var(--radius-modulo-mobile);
       gap: var(--space-4);
     }
     li {

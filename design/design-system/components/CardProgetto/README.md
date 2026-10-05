@@ -2,7 +2,8 @@
 
 Una card per ogni progetto, dentro il modulo Progetti: stato, nome, una riga di descrizione.
 
-- Fondo `cemento-incavo`, `radius-card`, padding 28px (20px su mobile).
+- Fondo `cemento-incavo`, smussata con `smusso-card` (20px; `smusso-card-mobile`, 12px, su mobile), padding 28px (20px su mobile).
+- I segni degli stati restano tondi (`radius-tondo`): sono l'unica cosa tonda della card.
 - **Stato ONLINE:** pallino pieno `arancio`. È l'unico uso dell'arancio fuori dal logotipo.
 - **Stato IN SVILUPPO:** anello vuoto `stato-spento`. Lo stato è sempre scritto accanto al pallino.
 - Il modulo che contiene le card mostra la legenda (● ONLINE ○ IN SVILUPPO) in alto a destra.

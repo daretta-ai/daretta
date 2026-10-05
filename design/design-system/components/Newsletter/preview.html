@@ -8,23 +8,35 @@
 <style>
 body{margin:0;background:var(--cemento)}
 .wrap{padding:24px 40px}
-form{max-width:720px;border-radius:var(--radius-modulo);background:linear-gradient(135deg,var(--petrolio-acceso) 0%,var(--petrolio-scuro) 100%);color:var(--carta);padding:40px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box}
+.sm{clip-path:polygon(0 var(--s),var(--s) 0,calc(100% - var(--s)) 0,100% var(--s),100% calc(100% - var(--s)),calc(100% - var(--s)) 100%,var(--s) 100%,0 calc(100% - var(--s)))}
+form{--s:var(--smusso-modulo);max-width:720px;background:linear-gradient(135deg,var(--petrolio-acceso) 0%,var(--petrolio-scuro) 100%);color:var(--carta);padding:40px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box}
 .t{font-family:var(--font-punti);font-weight:900;font-size:52px;line-height:1}
 p{margin:0;font-family:var(--font-sans);font-size:18px;line-height:1.45}
 label{font-family:var(--font-mono);font-size:13px;letter-spacing:1px}
-.riga{display:flex;gap:12px}
-input{flex-grow:1;height:56px;padding:0 24px;border-radius:var(--radius-pill);border:none;background:var(--carta);color:var(--cemento);font-size:17px;font-family:var(--font-sans)}
-button{height:56px;padding:0 28px;border-radius:var(--radius-pill);border:none;background:var(--arancio);color:var(--cemento);font-family:var(--font-mono);font-size:14px;letter-spacing:1px}
-input:focus-visible,button:focus-visible{outline:2px solid var(--carta);outline-offset:3px}
+.riga{display:flex;gap:6px;align-items:center}
+/* Anello di focus che segue lo smusso: anello (S+3) > stacco (S+2) > elemento (S) */
+.anello{display:flex;padding:2px}
+.stacco{display:flex;padding:3px;background:transparent}
+.anello:has(:focus-visible){background:var(--carta)}
+.campo{flex-grow:1}
+.campo.anello{--s:9px}.campo .stacco{--s:8px}
+.azione.anello{--s:15px}.azione .stacco{--s:14px}
+.campo .stacco,.azione .stacco{background:var(--petrolio)}
+.anello:not(:has(:focus-visible)) .stacco{background:transparent}
+input{--s:var(--smusso-campo);flex-grow:1;width:100%;height:56px;padding:0 20px;border:none;background:var(--carta);color:var(--cemento);font-size:17px;font-family:var(--font-sans);outline:none;box-sizing:border-box}
+button{--s:var(--smusso-azione);height:56px;padding:0 28px;border:none;background:var(--arancio);color:var(--cemento);font-family:var(--font-mono);font-size:14px;letter-spacing:1px;cursor:pointer;outline:none}
 </style>
 </head>
 <body>
 <div class="wrap">
-<form onsubmit="return false">
+<form class="sm" onsubmit="return false">
 <span class="t">una mail al mese.</span>
-<p>Cosa ho imparato, cosa ho sbagliato, a che punto sono i progetti. Niente di più.</p>
+<p>Dentro c'è qualche spunto dai miei progetti, gli articoli e qualche opinione… se mi scappa.</p>
 <label for="nl-mail">LA TUA EMAIL</label>
-<div class="riga"><input id="nl-mail" type="email" placeholder="nome@azienda.it"><button type="submit">ISCRIVIMI</button></div>
+<div class="riga">
+<span class="anello campo sm"><span class="stacco sm" style="flex-grow:1"><input class="sm" id="nl-mail" type="email" placeholder="nome@esempio.it"></span></span>
+<span class="anello azione sm"><span class="stacco sm"><button class="sm" type="submit">ISCRIVIMI</button></span></span>
+</div>
 </form>
 </div>
 </body>

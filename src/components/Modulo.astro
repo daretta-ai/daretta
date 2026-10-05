@@ -24,7 +24,7 @@ const { luce = 'nessuna', as: Tag = 'section', class: classe, ...resto } = Astro
   .modulo {
     position: relative;
     padding: var(--space-10);
-    border-radius: var(--radius-modulo);
+    clip-path: var(--ritaglio-modulo);
     background: var(--cemento-rilievo);
   }
   .luce-forte {
@@ -46,9 +46,21 @@ const { luce = 'nessuna', as: Tag = 'section', class: classe, ...resto } = Astro
     background: linear-gradient(135deg, var(--petrolio-acceso) 0%, var(--petrolio-scuro) 100%);
     color: var(--carta);
   }
+  /* Il contorno non può essere un border (il ritaglio lo taglierebbe sulle diagonali):
+     è un fondo pieno con un foro smussato di 1px più in dentro. */
   .luce-contorno {
-    background: transparent;
-    border: 1px solid var(--filetto-neutro);
+    background: var(--filetto-neutro);
+  }
+  .luce-contorno::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    background: var(--cemento);
+    clip-path: polygon(0 calc(var(--modulo-smusso) - 0.6px), calc(var(--modulo-smusso) - 0.6px) 0, calc(100% - var(--modulo-smusso) + 0.6px) 0, 100% calc(var(--modulo-smusso) - 0.6px), 100% calc(100% - var(--modulo-smusso) + 0.6px), calc(100% - var(--modulo-smusso) + 0.6px) 100%, calc(var(--modulo-smusso) - 0.6px) 100%, 0 calc(100% - var(--modulo-smusso) + 0.6px));
+  }
+  .luce-contorno {
+    isolation: isolate;
   }
 
   @media (max-width: 720px) {
@@ -57,7 +69,6 @@ const { luce = 'nessuna', as: Tag = 'section', class: classe, ...resto } = Astro
     .luce-sinistra,
     .luce-pieno {
       padding: 28px var(--space-6) var(--space-8);
-      border-radius: var(--radius-modulo-mobile);
     }
     .luce-forte {
       background: radial-gradient(420px 360px at 80% 20%, var(--petrolio-luce) 0%, #173134 45%, var(--cemento-rilievo) 90%);

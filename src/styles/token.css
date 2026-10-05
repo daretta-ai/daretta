@@ -44,26 +44,104 @@
   --space-10: 40px;
   --space-14: 56px;
 
-  /* Angoli */
-  --radius-card: 20px;
-  --radius-modulo-mobile: 24px;
-  --radius-modulo: 32px;
-  --radius-pill: 999px;
+  /* Angoli: smussi a 45°, fatti con clip-path (README, «Angoli»).
+     Tondi restano solo la sfera e i segni degli stati. */
+  --smusso-modulo: 32px;
+  --smusso-modulo-mobile: 30px;
+  --smusso-card: 20px;
+  --smusso-card-mobile: 12px;
+  --smusso-azione: 12px;
+  --smusso-campo: 6px;
+  --radius-tondo: 50%;
 
   --ombra-sfera: inset -60px -70px 120px #0b1112, inset 30px 30px 80px #2f6a71;
 
   /* Griglia */
   --margine: var(--space-14);
   --gap: var(--space-6);
-  --modulo-raggio: var(--radius-modulo);
+
+  /* Smussi che cambiano su mobile */
+  --modulo-smusso: var(--smusso-modulo);
+  --card-smusso: var(--smusso-card);
+
+  /* Tagli pronti per i contenitori che non prendono il focus (moduli, foto, figure).
+     Per ciò che prende il focus si usa la classe .smussato, più sotto. */
+  --ritaglio-modulo: polygon(0 var(--modulo-smusso), var(--modulo-smusso) 0, calc(100% - var(--modulo-smusso)) 0, 100% var(--modulo-smusso), 100% calc(100% - var(--modulo-smusso)), calc(100% - var(--modulo-smusso)) 100%, var(--modulo-smusso) 100%, 0 calc(100% - var(--modulo-smusso)));
+  --ritaglio-card: polygon(0 var(--card-smusso), var(--card-smusso) 0, calc(100% - var(--card-smusso)) 0, 100% var(--card-smusso), 100% calc(100% - var(--card-smusso)), calc(100% - var(--card-smusso)) 100%, var(--card-smusso) 100%, 0 calc(100% - var(--card-smusso)));
+  --ritaglio-campo: polygon(0 var(--smusso-campo), var(--smusso-campo) 0, calc(100% - var(--smusso-campo)) 0, 100% var(--smusso-campo), 100% calc(100% - var(--smusso-campo)), calc(100% - var(--smusso-campo)) 100%, var(--smusso-campo) 100%, 0 calc(100% - var(--smusso-campo)));
 }
 
 @media (max-width: 720px) {
   :root {
     --margine: var(--space-3);
     --gap: var(--space-3);
-    --modulo-raggio: var(--radius-modulo-mobile);
+    --modulo-smusso: var(--smusso-modulo-mobile);
+    --card-smusso: var(--smusso-card-mobile);
   }
+}
+
+/*
+  .smussato: per tutto ciò che prende il focus (pulsanti, card e rimandi cliccabili, campi).
+  L'elemento non viene ritagliato: il fondo sta in ::before, smussato, e l'anello di focus
+  in ::after, che segue lo smusso (2px staccati di 3px). clip-path taglierebbe outline e border.
+  Chi lo usa imposta:
+    --s        lo smusso (default smusso-azione)
+    --fondo    il fondo (colore o gradiente)
+    --anello   il colore dell'anello (default onda; carta sul modulo newsletter)
+  Con .contornato il ::before disegna solo il contorno di 1px, in --contorno (default bordo).
+  Sta in un layer, così gli stili dei componenti vincono sempre.
+*/
+@layer smusso {
+  .smussato {
+    --s: var(--smusso-azione);
+    --fondo: transparent;
+    --anello: var(--onda);
+    --contorno: var(--bordo);
+    /* Le forme si risolvono qui, con lo smusso dell'elemento */
+    --forma: polygon(0 var(--s), var(--s) 0, calc(100% - var(--s)) 0, 100% var(--s), 100% calc(100% - var(--s)), calc(100% - var(--s)) 100%, var(--s) 100%, 0 calc(100% - var(--s)));
+    /* Contorno di 1px: anello pari-dispari, il foro ha lo smusso corretto perché la diagonale resti di 1px */
+    --forma-contorno: polygon(evenodd, 0 var(--s), var(--s) 0, calc(100% - var(--s)) 0, 100% var(--s), 100% calc(100% - var(--s)), calc(100% - var(--s)) 100%, var(--s) 100%, 0 calc(100% - var(--s)), 0 var(--s), 1px calc(var(--s) + 0.4px), calc(var(--s) + 0.4px) 1px, calc(100% - var(--s) - 0.4px) 1px, calc(100% - 1px) calc(var(--s) + 0.4px), calc(100% - 1px) calc(100% - var(--s) - 0.4px), calc(100% - var(--s) - 0.4px) calc(100% - 1px), calc(var(--s) + 0.4px) calc(100% - 1px), 1px calc(100% - var(--s) - 0.4px), 1px calc(var(--s) + 0.4px));
+    /* Anello di focus, disegnato su una scatola 5px più grande per lato:
+       bordo esterno a 5px dall'elemento (smusso +2.9px), foro a 3px (smusso +1.8px) */
+    --forma-anello: polygon(evenodd, 0 calc(var(--s) + 2.9px), calc(var(--s) + 2.9px) 0, calc(100% - var(--s) - 2.9px) 0, 100% calc(var(--s) + 2.9px), 100% calc(100% - var(--s) - 2.9px), calc(100% - var(--s) - 2.9px) 100%, calc(var(--s) + 2.9px) 100%, 0 calc(100% - var(--s) - 2.9px), 0 calc(var(--s) + 2.9px), 2px calc(var(--s) + 3.8px), calc(var(--s) + 3.8px) 2px, calc(100% - var(--s) - 3.8px) 2px, calc(100% - 2px) calc(var(--s) + 3.8px), calc(100% - 2px) calc(100% - var(--s) - 3.8px), calc(100% - var(--s) - 3.8px) calc(100% - 2px), calc(var(--s) + 3.8px) calc(100% - 2px), 2px calc(100% - var(--s) - 3.8px), 2px calc(var(--s) + 3.8px));
+    position: relative;
+    isolation: isolate;
+    background: none;
+    border: 0;
+  }
+  .smussato::before,
+  .smussato::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .smussato::before {
+    inset: 0;
+    background: var(--fondo);
+    clip-path: var(--forma);
+    transition: background-color 0.15s;
+  }
+  .smussato.contornato::before {
+    background: var(--contorno);
+    clip-path: var(--forma-contorno);
+  }
+  .smussato::after {
+    inset: -5px;
+    background: var(--anello);
+    clip-path: var(--forma-anello);
+    opacity: 0;
+  }
+  .smussato:focus-visible::after,
+  .smussato:has(:focus-visible)::after {
+    opacity: 1;
+  }
+}
+
+/* Fuori dal layer: deve vincere sull'outline generico qui sotto */
+.smussato:focus-visible,
+.smussato :focus-visible {
+  outline: none;
 }
 
 *,

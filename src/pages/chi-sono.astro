@@ -146,7 +146,7 @@ const ruoli = [
   }
   .gradino {
     height: var(--h);
-    border-radius: 16px;
+    clip-path: var(--ritaglio-campo);
     background-color: var(--cemento-rilievo);
     background-image: radial-gradient(circle, var(--c) 1.8px, transparent 2.3px);
     background-size: 12px 12px;
@@ -174,7 +174,7 @@ const ruoli = [
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-modulo);
+    clip-path: var(--ritaglio-modulo);
     width: 100%;
     aspect-ratio: 1;
     height: auto;
@@ -212,7 +212,6 @@ const ruoli = [
     .gradino {
       width: var(--w);
       height: 28px;
-      border-radius: 10px;
       background-image: radial-gradient(circle, var(--c) 1.6px, transparent 2.1px);
       background-size: 10px 10px;
     }
@@ -229,7 +228,6 @@ const ruoli = [
     }
     .foto {
       min-height: 360px;
-      border-radius: var(--radius-modulo-mobile);
     }
   }
 </style>
