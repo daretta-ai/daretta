@@ -8,6 +8,6 @@
     "KEYSTATIC_GITHUB_CLIENT_ID": "Iv23liZYazGmHKRbXtRb",
     "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG": "daretta-cms",
     // Modulo Kit della newsletter (pubblico: è nell'indirizzo del modulo). La chiave API sta su Cloudflare come Secret.
-    "KIT_FORM_ID": ""
+    "KIT_FORM_ID": "10005106"
   }
 }
