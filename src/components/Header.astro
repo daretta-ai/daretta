@@ -4,8 +4,10 @@
 interface Props {
   attiva?: 'scritti' | 'progetti' | 'chi-sono';
   home?: boolean;
+  avanzamento?: boolean; // negli articoli: la barra di lettura a punti sotto l'header
 }
-const { attiva, home = false } = Astro.props;
+const { attiva, home = false, avanzamento = false } = Astro.props;
+const PUNTI = 72;
 
 // Non c'è una pagina indice dei progetti nelle tavole: PROGETTI porta al blocco in home.
 // Curiosità non sta nel menu (decisione di Patrizio, 2 ott 2026): ci si arriva da «Vedi tutte» e dal footer.
@@ -16,7 +18,7 @@ const voci = [
 ] as const;
 ---
 
-<header class:list={['header', { 'in-home': home }]}>
+<header class:list={['header', { 'in-home': home, 'con-avanzamento': avanzamento }]}>
   <a class="logo" href="/" aria-label="dàretta, home">d<span>à</span>retta</a>
 
   <nav class="menu" id="menu" aria-label="Principale">
@@ -38,6 +40,14 @@ const voci = [
       </svg>
     </button>
   </div>
+
+  {
+    avanzamento && (
+      <div class="avanzamento" role="progressbar" aria-label="Avanzamento della lettura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-avanzamento>
+        {Array.from({ length: PUNTI }, () => <span />)}
+      </div>
+    )
+  }
 </header>
 
 <script>
@@ -51,6 +61,24 @@ const voci = [
         rootMargin: '-80px 0px 0px 0px',
       }).observe(hero);
     }
+    // Negli articoli: i punti letti si accendono di arancio
+    const barra = header.querySelector<HTMLElement>('[data-avanzamento]');
+    const articolo = document.querySelector<HTMLElement>('[data-articolo]');
+    if (barra && articolo) {
+      const punti = [...barra.children];
+      const aggiorna = () => {
+        const r = articolo.getBoundingClientRect();
+        const totale = r.height - innerHeight;
+        const quota = totale > 0 ? Math.min(1, Math.max(0, -r.top / totale)) : 1;
+        const accesi = Math.round(quota * punti.length);
+        punti.forEach((p, i) => p.classList.toggle('letto', i < accesi));
+        barra.setAttribute('aria-valuenow', String(Math.round(quota * 100)));
+      };
+      aggiorna();
+      addEventListener('scroll', aggiorna, { passive: true });
+      addEventListener('resize', aggiorna);
+    }
+
     // Fondo dell'header solo quando la pagina scorre
     const segna = () => header.classList.toggle('staccato', scrollY > 8);
     segna();
@@ -90,6 +118,28 @@ const voci = [
     margin: 0 calc(var(--margine) * -1);
     padding: var(--space-6) calc(var(--margine) + var(--space-2)) var(--space-4);
     transition: background-color 0.2s;
+  }
+  .con-avanzamento {
+    flex-wrap: wrap;
+    row-gap: var(--space-3);
+  }
+  .avanzamento {
+    flex-basis: 100%;
+    order: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-2);
+  }
+  .avanzamento span {
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-tondo);
+    background: var(--filetto);
+    transition: background-color 0.2s;
+  }
+  .avanzamento span:global(.letto) {
+    background: var(--arancio);
   }
   .header.staccato {
     background: rgb(17 19 20 / 0.86);
@@ -177,6 +227,10 @@ const voci = [
   }
 
   @media (max-width: 900px) {
+    /* Su mobile la metà dei punti: la barra resta leggibile */
+    .avanzamento span:nth-child(even) {
+      display: none;
+    }
     .header {
       justify-content: space-between;
       padding: var(--space-4) calc(var(--margine) + var(--space-2)) var(--space-2);

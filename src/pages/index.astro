@@ -8,7 +8,16 @@ import CardProgetto from '../components/CardProgetto.astro';
 import Newsletter from '../components/Newsletter.astro';
 import Sfera from '../components/Sfera.astro';
 import Tabellone from '../components/Tabellone.astro';
-import { progetti } from '../data/progetti';
+import ListaScritti from '../components/ListaScritti.astro';
+import { getHome, getChiSono, getMicrotesti, getProgetti, getArticoli } from '../cms';
+
+const [home, chiSono, micro, progetti, articoli] = await Promise.all([
+  getHome(),
+  getChiSono(),
+  getMicrotesti(),
+  getProgetti(),
+  getArticoli(),
+]);
 ---
 
 <Base home>
@@ -16,12 +25,9 @@ import { progetti } from '../data/progetti';
   <Modulo luce="forte" class="griglia hero" data-hero>
     <div class="hero-testo">
       <h1 class="logo">d<span>à</span>retta</h1>
-      <p class="motto">risolvo problemi, a volte sono intere aziende.</p>
-      <p class="presentazione">
-        Sono amministratore delegato di Codever e service leader dello sviluppo digital di Mirror. Qui racconto i
-        side project che porto avanti la sera, e condivido con voi un po' di me.
-      </p>
-      <a class="cta-hero smussato" href="#newsletter">Una mail al mese →</a>
+      <p class="motto">{home.motto}</p>
+      <p class="presentazione">{home.presentazione}</p>
+      <a class="cta-hero smussato" href="#newsletter">{home.pulsante}</a>
     </div>
     <div class="hero-sfera">
       <Sfera />
@@ -32,19 +38,10 @@ import { progetti } from '../data/progetti';
   <Modulo luce="media" class="griglia chi-sono">
     <div class="chi-sinistra">
       <Sezione numero={2}>Chi sono</Sezione>
-      <p class="titolo-modulo">
-        Sviluppatore, team leader, project manager, product manager, CEO. Non è ambizione, è che ogni volta il
-        problema stava uno scalino più su.
-      </p>
+      <p class="titolo-modulo">{chiSono.attacco}</p>
     </div>
     <div class="chi-destra">
-      <p class="breve">
-        La versione breve è che ho un'azienda di software a Firenze. Per i più curiosi, l'azienda si chiama Codever,
-        l'ho fondata con Alberto e ne sono amministratore delegato. Siamo system integrator specializzati in sviluppo
-        web e mobile, con il pallino per le prestazioni. Dal 2026 facciamo parte di Mirror, dove sono service leader
-        dello sviluppo digital e system administrator. Se sono a una cena, però, mi fermo alla versione breve, perché
-        dopo «service leader» nessuno mi passa più il vino.
-      </p>
+      <p class="breve">{chiSono.breve}</p>
       <a class="link-etichetta" href="/chi-sono">Tutta la storia →</a>
     </div>
   </Modulo>
@@ -53,7 +50,7 @@ import { progetti } from '../data/progetti';
   <section class="griglia scritti-foto">
     <div class="scritti">
       <Sezione numero={3}>Scritti</Sezione>
-      <p class="titolo-lista vuoto">Ancora niente. Il primo articolo arriva presto… l'ho promesso all'AI.</p>
+      {articoli.length ? <ListaScritti articoli={articoli.slice(0, 3)} /> : <p class="titolo-lista vuoto">{micro.scrittiVuoto}</p>}
     </div>
     <img class="foto" src="/foto/pini-800.webp" srcset="/foto/pini-480.webp 480w, /foto/pini-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="800" alt="Patrizio con gli occhiali da sole, davanti al mare e ai pini" loading="lazy" decoding="async" style="object-position: 50% 40%" />
   </section>

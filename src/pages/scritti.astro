@@ -1,15 +1,34 @@
 ---
-// Scritti, finché è vuoto (tavola Scritti).
+// Scritti (tavola Scritti). Finché non c'è un articolo pubblicato, la pagina dice che arriva.
 import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
+import ListaScritti from '../components/ListaScritti.astro';
 import Chiusura from '../components/Chiusura.astro';
+import { getArticoli, getMicrotesti } from '../cms';
+
+const [articoli, micro] = await Promise.all([getArticoli(), getMicrotesti()]);
+const vuoto = articoli.length === 0;
 ---
 
-<Base titolo="Scritti" descrizione="Gli articoli di Patrizio Bartolozzi. Il primo arriva presto." attiva="scritti">
+<Base
+  titolo="Scritti"
+  descrizione={vuoto ? 'Gli articoli di Patrizio Bartolozzi. Il primo arriva presto.' : 'Gli articoli di Patrizio Bartolozzi.'}
+  attiva="scritti"
+>
   <Testata titolo="scritti.">
     <span slot="etichetta" class="etichetta">[ 003 ] Scritti</span>
-    <p class="attacco">Ancora niente. Il primo articolo arriva presto… l'ho promesso all'AI.</p>
+    {vuoto && <p class="attacco">{micro.scrittiVuoto}</p>}
   </Testata>
+
+  {
+    !vuoto && (
+      <section class="griglia elenco">
+        <div class="colonna">
+          <ListaScritti articoli={articoli} />
+        </div>
+      </section>
+    )
+  }
 
   <Chiusura
     rimandi={[
@@ -28,10 +47,19 @@ import Chiusura from '../components/Chiusura.astro';
     line-height: 1.3;
     letter-spacing: -0.5px;
   }
+  .elenco {
+    padding: 72px var(--space-2) 0;
+  }
+  .colonna {
+    grid-column: 1 / span 10;
+  }
   @media (max-width: 720px) {
     .attacco {
       font-size: 21px;
       line-height: 1.35;
+    }
+    .elenco {
+      padding-top: var(--space-8);
     }
   }
 </style>

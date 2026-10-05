@@ -1,0 +1,47 @@
+---
+// Blocco di codice (tavola Articolo): smusso da card, luce petrolio dall'alto a sinistra,
+// sotto il linguaggio in mono.
+interface Props {
+  codice: string;
+  linguaggio?: string;
+}
+const { codice, linguaggio } = Astro.props;
+---
+
+<figure class="codice">
+  <pre><code>{codice.replace(/\n$/, '')}</code></pre>
+  {linguaggio && <figcaption>{linguaggio}</figcaption>}
+</figure>
+
+<style>
+  .codice {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  pre {
+    margin: 0;
+    padding: 28px 32px;
+    clip-path: var(--ritaglio-card);
+    background: linear-gradient(160deg, #17383d 0%, var(--cemento-rilievo) 60%);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--inchiostro);
+    overflow-x: auto;
+  }
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  @media (max-width: 720px) {
+    pre {
+      padding: 20px;
+      font-size: 14px;
+    }
+  }
+</style>

@@ -1,41 +1,43 @@
 ---
+// Chi sono (tavole ChiSono e ChiSono-Mobile). I testi vengono da Keystatic (pagina «Chi sono»).
 import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
 import Sezione from '../components/Sezione.astro';
 import Blocco from '../components/Blocco.astro';
-import ModuloNumero from '../components/ModuloNumero.astro';
-import Citazione from '../components/Citazione.astro';
+import Corpo from '../components/Corpo.astro';
 import Chiusura from '../components/Chiusura.astro';
+import { getChiSono, corpo } from '../cms';
 
-// La scala dei ruoli: ogni gradino è più alto e più acceso del precedente
-const ruoli = [
-  { nome: 'Sviluppatore', colore: '#1f4a50' },
-  { nome: 'Team leader', colore: '#235a61' },
-  { nome: 'Project manager', colore: '#276b73' },
-  { nome: 'Product manager', colore: '#2c7c84' },
-  { nome: 'CEO', colore: '#3a9ca5' },
-];
+const pagina = await getChiSono();
+
+// La scala dei ruoli: ogni gradino è più alto e più acceso del precedente.
+// Con cinque gradini i colori sono quelli della tavola; con un numero diverso si sfumano tra il primo e l'ultimo.
+const tavola = ['#1f4a50', '#235a61', '#276b73', '#2c7c84', '#3a9ca5'];
+const sfuma = (i: number, n: number) => {
+  if (n === tavola.length) return tavola[i];
+  const t = n > 1 ? i / (n - 1) : 1;
+  const a = [0x1f, 0x4a, 0x50], b = [0x3a, 0x9c, 0xa5];
+  return '#' + a.map((x, k) => Math.round(x + (b[k] - x) * t).toString(16).padStart(2, '0')).join('');
+};
+const ruoli = pagina.ruoli.map((nome, i, tutti) => ({ nome, colore: sfuma(i, tutti.length) }));
+const passo = 100 / Math.max(ruoli.length, 1);
+
+// La versione breve è il blocco 01; il resto del corpo continua da 02.
+const nodi = corpo(pagina.body, { inizio: 2 });
 ---
 
-<Base
-  titolo="Chi sono"
-  descrizione="Sviluppatore, team leader, project manager, product manager, CEO. Non è ambizione, è che ogni volta il problema stava uno scalino più su."
-  attiva="chi-sono"
->
-  <Testata titolo="uno scalino più su.">
+<Base titolo="Chi sono" descrizione={pagina.attacco} attiva="chi-sono">
+  <Testata titolo={pagina.titolo}>
     <span slot="etichetta" class="etichetta">[ 002 ] Chi sono</span>
-    <p class="attacco">
-      Sviluppatore, team leader, project manager, product manager, CEO. Non è ambizione, è che ogni volta il problema
-      stava uno scalino più su.
-    </p>
+    <p class="attacco">{pagina.attacco}</p>
   </Testata>
 
   <section class="percorso">
     <Sezione>Il percorso</Sezione>
-    <ol>
+    <ol style={`--gradini: ${ruoli.length}`}>
       {
         ruoli.map((r, i) => (
-          <li style={`--h: ${(i + 1) * 64}px; --w: ${(i + 1) * 20}%; --c: ${r.colore}`}>
+          <li style={`--h: ${(i + 1) * 64}px; --w: ${Math.round((i + 1) * passo)}%; --c: ${r.colore}`}>
             <span class:list={['ruolo', { ultimo: i === ruoli.length - 1 }]}>
               {String(i + 1).padStart(2, '0')} · {r.nome}
             </span>
@@ -47,54 +49,10 @@ const ruoli = [
   </section>
 
   <Blocco numero={1} etichetta="La versione breve" spazio="piccolo">
-    <p>
-      La versione breve è che ho un'azienda di software a Firenze. Per i più curiosi, l'azienda si chiama Codever, l'ho
-      fondata con Alberto e ne sono amministratore delegato. Siamo system integrator specializzati in sviluppo web e
-      mobile, con il pallino per le prestazioni. Dal 2026 facciamo parte di Mirror, dove sono service leader dello
-      sviluppo digital e system administrator. Se sono a una cena, però, mi fermo alla versione breve, perché dopo
-      «service leader» nessuno mi passa più il vino.
-    </p>
+    <p>{pagina.breve}</p>
   </Blocco>
 
-  <Blocco numero={2} etichetta="Il filo" spazio="piccolo">
-    <p>
-      Una cosa sola mi ha guidato in tutto il percorso, la soddisfazione di usare la logica per risolvere un problema.
-      Prima un bug da fixare, poi le specifiche di un cliente da trasformare in prodotto, fino agli scazzi nei gruppi di
-      lavoro e agli stipendi da pagare. Cambiava la scala del problema. Non la soddisfazione nel lavorarci.
-    </p>
-  </Blocco>
-
-  <ModuloNumero numero={3} etichetta="Un lavoro" cifra="1/10" didascalia="Del costo · MongoDB → Elasticsearch">
-    <p>
-      Quando posso concentrarmi su un solo task e sviscerarlo per bene, do il meglio di me. Come con il portale delle auto
-      usate di Quattroruote, che su MongoDB non reggeva più le query paginate. L'abbiamo migrato su Elasticsearch, con
-      prestazioni migliori a un decimo del costo. Un lavorone pieno di insidie, che è andato liscio come l'olio.
-    </p>
-  </ModuloNumero>
-
-  <Blocco numero={4} etichetta="Sull'AI" spazio="grande">
-    <p>
-      Sull'AI sto dalla parte di chi la apprezza. C'è ancora chi si sente sminuito, o chi non vuole mollare la scrittura a
-      mano. Sbagliano entrambi, perché scrivere codice non è mai stato il punto, il punto era risolvere il puzzle. Dare
-      istruzioni alle AI su un task o un progetto mi dà lo stesso gusto della scrittura. Chi si sente sminuito, a mio
-      parere, non ha colto l'essenza del suo mestiere.
-    </p>
-  </Blocco>
-
-  <Citazione testo="scrivere codice non è mai stato il punto." didascalia="Il punto era risolvere il puzzle" />
-
-  <section class="griglia perche-ora">
-    <div class="testo">
-      <Sezione numero={5} cifre={2}>Perché ora</Sezione>
-      <p>
-        Grazie alle AI ora riesco a portare avanti i miei side project e perfino questo sito, finalmente. Prima, con
-        un'azienda da mandare avanti, al resto rimanevano i ritagli e i weekend. Ma il resto non ha mai vinto sulla voglia
-        di passare del tempo con mio figlio e gli amici. Adesso, parlando con un agente prima di addormentarmi, faccio le
-        cose a cui prima dovevo rinunciare.
-      </p>
-    </div>
-    <img class="foto" src="/foto/notte-800.webp" srcset="/foto/notte-480.webp 480w, /foto/notte-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="800" alt="Patrizio di notte, davanti a un paese illuminato" loading="lazy" decoding="async" style="object-position: 70% 45%" />
-  </section>
+  <Corpo nodi={nodi} />
 
   <Chiusura
     rimandi={[
@@ -125,7 +83,7 @@ const ruoli = [
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--gradini, 5), minmax(0, 1fr));
     gap: var(--space-3);
     align-items: end;
   }
@@ -152,41 +110,6 @@ const ruoli = [
     background-size: 12px 12px;
   }
 
-  .perche-ora {
-    align-items: stretch;
-    padding: 72px var(--space-2) 0;
-  }
-  .perche-ora .testo {
-    grid-column: span 7;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-  .perche-ora p {
-    margin: 0;
-    font-size: 21px;
-    line-height: 1.7;
-    color: var(--inchiostro-corpo);
-  }
-  .foto {
-    grid-column: 9 / span 4;
-    min-height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: var(--ritaglio-modulo);
-    width: 100%;
-    aspect-ratio: 1;
-    height: auto;
-    min-height: 0;
-    align-self: start;
-    object-fit: cover;
-    background: var(--cemento-alto);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    text-transform: uppercase;
-    color: var(--inchiostro-muto);
-  }
 
   @media (max-width: 720px) {
     .attacco {
@@ -214,20 +137,6 @@ const ruoli = [
       height: 28px;
       background-image: radial-gradient(circle, var(--c) 1.6px, transparent 2.1px);
       background-size: 10px 10px;
-    }
-    .perche-ora {
-      padding-top: var(--space-8);
-      gap: var(--space-4);
-    }
-    .perche-ora .testo {
-      gap: 14px;
-    }
-    .perche-ora p {
-      font-size: 18px;
-      line-height: 1.65;
-    }
-    .foto {
-      min-height: 360px;
     }
   }
 </style>

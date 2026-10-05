@@ -4,6 +4,7 @@
   "description": "dàretta, il sito di Patrizio Bartolozzi",
   "scripts": {
     "dev": "astro dev",
+    "cms": "CMS_LOCALE=1 astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
@@ -15,6 +16,7 @@
     "@astrojs/react": "^7.0.0",
     "@keystatic/astro": "^6.0.0",
     "@keystatic/core": "^0.6.9",
+    "@markdoc/markdoc": "^0.5.10",
     "astro": "^7.3.5",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"

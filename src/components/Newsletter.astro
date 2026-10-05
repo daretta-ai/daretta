@@ -2,23 +2,28 @@
 // Modulo newsletter, l'unico in petrolio pieno (tavole Main, ChiSono, Progetto).
 // Il collegamento a Kit arriva al passo 6: per ora il modulo non invia.
 import Modulo from './Modulo.astro';
+import { getNewsletter, paragrafi } from '../cms';
+
+const nl = await getNewsletter();
 
 interface Props {
   etichetta?: boolean;
+  articolo?: boolean; // in fondo agli articoli: titolo e testo propri, niente etichetta
   class?: string;
 }
-const { etichetta = true, class: classe } = Astro.props;
+const { etichetta = true, articolo = false, class: classe } = Astro.props;
+const titolo = articolo ? nl.articoloTitolo : nl.titolo;
+const testo = articolo ? nl.articoloTesto : nl.testo;
 ---
 
 <Modulo as="form" luce="pieno" id="newsletter" class:list={['newsletter', classe]} aria-labelledby="newsletter-titolo" data-newsletter>
-  {etichetta && <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>}
-  <h2 class="punti-titolo" id="newsletter-titolo">una mail al mese.</h2>
-  <p>Dentro c'è qualche spunto dai miei progetti, gli articoli e qualche opinione… se mi scappa.</p>
-  <p>Non ti vendo niente, ma se leggendo ti viene voglia di fare qualcosa insieme, rispondi alla mail, vediamo cosa ne esce.</p>
+  {etichetta && !articolo && <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>}
+  <h2 class="punti-titolo" id="newsletter-titolo">{titolo}</h2>
+  {paragrafi(testo).map((p) => <p>{p}</p>)}
   <div class="riga">
     <label class="solo-lettori" for="newsletter-mail">La tua email</label>
-    <span class="campo smussato"><input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder="la tua email" /></span>
-    <button class="smussato" type="submit">Iscrivimi</button>
+    <span class="campo smussato"><input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder={nl.segnaposto} /></span>
+    <button class="smussato" type="submit">{nl.pulsante}</button>
   </div>
 </Modulo>
 

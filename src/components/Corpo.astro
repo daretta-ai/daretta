@@ -1,0 +1,106 @@
+---
+// Disegna il corpo scritto in Keystatic: ogni blocco diventa il suo componente delle tavole.
+// L'albero arriva da corpo() in src/cms.ts, già numerato.
+import type { RenderableTreeNode } from '@markdoc/markdoc';
+import Blocco from './Blocco.astro';
+import BloccoFigura from './BloccoFigura.astro';
+import BloccoFoto from './BloccoFoto.astro';
+import ModuloNumero from './ModuloNumero.astro';
+import Citazione from './Citazione.astro';
+import Confronto from './Confronto.astro';
+import Codice from './Codice.astro';
+import FiguraBarre from './FiguraBarre.astro';
+import FiguraElenco from './FiguraElenco.astro';
+import Stato from './Stato.astro';
+
+interface Props {
+  nodi: RenderableTreeNode[];
+}
+const { nodi } = Astro.props;
+const Self = Astro.self;
+---
+
+{
+  nodi.map((nodo) => {
+    if (nodo === null || nodo === undefined || typeof nodo === 'boolean') return null;
+    if (typeof nodo === 'string' || typeof nodo === 'number') return nodo;
+    if (Array.isArray(nodo)) return <Self nodi={nodo} />;
+    if (typeof nodo !== 'object' || !('name' in nodo)) return null;
+    const { name, attributes: a, children } = nodo;
+    const stato = a.stato && <Stato stato={a.stato} focusabile />;
+
+    switch (name) {
+      case 'blocco':
+        return (
+          <Blocco numero={a.n} etichetta={a.libero ? undefined : a.etichetta} spazio={a.spazio || 'grande'}>
+            <Self nodi={children} />
+            {stato}
+          </Blocco>
+        );
+      case 'numero':
+        return (
+          <ModuloNumero numero={a.n} etichetta={a.etichetta} cifra={a.cifra} didascalia={a.didascalia}>
+            <Self nodi={children} />
+            {stato}
+          </ModuloNumero>
+        );
+      case 'figura': {
+        const f = a.figura?.value ?? {};
+        return (
+          <BloccoFigura numero={a.n} etichetta={a.etichetta}>
+            <Self nodi={children} />
+            {a.figura?.discriminant === 'elenco' ? (
+              <FiguraElenco slot="figura" didascalia={f.didascalia} voci={f.voci ?? []} nota={f.nota || undefined} />
+            ) : (
+              <FiguraBarre
+                slot="figura"
+                didascalia={f.didascalia}
+                nota={f.nota || undefined}
+                righe={(f.righe ?? []).map((r: any) => ({
+                  etichetta: r.etichetta,
+                  destra: r.destra || undefined,
+                  larghezza: r.larghezza,
+                  tono: Number(r.tono) || 2,
+                  accesa: r.accesa,
+                }))}
+              />
+            )}
+          </BloccoFigura>
+        );
+      }
+      case 'foto':
+        return (
+          <BloccoFoto numero={a.n} etichetta={a.etichetta} foto={a.foto} alt={a.alt} posizione={a.posizione}>
+            <Self nodi={children} />
+          </BloccoFoto>
+        );
+      case 'citazione':
+        return <Citazione testo={a.testo} didascalia={a.didascalia} />;
+      case 'confronto':
+        return <Confronto voci={a.voci ?? []} />;
+      case 'codice':
+        return <Codice codice={a.content} linguaggio={a.language} />;
+      case 'a': {
+        // I rimandi alle curiosità (/curiosita#013) hanno il loro tratto; i link esterni si aprono qui.
+        const interno = typeof a.href === 'string' && a.href.startsWith('/');
+        return (
+          <a
+            href={a.href}
+            class={a.href?.startsWith('/curiosita#') ? 'rimando-curiosita' : undefined}
+            rel={interno ? undefined : 'noopener'}
+          >
+            <Self nodi={children} />
+          </a>
+        );
+      }
+      default: {
+        const El = name as any;
+        return (
+          <El {...a}>
+            <Self nodi={children} />
+          </El>
+        );
+      }
+    }
+  })
+}

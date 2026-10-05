@@ -9,6 +9,7 @@ interface Props {
   descrizione?: string;
   attiva?: 'scritti' | 'progetti' | 'chi-sono';
   home?: boolean;
+  avanzamento?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   descrizione = 'Il sito di Patrizio Bartolozzi. Risolvo problemi, a volte sono intere aziende.',
   attiva,
   home = false,
+  avanzamento = false,
 } = Astro.props;
 
 const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
@@ -43,7 +45,7 @@ const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
   <body>
     <a class="salta smussato" href="#contenuto">Vai al contenuto</a>
     <div class="pagina">
-      <Header attiva={attiva} home={home} />
+      <Header attiva={attiva} home={home} avanzamento={avanzamento} />
       <main id="contenuto" class="contenuto">
         <slot />
       </main>

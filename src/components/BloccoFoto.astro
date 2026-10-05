@@ -1,0 +1,78 @@
+---
+// Blocco con foto: etichetta e testo a sinistra (7 colonne), foto quadrata a destra (4 colonne).
+// Tavola ChiSono, «Perché ora». Le foto stanno in public/foto, trattate con scripts/tratta-foto.py.
+import Sezione from './Sezione.astro';
+
+interface Props {
+  numero: number;
+  etichetta: string;
+  foto: string; // nome del file senza misura: «notte» → notte-480.webp, notte-800.webp
+  alt: string;
+  posizione?: string; // object-position, per tenere il viso nel quadrato
+}
+const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
+---
+
+<section class="griglia blocco-foto">
+  <div class="testo">
+    <Sezione numero={numero} cifre={2}>{etichetta}</Sezione>
+    <slot />
+  </div>
+  <img
+    class="foto"
+    src={`/foto/${foto}-800.webp`}
+    srcset={`/foto/${foto}-480.webp 480w, /foto/${foto}-800.webp 800w`}
+    sizes="(max-width: 720px) 100vw, 33vw"
+    width="800"
+    height="800"
+    alt={alt}
+    loading="lazy"
+    decoding="async"
+    style={`object-position: ${posizione}`}
+  />
+</section>
+
+<style>
+  .blocco-foto {
+    align-items: stretch;
+    padding: 72px var(--space-2) 0;
+  }
+  .testo {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .testo :global(p) {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--inchiostro-corpo);
+  }
+  .foto {
+    grid-column: 9 / span 4;
+    clip-path: var(--ritaglio-modulo);
+    width: 100%;
+    aspect-ratio: 1;
+    height: auto;
+    align-self: start;
+    object-fit: cover;
+    background: var(--cemento-alto);
+  }
+  @media (max-width: 720px) {
+    .blocco-foto {
+      padding-top: var(--space-8);
+      gap: var(--space-4);
+    }
+    .testo {
+      gap: 14px;
+    }
+    .testo :global(p) {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+    .foto {
+      min-height: 360px;
+    }
+  }
+</style>

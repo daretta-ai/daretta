@@ -1,12 +1,15 @@
 ---
 // Footer, dalle tavole: testi a sinistra, link e copyright a destra.
+import { getMicrotesti } from '../cms';
+
 const linkedin = 'https://www.linkedin.com/in/patriziobartolozzi';
+const { footer } = await getMicrotesti();
 ---
 
 <footer class="footer">
   <div class="testi">
-    <span><strong>dàretta.</strong> Fatto con passione, nei ritagli di tempo.</span>
-    <span>Niente cookie. Ti conto, ma non ti seguo.</span>
+    <span><strong>dàretta.</strong> {footer.prima}</span>
+    <span>{footer.seconda}</span>
   </div>
   <div class="link">
     <nav aria-label="Link del footer">

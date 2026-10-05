@@ -1,0 +1,245 @@
+---
+// Un articolo (tavola Articolo): colonna di lettura sul fondo, metadati nel margine,
+// barra di avanzamento a punti sotto l'header, newsletter e prossimo articolo in fondo.
+import Base from '../../layouts/Base.astro';
+import Corpo from '../../components/Corpo.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import Sfera from '../../components/Sfera.astro';
+import { getArticoli, getMicrotesti, corpo, minutiDiLettura, paragrafi } from '../../cms';
+
+export async function getStaticPaths() {
+  const articoli = await getArticoli();
+  // Il prossimo da leggere è quello uscito prima; dopo il più vecchio, si torna agli scritti.
+  return articoli.map((articolo, i) => ({
+    params: { slug: articolo.slug },
+    props: { articolo, prossimo: articoli[i + 1] },
+  }));
+}
+
+type Articolo = Awaited<ReturnType<typeof getArticoli>>[number];
+const { articolo, prossimo } = Astro.props as { articolo: Articolo; prossimo?: Articolo };
+const { firma } = await getMicrotesti();
+const nodi = corpo(articolo.body);
+const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base titolo={articolo.titolo} descrizione={articolo.attacco} attiva="scritti" avanzamento>
+  <article class="articolo" data-articolo>
+    <header class="griglia apertura">
+      <div class="meta-margine">
+        <a class="torna" href="/scritti">← Scritti</a>
+        {articolo.tag && <span class="tag smussato contornato">{articolo.tag}</span>}
+        <time datetime={articolo.data.toISOString().slice(0, 10)}>{data}</time>
+        <span>{minutiDiLettura(articolo.body)} min di lettura</span>
+      </div>
+      <div class="titoli">
+        <h1>{articolo.titolo}</h1>
+        {paragrafi(articolo.attacco).map((p) => <p class="attacco">{p}</p>)}
+      </div>
+      <div class="lato">
+        <Sfera misura={150} />
+      </div>
+    </header>
+
+    <hr class="filetto-apertura" />
+
+    <Corpo nodi={nodi} />
+
+    {
+      firma && (
+        <section class="griglia firma">
+          <div class="riga-firma">
+            <img src="/foto/notte-480.webp" width="72" height="72" alt="" loading="lazy" decoding="async" />
+            <div>
+              <span class="nome">Patrizio Bartolozzi</span>
+              <span class="chi">{firma}</span>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </article>
+
+  <section class="griglia chiusura">
+    <div class="nl"><Newsletter articolo /></div>
+    <a class="prossimo smussato" href={prossimo ? `/scritti/${prossimo.slug}` : '/scritti'}>
+      <span class="etichetta-prossimo">{prossimo ? 'Prossimo →' : 'Tutti gli scritti →'}</span>
+      <span class="titolo-prossimo">{prossimo ? prossimo.titolo : 'Torna all\'elenco.'}</span>
+    </a>
+  </section>
+</Base>
+
+<style>
+  .articolo {
+    display: flex;
+    flex-direction: column;
+  }
+  .apertura {
+    align-items: start;
+    padding: 72px var(--space-2) 0;
+  }
+  .meta-margine {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .torna {
+    margin-bottom: 20px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .torna:hover {
+    color: var(--inchiostro);
+  }
+  .tag {
+    padding: 6px 12px;
+    --s: var(--smusso-azione);
+    --fondo: var(--cemento);
+    color: var(--inchiostro);
+  }
+  .titoli {
+    grid-column: 4 / span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  h1 {
+    margin: 0;
+    font-size: 80px;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -2.5px;
+    text-wrap: balance;
+  }
+  .attacco {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.45;
+    color: var(--inchiostro-corpo);
+  }
+  .lato {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .filetto-apertura {
+    margin: 72px var(--space-2) 0;
+    border: none;
+    height: 1px;
+    background: var(--filetto);
+  }
+  .firma {
+    padding: 72px var(--space-2) 0;
+  }
+  .riga-firma {
+    grid-column: 4 / span 7;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--filetto);
+  }
+  .riga-firma img {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-tondo);
+    object-fit: cover;
+    object-position: 70% 40%;
+  }
+  .riga-firma div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .nome {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .chi {
+    font-size: 16px;
+    color: var(--inchiostro-secondario);
+  }
+  .chiusura {
+    padding-top: 96px;
+    align-items: stretch;
+  }
+  .nl {
+    grid-column: span 7;
+    display: flex;
+  }
+  .nl :global(.newsletter) {
+    flex-grow: 1;
+  }
+  .prossimo {
+    grid-column: span 5;
+    --s: var(--modulo-smusso);
+    --fondo: radial-gradient(700px 400px at 90% -20%, #16292c 0%, var(--cemento-rilievo) 70%);
+    padding: var(--space-10) 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-6);
+    text-decoration: none;
+  }
+  .etichetta-prossimo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .titolo-prossimo {
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  @media (max-width: 720px) {
+    .apertura {
+      padding-top: var(--space-8);
+      gap: var(--space-6);
+    }
+    .meta-margine {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      padding-top: 0;
+      font-size: 12px;
+    }
+    .torna {
+      flex-basis: 100%;
+      margin-bottom: 0;
+    }
+    h1 {
+      font-size: 40px;
+      letter-spacing: -1px;
+    }
+    .attacco {
+      font-size: 20px;
+    }
+    .lato {
+      display: none;
+    }
+    .filetto-apertura {
+      margin-top: var(--space-10);
+    }
+    .chiusura {
+      padding-top: var(--space-14);
+    }
+    .prossimo {
+      padding: var(--space-6);
+    }
+    .titolo-prossimo {
+      font-size: 24px;
+    }
+  }
+</style>

@@ -3,20 +3,21 @@
 import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
 import Tabellone from '../components/Tabellone.astro';
+import { getMicrotesti } from '../cms';
+
+const { nonTrovato } = await getMicrotesti();
 ---
 
 <Base titolo="Pagina non trovata">
-  <Testata titolo="qui non c'è niente.">
+  <Testata titolo={nonTrovato.titolo}>
     <span slot="etichetta" class="etichetta">[ 404 ] Pagina non trovata</span>
-    <p class="attacco">
-      O c'era e l'ho tolta, o il link è sbagliato. Ma se proprio vuoi restare, ti do qualche curiosità su di me.
-    </p>
+    <p class="attacco">{nonTrovato.testo}</p>
   </Testata>
 
   <section class="griglia resto">
     <div class="colonna">
       <Tabellone />
-      <p class="via">Altrimenti… <a href="/">torna al via</a>.</p>
+      <p class="via">{nonTrovato.prima} <a href="/">{nonTrovato.link}</a>.</p>
     </div>
   </section>
 </Base>

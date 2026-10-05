@@ -1,0 +1,37 @@
+---
+// Pagina di un progetto (tavole Progetto*). Testata, corpo a blocchi e chiusura vengono da Keystatic.
+import Base from '../../layouts/Base.astro';
+import TestataProgetto from '../../components/TestataProgetto.astro';
+import Corpo from '../../components/Corpo.astro';
+import Chiusura from '../../components/Chiusura.astro';
+import { getProgetti, corpo, type Progetto } from '../../cms';
+
+export async function getStaticPaths() {
+  const progetti = await getProgetti();
+  return progetti.map((progetto) => ({ params: { slug: progetto.slug }, props: { progetto } }));
+}
+
+const { progetto } = Astro.props as { progetto: Progetto };
+const nodi = corpo(progetto.body, { stato: progetto.stato });
+
+const secondo = {
+  'chi-sono': { etichetta: '[ 002 ] Chi sono', testo: 'Uno scalino più su.', href: '/chi-sono' },
+  curiosita: { etichetta: '[ 005 ] Curiosità', testo: 'Il resto, quello che non va nel curriculum.', href: '/curiosita' },
+}[progetto.rimando];
+---
+
+<Base titolo={progetto.nome} descrizione={progetto.card} attiva="progetti">
+  <TestataProgetto
+    progetto={progetto}
+    titolo={progetto.titolo}
+    fase={progetto.fase}
+    credito={progetto.credito}
+    link={progetto.link}
+  />
+
+  <Corpo nodi={nodi} />
+
+  <Chiusura
+    rimandi={[{ etichetta: '[ 004 ] Altri progetti', testo: 'Quello che porto avanti la sera.', href: '/#progetti' }, secondo]}
+  />
+</Base>

@@ -5,14 +5,14 @@ import Sezione from './Sezione.astro';
 
 interface Props {
   numero?: number;
-  etichetta: string;
+  etichetta?: string; // senza etichetta: testo libero, senza numero
   spazio?: 'piccolo' | 'medio' | 'grande'; // distanza dal blocco prima: 48, 72, 88px
 }
 const { numero, etichetta, spazio = 'grande' } = Astro.props;
 ---
 
 <section class:list={['griglia', 'blocco', `spazio-${spazio}`]}>
-  <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>
+  {etichetta && <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>}
   <div class="testo">
     <slot />
   </div>

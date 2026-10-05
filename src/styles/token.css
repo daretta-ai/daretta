@@ -288,6 +288,14 @@ a {
   }
 }
 
+/* Rimando a una curiosità dentro un testo (/curiosita#013) */
+.rimando-curiosita {
+  color: var(--inchiostro);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+}
+
 .solo-lettori {
   position: absolute;
   width: 1px;

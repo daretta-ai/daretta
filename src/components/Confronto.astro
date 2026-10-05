@@ -1,0 +1,56 @@
+---
+// Prima e dopo: due o più numeri in card (tavola Articolo).
+interface Props {
+  voci: { etichetta: string; cifra: string }[];
+}
+const { voci } = Astro.props;
+---
+
+<div class="confronto">
+  {
+    voci.map((v) => (
+      <div class="voce">
+        <span class="etichetta-voce">{v.etichetta}</span>
+        <span class="cifra">{v.cifra}</span>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .confronto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+  .voce {
+    clip-path: var(--ritaglio-card);
+    background: var(--cemento-rilievo);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .etichetta-voce {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .cifra {
+    font-family: var(--font-punti);
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--inchiostro);
+  }
+  @media (max-width: 720px) {
+    .voce {
+      padding: 20px;
+    }
+    .cifra {
+      font-size: 40px;
+    }
+  }
+</style>

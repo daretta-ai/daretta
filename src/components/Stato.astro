@@ -1,6 +1,8 @@
 ---
 // Stato di un progetto: segno e parola sempre insieme (misure dalle tavole).
 // La frase compare all'hover e al focus; per gli screen reader è la descrizione.
+import { getMicrotesti } from '../cms';
+
 interface Props {
   stato: 'online' | 'in-sviluppo' | 'concept';
   frase?: boolean; // false nella legenda, dove la frase non serve
@@ -8,10 +10,12 @@ interface Props {
 }
 const { stato, frase = true, focusabile = false } = Astro.props;
 
+// Le frasi stanno in Keystatic, nei Microtesti.
+const frasi = (await getMicrotesti()).stati;
 const stati = {
-  online: { parola: 'ONLINE', descrizione: 'Si può usare.' },
-  'in-sviluppo': { parola: 'IN SVILUPPO', descrizione: 'Ci sto lavorando.' },
-  concept: { parola: 'CONCEPT', descrizione: "Per ora è un'idea." },
+  online: { parola: 'ONLINE', descrizione: frasi.online },
+  'in-sviluppo': { parola: 'IN SVILUPPO', descrizione: frasi.inSviluppo },
+  concept: { parola: 'CONCEPT', descrizione: frasi.concept },
 };
 const { parola, descrizione } = stati[stato];
 const id = `stato-${Math.random().toString(36).slice(2, 9)}`;

@@ -1,0 +1,63 @@
+---
+// Lista degli scritti (design system, RigaScritto): titolo e data, righe separate dal filetto,
+// posata sul fondo senza modulo.
+interface Props {
+  articoli: { slug: string; titolo: string; data: Date }[];
+}
+const { articoli } = Astro.props;
+const data = (d: Date) => d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<ol class="lista-scritti">
+  {
+    articoli.map((a) => (
+      <li>
+        <a href={`/scritti/${a.slug}`}>
+          <span class="titolo-lista">{a.titolo}</span>
+          <time class="meta" datetime={a.data.toISOString().slice(0, 10)}>{data(a.data)}</time>
+        </a>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .lista-scritti {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--filetto);
+  }
+  li {
+    border-top: 1px solid var(--filetto);
+  }
+  a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding: var(--space-10) 0;
+    text-decoration: none;
+  }
+  .titolo-lista {
+    color: var(--inchiostro-corpo);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 8px;
+    transition: text-decoration-color 0.2s;
+  }
+  a:hover .titolo-lista {
+    text-decoration-color: currentColor;
+  }
+  .meta {
+    flex-shrink: 0;
+  }
+  @media (max-width: 720px) {
+    a {
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: var(--space-6) 0;
+    }
+  }
+</style>
