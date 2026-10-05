@@ -1,11 +1,13 @@
 // Configurazione del Worker su Cloudflare. L'adapter di Astro la unisce a quella che genera.
 // Qui stanno solo valori pubblici: i segreti (KEYSTATIC_GITHUB_CLIENT_SECRET, KEYSTATIC_SECRET)
-// restano nel pannello di Cloudflare come Secret, che il deploy non tocca.
+// e KIT_API_KEY restano nel pannello di Cloudflare come Secret, che il deploy non tocca.
 {
   "name": "daretta",
   "vars": {
     // GitHub App «daretta-cms» per l'admin di Keystatic (vedi CMS.md)
     "KEYSTATIC_GITHUB_CLIENT_ID": "Iv23liZYazGmHKRbXtRb",
-    "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG": "daretta-cms"
+    "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG": "daretta-cms",
+    // Modulo Kit della newsletter (pubblico: è nell'indirizzo del modulo). La chiave API sta su Cloudflare come Secret.
+    "KIT_FORM_ID": ""
   }
 }

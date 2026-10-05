@@ -57,3 +57,14 @@ Le variabili in chiaro aggiunte dal pannello di Cloudflare spariscono al deploy 
 Se il client secret va rigenerato su GitHub, va aggiornato anche su Cloudflare.
 
 Possono scrivere solo gli account GitHub con accesso in scrittura al repository.
+
+## Newsletter: Kit
+
+Il modulo del sito manda l'email a `/api/iscrizione` (`src/pages/api/iscrizione.ts`), che la passa a Kit. Nella pagina non c'è nessuno script di Kit.
+
+| Valore | Dove | Perché |
+| --- | --- | --- |
+| `KIT_FORM_ID` | `wrangler.jsonc` | Pubblico: è nell'indirizzo del modulo Kit |
+| `KIT_API_KEY` | Cloudflare, come Secret | Segreto. Serve solo per riconoscere chi è già iscritto: senza, l'iscrizione funziona lo stesso |
+
+Nel modulo Kit vanno impostati la conferma via mail (doppio passaggio) e, come pagina dopo la conferma, `https://daretta.it/newsletter/benvenuto`. I messaggi di esito si scrivono in Keystatic, pagina Newsletter.

@@ -1,6 +1,6 @@
 ---
 // Modulo newsletter, l'unico in petrolio pieno (tavole Main, ChiSono, Progetto).
-// Il collegamento a Kit arriva al passo 6: per ora il modulo non invia.
+// Invia a /api/iscrizione, che passa l'email a Kit (passo 6). I messaggi di esito sono in Keystatic.
 import Modulo from './Modulo.astro';
 import { getNewsletter, paragrafi } from '../cms';
 
@@ -16,7 +16,21 @@ const titolo = articolo ? nl.articoloTitolo : nl.titolo;
 const testo = articolo ? nl.articoloTesto : nl.testo;
 ---
 
-<Modulo as="form" luce="pieno" id="newsletter" class:list={['newsletter', classe]} aria-labelledby="newsletter-titolo" data-newsletter>
+<Modulo
+  as="form"
+  luce="pieno"
+  id="newsletter"
+  class:list={['newsletter', classe]}
+  aria-labelledby="newsletter-titolo"
+  data-newsletter
+  data-inviato={nl.inviato}
+  data-gia-iscritto={nl.giaIscritto}
+  data-mail-non-valida={nl.mailNonValida}
+  data-errore={nl.errore}
+  method="post"
+  action="/api/iscrizione"
+  novalidate
+>
   {etichetta && !articolo && <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>}
   <h2 class="punti-titolo" id="newsletter-titolo">{titolo}</h2>
   {paragrafi(testo).map((p) => <p>{p}</p>)}
@@ -25,7 +39,63 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     <span class="campo smussato"><input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder={nl.segnaposto} /></span>
     <button class="smussato" type="submit">{nl.pulsante}</button>
   </div>
+  <!-- Trappola per i bot: nascosta a chi legge e a chi usa lo screen reader -->
+  <input class="trappola" name="sito" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <p class="esito" role="status" aria-live="polite" data-esito></p>
 </Modulo>
+
+<script>
+  // Un modulo per pagina di solito, ma negli articoli possono essercene due: si gestiscono tutti.
+  for (const modulo of document.querySelectorAll<HTMLFormElement>('form[data-newsletter]')) {
+    const campo = modulo.querySelector<HTMLInputElement>('input[name="email"]')!;
+    const pulsante = modulo.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const esito = modulo.querySelector<HTMLElement>('[data-esito]')!;
+    const riga = modulo.querySelector<HTMLElement>('.riga')!;
+    const testi: Record<string, string> = {
+      inviato: modulo.dataset.inviato ?? '',
+      'gia-iscritto': modulo.dataset.giaIscritto ?? '',
+      'mail-non-valida': modulo.dataset.mailNonValida ?? '',
+      errore: modulo.dataset.errore ?? '',
+    };
+    const mostra = (chiave: string) => {
+      esito.textContent = testi[chiave] ?? testi.errore;
+      esito.dataset.tipo = chiave;
+    };
+
+    modulo.addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+      if (!campo.checkValidity()) {
+        mostra('mail-non-valida');
+        campo.setAttribute('aria-invalid', 'true');
+        campo.focus();
+        return;
+      }
+      campo.removeAttribute('aria-invalid');
+      pulsante.disabled = true;
+      modulo.setAttribute('aria-busy', 'true');
+      let chiave = 'errore';
+      try {
+        const r = await fetch('/api/iscrizione', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ email: campo.value, sito: (modulo.elements.namedItem('sito') as HTMLInputElement).value }),
+        });
+        chiave = ((await r.json()) as { esito?: string }).esito ?? 'errore';
+      } catch {
+        chiave = 'errore';
+      }
+      modulo.removeAttribute('aria-busy');
+      pulsante.disabled = false;
+      mostra(chiave);
+      if (chiave === 'mail-non-valida') {
+        campo.setAttribute('aria-invalid', 'true');
+        campo.focus();
+      }
+      // Fatto: il campo non serve più, resta solo il messaggio.
+      if (chiave === 'inviato' || chiave === 'gia-iscritto') riga.hidden = true;
+    });
+  }
+</script>
 
 <style>
   .newsletter {
@@ -45,6 +115,26 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   .riga {
     display: flex;
     gap: var(--space-3);
+  }
+  .riga[hidden] {
+    display: none;
+  }
+  .esito {
+    font-size: 17px;
+  }
+  .esito:empty {
+    display: none;
+  }
+  .trappola {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  button:disabled {
+    cursor: wait;
+    opacity: 0.7;
   }
   /* Il campo è smussato appena (smusso-campo), altrimenti sembra un pulsante.
      La forma sta sul contenitore: un input non ha ::before e ::after. */
