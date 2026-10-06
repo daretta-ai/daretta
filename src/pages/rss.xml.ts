@@ -18,5 +18,7 @@ export async function GET(context: APIContext) {
       categories: a.tag ? [a.tag] : undefined,
     })),
     customData: '<language>it-it</language>',
+    // Link senza barra finale, come gli indirizzi del sito
+    trailingSlash: false,
   });
 }

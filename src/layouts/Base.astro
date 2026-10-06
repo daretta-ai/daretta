@@ -33,7 +33,9 @@ const {
 
 const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
 // Indirizzo canonico sempre su daretta.it, anche quando la pagina è servita dall'anteprima
-const canonico = new URL(Astro.url.pathname, Astro.site).href;
+// Le pagine sono file .html (build.format 'file'), ma si servono senza estensione: /chi-sono, e / per la home.
+const percorso = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '').replace(/(.)\/$/, '$1');
+const canonico = new URL(percorso, Astro.site).href;
 const immagineAssoluta = new URL(immagine, Astro.site).href;
 
 // Dati strutturati per i motori di ricerca, solo in home: chi è Patrizio e qual è il suo sito.

@@ -18,6 +18,10 @@ const fuoriSitemap = ['/newsletter/benvenuto', '/404'];
 export default defineConfig({
   site: 'https://daretta.it',
   output: 'static',
+  // Indirizzi senza barra finale (/chi-sono), come i link del sito e i rimandi nei testi del CMS:
+  // ogni pagina diventa chi-sono.html e Cloudflare la serve su /chi-sono, senza redirect.
+  // Chi arriva con la barra (/chi-sono/) viene rediretto da Cloudflare.
+  build: { format: 'file' },
   // Le pagine interne si scaricano quando il cursore si posa sul link (o al tocco): si aprono all'istante.
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   // Le pagine statiche si generano in Node, non nel runtime di Cloudflare: le immagini per i social
