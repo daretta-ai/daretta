@@ -6,4 +6,4 @@ Il nome dàretta scritto in Doto 900, color `inchiostro`, con la à in `arancio`
 - Nella hero è seguito dalla frase in `punti-motto`. Nessun asterisco e nessuna nota: la spiegazione del nome per ora non compare.
 - Nella home l'header non mostra il logotipo finché la hero è in vista.
 - Mai dentro un contenitore (quadrato, cerchio, pill). Mai tutto arancio, mai tutto bianco.
-- Il consumatore carica Doto da Google Fonts.
+- Il consumatore carica Doto dai propri file (nel sito: `src/styles/font.css`), non da Google Fonts.

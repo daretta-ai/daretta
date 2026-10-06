@@ -26,7 +26,7 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 - **Geist** (sans) per tutto quello che si legge: titoli di liste e articoli, paragrafi, card.
 - **Geist Mono** (mono) per etichette, stati, date, codice. Sempre maiuscolo tranne il codice.
 
-I tre caratteri sono su Google Fonts (`family=Doto:wght@600;800;900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500`).
+I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indirizzo IP passa a Google. Sono i file latin di @fontsource (Doto 600, 800, 900; Geist 400, 500, 600; Geist Mono 400, 500) in `src/assets/font`, dichiarati in `src/styles/font.css`.
 
 ## Composizione
 
@@ -114,6 +114,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 ## Accessibilità
 
 - Testo ≥4.5:1 sul suo fondo (ogni token di testo dice su quali fondi è verificato); ≥3:1 per testo sopra i 24px, anelli e icone. Sui pulsanti arancio il testo è `cemento`.
+- `inchiostro-muto` su `petrolio-luce` si ferma a 3,5:1: nei moduli più carichi (hero e testate delle pagine interne) le etichette passano a `inchiostro-secondario` (4,8:1).
 - Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `inchiostro-muto` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
 - Pulsanti e chip alti almeno 44px su mobile.
 - L'anello di focus segue lo smusso (vedi «Angoli»): mai un `outline` rettangolare tagliato dal `clip-path`, e mai un elemento senza anello.
