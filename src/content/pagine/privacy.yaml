@@ -10,4 +10,4 @@ sezioni:
   - titolo: I tuoi diritti
     testo: Puoi chiedermi di vedere, correggere o cancellare del tutto i tuoi dati, e lo faccio entro un mese. Puoi anche fare reclamo al Garante per la protezione dei dati personali.
   - titolo: Sul sito
-    testo: Niente cookie. Conto le visite, ma non so chi sei.
+    testo: Niente cookie. Conto le visite con Cloudflare Web Analytics, che non salva niente sul tuo dispositivo e non ti riconosce da una visita all'altra. So quante persone leggono una pagina, non chi sei. Anche Cloudflare ha server negli Stati Uniti, e aderisce allo stesso Data Privacy Framework.
