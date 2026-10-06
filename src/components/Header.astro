@@ -95,13 +95,19 @@ const voci = [
       const aperto = header.classList.toggle('aperto');
       bottone.setAttribute('aria-expanded', String(aperto));
       bottone.setAttribute('aria-label', aperto ? 'Chiudi il menu' : 'Apri il menu');
+      // Il menu viene prima del bottone nella pagina: senza questo, con Tab si finirebbe nel contenuto
+      if (aperto) header.querySelector<HTMLAnchorElement>('.menu a')?.focus();
     });
     header.querySelectorAll('.menu a').forEach((a) => a.addEventListener('click', chiudi));
-    header.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && header.classList.contains('aperto')) {
         chiudi();
         bottone?.focus();
       }
+    });
+    // Se il focus esce dal menu aperto (Tab oltre l'ultima voce e il bottone), il menu si chiude
+    header.addEventListener('focusout', (e) => {
+      if (header.classList.contains('aperto') && !header.contains(e.relatedTarget as Node | null)) chiudi();
     });
   }
 </script>

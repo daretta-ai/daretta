@@ -16,9 +16,9 @@ const prima = dati[0];
 
 <div class:list={['tabellone', classe]} data-tabellone data-curiosita={JSON.stringify(dati)}>
   <div class="testata" aria-hidden="true">
-    <div class="campo"><span class="meta">N°</span><div class="tessere" data-campo="n" data-len="3"></div></div>
-    <div class="campo"><span class="meta">Tipo</span><div class="tessere" data-campo="cat" data-len="10"></div></div>
-    <div class="campo"><span class="meta">Dest.</span><div class="tessere" data-campo="dest" data-len="15"></div></div>
+    <div class="campo"><span class="meta">N°</span><div class="tessere" data-campo="n" data-len="3" style="--len: 3"></div></div>
+    <div class="campo"><span class="meta">Tipo</span><div class="tessere" data-campo="cat" data-len="10" style="--len: 10"></div></div>
+    <div class="campo"><span class="meta">Dest.</span><div class="tessere" data-campo="dest" data-len="15" style="--len: 15"></div></div>
   </div>
   <div class="palette" aria-hidden="true"></div>
   <div class="avanzamento" aria-hidden="true"><span></span></div>
@@ -69,6 +69,33 @@ const prima = dati[0];
   .tessere {
     display: flex;
     gap: 2px;
+  }
+  /* Spazio riservato prima che lo script costruisca tessere e palette:
+     senza, la pagina Curiosità salta (CLS) appena il tabellone compare.
+     Le tessere hanno misura fissa, le righe di palette dipendono dalla larghezza
+     (lo script ne crea tante quante servono alla curiosità più lunga). */
+  .tessere {
+    min-width: calc(var(--len) * var(--tw) + (var(--len) - 1) * 2px);
+    min-height: var(--th);
+  }
+  .palette {
+    --righe: 3;
+    min-height: calc(var(--righe) * var(--rh) + (var(--righe) - 1) * 3px);
+  }
+  @media (max-width: 560px) {
+    .palette {
+      --righe: 5;
+    }
+  }
+  @media (max-width: 380px) {
+    .palette {
+      --righe: 6;
+    }
+  }
+  @media (max-width: 340px) {
+    .palette {
+      --righe: 7;
+    }
   }
   .palette {
     display: flex;

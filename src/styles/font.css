@@ -1,0 +1,63 @@
+/*
+  Caratteri serviti dal sito stesso, non da Google Fonts.
+  Così nessun indirizzo IP passa a Google (coerente con «Niente cookie. Ti conto, ma non ti seguo.»)
+  e la pagina non aspetta una connessione a due domini esterni.
+  I file sono il sottoinsieme latin (copre l'italiano, «», …) presi da @fontsource:
+  per aggiornarli si ricopiano da node_modules/@fontsource/{doto,geist-sans,geist-mono}/files.
+*/
+@font-face {
+  font-family: 'Doto';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/font/doto-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Doto';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/font/doto-latin-800-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Doto';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../assets/font/doto-latin-900-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/font/geist-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/font/geist-sans-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/font/geist-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/font/geist-mono-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/font/geist-mono-latin-500-normal.woff2') format('woff2');
+}

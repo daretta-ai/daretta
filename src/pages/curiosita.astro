@@ -32,7 +32,7 @@ const lettere = (s: string) => s.split('');
         {
           curiosita.map((c) => (
             <li class="riga" id={c.id}>
-              <a class="cella c-num" href={`#${c.id}`} aria-label={`Curiosità ${c.id}, link diretto`}>
+              <a class="cella c-num" href={`#${c.id}`} aria-label={`N° ${c.id}, link diretto alla curiosità`}>
                 <span class="meta lab" aria-hidden="true">N°</span>
                 <span class="tessere" aria-hidden="true">{lettere(c.id).map((l, i) => <span class="t" style={`--i: ${i}`}>{l}</span>)}</span>
               </a>
