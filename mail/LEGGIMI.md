@@ -14,3 +14,5 @@ Regole del design system adattate alla posta:
 - niente smusso: i programmi di posta non supportano clip-path. Pulsante ad angoli vivi, mai tondi.
 
 Il colore del pulsante si sceglie anche nell'editor di Kit: arancio `#FF4F1A`, testo `#111314`, nessun bordo. Kit scrive i suoi colori direttamente sul pulsante, e alcuni programmi di posta ignorano gli stili del template: impostarli anche lì evita il blu.
+
+L'indirizzo postale nel piede è testo semplice, ma Gmail e Apple Mail lo riconoscono e ne fanno da soli un link, blu. Il template lo riporta al grigio del piede (classe `indirizzo` e regole per i link aggiunti dai programmi di posta).
