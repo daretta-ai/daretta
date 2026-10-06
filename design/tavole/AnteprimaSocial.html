@@ -1,0 +1,315 @@
+<title>dàretta — anteprima social</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800;900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" />
+<style>
+  /* Tavola a fondo cemento, come il sito: un solo aspetto, scuro.
+     Ogni anteprima è disegnata a 1200×630 reali e poi ridotta, così le misure sono quelle vere. */
+  :root {
+    --cemento: #111314;
+    --cemento-rilievo: #1a1d1f;
+    --cemento-incavo: #131617;
+    --petrolio-notte: #0b2429;
+    --petrolio-alone: #17393e;
+    --petrolio-luce: #1e4f56;
+    --punti: #2c8a93;
+    --onda: #6ccbd3;
+    --inchiostro: #ecece7;
+    --inchiostro-corpo: #d2d4ce;
+    --inchiostro-muto: #9aa3a4;
+    --filetto: #2e3a3c;
+    --arancio: #ff4f1a;
+    --font-punti: 'Doto', ui-monospace, monospace;
+    --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--cemento);
+    color: var(--inchiostro);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .tavola {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-inline: 24px;
+    padding-block: 48px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .etichetta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  h1 {
+    font-family: var(--font-punti);
+    font-weight: 900;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1;
+    margin: 12px 0 16px;
+  }
+  h1 .a { color: var(--arancio); }
+  .intro p { max-width: 62ch; color: var(--inchiostro-corpo); margin: 0; }
+  .intro p + p { margin-top: 10px; }
+
+  .sezione { display: grid; grid-template-columns: 220px 1fr; gap: 24px; }
+  .sezione > div { min-width: 0; }
+  .sezione h2 { font-size: 20px; font-weight: 600; margin: 8px 0 8px; text-wrap: balance; }
+  .sezione .nota { color: var(--inchiostro-muto); font-size: 14px; margin: 0; }
+  .sezione .nota + .nota { margin-top: 8px; }
+  @media (max-width: 760px) { .sezione { grid-template-columns: 1fr; gap: 12px; } }
+
+  /* Contenitore che riduce l'anteprima vera da 1200×630 */
+  .scala { width: 100%; aspect-ratio: 1200 / 630; max-width: 100%; position: relative; overflow: hidden; }
+  .scala > .og { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .misura { margin-top: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--inchiostro-muto); letter-spacing: 0.06em; }
+
+  /* ===== L'anteprima, a misura vera ===== */
+  .og {
+    width: 1200px;
+    height: 630px;
+    background: var(--cemento);
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-sans);
+    color: var(--inchiostro);
+  }
+  .og canvas { position: absolute; }
+  .og .alone { position: absolute; inset: 0; }
+  .og .dentro { position: absolute; inset: 0; padding: 64px 72px; display: flex; flex-direction: column; }
+  .og .logo { font-family: var(--font-punti); font-weight: 900; line-height: 0.9; letter-spacing: -0.01em; }
+  .og .logo .a { color: var(--arancio); }
+  .og .lab { font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--inchiostro-muto); }
+  .og .dominio { font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.1em; color: var(--inchiostro-muto); }
+
+  /* Sito */
+  .og-sito .dentro { justify-content: center; }
+  .og-sito .logo { font-size: 150px; }
+  .og-sito .motto { font-family: var(--font-punti); font-weight: 800; font-size: 44px; line-height: 1.12; max-width: 640px; margin-top: 36px; color: var(--inchiostro); }
+  .og-sito .dominio { position: absolute; left: 72px; bottom: 64px; }
+
+  /* Progetto e articolo */
+  .og-voce .testa { display: flex; align-items: center; gap: 22px; }
+  .og-voce .stato { display: inline-flex; align-items: center; gap: 12px; }
+  .og-voce .anello { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid var(--inchiostro-muto); }
+  .og-voce .titolo { font-weight: 600; font-size: 84px; line-height: 1.02; letter-spacing: -0.02em; margin-top: 56px; max-width: 760px; text-wrap: balance; }
+  .og-voce .titolo.lungo { font-size: 68px; }
+  .og-voce .sotto { font-size: 32px; line-height: 1.35; color: var(--inchiostro-corpo); margin-top: 24px; max-width: 700px; }
+  .og-voce .piede { margin-top: auto; display: flex; align-items: baseline; justify-content: space-between; }
+  .og-voce .piede .logo { font-size: 56px; }
+
+  /* Come si vede: schede finte, solo per dare il contesto */
+  .contesti { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 760px) { .contesti { grid-template-columns: 1fr; } }
+  .scheda { background: var(--cemento-rilievo); padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .scheda .riga { font-size: 13px; color: var(--inchiostro-corpo); }
+  .scheda .link { font-size: 13px; }
+  .scheda .link b { display: block; font-weight: 600; color: var(--inchiostro); }
+  .scheda .link span { color: var(--inchiostro-muto); font-size: 12px; }
+  .wa { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: center; background: var(--cemento-incavo); padding: 8px; }
+  .wa .quadrato { width: 96px; height: 96px; position: relative; overflow: hidden; }
+  .wa .quadrato .scala { position: absolute; height: 100%; width: auto; aspect-ratio: 1200/630; left: 50%; transform: translateX(-50%); max-width: none; }
+
+  .proposte { display: flex; flex-direction: column; gap: 40px; }
+  .proposta { display: grid; grid-template-columns: 1fr 200px; gap: 20px; align-items: start; }
+  .proposta > div { min-width: 0; }
+  .proposta h3 { font-size: 17px; font-weight: 600; margin: 0 0 6px; }
+  .proposta .testo { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; }
+  .proposta .testo p { margin: 0; color: var(--inchiostro-corpo); font-size: 15px; max-width: 70ch; }
+  .proposta .testo p.contro { color: var(--inchiostro-muto); }
+  .ritaglio { width: 200px; height: 200px; position: relative; overflow: hidden; }
+  .ritaglio .scala { position: absolute; height: 100%; width: auto; aspect-ratio: 1200/630; left: 50%; transform: translateX(-50%); max-width: none; }
+  .guida { position: absolute; top: 0; bottom: 0; left: 23.75%; right: 23.75%; outline: 1px dashed rgba(108,203,211,.55); pointer-events: none; z-index: 2; }
+  @media (max-width: 760px) { .proposta { grid-template-columns: 1fr; } }
+
+  .og-centro .dentro { align-items: center; justify-content: center; }
+  .og-centro .logo { font-size: 120px; }
+  .og-centro .dominio { position: absolute; left: 0; right: 0; bottom: 64px; text-align: center; }
+  .og-spostata .dentro { justify-content: center; padding-left: 300px; }
+  .og-spostata .logo { font-size: 130px; }
+  .og-spostata .dominio { position: absolute; left: 300px; bottom: 64px; }
+  .og-segno .simbolo { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-54%); text-align: center; font-family: var(--font-punti); font-weight: 900; font-size: 430px; line-height: 1; color: var(--arancio); }
+  .og-segno .piede { position: absolute; left: 72px; right: 72px; bottom: 56px; display: flex; justify-content: space-between; align-items: baseline; }
+  .og-segno .logo { font-size: 56px; }
+
+  .decisioni { background: var(--cemento-rilievo); padding: 28px; display: flex; flex-direction: column; gap: 14px;
+    clip-path: polygon(0 32px, 32px 0, calc(100% - 32px) 0, 100% 32px, 100% calc(100% - 32px), calc(100% - 32px) 100%, 32px 100%, 0 calc(100% - 32px)); }
+  .decisioni ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; color: var(--inchiostro-corpo); max-width: 70ch; }
+  .decisioni b { color: var(--inchiostro); font-weight: 600; }
+</style>
+
+<main class="tavola">
+  <header class="intro">
+    <div class="etichetta">[ Tavola ] Anteprima per i social · 6 ottobre 2026</div>
+    <h1>d<span class="a">à</span>retta.</h1>
+    <p>Quello che compare quando un link al sito viene condiviso su LinkedIn, WhatsApp o Slack. Tre versioni, disegnate a 1200×630 come le vogliono le piattaforme, e qui ridotte.</p>
+    <p>Valgono le regole del design system. Fondo cemento con la luce petrolio che parte dalla sfera, arancio solo sulla à, Doto solo per logotipo e frase della hero, i titoli di progetti e articoli in Geist.</p>
+  </header>
+
+  <section class="sezione">
+    <div>
+      <div class="etichetta">[ 01 ] Sito</div>
+      <h2>Home, Chi sono, Curiosità, Scritti</h2>
+      <p class="nota">È la versione di tutte le pagine senza un'anteprima loro. Riprende la hero, con la sfera a destra. Solo logotipo, senza la frase.</p>
+    </div>
+    <div>
+      <div class="scala"><div class="og og-sito" data-sfera="sito">
+        <div class="dentro">
+          <div class="logo">d<span class="a">à</span>retta</div>
+          <div class="dominio">DARETTA.IT</div>
+        </div>
+      </div></div>
+      <div class="misura">1200 × 630 · PNG</div>
+    </div>
+  </section>
+
+  <section class="sezione">
+    <div>
+      <div class="etichetta">[ 02 ] Progetto</div>
+      <h2>Una per ogni progetto</h2>
+      <p class="nota">Nome e frase della card, che già esistono in Keystatic. Lo stato porta il suo segno, e si accende di arancio solo se è ONLINE.</p>
+      <p class="nota">Esempio: valdinievole.online.</p>
+    </div>
+    <div>
+      <div class="scala"><div class="og og-voce" data-sfera="voce">
+        <div class="dentro">
+          <div class="testa">
+            <span class="lab">[ 004 ] Progetti</span>
+            <span class="lab stato"><span class="anello"></span>In sviluppo</span>
+          </div>
+          <div class="titolo">valdinievole.online</div>
+          <div class="sotto">Le notizie degli undici comuni della Valdinievole, in un posto solo.</div>
+          <div class="piede">
+            <div class="logo">d<span class="a">à</span>retta</div>
+            <div class="dominio">DARETTA.IT/PROGETTI</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="misura">1200 × 630 · PNG</div>
+    </div>
+  </section>
+
+  <section class="sezione">
+    <div>
+      <div class="etichetta">[ 03 ] Articolo</div>
+      <h2>Una per ogni articolo</h2>
+      <p class="nota">Titolo dell'articolo, data e minuti di lettura. I titoli lunghi scendono a una misura più piccola per stare su tre righe.</p>
+      <p class="nota">Esempio con la bozza dell'articolo 002, data di prova.</p>
+    </div>
+    <div>
+      <div class="scala"><div class="og og-voce" data-sfera="voce">
+        <div class="dentro">
+          <div class="testa">
+            <span class="lab">[ 003 ] Scritti</span>
+            <span class="lab">15 ottobre 2026 · 4 min</span>
+          </div>
+          <div class="titolo lungo">Ho smesso di scrivere codice, non di programmare</div>
+          <div class="piede">
+            <div class="logo">d<span class="a">à</span>retta</div>
+            <div class="dominio">DARETTA.IT/SCRITTI</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="misura">1200 × 630 · PNG</div>
+    </div>
+  </section>
+
+  <section class="sezione">
+    <div>
+      <div class="etichetta">[ 04 ] Il taglio di WhatsApp</div>
+      <h2>Si accetta</h2>
+      <p class="nota">WhatsApp, nelle chat, a volte tiene solo il quadrato centrale e taglia logotipo e sfera. Si tiene la composizione della hero: il nome del sito lo scrive comunque WhatsApp sotto l'immagine.</p>
+    </div>
+    <div class="proposte">
+      <div class="proposta">
+        <div><div class="scala"><div class="og og-sito" data-sfera="sito"><div class="dentro"><div class="logo">d<span class="a">à</span>retta</div><div class="dominio">DARETTA.IT</div></div></div></div></div>
+        <div><div class="ritaglio"><div class="scala"><div class="og og-sito" data-sfera="sito"><div class="dentro"><div class="logo">d<span class="a">à</span>retta</div><div class="dominio">DARETTA.IT</div></div></div></div></div><div class="misura">QUADRATO DI WHATSAPP</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="decisioni">
+    <div class="etichetta">[ 05 ] Decisioni</div>
+    <ol>
+      <li><b>Sfera in tutte le versioni.</b> Deciso.</li>
+      <li><b>Nel Sito solo il logotipo, senza la frase.</b> Deciso.</li>
+      <li><b>Un'immagine per ogni progetto e articolo.</b> Deciso. Si generano da sole dai testi di Keystatic.</li>
+      <li><b>Il taglio di WhatsApp si accetta.</b> Deciso: la composizione resta quella della hero.</li>
+    </ol>
+  </section>
+</main>
+
+<script>
+  // Sfera a punti, un fotogramma fermo (nel sito ruota; qui è una foto).
+  function sfera(og) {
+    const tipo = og.dataset.sfera;
+    const c = document.createElement('canvas');
+    const W = 1200, H = 630;
+    c.width = W; c.height = H;
+    c.style.left = '0'; c.style.top = '0';
+    og.prepend(c);
+    const x = c.getContext('2d');
+    const d0 = og.dataset;
+    const cx = d0.cx ? +d0.cx : tipo === 'sito' ? 955 : 1090;
+    const cy = d0.cy ? +d0.cy : tipo === 'sito' ? 315 : 120;
+    const r = d0.r ? +d0.r : tipo === 'sito' ? 205 : 120;
+    const luce = d0.luce ? +d0.luce : 1;
+    const grande = tipo !== 'voce';
+    // Luce petrolio dalla sfera verso il cemento
+    const g = x.createRadialGradient(cx, cy, r * 0.2, cx, cy, r * (grande ? 3.2 : 4.2));
+    g.addColorStop(0, '#1e4f56');
+    g.addColorStop(0.35, '#17393e');
+    g.addColorStop(1, '#111314');
+    x.fillStyle = g;
+    x.fillRect(0, 0, W, H);
+    // Punti su sfera di Fibonacci, inclinata
+    const n = grande ? 900 : 420;
+    const t = 0.5, ct = Math.cos(t), st = Math.sin(t), rot = 0.9;
+    const punti = [];
+    for (let i = 0; i < n; i++) {
+      const yv = 1 - (i / (n - 1)) * 2;
+      const rad = Math.sqrt(1 - yv * yv);
+      const th = i * 2.399963 + rot;
+      let px = Math.cos(th) * rad, py = yv, pz = Math.sin(th) * rad;
+      const y2 = py * ct - pz * st, z2 = py * st + pz * ct;
+      punti.push([px, y2, z2]);
+    }
+    punti.sort((a, b) => a[2] - b[2]);
+    for (const [px, py, pz] of punti) {
+      const d = (pz + 1) / 2;
+      x.globalAlpha = (0.18 + d * 0.82) * luce;
+      x.fillStyle = d > 0.78 ? '#6ccbd3' : '#2c8a93';
+      x.beginPath();
+      x.arc(cx + px * r, cy + py * r, (grande ? 1.6 : 1.3) + d * (grande ? 2.6 : 1.9), 0, Math.PI * 2);
+      x.fill();
+    }
+    x.globalAlpha = 1;
+  }
+
+  function scala() {
+    document.querySelectorAll('.scala').forEach((s) => {
+      const og = s.querySelector('.og');
+      const w = s.getBoundingClientRect().width;
+      og.style.transform = 'scale(' + w / 1200 + ')';
+    });
+  }
+
+  const avvia = () => {
+    document.querySelectorAll('.og').forEach(sfera);
+    scala();
+  };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(avvia);
+  window.addEventListener('resize', scala);
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(scala);
+    document.querySelectorAll('.scala').forEach((s) => ro.observe(s));
+  }
+</script>
