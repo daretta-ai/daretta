@@ -8,7 +8,7 @@ import { getNewsletter } from '../../cms';
 const nl = await getNewsletter();
 ---
 
-<Base titolo="Benvenuto">
+<Base titolo="Benvenuto" nascosta>
   <Modulo luce="pieno" class="benvenuto">
     <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>
     <h1 class="punti-pagina">{nl.benvenutoTitolo}</h1>

@@ -23,7 +23,13 @@ const nodi = corpo(articolo.body);
 const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
-<Base titolo={articolo.titolo} descrizione={articolo.attacco} attiva="scritti" avanzamento>
+<Base
+  titolo={articolo.titolo}
+  descrizione={articolo.attacco}
+  attiva="scritti"
+  avanzamento
+  articolo={{ data: articolo.data }}
+>
   <article class="articolo" data-articolo>
     <header class="griglia apertura">
       <div class="meta-margine">

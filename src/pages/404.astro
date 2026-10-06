@@ -8,7 +8,7 @@ import { getMicrotesti } from '../cms';
 const { nonTrovato } = await getMicrotesti();
 ---
 
-<Base titolo="Pagina non trovata">
+<Base titolo="Pagina non trovata" nascosta>
   <Testata titolo={nonTrovato.titolo}>
     <span slot="etichetta" class="etichetta">[ 404 ] Pagina non trovata</span>
     <p class="attacco">{nonTrovato.testo}</p>
