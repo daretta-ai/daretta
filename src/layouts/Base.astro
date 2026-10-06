@@ -14,7 +14,7 @@ interface Props {
   nascosta?: boolean;
   // Per gli articoli: og:type «article» con la data di pubblicazione
   articolo?: { data: Date };
-  // Immagine di anteprima per i social (1200×630). Arriva con la tavola dell'anteprima.
+  // Immagine di anteprima per i social (1200×630), generata da src/pages/og. Di base quella del sito.
   immagine?: string;
 }
 
@@ -26,13 +26,13 @@ const {
   avanzamento = false,
   nascosta = false,
   articolo,
-  immagine,
+  immagine = '/og/sito.png',
 } = Astro.props;
 
 const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
 // Indirizzo canonico sempre su daretta.it, anche quando la pagina è servita dall'anteprima
 const canonico = new URL(Astro.url.pathname, Astro.site).href;
-const immagineAssoluta = immagine && new URL(immagine, Astro.site).href;
+const immagineAssoluta = new URL(immagine, Astro.site).href;
 ---
 
 <!doctype html>
@@ -54,10 +54,11 @@ const immagineAssoluta = immagine && new URL(immagine, Astro.site).href;
     {articolo && <meta property="article:published_time" content={articolo.data.toISOString()} />}
     {articolo && <meta property="article:author" content="Patrizio Bartolozzi" />}
     <meta name="author" content="Patrizio Bartolozzi" />
-    {immagineAssoluta && <meta property="og:image" content={immagineAssoluta} />}
-    {immagineAssoluta && <meta property="og:image:width" content="1200" />}
-    {immagineAssoluta && <meta property="og:image:height" content="630" />}
-    <meta name="twitter:card" content={immagineAssoluta ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={immagineAssoluta} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={titolo ? `${titolo} · dàretta` : 'dàretta'} />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

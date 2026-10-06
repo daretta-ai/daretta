@@ -17,7 +17,12 @@ const fuoriSitemap = ['/newsletter/benvenuto', '/404'];
 export default defineConfig({
   site: 'https://daretta.it',
   output: 'static',
-  adapter: cmsLocale ? undefined : cloudflare(),
+  // Le pagine statiche si generano in Node, non nel runtime di Cloudflare: le immagini per i social
+  // (src/og) usano WebAssembly e leggono i font dal disco, cose che il runtime non permette durante la build.
+  adapter: cmsLocale ? undefined : cloudflare({ prerenderEnvironment: 'node' }),
+  // Stessi browser di prima per il CSS (prefissi per Safari compresi): generando in Node, Vite altrimenti
+  // usa un obiettivo più recente e toglie qualche prefisso.
+  vite: { build: { cssTarget: ['chrome87', 'edge88', 'firefox78', 'safari14'] } },
   integrations: [
     react(),
     markdoc(),

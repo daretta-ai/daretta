@@ -20,7 +20,12 @@ const secondo = {
 }[progetto.rimando];
 ---
 
-<Base titolo={progetto.nome} descrizione={progetto.card} attiva="progetti">
+<Base
+  titolo={progetto.nome}
+  descrizione={progetto.card}
+  attiva="progetti"
+  immagine={`/og/progetti/${progetto.slug}.png`}
+>
   <TestataProgetto
     progetto={progetto}
     titolo={progetto.titolo}
