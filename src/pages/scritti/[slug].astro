@@ -34,7 +34,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   <article class="articolo" data-articolo>
     <header class="griglia apertura">
       <div class="meta-margine">
-        <a class="torna" href="/scritti">← Scritti</a>
+        <a class="torna" href="/scritti"><span class="freccia freccia-indietro" aria-hidden="true">←</span> Scritti</a>
         {articolo.tag && <span class="tag smussato contornato">{articolo.tag}</span>}
         <time datetime={articolo.data.toISOString().slice(0, 10)}>{data}</time>
         <span>{minutiDiLettura(articolo.body)} min di lettura</span>
@@ -70,7 +70,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   <section class="griglia chiusura">
     <div class="nl"><Newsletter articolo /></div>
     <a class="prossimo smussato" href={prossimo ? `/scritti/${prossimo.slug}` : '/scritti'}>
-      <span class="etichetta-prossimo">{prossimo ? 'Prossimo →' : 'Tutti gli scritti →'}</span>
+      <span class="etichetta-prossimo">{prossimo ? 'Prossimo' : 'Tutti gli scritti'} <span class="freccia" aria-hidden="true">→</span></span>
       <span class="titolo-prossimo">{prossimo ? prossimo.titolo : 'Torna all\'elenco.'}</span>
     </a>
   </section>

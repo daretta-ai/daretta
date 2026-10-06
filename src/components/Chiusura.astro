@@ -19,7 +19,7 @@ const { rimandi } = Astro.props;
     {
       rimandi.map((r, i) => (
         <a class:list={['rimando', 'smussato', i === 0 ? 'velo' : 'contorno contornato']} href={r.href}>
-          <span class="etichetta-rimando">{r.etichetta} →</span>
+          <span class="etichetta-rimando">{r.etichetta} <span class="freccia" aria-hidden="true">→</span></span>
           <span class="testo-rimando">{r.testo}</span>
         </a>
       ))

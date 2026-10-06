@@ -42,7 +42,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     </div>
     <div class="chi-destra">
       <p class="breve">{chiSono.breve}</p>
-      <a class="link-etichetta" href="/chi-sono">Tutta la storia →</a>
+      <a class="link-etichetta" href="/chi-sono">Tutta la storia <span class="freccia" aria-hidden="true">→</span></a>
     </div>
   </Modulo>
 
@@ -75,7 +75,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     <div class="curiosita">
       <div class="curiosita-testa">
         <Sezione numero={5}>Curiosità</Sezione>
-        <a class="link-etichetta" href="/curiosita">Vedi tutte →</a>
+        <a class="link-etichetta" href="/curiosita">Vedi tutte <span class="freccia" aria-hidden="true">→</span></a>
       </div>
       <Tabellone />
     </div>

@@ -1,0 +1,98 @@
+/* Movimento del sito: poco, e solo dove spiega qualcosa.
+   La meraviglia resta alla sfera; qui ci sono tre cose sole.
+     1. Il passaggio tra le pagine: la pagina sfuma, header e sfera restano al loro posto.
+     2. Il riscontro sulle azioni: la freccia dei rimandi fa un passo avanti.
+     3. I moduli sotto la piega salgono appena, una volta sola (lo script è in Base.astro).
+   Si anima solo transform e opacity: nessun ricalcolo del layout, nessun peso in più.
+   Con prefers-reduced-motion non si muove niente. */
+
+/* 1. Passaggio tra le pagine (View Transitions tra documenti: Chrome, Edge, Safari 18.2+).
+   Dove non c'è, si cambia pagina come prima. */
+@view-transition {
+  navigation: auto;
+}
+
+/* L'header resta fermo, la sfera passa da una pagina all'altra: è la stessa che ti segue. */
+.header {
+  view-transition-name: intestazione;
+}
+[data-sfera] {
+  view-transition-name: sfera;
+}
+
+::view-transition-old(root) {
+  animation: 140ms ease-in both movimento-esci;
+}
+::view-transition-new(root) {
+  animation: 320ms cubic-bezier(0.2, 0.7, 0.2, 1) 60ms both movimento-entra;
+}
+
+/* La sfera nuova si accende dopo il testo, quindi nel passaggio si vede la vecchia
+   che va al suo nuovo posto e alla nuova misura; poi riprende a girare quella vera. */
+::view-transition-group(sfera) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+::view-transition-old(sfera) {
+  animation: none;
+  opacity: 1;
+}
+::view-transition-new(sfera) {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes movimento-esci {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes movimento-entra {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* 2. La freccia dei rimandi fa un passo verso dove porta */
+.freccia {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+a:hover .freccia,
+a:focus-visible .freccia {
+  transform: translateX(4px);
+}
+a:hover .freccia-indietro,
+a:focus-visible .freccia-indietro {
+  transform: translateX(-4px);
+}
+
+/* 3. Moduli sotto la piega. Senza JavaScript la classe non c'è e tutto è già visibile. */
+.da-rivelare {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.da-rivelare.rivelato {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.35s ease-out,
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media print {
+  .da-rivelare {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+  .freccia {
+    transition: none;
+  }
+}

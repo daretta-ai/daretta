@@ -1,6 +1,7 @@
 ---
 import '../styles/font.css';
 import '../styles/token.css';
+import '../styles/movimento.css';
 import geistTesto from '../assets/font/geist-sans-latin-400-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -109,6 +110,34 @@ const datiStrutturati = home
       </main>
       <Footer />
     </div>
+    <script>
+      // Moduli sotto la piega: salgono appena quando entrano nello schermo, una volta sola.
+      // Solo i blocchi di pagina (moduli, figure, foto, citazioni, chiusura), mai i paragrafi:
+      // restano fuori la testata, i blocchi di testo e tutto l'articolo.
+      // Niente animazione se si arriva da un'ancora (#013) o tornando indietro, dove la pagina
+      // si apre già scorsa, e con prefers-reduced-motion.
+      const ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const navigazione = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+      const indietro = navigazione?.type === 'back_forward';
+      if (!ridotto && !location.hash && !indietro && 'IntersectionObserver' in window) {
+        const sotto = [...document.querySelectorAll<HTMLElement>('main > *:not(:first-child):not(.blocco):not(article)')]
+          .filter((el) => el.getBoundingClientRect().top > innerHeight);
+        const osserva = new IntersectionObserver(
+          (voci) => {
+            for (const v of voci) {
+              if (!v.isIntersecting) continue;
+              v.target.classList.add('rivelato');
+              osserva.unobserve(v.target);
+            }
+          },
+          { rootMargin: '0px 0px -6% 0px' },
+        );
+        for (const el of sotto) {
+          el.classList.add('da-rivelare');
+          osserva.observe(el);
+        }
+      }
+    </script>
   </body>
 </html>
 
