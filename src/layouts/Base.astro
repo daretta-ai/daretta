@@ -35,6 +35,34 @@ const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
 // Indirizzo canonico sempre su daretta.it, anche quando la pagina è servita dall'anteprima
 const canonico = new URL(Astro.url.pathname, Astro.site).href;
 const immagineAssoluta = new URL(immagine, Astro.site).href;
+
+// Dati strutturati per i motori di ricerca, solo in home: chi è Patrizio e qual è il suo sito.
+// Solo fatti già scritti nel sito, niente superlativi.
+const datiStrutturati = home
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': 'https://daretta.it/#sito',
+          url: 'https://daretta.it/',
+          name: 'dàretta',
+          inLanguage: 'it',
+          author: { '@id': 'https://daretta.it/#patrizio' },
+        },
+        {
+          '@type': 'Person',
+          '@id': 'https://daretta.it/#patrizio',
+          name: 'Patrizio Bartolozzi',
+          url: 'https://daretta.it/chi-sono',
+          image: 'https://daretta.it/foto/notte-800.webp',
+          jobTitle: 'Amministratore delegato',
+          worksFor: { '@type': 'Organization', name: 'Codever' },
+          sameAs: ['https://www.linkedin.com/in/patriziobartolozzi'],
+        },
+      ],
+    })
+  : null;
 ---
 
 <!doctype html>
@@ -47,6 +75,7 @@ const immagineAssoluta = new URL(immagine, Astro.site).href;
     {(ANTEPRIMA || nascosta) && <meta name="robots" content="noindex, nofollow" />}
     {!nascosta && <link rel="canonical" href={canonico} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="dàretta · Scritti" href="/rss.xml" />
     <meta property="og:site_name" content="dàretta" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:type" content={articolo ? 'article' : 'website'} />
@@ -67,6 +96,7 @@ const immagineAssoluta = new URL(immagine, Astro.site).href;
     <meta name="theme-color" content="#111314" />
     <!-- Doto pesa meno di 4 KB per peso: Vite la incorpora nel CSS, non serve precaricarla -->
     <link rel="preload" href={geistTesto} as="font" type="font/woff2" crossorigin />
+    {datiStrutturati && <script type="application/ld+json" set:html={datiStrutturati} />}
   </head>
   <body>
     <a class="salta smussato" href="#contenuto">Vai al contenuto</a>

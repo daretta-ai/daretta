@@ -18,6 +18,8 @@ const fuoriSitemap = ['/newsletter/benvenuto', '/404'];
 export default defineConfig({
   site: 'https://daretta.it',
   output: 'static',
+  // Le pagine interne si scaricano quando il cursore si posa sul link (o al tocco): si aprono all'istante.
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   // Le pagine statiche si generano in Node, non nel runtime di Cloudflare: le immagini per i social
   // (src/og) usano WebAssembly e leggono i font dal disco, cose che il runtime non permette durante la build.
   adapter: cmsLocale ? undefined : cloudflare({ prerenderEnvironment: 'node' }),
