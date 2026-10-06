@@ -4,6 +4,7 @@ import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
+import csp from './src/integrazioni/csp.mjs';
 
 // Le pagine del sito sono statiche: si caricano all'istante.
 // Solo l'admin di Keystatic gira sul server.
@@ -30,5 +31,8 @@ export default defineConfig({
     sitemap({
       filter: (pagina) => !fuoriSitemap.some((p) => new URL(pagina).pathname.replace(/\/$/, '') === p),
     }),
+    // Content-Security-Policy con gli hash degli script in linea, in fondo a _headers (vedi il file).
+    // Non serve con `npm run cms`, dove non c'è Cloudflare a leggere _headers.
+    ...(cmsLocale ? [] : [csp()]),
   ],
 });

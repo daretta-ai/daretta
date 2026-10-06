@@ -1,0 +1,28 @@
+# Header delle pagine e dei file statici, letti da Cloudflare.
+# Valgono solo per i file in dist/client: l'admin di Keystatic e /api/iscrizione girano sul Worker e non li ricevono.
+# La Content-Security-Policy non sta qui: la aggiunge in fondo a questo file, a ogni build,
+# l'integrazione src/integrazioni/csp.mjs, perché contiene gli hash degli script in linea.
+# La cache di /_astro/* (un anno, immutable) la aggiunge l'adapter di Cloudflare.
+
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Foto, immagini per i social, favicon e logotipo della mail non hanno l'hash nel nome:
+# un giorno di cache, poi per una settimana il browser usa la copia vecchia mentre scarica la nuova.
+/foto/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/og/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/mail/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/favicon.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/favicon.ico
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
