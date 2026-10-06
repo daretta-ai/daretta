@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html lang="it" xmlns="http://www.w3.org/1999/xhtml">
-<!--
-  Template dàretta per Kit (passo 6). Lo usano la mail di conferma e le newsletter.
-  Si incolla in Kit come template HTML e si imposta come predefinito dell'account.
-  Variabili di Kit obbligatorie: {{ message_content }}, {{ unsubscribe_url }}, {{ address }}.
 
-  Regole del design system adattate alla posta:
-  - fondo cemento, testo inchiostro, link spenti (sottolineati, mai arancio);
-  - l'arancio solo per il pulsante (testo cemento sopra) e per la à del logotipo;
-  - il logotipo è un'immagine, perché Doto e Geist nelle mail non si caricano in modo affidabile;
-  - niente smusso: i programmi di posta non supportano clip-path. Pulsante ad angoli vivi, mai tondi.
-  Il colore del pulsante si sceglie anche nell'editor di Kit: arancio #FF4F1A, testo #111314.
--->
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,9 +21,10 @@
     .corpo blockquote { margin: 24px 0; padding: 0 0 0 20px; border-left: 2px solid #2E3A3C; color: #ECECE7; }
     .corpo img { max-width: 100%; height: auto; }
     .corpo hr { border: 0; border-top: 1px solid #2A2F31; margin: 32px 0; }
-    /* Pulsanti dell'editor di Kit: arancio pieno, testo cemento, angoli vivi */
-    .corpo a.btn, .corpo a.button, .corpo .btn a, .corpo .button a, .corpo a[class*="button"] {
-      background: #FF4F1A !important; color: #111314 !important; border-radius: 0 !important;
+    .corpo a.btn, .corpo a.button, .corpo .btn a, .corpo .button a, .corpo a[class*="button"],
+    .corpo [class*="button"], .corpo [class*="btn"] {
+      background: #FF4F1A !important; background-color: #FF4F1A !important; color: #111314 !important;
+      border: 0 !important; border-color: #FF4F1A !important; border-radius: 0 !important;
       font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important;
       font-size: 14px !important; letter-spacing: 1px !important; text-transform: uppercase !important;
       text-decoration: none !important; padding: 16px 28px !important; display: inline-block !important;
