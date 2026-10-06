@@ -4,7 +4,7 @@ I testi del sito si scrivono in Keystatic. Keystatic salva file normali dentro `
 
 ## Dove si scrive
 
-- **Online:** `/keystatic` sul sito (oggi `https://daretta.dimmipure.workers.dev/keystatic`, poi `https://daretta.it/keystatic`). Si entra con l'account GitHub. Ogni salvataggio è un commit su `main`, e Cloudflare ripubblica il sito in un paio di minuti.
+- **Online:** `/keystatic` sul sito (`https://daretta.it/keystatic`). Si entra con l'account GitHub. Ogni salvataggio è un commit su `main`, e Cloudflare ripubblica il sito in un paio di minuti.
 - **In locale:** `npm run cms`, poi `http://localhost:4321/keystatic`. Qui l'admin salva sui file del computer, e le modifiche vanno messe su GitHub con un commit come il resto del codice. In locale si vedono anche gli articoli non pubblicati. `npm run cms` fa girare il sito in Node, senza l'adapter Cloudflare: con `npm run dev` le pagine funzionano, ma l'admin no, perché il runtime di Cloudflare non può scrivere file.
 
 ## Cosa c'è
