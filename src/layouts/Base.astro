@@ -100,6 +100,48 @@ const datiStrutturati = home
     <!-- Doto pesa meno di 4 KB per peso: Vite la incorpora nel CSS, non serve precaricarla -->
     <link rel="preload" href={geistTesto} as="font" type="font/woff2" crossorigin />
     {datiStrutturati && <script type="application/ld+json" set:html={datiStrutturati} />}
+    <script is:inline>
+      // Passaggio tra le pagine: la sfera vola dalla pagina vecchia alla nuova solo se si vede in tutte e due.
+      // Se al clic è fuori dallo schermo (es. dai Progetti in home) non le si dà il nome:
+      // niente sfera che cala dall'alto, la pagina sfuma e basta. In linea nell'head perché pagereveal
+      // arriva prima che partano gli script normali.
+      (function () {
+        var CHIAVE = 'sfera-ferma';
+        var inVista = function (el) {
+          var r = el.getBoundingClientRect();
+          return r.width > 0 && r.bottom > 0 && r.top < innerHeight;
+        };
+        var nome = function (valore) {
+          document.querySelectorAll('[data-sfera]').forEach(function (el) {
+            el.style.viewTransitionName = valore;
+          });
+        };
+        var togli = function () { nome('none'); };
+        // Finito il passaggio la sfera riprende il nome, per il prossimo clic
+        var rimetti = function () { nome(''); };
+        addEventListener('pageswap', function (e) {
+          if (!e.viewTransition) return;
+          var sfera = document.querySelector('[data-sfera]');
+          if (sfera && inVista(sfera)) return;
+          togli();
+          try { sessionStorage.setItem(CHIAVE, '1'); } catch (_) {}
+        });
+        addEventListener('pagereveal', function (e) {
+          var ferma = false;
+          try { ferma = sessionStorage.getItem(CHIAVE) === '1'; sessionStorage.removeItem(CHIAVE); } catch (_) {}
+          if (!e.viewTransition) return;
+          var sfera = document.querySelector('[data-sfera]');
+          if (ferma || (sfera && !inVista(sfera))) {
+            togli();
+            e.viewTransition.finished.then(rimetti, rimetti);
+          }
+        });
+        // Tornando indietro la pagina può uscire intatta dalla cache, con la sfera ancora senza nome
+        addEventListener('pageshow', function (e) {
+          if (e.persisted) rimetti();
+        });
+      })();
+    </script>
   </head>
   <body>
     <a class="salta smussato" href="#contenuto">Vai al contenuto</a>
