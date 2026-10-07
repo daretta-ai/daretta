@@ -87,6 +87,7 @@ Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa 
 - **Passaggio tra le pagine.** La pagina vecchia sfuma (140ms), la nuova sale di 8px e sfuma dentro (320ms). L'header resta fermo. La sfera vola dalla pagina vecchia alla nuova, al suo posto e alla sua misura, solo se al clic si vede sullo schermo: se l'hai già superata scorrendo, la pagina sfuma e basta. View Transitions tra documenti (`@view-transition`), dove il browser non le ha si cambia pagina come prima.
 - **Riscontro sulle azioni.** Le frecce dei rimandi fanno un passo di 4px verso dove portano, all'hover e al focus (200ms). Hover e focus sempre tra 150 e 200ms.
 - **Moduli sotto la piega.** Salgono di 12px e sfumano dentro, una volta sola, quando entrano nello schermo. Mai la testata o la hero, mai i paragrafi, mai gli articoli, mai il tabellone (si muove già da solo). Niente animazione se si arriva da un'ancora o tornando indietro. Senza JavaScript tutto è già visibile.
+- **Parallasse, solo sugli oggetti.** Foto e indicatori di stato possono scorrere appena più piano o più veloci della pagina, per dare profondità: pochi pixel (al massimo 24px su tutta la corsa), legati allo scorrimento, mai a scatti. Mai sui testi: un paragrafo o un titolo che scorre a un'altra velocità si legge peggio.
 - **Le misure.** Spostamenti tra 4 e 12px, durate tra 140 e 450ms, uscita veloce e ingresso morbido (`cubic-bezier(0.2, 0.7, 0.2, 1)`). Mai rimbalzi, mai elastici.
 - **Costruzione.** Solo `transform` e `opacity`, solo CSS e qualche riga di script, nessuna libreria: il sito resta istantaneo (Lighthouse e CLS invariati). Tutto in `src/styles/movimento.css`; il reveal è in `Base.astro`. Con `prefers-reduced-motion` non si muove niente.
 - **Per ogni nuovo movimento** la domanda è una: spiega qualcosa, o fa solo scena? Se fa solo scena, non si fa. Prima si prova su una pagina, poi si estende.
@@ -147,4 +148,5 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Smussi fatti con `corner-shape` o `border-radius` di ripiego: il segno deve essere uguale su ogni browser.
 - Foto a colori, ritoccate, o con un trattamento diverso da luce petrolio.
 - Animare ogni blocco in entrata, i paragrafi, la hero o il testo degli articoli.
-- Rimbalzi, elastici, parallasse, movimenti che durano più di mezzo secondo.
+- Rimbalzi, elastici, transizioni che durano più di mezzo secondo.
+- Parallasse sui testi (titoli, paragrafi, etichette).
