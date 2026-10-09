@@ -11,6 +11,7 @@ import Confronto from './Confronto.astro';
 import Codice from './Codice.astro';
 import FiguraBarre from './FiguraBarre.astro';
 import FiguraElenco from './FiguraElenco.astro';
+import Elenco from './Elenco.astro';
 import Stato from './Stato.astro';
 
 interface Props {
@@ -78,6 +79,14 @@ const Self = Astro.self;
         return <Citazione testo={a.testo} didascalia={a.didascalia} />;
       case 'confronto':
         return <Confronto voci={a.voci ?? []} />;
+      case 'ul':
+      case 'ol': {
+        // Elenchi del testo: ogni voce con il suo segno nel margine (Elenco.astro)
+        const voci = children
+          .filter((c): c is any => typeof c === 'object' && c !== null && 'name' in c && c.name === 'li')
+          .map((li) => li.children as RenderableTreeNode[]);
+        return <Elenco ordinato={name === 'ol'} inizio={Number(a.start) || 1} voci={voci} />;
+      }
       case 'codice':
         return <Codice codice={a.content} linguaggio={a.language} />;
       case 'a': {

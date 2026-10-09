@@ -3,6 +3,7 @@
      1. Il passaggio tra le pagine: la pagina sfuma, header e sfera restano al loro posto.
      2. Il riscontro sulle azioni: la freccia dei rimandi fa un passo avanti.
      3. I moduli sotto la piega salgono appena, una volta sola (lo script è in Base.astro).
+     4. I segni degli elenchi si aprono quando l'elenco entra nello schermo; il testo resta fermo.
    Si anima solo transform e opacity: nessun ricalcolo del layout, nessun peso in più.
    Con prefers-reduced-motion non si muove niente. */
 
@@ -81,7 +82,46 @@ a:focus-visible .freccia-indietro {
     transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+/* 4. Segni degli elenchi: l'unico movimento dentro gli articoli, e solo sul segno, mai sul testo.
+   Quando l'elenco entra nello schermo, una volta sola, le parentesi si aprono di 4px e compaiono;
+   120ms dopo arriva quello che c'è dentro (il quadretto cresce, il numero sale e sfuma dentro).
+   Ogni voce parte 60ms dopo la precedente. data-segni lo mette lo script nell'head di Base.astro,
+   solo se il movimento si può fare: senza JavaScript, da un'ancora o tornando indietro i segni sono già lì. */
+[data-segni='attesa'] .elenco-testo:not(.visto) .parentesi,
+[data-segni='attesa'] .elenco-testo:not(.visto) .dentro {
+  opacity: 0;
+}
+[data-segni='attesa'] .elenco-testo:not(.visto) .apre {
+  transform: translateX(4px);
+}
+[data-segni='attesa'] .elenco-testo:not(.visto) .chiude {
+  transform: translateX(-4px);
+}
+[data-segni='attesa'] .elenco-testo:not(.visto) .dentro {
+  transform: translateY(4px);
+}
+[data-segni='attesa'] .elenco-testo:not(.visto) .quadretto {
+  transform: scale(0);
+}
+.elenco-testo.visto .parentesi {
+  transition:
+    opacity 320ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 60ms),
+    transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 60ms);
+}
+.elenco-testo.visto .dentro,
+.elenco-testo.visto .quadretto {
+  transition:
+    opacity 320ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 60ms + 120ms),
+    transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 60ms + 120ms);
+}
+
 @media print {
+  [data-segni='attesa'] .elenco-testo .parentesi,
+  [data-segni='attesa'] .elenco-testo .dentro,
+  [data-segni='attesa'] .elenco-testo .quadretto {
+    opacity: 1;
+    transform: none;
+  }
   .da-rivelare {
     opacity: 1;
     transform: none;

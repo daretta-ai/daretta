@@ -1,0 +1,119 @@
+---
+// Elenco puntato o numerato del corpo (componente «Elenco puntato» del design system).
+// Il segno sta nel margine dell'elenco, in mono tra parentesi quadre: [ ■ ] o [ 01 ].
+// Si anima solo il segno, mai il testo (regole in movimento.css, script in Base.astro).
+//
+// Una voce che nel testo comincia con ↻ (es. «↻ da capo») è il ritorno all'inizio:
+// il segno diventa [ ↻ ] e il resto della voce si scrive in mono. Il testo sta nell'articolo.
+import type { RenderableTreeNode } from '@markdoc/markdoc';
+import Corpo from './Corpo.astro';
+
+interface Props {
+  ordinato?: boolean;
+  inizio?: number;
+  voci: RenderableTreeNode[][]; // i figli di ogni <li>
+}
+const { ordinato = false, inizio = 1, voci } = Astro.props;
+const El = ordinato ? 'ol' : 'ul';
+
+const LOOP = '↻';
+// Toglie il ↻ iniziale dalla voce; null se la voce non comincia con ↻.
+function senzaLoop(figli: RenderableTreeNode[]): RenderableTreeNode[] | null {
+  const [primo, ...resto] = figli;
+  if (typeof primo !== 'string' || !primo.trimStart().startsWith(LOOP)) return null;
+  const testo = primo.trimStart().slice(LOOP.length).trimStart();
+  return testo ? [testo, ...resto] : resto;
+}
+---
+
+<El class="elenco-testo" start={ordinato && inizio !== 1 ? inizio : undefined}>
+  {
+    voci.map((figli, i) => {
+      const loop = senzaLoop(figli);
+      return (
+        <li class:list={['voce', loop && 'da-capo']} style={`--i: ${i}`}>
+          <span class="segno" aria-hidden="true">
+            <span class="parentesi apre">[</span>
+            <span class="dentro">
+              {loop ? LOOP : ordinato ? String(inizio + i).padStart(2, '0') : <span class="quadretto" />}
+            </span>
+            <span class="parentesi chiude">]</span>
+          </span>
+          <span class="voce-testo">
+            <Corpo nodi={loop ?? figli} />
+          </span>
+        </li>
+      );
+    })
+  }
+</El>
+
+<style>
+  .elenco-testo {
+    margin: 12px 0; /* con il gap di 20px del testo fa 32px dai paragrafi */
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--filetto);
+  }
+  .voce {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--filetto);
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--inchiostro-corpo);
+  }
+  .segno {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--inchiostro-muto);
+    white-space: nowrap;
+  }
+  .parentesi,
+  .dentro {
+    display: inline-block;
+  }
+  .dentro {
+    min-width: 22px;
+    text-align: center;
+  }
+  ol .dentro {
+    min-width: 30px;
+  }
+  .quadretto {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    vertical-align: middle;
+    background: var(--inchiostro-muto);
+  }
+  .da-capo .dentro {
+    font-size: 15px;
+  }
+  .da-capo .voce-testo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  @media (max-width: 720px) {
+    .voce {
+      grid-template-columns: 56px minmax(0, 1fr);
+      padding: 12px 0;
+      font-size: 18px;
+      line-height: 1.65;
+    }
+    .segno {
+      font-size: 12px;
+    }
+    .da-capo .voce-testo {
+      font-size: 12px;
+    }
+  }
+</style>

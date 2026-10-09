@@ -141,6 +141,21 @@ const datiStrutturati = home
           if (e.persisted) rimetti();
         });
       })();
+      // Segni degli elenchi: si nascondono prima del primo disegno, così si vedono aprirsi
+      // (lo script in fondo alla pagina li accende). Solo se il movimento si può fare:
+      // niente con prefers-reduced-motion, arrivando da un'ancora o tornando indietro.
+      (function () {
+        try {
+          var nav = performance.getEntriesByType('navigation')[0];
+          if (
+            matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            location.hash ||
+            (nav && nav.type === 'back_forward') ||
+            !('IntersectionObserver' in window)
+          ) return;
+          document.documentElement.setAttribute('data-segni', 'attesa');
+        } catch (_) {}
+      })();
     </script>
   </head>
   <body>
@@ -178,6 +193,22 @@ const datiStrutturati = home
           el.classList.add('da-rivelare');
           osserva.observe(el);
         }
+      }
+
+      // Segni degli elenchi: si aprono quando l'elenco entra nello schermo, una volta sola.
+      // Lo stato di attesa lo mette lo script nell'head, con le stesse condizioni di sopra.
+      if (document.documentElement.dataset.segni === 'attesa') {
+        const segni = new IntersectionObserver(
+          (voci) => {
+            for (const v of voci) {
+              if (!v.isIntersecting) continue;
+              v.target.classList.add('visto');
+              segni.unobserve(v.target);
+            }
+          },
+          { rootMargin: '0px 0px -6% 0px' },
+        );
+        document.querySelectorAll('.elenco-testo').forEach((el) => segni.observe(el));
       }
     </script>
   </body>

@@ -1,0 +1,75 @@
+<!-- @dsCard group="Racconto" height=620 subtitle="Puntato e numerato, si anima solo il segno" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Elenco puntato — anteprima</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400&amp;family=Geist+Mono:wght@400&amp;display=swap">
+<style>
+body{margin:0;background:var(--cemento);color:var(--inchiostro-corpo);font-family:var(--font-sans)}
+.wrap{padding:32px 40px;display:flex;flex-direction:column;gap:40px}
+.blocco{display:grid;grid-template-columns:160px minmax(0,1fr);column-gap:24px;align-items:start}
+.etichetta{padding-top:18px;font-family:var(--font-mono);font-size:12px;letter-spacing:.5px;color:var(--inchiostro-muto)}
+ul,ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--filetto);max-width:760px}
+li{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:baseline;padding:14px 0;border-bottom:1px solid var(--filetto);font-size:21px;line-height:1.7}
+.segno{display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:13px;letter-spacing:1px;color:var(--inchiostro-muto);white-space:nowrap}
+.p{display:inline-block}
+.dentro{display:inline-flex;justify-content:center;align-items:center;width:22px}
+ol .dentro{width:30px}
+.q{display:inline-block;width:5px;height:5px;background:var(--inchiostro-muto)}
+.curva{transition-timing-function:cubic-bezier(.2,.7,.2,1)}
+/* stato iniziale, solo con JS e senza movimento ridotto */
+.anima .p,.anima .n{opacity:0;transition:transform 320ms cubic-bezier(.2,.7,.2,1) var(--d),opacity 320ms cubic-bezier(.2,.7,.2,1) var(--d)}
+.anima .pa{transform:translateX(4px)}
+.anima .pc{transform:translateX(-4px)}
+.anima .q{transform:scale(0);transition:transform 320ms cubic-bezier(.2,.7,.2,1) calc(var(--d) + 120ms)}
+.anima .n{transform:translateY(4px);transition-delay:calc(var(--d) + 120ms)}
+.anima.via .p,.anima.via .n{opacity:1;transform:none}
+.anima.via .q{transform:none}
+button{margin-left:184px;align-self:flex-start;height:44px;padding:1px;border:none;background:var(--bordo);cursor:pointer;clip-path:polygon(0 9.4px,9.4px 0,calc(100% - 9.4px) 0,100% 9.4px,100% calc(100% - 9.4px),calc(100% - 9.4px) 100%,9.4px 100%,0 calc(100% - 9.4px))}
+button span{display:flex;align-items:center;height:100%;padding:0 18px;background:var(--cemento);color:var(--inchiostro);font-family:var(--font-mono);font-size:12px;letter-spacing:1px;clip-path:polygon(0 9.2px,9.2px 0,calc(100% - 9.2px) 0,100% 9.2px,100% calc(100% - 9.2px),calc(100% - 9.2px) 100%,9.2px 100%,0 calc(100% - 9.2px))}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="blocco">
+<span class="etichetta">NON NUMERATO</span>
+<ul class="lista">
+<li><span class="segno" aria-hidden="true"><span class="p pa">[</span><span class="dentro"><span class="q"></span></span><span class="p pc">]</span></span><span>l'Account chiede a che punto sono le ultime modifiche</span></li>
+<li><span class="segno" aria-hidden="true"><span class="p pa">[</span><span class="dentro"><span class="q"></span></span><span class="p pc">]</span></span><span>il Developer risponde che il lavoro è finito</span></li>
+<li><span class="segno" aria-hidden="true"><span class="p pa">[</span><span class="dentro"><span class="q"></span></span><span class="p pc">]</span></span><span>il Project Manager conferma che le modifiche sono state pubblicate</span></li>
+</ul>
+</div>
+<div class="blocco">
+<span class="etichetta">NUMERATO</span>
+<ol class="lista">
+<li><span class="segno" aria-hidden="true"><span class="p pa">[</span><span class="dentro n">01</span><span class="p pc">]</span></span><span>l'Account chiede a che punto sono le ultime modifiche</span></li>
+<li><span class="segno" aria-hidden="true"><span class="p pa">[</span><span class="dentro n">02</span><span class="p pc">]</span></span><span>il Developer risponde che il lavoro è finito</span></li>
+<li><span class="segno" aria-hidden="true"><span class="p pa">[</span><span class="dentro n">03</span><span class="p pc">]</span></span><span>il Project Manager conferma che le modifiche sono state pubblicate</span></li>
+</ol>
+</div>
+<button type="button" id="rivedi"><span>RIVEDI L'ANIMAZIONE</span></button>
+</div>
+<script>
+(function(){
+var ridotto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var liste = document.querySelectorAll('.lista');
+liste.forEach(function(l){
+  l.querySelectorAll('li').forEach(function(li, i){ li.style.setProperty('--d', (i * 60) + 'ms'); });
+});
+function parti(){
+  if (ridotto) return;
+  liste.forEach(function(l){ l.classList.remove('via'); l.classList.add('anima'); });
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    liste.forEach(function(l){ l.classList.add('via'); });
+  }); });
+}
+parti();
+document.getElementById('rivedi').addEventListener('click', function(){
+  liste.forEach(function(l){ l.classList.remove('anima', 'via'); });
+  setTimeout(parti, 60);
+});
+})();
+</script>
+</body>
+</html>
