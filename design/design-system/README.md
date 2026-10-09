@@ -51,7 +51,7 @@ Nel sito convivono due materiali, e il contrasto tra i due racconta il nome.
 | Moduli e foto | `smusso-modulo` 32px | `smusso-modulo-mobile` 30px |
 | Card e blocchi di codice | `smusso-card` 20px | `smusso-card-mobile` 12px |
 | Pulsanti e chip | 3/14 dell'altezza (`smusso-azione`, 12px su 56px) | 3/14 dell'altezza |
-| Campi dei form | `smusso-campo` 6px | `smusso-campo` 6px |
+| Campi dei form e messaggi | `smusso-campo` 6px | `smusso-campo` 6px |
 
 - **Pulsanti e chip hanno lo smusso più forte, e sempre nella stessa proporzione.** Lo smusso è 3/14 dell'altezza, come 12px su un pulsante da 56px: così un pulsante piccolo ha lo stesso carattere di uno grande, senza sembrare tagliato a metà. Per esempio 9,4px su 44px (ISCRIVITI in testata, comandi del tabellone, chip), 10,3px su 48px (menu), 11,1px su 52px (pulsanti su mobile). Sono ciò che agisce, e devono avere carattere. I campi invece restano a 6px fissi, appena accennati, altrimenti sembrano pulsanti.
 - **Il tabellone resta com'è.** Tessere e palette hanno gli angoli arrotondati degli oggetti veri: è un oggetto, non layout. I suoi comandi (Pausa, Prossima) invece sono pulsanti, e sono smussati.
@@ -80,6 +80,18 @@ Negli articoli e nei testi lunghi, puntati o numerati, con la stessa struttura. 
 - **Accessibilità:** `ul` e `ol` veri; il segno è `aria-hidden`, la numerazione arriva allo screen reader dall'`ol`.
 - Voci speciali di un solo articolo restano nell'articolo, non nel sistema. Oggi c'è il ritorno all'inizio di «Due giorni di chat VS trenta secondi di telefonata»: una voce che comincia con ↻ ha il segno `[ ↻ ]` e il resto in mono (nel testo «↻ da capo»).
 
+## I messaggi dei form
+
+Oggi c'è un solo form, la newsletter, ma la regola vale per tutti. Un messaggio è un oggetto, non una riga di testo: deve vedersi arrivare, anche da chi non sta guardando il punto giusto.
+
+- **La striscia.** Ogni messaggio sta in una striscia smussata (`smusso-campo`, 6px) con fondo `petrolio-scuro` al 60%, larga quanto il form. Dentro, un'etichetta in Geist Mono maiuscolo tra parentesi quadre, poi la frase in Geist. Sul modulo newsletter etichetta e testo sono in `carta`.
+- **Le etichette.** `[ VERIFICA LA MAIL ]` dopo l'iscrizione, `[ DI NUOVO? ]` se l'indirizzo è già iscritto, `[ MAIL SBAGLIATA? ]` se l'indirizzo non è valido, `[ AZZ ]` per l'errore generico. Le frasi sono nei microtesti (testi.md).
+- **Successo: il messaggio sostituisce il form.** Campo e pulsante spariscono e la striscia prende il loro posto. Il form ha finito il suo lavoro, e lasciarlo lì invita a rimandarlo. Vale anche per «già iscritto»: non c'è altro da fare.
+- **Errore: il form resta.** La striscia compare sotto il campo e il cursore torna dentro, con l'anello `carta` del focus. Se è l'indirizzo a essere sbagliato, l'anello resta acceso anche quando il campo perde il focus, finché non si reinvia. Al nuovo invio la striscia sparisce.
+- **Niente arancio, niente rosso.** L'arancio è per le azioni, e un messaggio non lo è; un rosso sarebbe un colore in più nel sistema. Successo ed errore si distinguono per etichetta e comportamento, non per colore, come gli stati dei progetti.
+- **Il movimento.** La striscia sale di 8px e sfuma dentro (320ms, curva del sito). Nel successo il form sfuma via prima (140ms), poi arriva la striscia, e la striscia è alta almeno quanto la riga del campo, così il modulo non salta. Con `prefers-reduced-motion` il cambio è istantaneo.
+- **Accessibilità.** `role="status"` per il successo, `role="alert"` per gli errori; il campo ha `aria-invalid="true"` ed è collegato al messaggio con `aria-describedby`. Dopo il successo il focus va sulla striscia (`tabindex="-1"`), così chi usa la tastiera non resta su un pulsante sparito.
+
 ## La sfera
 
 L'unico momento «wow» del sito, ed è legato al nome: la sfera *ascolta*.
@@ -97,7 +109,7 @@ Implementazione: canvas 2D, nessuna libreria, pochi KB. Rispetta `prefers-reduce
 Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa è cambiato, cosa hai appena fatto. Deve dare l'idea di una grande cura per ogni dettaglio, essere gradevole e sorprendere piano, senza mai mettersi in mezzo alla lettura. La meraviglia resta alla sfera.
 
 - **Passaggio tra le pagine.** La pagina vecchia sfuma (140ms), la nuova sale di 8px e sfuma dentro (320ms). L'header resta fermo. La sfera vola dalla pagina vecchia alla nuova, al suo posto e alla sua misura, solo se al clic si vede sullo schermo: se l'hai già superata scorrendo, la pagina sfuma e basta. View Transitions tra documenti (`@view-transition`), dove il browser non le ha si cambia pagina come prima.
-- **Riscontro sulle azioni.** Le frecce dei rimandi fanno un passo di 4px verso dove portano, all'hover e al focus (200ms). Hover e focus sempre tra 150 e 200ms.
+- **Riscontro sulle azioni.** Le frecce dei rimandi fanno un passo di 4px verso dove portano, all'hover e al focus (200ms). Hover e focus sempre tra 150 e 200ms. I messaggi dei form arrivano come descritto in «I messaggi dei form».
 - **Moduli sotto la piega.** Salgono di 12px e sfumano dentro, una volta sola, quando entrano nello schermo. Mai la testata o la hero, mai i paragrafi, mai gli articoli, mai il tabellone (si muove già da solo). Niente animazione se si arriva da un'ancora o tornando indietro. Senza JavaScript tutto è già visibile.
 - **Segni degli elenchi.** L'unica eccezione dentro gli articoli: si anima il segno (`[ ■ ]`, `[ 01 ]`), mai il testo della voce. Stesse condizioni dei moduli: una volta sola, niente animazione da un'ancora o tornando indietro, senza JavaScript tutto visibile. Le misure sono in «Gli elenchi».
 - **Parallasse, solo sugli oggetti.** Foto e indicatori di stato possono scorrere appena più piano o più veloci della pagina, per dare profondità: pochi pixel (al massimo 24px su tutta la corsa), legati allo scorrimento, mai a scatti. Mai sui testi: un paragrafo o un titolo che scorre a un'altra velocità si legge peggio.
@@ -141,6 +153,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Testo ≥4.5:1 sul suo fondo (ogni token di testo dice su quali fondi è verificato); ≥3:1 per testo sopra i 24px, anelli e icone. Sui pulsanti arancio il testo è `cemento`.
 - `inchiostro-muto` su `petrolio-luce` si ferma a 3,5:1: nei moduli più carichi (hero e testate delle pagine interne) le etichette passano a `inchiostro-secondario` (4,8:1).
 - Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `inchiostro-muto` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
+- I messaggi dei form si distinguono per etichetta e comportamento, mai solo per colore, e vengono annunciati (`role="status"` o `role="alert"`).
 - Pulsanti e chip alti almeno 44px su mobile.
 - L'anello di focus segue lo smusso (vedi «Angoli»): mai un `outline` rettangolare tagliato dal `clip-path`, e mai un elemento senza anello.
 
@@ -164,3 +177,4 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Animare ogni blocco in entrata, i paragrafi, la hero o il testo degli articoli (negli elenchi si muove solo il segno).
 - Rimbalzi, elastici, transizioni che durano più di mezzo secondo.
 - Parallasse sui testi (titoli, paragrafi, etichette).
+- Messaggi dei form come semplice riga di testo, o colorati di rosso o di arancio.

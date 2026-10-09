@@ -27,6 +27,10 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   data-gia-iscritto={nl.giaIscritto}
   data-mail-non-valida={nl.mailNonValida}
   data-errore={nl.errore}
+  data-etichetta-inviato={nl.etichettaInviato}
+  data-etichetta-gia-iscritto={nl.etichettaGiaIscritto}
+  data-etichetta-mail-non-valida={nl.etichettaMailNonValida}
+  data-etichetta-errore={nl.etichettaErrore}
   method="post"
   action="/api/iscrizione"
   novalidate
@@ -36,12 +40,17 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   {paragrafi(testo).map((p) => <p>{p}</p>)}
   <div class="riga">
     <label class="solo-lettori" for="newsletter-mail">La tua email</label>
-    <span class="campo smussato"><input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder={nl.segnaposto} /></span>
+    <span class="campo smussato"><input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder={nl.segnaposto} aria-describedby="newsletter-esito" /></span>
     <button class="smussato" type="submit">{nl.pulsante}</button>
   </div>
   <!-- Trappola per i bot: nascosta a chi legge e a chi usa lo screen reader -->
   <input class="trappola" name="sito" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
-  <p class="esito" role="status" aria-live="polite" data-esito></p>
+  <!-- Il messaggio di esito: una striscia con etichetta e frase (design system, «I messaggi dei form»).
+       Dopo l'iscrizione prende il posto del campo; dopo un errore sta sotto, e il campo resta. -->
+  <div class="esito" id="newsletter-esito" role="status" tabindex="-1" data-esito hidden>
+    <span class="esito-etichetta" data-esito-etichetta></span>
+    <span class="esito-testo" data-esito-testo></span>
+  </div>
   <a class="privacy" href="/privacy">{nl.privacy}</a>
 </Modulo>
 
@@ -51,20 +60,52 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     const campo = modulo.querySelector<HTMLInputElement>('input[name="email"]')!;
     const pulsante = modulo.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     const esito = modulo.querySelector<HTMLElement>('[data-esito]')!;
+    const etichetta = modulo.querySelector<HTMLElement>('[data-esito-etichetta]')!;
+    const frase = modulo.querySelector<HTMLElement>('[data-esito-testo]')!;
     const riga = modulo.querySelector<HTMLElement>('.riga')!;
-    const testi: Record<string, string> = {
-      inviato: modulo.dataset.inviato ?? '',
-      'gia-iscritto': modulo.dataset.giaIscritto ?? '',
-      'mail-non-valida': modulo.dataset.mailNonValida ?? '',
-      errore: modulo.dataset.errore ?? '',
+    const d = modulo.dataset;
+    const messaggi: Record<string, [string, string]> = {
+      inviato: [d.etichettaInviato ?? '', d.inviato ?? ''],
+      'gia-iscritto': [d.etichettaGiaIscritto ?? '', d.giaIscritto ?? ''],
+      'mail-non-valida': [d.etichettaMailNonValida ?? '', d.mailNonValida ?? ''],
+      errore: [d.etichettaErrore ?? '', d.errore ?? ''],
     };
-    const mostra = (chiave: string) => {
-      esito.textContent = testi[chiave] ?? testi.errore;
+    // Iscrizione fatta (o già fatta): il form ha finito il suo lavoro e lascia il posto al messaggio.
+    const conclusivi = new Set(['inviato', 'gia-iscritto']);
+    const fermo = matchMedia('(prefers-reduced-motion: reduce)');
+    const attendi = (ms: number) => new Promise((ok) => setTimeout(ok, fermo.matches ? 0 : ms));
+
+    const nascondi = () => {
+      esito.hidden = true;
+      esito.classList.remove('entra');
+      etichetta.textContent = '';
+      frase.textContent = '';
+    };
+    const mostra = async (chiave: string) => {
+      const [et, testo] = messaggi[chiave] ?? messaggi.errore;
+      const conclusivo = conclusivi.has(chiave);
+      // Gli errori si annunciano subito, il resto con calma
+      esito.setAttribute('role', conclusivo ? 'status' : 'alert');
       esito.dataset.tipo = chiave;
+      if (conclusivo) {
+        // Il form sfuma via (140ms), poi arriva la striscia
+        riga.classList.add('esce');
+        await attendi(140);
+        riga.hidden = true;
+        campo.removeAttribute('aria-describedby');
+      }
+      etichetta.textContent = `[ ${et} ]`;
+      frase.textContent = testo;
+      esito.hidden = false;
+      esito.classList.remove('entra');
+      void esito.offsetWidth; // riparte l'animazione anche se il messaggio cambia
+      esito.classList.add('entra');
+      if (conclusivo) esito.focus({ preventScroll: true });
     };
 
     modulo.addEventListener('submit', async (evento) => {
       evento.preventDefault();
+      nascondi();
       if (!campo.checkValidity()) {
         mostra('mail-non-valida');
         campo.setAttribute('aria-invalid', 'true');
@@ -87,13 +128,11 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
       }
       modulo.removeAttribute('aria-busy');
       pulsante.disabled = false;
-      mostra(chiave);
-      if (chiave === 'mail-non-valida') {
-        campo.setAttribute('aria-invalid', 'true');
+      await mostra(chiave);
+      if (!conclusivi.has(chiave)) {
+        if (chiave === 'mail-non-valida') campo.setAttribute('aria-invalid', 'true');
         campo.focus();
       }
-      // Fatto: il campo non serve più, resta solo il messaggio.
-      if (chiave === 'inviato' || chiave === 'gia-iscritto') riga.hidden = true;
     });
   }
 </script>
@@ -130,11 +169,58 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     text-decoration-style: dotted;
     text-underline-offset: 4px;
   }
+  /* La striscia del messaggio: smusso dei campi, petrolio scuro sopra il petrolio del modulo */
   .esito {
-    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    min-height: 56px; /* quanto la riga del campo: il modulo non salta */
+    padding: 14px var(--space-6);
+    background: color-mix(in srgb, var(--petrolio-scuro) 60%, transparent);
+    clip-path: var(--ritaglio-campo);
+    color: var(--carta);
   }
-  .esito:empty {
+  .esito[hidden] {
     display: none;
+  }
+  .esito:focus {
+    outline: none; /* riceve il focus solo da script, per non lasciare la tastiera su un pulsante sparito */
+  }
+  .esito-etichetta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .esito-testo {
+    font-size: 17px;
+    line-height: 1.45;
+  }
+  .esito.entra {
+    animation: esito-entra 320ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes esito-entra {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  .riga.esce {
+    opacity: 0;
+    transition: opacity 140ms ease-in;
+  }
+  /* Email da correggere: l'anello del campo resta acceso anche senza focus */
+  .campo:has([aria-invalid='true'])::after {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .esito.entra {
+      animation: none;
+    }
+    .riga.esce {
+      transition: none;
+    }
   }
   .trappola {
     position: absolute;
@@ -208,6 +294,13 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     input {
       font-size: 16px;
       padding: 0 20px;
+    }
+    .esito {
+      min-height: 52px;
+      padding: 12px 20px;
+    }
+    .esito-testo {
+      font-size: 16px;
     }
   }
 </style>

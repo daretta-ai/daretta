@@ -41,6 +41,10 @@ export interface Newsletter {
   giaIscritto: string;
   mailNonValida: string;
   errore: string;
+  etichettaInviato: string;
+  etichettaGiaIscritto: string;
+  etichettaMailNonValida: string;
+  etichettaErrore: string;
   articoloTitolo: string;
   articoloTesto: string;
   benvenutoTitolo: string;
