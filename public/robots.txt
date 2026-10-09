@@ -1,4 +1,8 @@
+# dàretta è aperto a tutti i crawler, compresi quelli dei modelli AI,
+# sia per la ricerca sia per l'addestramento (scelta di Patrizio, 10 ott 2026).
+
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Disallow: /keystatic
 Disallow: /api/
 
