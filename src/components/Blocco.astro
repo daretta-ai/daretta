@@ -49,6 +49,30 @@ const { numero, etichetta, spazio = 'grande' } = Astro.props;
     line-height: 1.7;
     color: var(--inchiostro-corpo);
   }
+  /* Elenchi nel testo: stessa voce del corpo, trattino in mono al posto del pallino. */
+  .testo :global(ul),
+  .testo :global(ol) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .testo :global(li) {
+    position: relative;
+    padding-left: 32px;
+    font-size: 21px;
+    line-height: 1.7;
+    color: var(--inchiostro-corpo);
+  }
+  .testo :global(li)::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono);
+    color: var(--inchiostro-muto);
+  }
   @media (max-width: 720px) {
     .blocco {
       gap: 14px;
@@ -63,9 +87,13 @@ const { numero, etichetta, spazio = 'grande' } = Astro.props;
     .blocco :global(.margine) {
       padding-top: 0;
     }
-    .testo :global(p) {
+    .testo :global(p),
+    .testo :global(li) {
       font-size: 18px;
       line-height: 1.65;
+    }
+    .testo :global(li) {
+      padding-left: 26px;
     }
   }
 </style>
