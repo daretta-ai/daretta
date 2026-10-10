@@ -70,7 +70,7 @@ const voci = [
         rootMargin: '-80px 0px 0px 0px',
       }).observe(hero);
     }
-    // Negli articoli: i punti letti si accendono di onda (luce, non azione)
+    // Negli articoli: i punti letti si accendono come i punti della sfera (luce, non azione)
     const barra = header.querySelector<HTMLElement>('[data-avanzamento]');
     const articolo = document.querySelector<HTMLElement>('[data-articolo]');
     if (barra && articolo) {
@@ -156,11 +156,11 @@ const voci = [
     width: 5px;
     height: 5px;
     border-radius: var(--radius-tondo);
-    background: var(--filetto);
+    background: var(--filetto-neutro);
     transition: background-color 0.2s;
   }
   .avanzamento span:global(.letto) {
-    background: var(--onda);
+    background: var(--punti);
   }
   .header.staccato {
     background: rgb(17 19 20 / 0.86);
