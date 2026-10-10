@@ -37,52 +37,67 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   </Modulo>
 
   <!-- Chi sono -->
-  <Modulo luce="media" class="griglia chi-sono">
-    <div class="chi-sinistra">
-      <Sezione numero={2}>Chi sono</Sezione>
-      <p class="titolo-modulo">{chiSono.attacco}</p>
+  <section class="sezione" aria-labelledby="sezione-chi-sono">
+    <div class="testa-sezione">
+      <Sezione numero={2} id="sezione-chi-sono">Chi sono</Sezione>
     </div>
-    <div class="chi-destra">
-      <p class="breve">{chiSono.breve}</p>
-      <a class="link-etichetta" href="/chi-sono">Tutta la storia <span class="freccia" aria-hidden="true">→</span></a>
-    </div>
-  </Modulo>
+    <Modulo luce="media" as="div" class="griglia chi-sono">
+      <div class="chi-sinistra">
+        <p class="titolo-modulo">{chiSono.attacco}</p>
+      </div>
+      <div class="chi-destra">
+        <p class="breve">{chiSono.breve}</p>
+        <a class="link-etichetta" href="/chi-sono">Tutta la storia <span class="freccia" aria-hidden="true">→</span></a>
+      </div>
+    </Modulo>
+  </section>
 
   <!-- Scritti e foto -->
-  <section class="griglia scritti-foto">
-    <div class="scritti">
-      <Sezione numero={3}>Scritti</Sezione>
-      {articoli.length ? <ListaScritti articoli={articoli.slice(0, 3)} /> : <p class="titolo-lista vuoto">{micro.scrittiVuoto}</p>}
+  <section class="sezione" aria-labelledby="sezione-scritti">
+    <div class="testa-sezione">
+      <Sezione numero={3} id="sezione-scritti">Scritti</Sezione>
     </div>
-    <img class="foto" src="/foto/pini-800.webp" srcset="/foto/pini-480.webp 480w, /foto/pini-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="800" alt="Patrizio con gli occhiali da sole, davanti al mare e ai pini" loading="lazy" decoding="async" style="object-position: 50% 40%" />
+    <div class="griglia scritti-foto">
+      <div class="scritti">
+        {articoli.length ? <ListaScritti articoli={articoli.slice(0, 3)} /> : <p class="titolo-lista vuoto">{micro.scrittiVuoto}</p>}
+      </div>
+      <img class="foto" src="/foto/pini-800.webp" srcset="/foto/pini-480.webp 480w, /foto/pini-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="800" alt="Patrizio con gli occhiali da sole, davanti al mare e ai pini" loading="lazy" decoding="async" style="object-position: 50% 40%" />
+    </div>
   </section>
 
   <!-- Progetti -->
-  <Modulo luce="velo" class="progetti" id="progetti">
-    <div class="progetti-testa">
-      <Sezione numero={4}>Progetti</Sezione>
+  <section class="sezione" id="progetti" aria-labelledby="sezione-progetti">
+    <div class="testa-sezione">
+      <Sezione numero={4} id="sezione-progetti">Progetti</Sezione>
       <div class="legenda" aria-hidden="true">
         <Stato stato="online" frase={false} />
         <Stato stato="in-sviluppo" frase={false} />
         <Stato stato="concept" frase={false} />
       </div>
     </div>
-    <div class="card">
-      {progetti.map((p) => <CardProgetto progetto={p} />)}
-    </div>
-  </Modulo>
+    <Modulo luce="velo" as="div" class="progetti">
+      <div class="card">
+        {progetti.map((p) => <CardProgetto progetto={p} />)}
+      </div>
+    </Modulo>
+  </section>
 
   <!-- Curiosità e newsletter -->
-  <section class="griglia curiosita-newsletter">
-    <div class="curiosita">
-      <div class="curiosita-testa">
-        <Sezione numero={5}>Curiosità</Sezione>
+  <div class="griglia curiosita-newsletter">
+    <section class="curiosita" aria-labelledby="sezione-curiosita">
+      <div class="testa-sezione">
+        <Sezione numero={5} id="sezione-curiosita">Curiosità</Sezione>
         <a class="link-etichetta" href="/curiosita">Vedi tutte <span class="freccia" aria-hidden="true">→</span></a>
       </div>
       <Tabellone />
+    </section>
+    <div class="nl-home">
+      <div class="testa-sezione">
+        <p class="etichetta">[ 006 ] Newsletter</p>
+      </div>
+      <Newsletter etichetta={false} />
     </div>
-    <div class="nl-home"><Newsletter /></div>
-  </section>
+  </div>
 </Base>
 
 <style>
@@ -151,22 +166,25 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     text-transform: uppercase;
   }
 
+  /* Stacco tra le sezioni: la testa (filetto ed etichetta) apre ognuna, fuori dal modulo */
+  .sezione,
+  .curiosita-newsletter {
+    margin-top: calc(var(--stacco) - var(--gap));
+  }
+
   /* Chi sono */
   .chi-sono {
     align-items: start;
   }
   .chi-sinistra {
     grid-column: span 6;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
   }
   .chi-destra {
     grid-column: 8 / span 5;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding-top: 38px;
+    padding-top: 4px;
   }
   .breve {
     margin: 0;
@@ -187,19 +205,18 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   }
 
   /* Scritti e foto */
-  .scritti-foto {
-    padding-top: var(--space-8);
-  }
   .scritti {
     grid-column: span 8;
-    padding: var(--space-2) var(--space-2) 0;
   }
-  .scritti :global(.etichetta) {
-    padding-bottom: 20px;
+  /* Il filetto della testa fa già da primo filetto della lista: niente doppione */
+  .scritti :global(.lista-scritti > li:first-child) {
+    border-top: 0;
+  }
+  .scritti :global(.lista-scritti > li:first-child a) {
+    padding-top: 0;
   }
   .vuoto {
-    padding: 40px 0;
-    border-top: 1px solid var(--filetto);
+    padding: 0 0 40px;
     border-bottom: 1px solid var(--filetto);
     color: var(--inchiostro-corpo);
   }
@@ -224,18 +241,6 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   }
 
   /* Progetti */
-  .progetti {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  .progetti-testa,
-  .curiosita-testa {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: var(--space-4);
-  }
   .legenda {
     display: flex;
     gap: 20px;
@@ -247,21 +252,17 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   }
 
   /* Curiosità e newsletter */
-  .curiosita-newsletter {
-    padding-top: var(--space-8);
-  }
   .curiosita {
     grid-column: span 5;
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
-    padding: var(--space-2) var(--space-2) 0;
   }
   .nl-home {
     grid-column: 7 / span 6;
     display: flex;
+    flex-direction: column;
   }
-  .nl-home > :global(*) {
+  .nl-home > :global(form) {
     flex: 1;
   }
 
@@ -273,6 +274,10 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     .curiosita,
     .nl-home {
       grid-column: 1 / -1;
+    }
+    /* Curiosità e newsletter vanno una sotto l'altra: tra le due lo stesso stacco delle sezioni */
+    .curiosita-newsletter {
+      row-gap: var(--stacco);
     }
     .logo {
       font-size: 104px;
@@ -323,29 +328,16 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
       display: inline-flex;
       align-items: center;
       min-height: 44px;
+      gap: 0.5em;
       font-size: 12px;
     }
-    .scritti-foto,
-    .curiosita-newsletter {
-      padding-top: var(--space-4);
-    }
-    .scritti {
-      padding: var(--space-3) var(--space-3) 0;
-    }
     .vuoto {
-      padding: 20px 0;
+      padding: 0 0 20px;
       font-size: 22px;
       line-height: 1.3;
     }
     .foto {
       min-height: 300px;
-    }
-    .progetti {
-      gap: var(--space-3);
-    }
-    .progetti-testa {
-      flex-direction: column;
-      gap: var(--space-3);
     }
     .legenda {
       gap: var(--space-3);
@@ -353,12 +345,6 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     .card {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-3);
-    }
-    .curiosita {
-      padding: var(--space-4) 0;
-    }
-    .curiosita-testa {
-      padding: 0 var(--space-3);
     }
   }
 </style>

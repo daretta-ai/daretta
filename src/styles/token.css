@@ -59,6 +59,8 @@
   /* Griglia */
   --margine: var(--space-14);
   --gap: var(--space-6);
+  /* Stacco tra una sezione e l'altra: più largo del gap, che resta per ciò che sta insieme */
+  --stacco: 96px;
 
   /* Smussi che cambiano su mobile */
   --modulo-smusso: var(--smusso-modulo);
@@ -75,6 +77,7 @@
   :root {
     --margine: var(--space-3);
     --gap: var(--space-3);
+    --stacco: var(--space-14);
     --modulo-smusso: var(--smusso-modulo-mobile);
     --card-smusso: var(--smusso-card-mobile);
   }
@@ -206,6 +209,29 @@ a {
   }
   .griglia > * {
     grid-column: 1 / -1 !important;
+  }
+}
+
+/* Testa di sezione: filetto a tutta larghezza, poi l'etichetta posata sul fondo, fuori dal modulo.
+   A destra, se serve, un rimando o la legenda. Uguale su desktop e mobile. */
+.testa-sezione {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  min-height: 44px;
+  padding-top: var(--space-4);
+  margin-bottom: var(--space-6);
+  border-top: 1px solid var(--filetto);
+}
+.testa-sezione .etichetta {
+  color: var(--inchiostro-muto);
+}
+@media (max-width: 720px) {
+  .testa-sezione {
+    padding-top: var(--space-3);
+    margin-bottom: var(--space-4);
   }
 }
 
