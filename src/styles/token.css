@@ -59,6 +59,8 @@
   /* Griglia */
   --margine: var(--space-14);
   --gap: var(--space-6);
+  /* Stacco tra una sezione e l'altra: più largo del gap, che resta per ciò che sta insieme */
+  --stacco: 96px;
 
   /* Smussi che cambiano su mobile */
   --modulo-smusso: var(--smusso-modulo);
@@ -75,6 +77,7 @@
   :root {
     --margine: var(--space-3);
     --gap: var(--space-3);
+    --stacco: var(--space-14);
     --modulo-smusso: var(--smusso-modulo-mobile);
     --card-smusso: var(--smusso-card-mobile);
   }
@@ -219,6 +222,13 @@ a {
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--inchiostro-muto);
+}
+/* Titoli di sezione ([ 003 ] SCRITTI, [ 01 ] LA VERSIONE BREVE, l'etichetta delle testate):
+   stessa misura e carattere delle etichette, nel colore dei punti della sfera quando ascolta.
+   Su tutti i fondi del sito resta sopra 4,5:1 (4,8:1 sul petrolio-luce delle testate). */
+.etichetta-sezione,
+.riga-etichetta > .etichetta {
+  color: var(--onda);
 }
 .meta {
   font-family: var(--font-mono);

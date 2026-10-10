@@ -11,4 +11,4 @@ interface Props {
 const { numero, cifre = 3, as: Tag = 'h2', id, class: classe } = Astro.props;
 ---
 
-<Tag class:list={['etichetta', classe]} id={id}>{numero !== undefined && `[ ${String(numero).padStart(cifre, '0')} ] `}<slot /></Tag>
+<Tag class:list={['etichetta', numero !== undefined && 'etichetta-sezione', classe]} id={id}>{numero !== undefined && <span class="etichetta-numero">{`[ ${String(numero).padStart(cifre, '0')} ] `}</span>}<span class="etichetta-nome"><slot /></span></Tag>

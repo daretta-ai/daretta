@@ -35,7 +35,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   action="/api/iscrizione"
   novalidate
 >
-  {etichetta && !articolo && <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>}
+  {etichetta && !articolo && <span class="etichetta etichetta-sezione etichetta-nl"><span class="etichetta-numero">[ 006 ] </span><span class="etichetta-nome">Newsletter</span></span>}
   <h2 class="punti-titolo" id="newsletter-titolo">{titolo}</h2>
   {paragrafi(testo).map((p) => <p>{p}</p>)}
   <div class="riga">
@@ -144,6 +144,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     justify-content: space-between;
     gap: 20px;
   }
+  /* Sul petrolio pieno onda non si legge: il titolo di sezione resta carta */
   .etichetta-nl {
     color: var(--carta);
   }

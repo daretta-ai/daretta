@@ -151,6 +151,14 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     text-transform: uppercase;
   }
 
+  /* Stacco tra le sezioni */
+  .chi-sono,
+  .scritti-foto,
+  .progetti,
+  .curiosita-newsletter {
+    margin-top: calc(var(--stacco) - var(--gap));
+  }
+
   /* Chi sono */
   .chi-sono {
     align-items: start;
@@ -187,9 +195,6 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   }
 
   /* Scritti e foto */
-  .scritti-foto {
-    padding-top: var(--space-8);
-  }
   .scritti {
     grid-column: span 8;
     padding: var(--space-2) var(--space-2) 0;
@@ -247,9 +252,6 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   }
 
   /* Curiosità e newsletter */
-  .curiosita-newsletter {
-    padding-top: var(--space-8);
-  }
   .curiosita {
     grid-column: span 5;
     display: flex;
@@ -273,6 +275,9 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     .curiosita,
     .nl-home {
       grid-column: 1 / -1;
+    }
+    .curiosita-newsletter {
+      row-gap: var(--stacco);
     }
     .logo {
       font-size: 104px;
@@ -323,11 +328,8 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
       display: inline-flex;
       align-items: center;
       min-height: 44px;
+      gap: 0.5em;
       font-size: 12px;
-    }
-    .scritti-foto,
-    .curiosita-newsletter {
-      padding-top: var(--space-4);
     }
     .scritti {
       padding: var(--space-3) var(--space-3) 0;
