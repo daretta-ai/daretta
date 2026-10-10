@@ -51,7 +51,8 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
 - **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono in Geist alla misura dei titoli (`testo-titolo`, 24px), separate da `filetto`, con il numero nel margine in mono (`[ 01 ] Scritti`); il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
 - **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `smusso-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
-- **Stacco tra le sezioni.** Tra una sezione e l'altra lo spazio è più largo del gap: 96px su desktop, 56px (`space-14`) su mobile (`--stacco`). Il gap resta per ciò che sta insieme, come le card di Progetti.
+- **Stacco tra le sezioni.** Tra una sezione e l'altra lo spazio è più largo del gap: 96px (`space-24`) su desktop, 56px (`space-14`) su mobile (`--stacco`). Il gap resta per ciò che sta insieme, come le card di Progetti.
+- **Una scala sola per gli spazi.** Margini, padding e gap usano solo i token `space-*`, su tre livelli. Dentro un elemento 4, 8, 12, 16 (etichetta e testo, chip, righe); tra elementi 24, 32, 40 (gap e padding di card e moduli: card a 32, moduli a 40 sui lati); tra blocchi 56, 72, 96 (blocchi, figure e citazioni negli articoli a 72, chiusure e stacco a 96). Un valore fuori scala va al gradino più vicino. Eccezioni volute: le righe degli elenchi a 14px, e le misure funzionali (tessere del tabellone, spazio del menu sotto l'header).
 - Angoli smussati a 45°, mai arrotondati, tranne la sfera e gli stati (vedi «Angoli»). Niente ombre tranne quella della sfera.
 
 ## Angoli: il tondo ascolta, il quadrato dice
@@ -185,7 +186,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Dare al tabellone i colori delle ferrovie (giallo, blu) o l'arancio.
 - Gradienti viola-blu, card con bordo sinistro colorato, emoji.
 - Doto per paragrafi, etichette o titoli degli articoli.
-- Misure di testo fuori dalla scala `testo-*`.
+- Misure di testo fuori dalla scala `testo-*`, spazi fuori dalla scala `space-*`.
 - Un box attorno a ogni sezione.
 - Una pagina interna fatta solo di una colonna di testo.
 - La sfera nelle pagine interne su mobile.
