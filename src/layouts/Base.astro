@@ -6,6 +6,7 @@ import geistTesto from '../assets/font/geist-sans-latin-400-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { ANTEPRIMA } from '../sito';
+import { grafo } from '../dati-strutturati';
 
 interface Props {
   titolo?: string;
@@ -19,6 +20,8 @@ interface Props {
   articolo?: { data: Date };
   // Immagine di anteprima per i social (1200×630), generata da src/pages/og. Di base quella del sito.
   immagine?: string;
+  // Nodo schema.org della pagina (articolo, progetto), da src/dati-strutturati.ts
+  schema?: Record<string, unknown>;
 }
 
 const {
@@ -30,6 +33,7 @@ const {
   nascosta = false,
   articolo,
   immagine = '/og/sito.png',
+  schema,
 } = Astro.props;
 
 const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
@@ -39,33 +43,9 @@ const percorso = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(
 const canonico = new URL(percorso, Astro.site).href;
 const immagineAssoluta = new URL(immagine, Astro.site).href;
 
-// Dati strutturati per i motori di ricerca, solo in home: chi è Patrizio e qual è il suo sito.
-// Solo fatti già scritti nel sito, niente superlativi.
-const datiStrutturati = home
-  ? JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'WebSite',
-          '@id': 'https://daretta.it/#sito',
-          url: 'https://daretta.it/',
-          name: 'dàretta',
-          inLanguage: 'it',
-          author: { '@id': 'https://daretta.it/#patrizio' },
-        },
-        {
-          '@type': 'Person',
-          '@id': 'https://daretta.it/#patrizio',
-          name: 'Patrizio Bartolozzi',
-          url: 'https://daretta.it/chi-sono',
-          image: 'https://daretta.it/foto/notte-800.webp',
-          jobTitle: 'Amministratore delegato',
-          worksFor: { '@type': 'Organization', name: 'Codever' },
-          sameAs: ['https://www.linkedin.com/in/patriziobartolozzi'],
-        },
-      ],
-    })
-  : null;
+// Dati strutturati (src/dati-strutturati.ts): in home chi è Patrizio e qual è il suo sito;
+// articoli e progetti passano il proprio nodo, che si aggiunge a quei due.
+const datiStrutturati = schema ? grafo(schema) : home ? grafo() : null;
 ---
 
 <!doctype html>

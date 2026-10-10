@@ -40,6 +40,7 @@ const articoli = defineCollection({
     titolo: z.string(),
     pubblicato: z.boolean().default(false),
     data: z.coerce.date(),
+    aggiornato: z.coerce.date().nullish().transform((v) => v ?? undefined),
     tag: facoltativo,
     attacco: z.string(),
   }),

@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import TestataProgetto from '../../components/TestataProgetto.astro';
 import Corpo from '../../components/Corpo.astro';
 import Chiusura from '../../components/Chiusura.astro';
+import { progetto as schemaProgetto } from '../../dati-strutturati';
 import { getProgetti, corpo, type Progetto } from '../../cms';
 
 export async function getStaticPaths() {
@@ -25,6 +26,7 @@ const secondo = {
   descrizione={progetto.card}
   attiva="progetti"
   immagine={`/og/progetti/${progetto.slug}.png`}
+  schema={schemaProgetto(progetto)}
 >
   <TestataProgetto
     progetto={progetto}

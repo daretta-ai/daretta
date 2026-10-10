@@ -340,6 +340,10 @@ export default config({
           defaultValue: false,
         }),
         data: fields.date({ label: 'Data', validation: { isRequired: true } }),
+        aggiornato: fields.date({
+          label: 'Aggiornato il',
+          description: 'Solo se cambi qualcosa di sostanziale dopo la pubblicazione. Lo leggono motori di ricerca e AI.',
+        }),
         tag: fields.text({ label: 'Tag', description: 'Uno solo, es. PERFORMANCE.' }),
         attacco: testoLungo('Frase d\'attacco', 'Sotto il titolo. Serve anche per i social e i motori di ricerca.'),
         corpo: corpo('Testo', true),

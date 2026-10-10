@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import Corpo from '../../components/Corpo.astro';
 import Newsletter from '../../components/Newsletter.astro';
 import Sfera from '../../components/Sfera.astro';
+import { articolo as schemaArticolo } from '../../dati-strutturati';
 import { getArticoli, getMicrotesti, corpo, minutiDiLettura, paragrafi } from '../../cms';
 
 export async function getStaticPaths() {
@@ -30,6 +31,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   avanzamento
   articolo={{ data: articolo.data }}
   immagine={`/og/scritti/${articolo.slug}.png`}
+  schema={schemaArticolo(articolo)}
 >
   <article class="articolo" data-articolo>
     <header class="griglia apertura">

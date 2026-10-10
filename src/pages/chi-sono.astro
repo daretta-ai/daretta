@@ -7,6 +7,7 @@ import Blocco from '../components/Blocco.astro';
 import Corpo from '../components/Corpo.astro';
 import Chiusura from '../components/Chiusura.astro';
 import { getChiSono, corpo } from '../cms';
+import { paginaProfilo } from '../dati-strutturati';
 
 const pagina = await getChiSono();
 
@@ -26,7 +27,7 @@ const passo = 100 / Math.max(ruoli.length, 1);
 const nodi = corpo(pagina.body, { inizio: 2 });
 ---
 
-<Base titolo="Chi sono" descrizione={pagina.attacco} attiva="chi-sono">
+<Base titolo="Chi sono" descrizione={pagina.attacco} attiva="chi-sono" schema={paginaProfilo}>
   <Testata titolo={pagina.titolo}>
     <span slot="etichetta" class="etichetta">[ 002 ] Chi sono</span>
     <p class="attacco">{pagina.attacco}</p>
