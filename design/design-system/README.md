@@ -27,6 +27,18 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 - **Geist** (sans) per tutto quello che si legge: titoli di liste e articoli, paragrafi, card.
 - **Geist Mono** (mono) per etichette, stati, date, codice. Sempre maiuscolo tranne il codice.
 
+**Una scala sola.** Geist ha quattro misure, più il titolo degli articoli; Geist Mono ne ha due. Sono i token `--testo-*` in `src/styles/token.css`, e su mobile cambiano da soli. Nessun componente si sceglie una misura sua: se un testo non trova posto nella scala, è il testo a doversi adattare. Il Doto resta fuori scala, perché è il carattere di display.
+
+| Token | Desktop | Mobile | Dove |
+| --- | --- | --- | --- |
+| `testo-articolo` | 64 | 40 | titolo della pagina di un articolo |
+| `testo-titolo` | 32 | 24 | titoli di Scritti, frase del Chi sono in home, rimandi in chiusura, nome nella testata dei progetti, voci del menu mobile |
+| `testo-attacco` | 24 | 20 | frase della hero, attacchi di testate e articoli, testo della newsletter, nomi nelle card progetto |
+| `testo-corpo` | 20 | 18 | tutti i paragrafi, elenchi compresi |
+| `testo-piccolo` | 16 | 16 | descrizioni delle card, campo email, messaggi dei form, codice |
+| `testo-etichetta` (mono) | 14 | 13 | etichette e titoli di sezione, link, pulsanti, footer |
+| `testo-meta` (mono) | 12 | 12 | stati, date, didascalie, note |
+
 I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indirizzo IP passa a Google. Sono i file latin di @fontsource (Doto 600, 800, 900; Geist 400, 500, 600; Geist Mono 400, 500) in `src/assets/font`, dichiarati in `src/styles/font.css`.
 
 ## Composizione
@@ -37,7 +49,7 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 - **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto escono dalla colonna. Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `punti`, gli altri in `filetto-neutro`. Sono i punti della sfera che si accendono mentre leggi: uno stato, non un'azione, quindi niente arancio (faceva concorrenza a ISCRIVITI e al logotipo) e niente `onda` (troppo chiara, sembrava un secondo accento). Tra letti e spenti serve almeno 3:1 (oggi 3,3:1), così il confine si vede.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
-- **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono grandi, in Geist 34px, separate da `filetto`, con il numero nel margine in mono (`[ 01 ] Scritti`); il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
+- **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono in Geist alla misura dei titoli (`testo-titolo`, 24px), separate da `filetto`, con il numero nel margine in mono (`[ 01 ] Scritti`); il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
 - **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `smusso-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
 - **Stacco tra le sezioni.** Tra una sezione e l'altra lo spazio è più largo del gap: 96px su desktop, 56px (`space-14`) su mobile (`--stacco`). Il gap resta per ciò che sta insieme, come le card di Progetti.
 - Angoli smussati a 45°, mai arrotondati, tranne la sfera e gli stati (vedi «Angoli»). Niente ombre tranne quella della sfera.
@@ -78,7 +90,7 @@ Negli articoli e nei testi lunghi, puntati o numerati, con la stessa struttura. 
 
 - **Non numerato:** un quadretto pieno di 5px in `inchiostro-muto` tra parentesi quadre, `[ ■ ]`. Quadrato perché il tondo è solo della sfera e degli stati.
 - **Numerato:** due cifre tra parentesi quadre, `[ 01 ]`, come le sottosezioni.
-- **Misure:** segno in Geist Mono 13px, spaziatura 1px, `inchiostro-muto`, in una colonna di 72px. Testo come il corpo dell'articolo (Geist 21px, interlinea 1,7, `inchiostro-corpo`). Su mobile testo a 18px, segno a 12px e colonna del segno di 56px. Voci separate da `filetto`, con un filetto anche sopra la prima, e 14px sopra e sotto ogni voce. 32px (`space-8`) tra l'elenco e i paragrafi.
+- **Misure:** segno in Geist Mono `testo-etichetta` (14px), spaziatura 1px, `inchiostro-muto`, in una colonna di 72px. Testo come il corpo dell'articolo (`testo-corpo`, 20px, interlinea 1,7, `inchiostro-corpo`). Su mobile testo a 18px, segno a 13px e colonna del segno di 56px. Voci separate da `filetto`, con un filetto anche sopra la prima, e 14px sopra e sotto ogni voce. 32px (`space-8`) tra l'elenco e i paragrafi.
 - **Niente arancio:** un elenco non è un'azione.
 - **Il movimento:** si anima solo il segno, il testo resta fermo. Quando l'elenco entra nello schermo, una volta sola, le parentesi si aprono di 4px e compaiono; il quadretto (cresce da zero) o il numero (sale di 4px e sfuma dentro) arriva 120ms dopo. Ogni voce parte 60ms dopo la precedente, 320ms con la curva del sito.
 - **Accessibilità:** `ul` e `ol` veri; il segno è `aria-hidden`, la numerazione arriva allo screen reader dall'`ol`.
@@ -173,6 +185,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Dare al tabellone i colori delle ferrovie (giallo, blu) o l'arancio.
 - Gradienti viola-blu, card con bordo sinistro colorato, emoji.
 - Doto per paragrafi, etichette o titoli degli articoli.
+- Misure di testo fuori dalla scala `testo-*`.
 - Un box attorno a ogni sezione.
 - Una pagina interna fatta solo di una colonna di testo.
 - La sfera nelle pagine interne su mobile.
