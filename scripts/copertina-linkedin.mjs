@@ -1,6 +1,6 @@
 // Copertina del profilo LinkedIn (1584×396, esportata a 2x), dalla composizione della hero:
 // logotipo a sinistra, sfera a destra. Il logotipo parte dopo la zona coperta dalla foto profilo.
-// Uso: node scripts/copertina-linkedin.mjs <cartella di uscita>
+// Uso: node scripts/copertina-linkedin.mjs <cartella di uscita> [frase|sfera]
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
@@ -63,20 +63,28 @@ const logotipo = (dim) => h('div', { display: 'flex', fontFamily: 'Doto', fontWe
   'd', h('span', { color: C.arancio }, 'à'), 'retta');
 const mono = { fontFamily: 'Geist Mono', fontSize: 20, letterSpacing: 2.2, textTransform: 'uppercase', color: C.inchiostroMuto };
 
-const copertina = h('div', { display: 'flex', position: 'relative', width: L, height: A, backgroundColor: C.cemento },
-  img(svgUri(sfera(1270, 198, 150, 700)), { position: 'absolute', left: 0, top: 0, width: L, height: A }),
-  h('div', { display: 'flex', flexDirection: 'column', position: 'absolute', left: 430, top: 0, bottom: 0, justifyContent: 'center', gap: 26 },
-    logotipo(128),
-    h('div', { display: 'flex', ...mono }, 'DARETTA.IT')),
-);
+const variante = process.argv[3] ?? 'frase';
+const fondo = (sferaSvg, ...contenuto) => h('div', { display: 'flex', position: 'relative', width: L, height: A, backgroundColor: C.cemento },
+  img(svgUri(sferaSvg), { position: 'absolute', left: 0, top: 0, width: L, height: A }), ...contenuto);
+
+const VARIANTI = {
+  // La frase della hero, in Doto come nel sito, con la sfera a destra
+  frase: () => fondo(sfera(1390, 198, 125, 600),
+    h('div', { display: 'flex', flexDirection: 'column', position: 'absolute', left: 430, top: 0, bottom: 0, justifyContent: 'center', maxWidth: 820 },
+      h('div', { display: 'flex', fontFamily: 'Doto', fontWeight: 900, fontSize: 42, lineHeight: 1.15, color: C.inchiostro, whiteSpace: 'nowrap' }, 'risolvo problemi,'),
+      h('div', { display: 'flex', fontFamily: 'Doto', fontWeight: 900, fontSize: 42, lineHeight: 1.15, color: C.inchiostro, whiteSpace: 'nowrap' }, 'a volte sono intere aziende.'))),
+  // Solo la sfera, grande e tagliata dal bordo destro, nient'altro
+  sfera: () => fondo(sfera(1180, 230, 260, 1100)),
+};
+const copertina = VARIANTI[variante]();
 
 await initWasm(readFileSync(richiedi.resolve('@resvg/resvg-wasm/index_bg.wasm')));
 const svg = await satori(copertina, { width: L, height: A, fonts });
 mkdirSync(uscita, { recursive: true });
 const png = new Resvg(svg, { fitTo: { mode: 'width', value: L * SCALA } }).render().asPng();
-writeFileSync(join(uscita, 'copertina-linkedin.png'), png);
+writeFileSync(join(uscita, `copertina-${variante}.png`), png);
 
 // Prova: stessa copertina con il cerchio della foto profilo dove lo mette LinkedIn su desktop
 const prova = svg.replace('</svg>', `<circle cx="197" cy="396" r="152" fill="#9aa3a4" fill-opacity="0.55" stroke="#ecece7" stroke-width="4"/></svg>`);
-writeFileSync(join(uscita, 'copertina-linkedin-prova.png'), new Resvg(prova, { fitTo: { mode: 'width', value: L } }).render().asPng());
+writeFileSync(join(uscita, `copertina-${variante}-prova.png`), new Resvg(prova, { fitTo: { mode: 'width', value: L } }).render().asPng());
 console.log('ok');
