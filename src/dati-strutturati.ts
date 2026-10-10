@@ -26,7 +26,7 @@ export const patrizio: Nodo = {
   name: 'Patrizio Bartolozzi',
   url: `${SITO}/chi-sono`,
   image: `${SITO}/foto/notte-800.webp`,
-  jobTitle: ['Amministratore delegato di Codever', 'Service leader dello sviluppo digital in Mirror'],
+  jobTitle: ['Amministratore delegato di Codever', 'Service manager dello sviluppo digital in Mirror'],
   worksFor: [
     { '@type': 'Organization', name: 'Codever', url: 'https://www.codever.it' },
     { '@type': 'Organization', name: 'Mirror', url: 'https://www.mirror.it' },
