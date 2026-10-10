@@ -212,20 +212,6 @@ a {
   }
 }
 
-/* PROVA: etichetta di sezione colorata, stessa misura e carattere (html[data-variante]) */
-/* punti: il colore dei punti della sfera a riposo */
-[data-variante='punti'] .etichetta-sezione {
-  color: var(--punti);
-}
-/* onda: il colore dei punti quando la sfera ascolta */
-[data-variante='onda'] .etichetta-sezione {
-  color: var(--onda);
-}
-/* Sul petrolio pieno della newsletter nessuno dei due si legge: resta carta */
-[data-variante] .etichetta-nl {
-  color: var(--carta);
-}
-
 /* Stili di testo (nomi da tokens.json) */
 .etichetta {
   margin: 0;
@@ -236,6 +222,13 @@ a {
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--inchiostro-muto);
+}
+/* Titoli di sezione ([ 003 ] SCRITTI, [ 01 ] LA VERSIONE BREVE, l'etichetta delle testate):
+   stessa misura e carattere delle etichette, nel colore dei punti della sfera quando ascolta.
+   Su tutti i fondi del sito resta sopra 4,5:1 (4,8:1 sul petrolio-luce delle testate). */
+.etichetta-sezione,
+.riga-etichetta > .etichetta {
+  color: var(--onda);
 }
 .meta {
   font-family: var(--font-mono);

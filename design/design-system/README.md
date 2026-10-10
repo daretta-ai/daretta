@@ -13,10 +13,11 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 - **dàretta si scrive sempre così:** minuscolo, con l'accento grave. Se si spiega, si spiega solo così: «dà retta… a un cretino». Mai con «ascoltami» o simili; non si traduce e non si italianizza mai in «dammi retta».
 - I titoli in Doto sono minuscoli e finiscono con il punto: «una mail al mese.»
 - Le etichette sono in mono maiuscolo, le sezioni numerate tra parentesi quadre: `[ 003 ] SCRITTI`. Dentro una pagina, le sottosezioni hanno due cifre: `[ 01 ] LA VERSIONE BREVE`.
+- **I titoli di sezione sono in `onda`**, con la stessa misura e lo stesso carattere delle altre etichette: è il colore dei punti quando la sfera ascolta. Valgono come titoli le etichette numerate delle sezioni e delle sottosezioni e quella delle testate. Restano dentro il loro modulo, senza filetti sopra. Sul modulo newsletter sono `carta`.
 
 ## Tre regole di colore
 
-1. **Il fondo è cemento.** `cemento` per la pagina, `cemento-rilievo` per i moduli, `cemento-incavo` per le card dentro i moduli. Il testo è `inchiostro`; i paragrafi lunghi `inchiostro-corpo`; etichette e date `inchiostro-muto`.
+1. **Il fondo è cemento.** `cemento` per la pagina, `cemento-rilievo` per i moduli, `cemento-incavo` per le card dentro i moduli. Il testo è `inchiostro`; i paragrafi lunghi `inchiostro-corpo`; etichette e date `inchiostro-muto`; i titoli di sezione `onda`.
 2. **Il petrolio è luce, non vernice.** Viene dalla sfera: un alone (`petrolio-alone`) si allarga sul fondo della pagina, e ogni modulo ne prende tanto quanto è vicino alla sfera. La hero e la foto sono le più cariche (`petrolio-luce` al centro), «Chi sono» una dose media, «Progetti» appena un velo. Il gradiente è sempre radiale o lineare *da* petrolio *verso* cemento, mai il contrario, mai tra due colori caldi. Unica eccezione: il modulo newsletter è petrolio pieno (`petrolio-acceso` → `petrolio-scuro`, 135°), perché è l'invito principale.
 3. **L'arancio vuol dire «vivo», e «fai qualcosa».** `arancio` si accende per la à del logotipo, il pallino dei progetti ONLINE e le CTA (Iscriviti nell'header, Iscrivimi nella newsletter). Più pochi dettagli di stato: il pallino accanto alla voce di menu attiva e i punti già letti della barra di avanzamento negli articoli. Il testo sopra l'arancio è sempre `cemento`, mai `inchiostro` (non raggiunge il contrasto). Mai per link, hover, bordi, tag o decorazione: se un elemento non è la à, uno stato o un'azione, resta spento.
 
@@ -38,6 +39,7 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
 - **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono grandi, in Geist 34px, separate da `filetto`, con il numero nel margine in mono (`[ 01 ] Scritti`); il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
 - **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `smusso-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
+- **Stacco tra le sezioni.** Tra una sezione e l'altra lo spazio è più largo del gap: 96px su desktop, 56px (`space-14`) su mobile (`--stacco`). Il gap resta per ciò che sta insieme, come le card di Progetti.
 - Angoli smussati a 45°, mai arrotondati, tranne la sfera e gli stati (vedi «Angoli»). Niente ombre tranne quella della sfera.
 
 ## Angoli: il tondo ascolta, il quadrato dice
@@ -154,6 +156,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 
 - Testo ≥4.5:1 sul suo fondo (ogni token di testo dice su quali fondi è verificato); ≥3:1 per testo sopra i 24px, anelli e icone. Sui pulsanti arancio il testo è `cemento`.
 - `inchiostro-muto` su `petrolio-luce` si ferma a 3,5:1: nei moduli più carichi (hero e testate delle pagine interne) le etichette passano a `inchiostro-secondario` (4,8:1).
+- I titoli di sezione in `onda` restano sopra 4,5:1 su tutti i fondi (4,8:1 su `petrolio-luce`), tranne il petrolio pieno della newsletter, dove sono `carta`.
 - Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `inchiostro-muto` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
 - I messaggi dei form si distinguono per etichetta e comportamento, mai solo per colore, e vengono annunciati (`role="status"` o `role="alert"`).
 - Pulsanti e chip alti almeno 44px su mobile.
@@ -181,3 +184,4 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Rimbalzi, elastici, transizioni che durano più di mezzo secondo.
 - Parallasse sui testi (titoli, paragrafi, etichette).
 - Messaggi dei form come semplice riga di testo, o colorati di rosso o di arancio.
+- `onda` per testo che non sia un titolo di sezione: resta per l'ascolto della sfera, i titoli e l'anello di focus.
