@@ -212,26 +212,38 @@ a {
   }
 }
 
-/* Testa di sezione: filetto a tutta larghezza, poi l'etichetta posata sul fondo, fuori dal modulo.
-   A destra, se serve, un rimando o la legenda. Uguale su desktop e mobile. */
-.testa-sezione {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-3) var(--space-4);
-  min-height: 44px;
-  padding-top: var(--space-4);
-  margin-bottom: var(--space-6);
-  border-top: 1px solid var(--filetto);
+/* PROVA: due varianti dell'etichetta di sezione, da scegliere (html[data-variante]) */
+/* A: etichetta più forte, sempre mono maiuscolo */
+[data-variante='a'] .etichetta-sezione {
+  font-size: 16px;
+  letter-spacing: 2px;
 }
-.testa-sezione .etichetta {
-  color: var(--inchiostro-muto);
+[data-variante='a'] .etichetta-sezione .etichetta-nome {
+  color: var(--inchiostro);
+}
+/* B: il numero resta etichetta, il nome diventa un titolo in Geist */
+[data-variante='b'] .etichetta-sezione {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+[data-variante='b'] .etichetta-sezione .etichetta-nome {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-transform: none;
+  color: var(--inchiostro);
+}
+[data-variante='b'] .etichetta-nl .etichetta-nome {
+  color: var(--carta);
 }
 @media (max-width: 720px) {
-  .testa-sezione {
-    padding-top: var(--space-3);
-    margin-bottom: var(--space-4);
+  [data-variante='a'] .etichetta-sezione {
+    font-size: 14px;
+  }
+  [data-variante='b'] .etichetta-sezione .etichetta-nome {
+    font-size: 20px;
   }
 }
 
