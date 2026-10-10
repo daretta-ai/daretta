@@ -33,7 +33,7 @@ const voci = [
 
   <div class="azioni">
     <a class="cta smussato" href="/#newsletter">Iscriviti</a>
-    <button class="panino smussato contornato" type="button" aria-controls="menu" aria-expanded="false" aria-label="Apri il menu">
+    <button class="panino smussato" type="button" aria-controls="menu" aria-expanded="false" aria-label="Apri il menu">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <line class="l1" x1="3" y1="7" x2="17" y2="7"></line>
         <line class="l2" x1="3" y1="13" x2="17" y2="13"></line>
@@ -214,6 +214,7 @@ const voci = [
     --fondo: var(--arancio);
     color: var(--cemento);
   }
+  /* Menu mobile: l'hamburger su un fondo smussato in filetto, senza contorno (scelta di Patrizio, 10 ott 2026). */
   .panino {
     display: none;
     width: 48px;
@@ -221,6 +222,7 @@ const voci = [
     --h: 48px;
     align-items: center;
     justify-content: center;
+    --fondo: var(--filetto); /* cemento-rilievo non si vedeva sull'header trasparente */
     color: var(--inchiostro);
     cursor: pointer;
   }
