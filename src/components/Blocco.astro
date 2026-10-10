@@ -45,7 +45,7 @@ const { numero, etichetta, spazio = 'grande' } = Astro.props;
   }
   .testo :global(p) {
     margin: 0;
-    font-size: 21px;
+    font-size: var(--testo-corpo);
     line-height: 1.7;
     color: var(--inchiostro-corpo);
   }
@@ -65,7 +65,7 @@ const { numero, etichetta, spazio = 'grande' } = Astro.props;
       padding-top: 0;
     }
     .testo :global(p) {
-      font-size: 18px;
+      font-size: var(--testo-corpo);
       line-height: 1.65;
     }
   }

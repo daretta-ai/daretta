@@ -70,13 +70,13 @@ const { rimandi } = Astro.props;
   }
   .etichetta-rimando {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--testo-etichetta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
   }
   .testo-rimando {
-    font-size: 30px;
+    font-size: var(--testo-titolo);
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: -0.5px;
@@ -93,10 +93,10 @@ const { rimandi } = Astro.props;
       gap: 14px;
     }
     .etichetta-rimando {
-      font-size: 12px;
+      font-size: var(--testo-etichetta);
     }
     .testo-rimando {
-      font-size: 22px;
+      font-size: var(--testo-titolo);
       line-height: 1.25;
     }
   }

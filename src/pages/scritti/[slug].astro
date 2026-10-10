@@ -95,7 +95,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     gap: 14px;
     padding-top: var(--space-3);
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--testo-meta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
@@ -122,7 +122,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   }
   h1 {
     margin: 0;
-    font-size: 80px;
+    font-size: var(--testo-articolo);
     font-weight: 600;
     line-height: 1.02;
     letter-spacing: -2.5px;
@@ -130,7 +130,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   }
   .attacco {
     margin: 0;
-    font-size: 26px;
+    font-size: var(--testo-attacco);
     line-height: 1.45;
     color: var(--inchiostro-corpo);
   }
@@ -169,11 +169,11 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     gap: var(--space-1);
   }
   .nome {
-    font-size: 18px;
+    font-size: var(--testo-corpo);
     font-weight: 600;
   }
   .chi {
-    font-size: 16px;
+    font-size: var(--testo-piccolo);
     color: var(--inchiostro-secondario);
   }
   .chiusura {
@@ -200,13 +200,13 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   }
   .etichetta-prossimo {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--testo-etichetta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
   }
   .titolo-prossimo {
-    font-size: 34px;
+    font-size: var(--testo-titolo);
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: -0.5px;
@@ -222,18 +222,18 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
       align-items: center;
       gap: var(--space-3);
       padding-top: 0;
-      font-size: 12px;
+      font-size: var(--testo-meta);
     }
     .torna {
       flex-basis: 100%;
       margin-bottom: 0;
     }
     h1 {
-      font-size: 40px;
+      font-size: var(--testo-articolo);
       letter-spacing: -1px;
     }
     .attacco {
-      font-size: 20px;
+      font-size: var(--testo-attacco);
     }
     .lato {
       display: none;
@@ -248,7 +248,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
       padding: var(--space-6);
     }
     .titolo-prossimo {
-      font-size: 24px;
+      font-size: var(--testo-titolo);
     }
   }
 </style>

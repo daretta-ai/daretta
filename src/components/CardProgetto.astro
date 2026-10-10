@@ -38,20 +38,20 @@ const { progetto } = Astro.props;
     gap: 6px;
   }
   .titolo {
-    font-size: 24px;
+    font-size: var(--testo-attacco);
     font-weight: 600;
     line-height: 1.25;
   }
   .provvisorio {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: var(--testo-meta);
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
   }
   .descrizione {
-    font-size: 16px;
+    font-size: var(--testo-piccolo);
     line-height: 1.45;
     color: var(--inchiostro-secondario);
   }

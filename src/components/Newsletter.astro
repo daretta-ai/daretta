@@ -150,7 +150,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   }
   p {
     margin: 0;
-    font-size: 20px;
+    font-size: var(--testo-attacco);
     line-height: 1.45;
   }
   .riga {
@@ -164,7 +164,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     align-self: flex-start;
     color: var(--carta);
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: var(--testo-meta);
     letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration-style: dotted;
@@ -190,12 +190,12 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   }
   .esito-etichetta {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: var(--testo-meta);
     letter-spacing: 1px;
     text-transform: uppercase;
   }
   .esito-testo {
-    font-size: 17px;
+    font-size: var(--testo-piccolo);
     line-height: 1.45;
   }
   .esito.entra {
@@ -253,7 +253,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     background: transparent;
     color: var(--cemento);
     font: inherit;
-    font-size: 17px;
+    font-size: var(--testo-piccolo);
   }
   input::placeholder {
     color: #5c6466;
@@ -266,7 +266,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     --anello: var(--carta);
     color: var(--cemento);
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: var(--testo-etichetta);
     letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
@@ -280,7 +280,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
       display: none;
     }
     p {
-      font-size: 16px;
+      font-size: var(--testo-attacco);
     }
     .riga {
       flex-direction: column;
@@ -293,7 +293,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
       --h: 52px;
     }
     input {
-      font-size: 16px;
+      font-size: var(--testo-piccolo);
       padding: 0 20px;
     }
     .esito {
@@ -301,7 +301,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
       padding: 12px 20px;
     }
     .esito-testo {
-      font-size: 16px;
+      font-size: var(--testo-piccolo);
     }
   }
 </style>

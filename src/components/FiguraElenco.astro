@@ -41,10 +41,10 @@ const { didascalia, voci, nota } = Astro.props;
     color: var(--inchiostro-muto);
   }
   figcaption {
-    font-size: 13px;
+    font-size: var(--testo-meta);
   }
   .nota {
-    font-size: 12px;
+    font-size: var(--testo-meta);
   }
   ul {
     list-style: none;
@@ -58,7 +58,7 @@ const { didascalia, voci, nota } = Astro.props;
     align-items: center;
     padding: var(--space-4) 0;
     border-top: 1px solid var(--filetto-neutro);
-    font-size: 18px;
+    font-size: var(--testo-corpo);
     color: var(--inchiostro-corpo);
   }
   li.ultima {
@@ -79,7 +79,7 @@ const { didascalia, voci, nota } = Astro.props;
       gap: var(--space-4);
     }
     li {
-      font-size: 16px;
+      font-size: var(--testo-corpo);
       padding: 14px 0;
     }
   }

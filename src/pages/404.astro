@@ -26,7 +26,7 @@ const { nonTrovato } = await getMicrotesti();
   .attacco {
     margin: 0;
     max-width: 680px;
-    font-size: 28px;
+    font-size: var(--testo-attacco);
     font-weight: 500;
     line-height: 1.3;
     letter-spacing: -0.5px;
@@ -42,7 +42,7 @@ const { nonTrovato } = await getMicrotesti();
   }
   .via {
     margin: 0;
-    font-size: 21px;
+    font-size: var(--testo-corpo);
     line-height: 1.6;
     color: var(--inchiostro-corpo);
   }
@@ -58,14 +58,14 @@ const { nonTrovato } = await getMicrotesti();
   }
   @media (max-width: 720px) {
     .attacco {
-      font-size: 21px;
+      font-size: var(--testo-attacco);
       line-height: 1.35;
     }
     .resto {
       padding-top: var(--space-10);
     }
     .via {
-      font-size: 18px;
+      font-size: var(--testo-corpo);
     }
   }
 </style>

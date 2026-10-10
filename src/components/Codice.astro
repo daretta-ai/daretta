@@ -26,14 +26,14 @@ const { codice, linguaggio } = Astro.props;
     clip-path: var(--ritaglio-card);
     background: linear-gradient(160deg, #17383d 0%, var(--cemento-rilievo) 60%);
     font-family: var(--font-mono);
-    font-size: 16px;
+    font-size: var(--testo-piccolo);
     line-height: 1.7;
     color: var(--inchiostro);
     overflow-x: auto;
   }
   figcaption {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: var(--testo-meta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
@@ -41,7 +41,7 @@ const { codice, linguaggio } = Astro.props;
   @media (max-width: 720px) {
     pre {
       padding: 20px;
-      font-size: 14px;
+      font-size: var(--testo-piccolo);
     }
   }
 </style>

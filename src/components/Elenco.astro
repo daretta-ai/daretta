@@ -61,7 +61,7 @@ function senzaLoop(figli: RenderableTreeNode[]): RenderableTreeNode[] | null {
     align-items: baseline;
     padding: 14px 0;
     border-bottom: 1px solid var(--filetto);
-    font-size: 21px;
+    font-size: var(--testo-corpo);
     line-height: 1.7;
     color: var(--inchiostro-corpo);
   }
@@ -69,7 +69,7 @@ function senzaLoop(figli: RenderableTreeNode[]): RenderableTreeNode[] | null {
     display: inline-flex;
     align-items: center;
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--testo-etichetta);
     letter-spacing: 1px;
     color: var(--inchiostro-muto);
     white-space: nowrap;
@@ -93,11 +93,11 @@ function senzaLoop(figli: RenderableTreeNode[]): RenderableTreeNode[] | null {
     background: var(--inchiostro-muto);
   }
   .da-capo .dentro {
-    font-size: 15px;
+    font-size: var(--testo-etichetta);
   }
   .da-capo .voce-testo {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--testo-etichetta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
@@ -106,14 +106,14 @@ function senzaLoop(figli: RenderableTreeNode[]): RenderableTreeNode[] | null {
     .voce {
       grid-template-columns: 56px minmax(0, 1fr);
       padding: 12px 0;
-      font-size: 18px;
+      font-size: var(--testo-corpo);
       line-height: 1.65;
     }
     .segno {
-      font-size: 12px;
+      font-size: var(--testo-etichetta);
     }
     .da-capo .voce-testo {
-      font-size: 12px;
+      font-size: var(--testo-etichetta);
     }
   }
 </style>

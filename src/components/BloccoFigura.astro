@@ -33,7 +33,7 @@ const { numero, etichetta } = Astro.props;
   }
   .testo :global(p) {
     margin: 0;
-    font-size: 21px;
+    font-size: var(--testo-corpo);
     line-height: 1.7;
     color: var(--inchiostro-corpo);
   }
@@ -48,7 +48,7 @@ const { numero, etichetta } = Astro.props;
       gap: 14px;
     }
     .testo :global(p) {
-      font-size: 18px;
+      font-size: var(--testo-corpo);
       line-height: 1.65;
     }
     .figura {

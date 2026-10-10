@@ -68,7 +68,7 @@ const lettere = (s: string) => s.split('');
   }
   .attacco {
     margin: 0 0 var(--space-6);
-    font-size: 20px;
+    font-size: var(--testo-attacco);
     line-height: 1.5;
     color: var(--inchiostro-corpo);
   }
@@ -150,7 +150,7 @@ const lettere = (s: string) => s.split('');
     background: var(--cemento-rilievo);
     font-family: var(--font-mono);
     font-weight: 500;
-    font-size: 12px;
+    font-size: var(--testo-meta);
     color: var(--inchiostro);
   }
   .t::after {
@@ -187,7 +187,7 @@ const lettere = (s: string) => s.split('');
   .c-testo {
     margin: 0;
     max-width: 62ch;
-    font-size: 18px;
+    font-size: var(--testo-corpo);
     line-height: 1.6;
     color: var(--inchiostro-corpo);
   }
@@ -205,7 +205,7 @@ const lettere = (s: string) => s.split('');
       padding-top: var(--space-6);
     }
     .attacco {
-      font-size: 18px;
+      font-size: var(--testo-attacco);
       margin-bottom: var(--space-2);
     }
     .elenco {
@@ -232,7 +232,7 @@ const lettere = (s: string) => s.split('');
     }
     .c-testo {
       grid-area: testo;
-      font-size: 17px;
+      font-size: var(--testo-corpo);
     }
     .lab {
       display: inline;

@@ -45,11 +45,11 @@ const { progetto, titolo, fase, credito, link } = Astro.props;
     align-items: center;
   }
   .stato-riga :global(.stato) {
-    font-size: 14px;
+    font-size: var(--testo-etichetta);
   }
   .fase {
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: var(--testo-etichetta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
@@ -60,7 +60,7 @@ const { progetto, titolo, fase, credito, link } = Astro.props;
     gap: 14px;
   }
   .nome {
-    font-size: 32px;
+    font-size: var(--testo-titolo);
     font-weight: 600;
     letter-spacing: -0.5px;
   }
@@ -72,7 +72,7 @@ const { progetto, titolo, fase, credito, link } = Astro.props;
   .provvisorio {
     margin-left: var(--space-3);
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--testo-meta);
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -81,7 +81,7 @@ const { progetto, titolo, fase, credito, link } = Astro.props;
   .attacco {
     margin: 0;
     max-width: 680px;
-    font-size: 28px;
+    font-size: var(--testo-attacco);
     font-weight: 500;
     line-height: 1.3;
     letter-spacing: -0.5px;
@@ -89,7 +89,7 @@ const { progetto, titolo, fase, credito, link } = Astro.props;
   }
   .credito {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--testo-meta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);
@@ -97,22 +97,22 @@ const { progetto, titolo, fase, credito, link } = Astro.props;
   @media (max-width: 720px) {
     .stato-riga :global(.stato),
     .fase {
-      font-size: 12px;
+      font-size: var(--testo-etichetta);
     }
     .nome {
-      font-size: 24px;
+      font-size: var(--testo-titolo);
     }
     .provvisorio {
       display: block;
       margin: 6px 0 0;
-      font-size: 11px;
+      font-size: var(--testo-meta);
     }
     .attacco {
-      font-size: 20px;
+      font-size: var(--testo-attacco);
       line-height: 1.35;
     }
     .credito {
-      font-size: 12px;
+      font-size: var(--testo-meta);
     }
   }
 </style>

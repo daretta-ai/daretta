@@ -47,7 +47,7 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
   }
   .didascalia {
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: var(--testo-meta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-corpo);
@@ -60,7 +60,7 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
   }
   .destra :global(p) {
     margin: 0;
-    font-size: 21px;
+    font-size: var(--testo-corpo);
     line-height: 1.7;
     color: var(--inchiostro-corpo);
   }
@@ -80,13 +80,13 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
       letter-spacing: -4px;
     }
     .didascalia {
-      font-size: 12px;
+      font-size: var(--testo-meta);
     }
     .destra {
       margin-top: var(--space-2);
     }
     .destra :global(p) {
-      font-size: 18px;
+      font-size: var(--testo-corpo);
       line-height: 1.65;
     }
   }
