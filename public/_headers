@@ -26,3 +26,7 @@
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 /apple-touch-icon.png
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# Senza charset il browser legge robots.txt in Latin-1 e storpia le lettere accentate.
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
