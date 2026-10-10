@@ -71,8 +71,8 @@ const VARIANTI = {
   // La frase della hero, in Doto come nel sito, con la sfera a destra
   frase: () => fondo(sfera(1390, 198, 125, 600),
     h('div', { display: 'flex', flexDirection: 'column', position: 'absolute', left: 430, top: 0, bottom: 0, justifyContent: 'center', maxWidth: 820 },
-      h('div', { display: 'flex', fontFamily: 'Doto', fontWeight: 900, fontSize: 42, lineHeight: 1.15, color: C.inchiostro, whiteSpace: 'nowrap' }, 'risolvo problemi.'),
-      h('div', { display: 'flex', fontFamily: 'Doto', fontWeight: 900, fontSize: 42, lineHeight: 1.15, color: C.inchiostro, whiteSpace: 'nowrap' }, 'di solito non i miei.'))),
+      h('div', { display: 'flex', fontFamily: 'Doto', fontWeight: 900, fontSize: 56, lineHeight: 1.12, color: C.inchiostro, whiteSpace: 'nowrap' }, 'risolvo problemi.'),
+      h('div', { display: 'flex', fontFamily: 'Doto', fontWeight: 900, fontSize: 56, lineHeight: 1.12, color: C.inchiostro, whiteSpace: 'nowrap' }, 'di solito non i miei.'))),
   // Solo la sfera, grande e tagliata dal bordo destro, nient'altro
   sfera: () => fondo(sfera(1180, 230, 260, 1100)),
 };
