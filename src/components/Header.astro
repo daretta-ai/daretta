@@ -214,8 +214,7 @@ const voci = [
     --fondo: var(--arancio);
     color: var(--cemento);
   }
-  /* Menu mobile: l'hamburger classico, senza fondo né contorno (scelta di Patrizio, 10 ott 2026).
-     Resta .smussato per l'anello di focus. */
+  /* Menu mobile: l'hamburger su un fondo smussato in cemento-rilievo, senza contorno (scelta di Patrizio, 10 ott 2026). */
   .panino {
     display: none;
     width: 48px;
@@ -223,7 +222,7 @@ const voci = [
     --h: 48px;
     align-items: center;
     justify-content: center;
-    margin-right: -14px; /* senza contorno, il bordo destro delle righe si allinea al margine della pagina */
+    --fondo: var(--cemento-rilievo);
     color: var(--inchiostro);
     cursor: pointer;
   }

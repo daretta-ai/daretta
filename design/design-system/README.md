@@ -35,7 +35,7 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 - **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con newsletter e rimandi ad altre pagine in card.
 - **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto escono dalla colonna. Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `arancio`, gli altri in `filetto`.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
-- **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro`, senza fondo né contorno: accanto a ISCRIVITI un secondo box pesava troppo. L'area di tocco resta di 48px, le righe si allineano al margine destro della pagina e l'anello di focus segue lo smusso come per ogni pulsante.
+- **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `cemento-rilievo`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo. L'anello di focus segue lo smusso.
 - **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `smusso-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
 - Angoli smussati a 45°, mai arrotondati, tranne la sfera e gli stati (vedi «Angoli»). Niente ombre tranne quella della sfera.
 
@@ -173,7 +173,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - La sfera nelle pagine interne su mobile.
 - Angoli arrotondati su moduli, card, pulsanti o campi: tondi sono solo la sfera e gli stati.
 - Pallini tondi negli elenchi.
-- Un contorno o un fondo attorno all'hamburger del menu mobile.
+- Un contorno attorno all'hamburger del menu mobile.
 - Smussi fatti con `corner-shape` o `border-radius` di ripiego: il segno deve essere uguale su ogni browser.
 - Foto a colori, ritoccate, o con un trattamento diverso da luce petrolio.
 - Animare ogni blocco in entrata, i paragrafi, la hero o il testo degli articoli (negli elenchi si muove solo il segno).
