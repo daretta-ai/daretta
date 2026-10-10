@@ -1,6 +1,6 @@
 # Sfera
 
-La sfera di punti nella hero: l'unico momento «wow» del sito e la fonte della luce petrolio. dàretta vuol dire «ascolta me», e la sfera ascolta.
+La sfera di punti nella hero: l'unico momento «wow» del sito e la fonte della luce petrolio. dàretta viene da «dà retta… a un cretino»: la sfera, intanto, dà retta a chi le passa vicino.
 
 - **A riposo:** ruota piano. Punti `punti` su un fondo petrolio scuro, volume con `ombra-sfera`.
 - **In ascolto:** quando il cursore si avvicina, i punti vibrano in onde (`onda`) che partono dal cursore.

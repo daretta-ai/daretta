@@ -1,6 +1,6 @@
 # dàretta
 
-Il sito personale di Patrizio Bartolozzi, detto Papi. *dàretta*, in toscano: ascolta me.
+Il sito personale di Patrizio Bartolozzi, detto Papi. *dàretta*, in toscano: «dà retta… a un cretino», come dice con falsa modestia chi crede di saperla lunga.
 
 Il sistema è **scuro, essenziale e con un solo momento di meraviglia**: fondo cemento, luce petrolio che viene da una sfera di punti, e un solo colore acceso, l'arancio della à, che si accende anche sulle azioni.
 
@@ -10,7 +10,7 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 
 - **Sì:** frasi brevi, un'opinione per frase, l'autoironia. «Il database non è lento. La tua query sì.»
 - **No:** superlativi, entusiasmo di maniera, gergo da LinkedIn, punti esclamativi, emoji.
-- **dàretta si scrive sempre così:** minuscolo, con l'accento grave. Per ora non si spiega (l'asterisco è stato tolto; la spiegazione del nome, se servirà, troverà un altro posto), non si traduce e non si italianizza mai in «dammi retta».
+- **dàretta si scrive sempre così:** minuscolo, con l'accento grave. Se si spiega, si spiega solo così: «dà retta… a un cretino». Mai con «ascoltami» o simili; non si traduce e non si italianizza mai in «dammi retta».
 - I titoli in Doto sono minuscoli e finiscono con il punto: «una mail al mese.»
 - Le etichette sono in mono maiuscolo, le sezioni numerate tra parentesi quadre: `[ 003 ] SCRITTI`. Dentro una pagina, le sottosezioni hanno due cifre: `[ 01 ] LA VERSIONE BREVE`.
 
@@ -31,7 +31,7 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 ## Composizione
 
 - **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`smusso-modulo`, padding `space-10`); Scritti e Curiosità sono posate direttamente sul fondo. Scritti è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
-- **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi. di solito non i miei.». A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
+- **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi. di solito non i miei.». Da desktop ogni frase resta intera sulla sua riga. È la frase da usare ovunque (sito, LinkedIn, bio), quindi deve reggere anche da sola. A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
 - **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con newsletter e rimandi ad altre pagine in card.
 - **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto escono dalla colonna. Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `arancio`, gli altri in `filetto`.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
