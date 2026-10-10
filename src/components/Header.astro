@@ -70,7 +70,7 @@ const voci = [
         rootMargin: '-80px 0px 0px 0px',
       }).observe(hero);
     }
-    // Negli articoli: i punti letti si accendono di arancio
+    // Negli articoli: i punti letti si accendono di onda (luce, non azione)
     const barra = header.querySelector<HTMLElement>('[data-avanzamento]');
     const articolo = document.querySelector<HTMLElement>('[data-articolo]');
     if (barra && articolo) {
@@ -160,7 +160,7 @@ const voci = [
     transition: background-color 0.2s;
   }
   .avanzamento span:global(.letto) {
-    background: var(--arancio);
+    background: var(--onda);
   }
   .header.staccato {
     background: rgb(17 19 20 / 0.86);
@@ -213,7 +213,7 @@ const voci = [
   .menu-piede {
     display: none;
   }
-  /* Pallino della voce attiva: uno dei pochi dettagli di stato in arancio */
+  /* Pallino della voce attiva: l'unico dettaglio di stato in arancio */
   .menu a[aria-current]::before {
     content: '';
     width: 6px;
