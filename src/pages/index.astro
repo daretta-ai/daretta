@@ -25,7 +25,9 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   <Modulo luce="forte" class="griglia hero" data-hero>
     <div class="hero-testo">
       <h1 class="logo">d<span>à</span>retta</h1>
-      <p class="motto">{home.motto}</p>
+      <p class="motto">
+        {home.motto.split(/(?<=\.)\s+/).map((frase, i) => (i ? <> <span>{frase}</span></> : <span>{frase}</span>))}
+      </p>
       <p class="presentazione">{home.presentazione}</p>
       <a class="cta-hero smussato" href="#newsletter">{home.pulsante}</a>
     </div>
@@ -119,6 +121,12 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     line-height: 1.05;
     letter-spacing: -1px;
     text-wrap: balance;
+  }
+  /* Ogni frase del motto resta intera: si va a capo tra una frase e l'altra, non a metà */
+  @media (min-width: 721px) {
+    .motto span {
+      display: inline-block;
+    }
   }
   .presentazione {
     margin: 0;
