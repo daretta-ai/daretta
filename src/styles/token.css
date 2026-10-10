@@ -212,39 +212,18 @@ a {
   }
 }
 
-/* PROVA: due varianti dell'etichetta di sezione, da scegliere (html[data-variante]) */
-/* A: etichetta più forte, sempre mono maiuscolo */
-[data-variante='a'] .etichetta-sezione {
-  font-size: 16px;
-  letter-spacing: 2px;
+/* PROVA: etichetta di sezione colorata, stessa misura e carattere (html[data-variante]) */
+/* punti: il colore dei punti della sfera a riposo */
+[data-variante='punti'] .etichetta-sezione {
+  color: var(--punti);
 }
-[data-variante='a'] .etichetta-sezione .etichetta-nome {
-  color: var(--inchiostro);
+/* onda: il colore dei punti quando la sfera ascolta */
+[data-variante='onda'] .etichetta-sezione {
+  color: var(--onda);
 }
-/* B: il numero resta etichetta, il nome diventa un titolo in Geist */
-[data-variante='b'] .etichetta-sezione {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-3);
-}
-[data-variante='b'] .etichetta-sezione .etichetta-nome {
-  font-family: var(--font-sans);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-  text-transform: none;
-  color: var(--inchiostro);
-}
-[data-variante='b'] .etichetta-nl .etichetta-nome {
+/* Sul petrolio pieno della newsletter nessuno dei due si legge: resta carta */
+[data-variante] .etichetta-nl {
   color: var(--carta);
-}
-@media (max-width: 720px) {
-  [data-variante='a'] .etichetta-sezione {
-    font-size: 14px;
-  }
-  [data-variante='b'] .etichetta-sezione .etichetta-nome {
-    font-size: 20px;
-  }
 }
 
 /* Stili di testo (nomi da tokens.json) */
