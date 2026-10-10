@@ -35,7 +35,7 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
 <style>
   .blocco-foto {
     align-items: stretch;
-    padding: 72px var(--space-2) 0;
+    padding: var(--space-18) var(--space-2) 0;
   }
   .testo {
     grid-column: span 7;
@@ -65,7 +65,7 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
       gap: var(--space-4);
     }
     .testo {
-      gap: 14px;
+      gap: var(--space-4);
     }
     .testo :global(p) {
       font-size: var(--testo-corpo);

@@ -22,9 +22,9 @@ const { progetto } = Astro.props;
   .card {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: var(--space-3);
     min-height: 240px;
-    padding: 28px;
+    padding: var(--space-8);
     --s: var(--card-smusso);
     --fondo: var(--cemento-incavo);
     text-decoration: none;
@@ -35,7 +35,7 @@ const { progetto } = Astro.props;
   .nome {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: var(--space-2);
   }
   .titolo {
     font-size: var(--testo-attacco);
@@ -58,7 +58,7 @@ const { progetto } = Astro.props;
   @media (max-width: 720px) {
     .card {
       min-height: 0;
-      padding: 20px;
+      padding: var(--space-6);
     }
   }
 </style>

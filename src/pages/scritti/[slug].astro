@@ -85,14 +85,14 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   }
   .apertura {
     align-items: start;
-    padding: 72px var(--space-2) 0;
+    padding: var(--space-18) var(--space-2) 0;
   }
   .meta-margine {
     grid-column: span 3;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
+    gap: var(--space-3);
     padding-top: var(--space-3);
     font-family: var(--font-mono);
     font-size: var(--testo-meta);
@@ -101,7 +101,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     color: var(--inchiostro-muto);
   }
   .torna {
-    margin-bottom: 20px;
+    margin-bottom: var(--space-6);
     color: inherit;
     text-decoration: none;
   }
@@ -109,7 +109,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     color: var(--inchiostro);
   }
   .tag {
-    padding: 6px 12px;
+    padding: var(--space-2) var(--space-3);
     --h: 28px;
     --fondo: var(--cemento);
     color: var(--inchiostro);
@@ -140,18 +140,18 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     justify-content: flex-end;
   }
   .filetto-apertura {
-    margin: 72px var(--space-2) 0;
+    margin: var(--space-18) var(--space-2) 0;
     border: none;
     height: 1px;
     background: var(--filetto);
   }
   .firma {
-    padding: 72px var(--space-2) 0;
+    padding: var(--space-18) var(--space-2) 0;
   }
   .riga-firma {
     grid-column: 4 / span 7;
     display: flex;
-    gap: 20px;
+    gap: var(--space-6);
     align-items: center;
     padding-top: var(--space-8);
     border-top: 1px solid var(--filetto);
@@ -177,7 +177,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     color: var(--inchiostro-secondario);
   }
   .chiusura {
-    padding-top: 96px;
+    padding-top: var(--space-24);
     align-items: stretch;
   }
   .nl {
@@ -191,7 +191,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     grid-column: span 5;
     --s: var(--modulo-smusso);
     --fondo: radial-gradient(700px 400px at 90% -20%, #16292c 0%, var(--cemento-rilievo) 70%);
-    padding: var(--space-10) 48px;
+    padding: var(--space-10) var(--space-10);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

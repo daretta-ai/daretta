@@ -56,7 +56,7 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
     grid-column: 7 / span 6;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--space-6);
   }
   .destra :global(p) {
     margin: 0;
@@ -67,10 +67,10 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
   @media (max-width: 720px) {
     .modulo-numero {
       margin-top: var(--space-8);
-      gap: 14px;
+      gap: var(--space-4);
     }
     .sinistra {
-      gap: 14px;
+      gap: var(--space-4);
     }
     .sinistra :global(.etichetta-numero) {
       margin-bottom: var(--space-2);

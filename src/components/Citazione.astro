@@ -15,10 +15,10 @@ const { testo, didascalia } = Astro.props;
 <style>
   .citazione {
     margin: 0;
-    padding: 72px var(--space-2);
+    padding: var(--space-18) var(--space-2);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--space-6);
     border-bottom: 1px solid var(--filetto);
   }
   p {
@@ -43,7 +43,7 @@ const { testo, didascalia } = Astro.props;
   @media (max-width: 720px) {
     .citazione {
       padding: var(--space-10) var(--space-2);
-      gap: 14px;
+      gap: var(--space-4);
     }
     .frase {
       font-size: 44px;

@@ -43,6 +43,8 @@
   --space-8: 32px;
   --space-10: 40px;
   --space-14: 56px;
+  --space-18: 72px;
+  --space-24: 96px;
 
   /* Angoli: smussi a 45°, fatti con clip-path (README, «Angoli»).
      Tondi restano solo la sfera e i segni degli stati. */
@@ -60,7 +62,7 @@
   --margine: var(--space-14);
   --gap: var(--space-6);
   /* Stacco tra una sezione e l'altra: più largo del gap, che resta per ciò che sta insieme */
-  --stacco: 96px;
+  --stacco: var(--space-24);
 
   /* Smussi che cambiano su mobile */
   --modulo-smusso: var(--smusso-modulo);

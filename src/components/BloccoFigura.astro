@@ -23,7 +23,7 @@ const { numero, etichetta } = Astro.props;
 <style>
   .blocco-figura {
     align-items: start;
-    padding: 72px var(--space-2) 0;
+    padding: var(--space-18) var(--space-2) 0;
   }
   .testo {
     grid-column: span 6;
@@ -45,7 +45,7 @@ const { numero, etichetta } = Astro.props;
       padding: var(--space-8) var(--space-2) 0;
     }
     .testo {
-      gap: 14px;
+      gap: var(--space-4);
     }
     .testo :global(p) {
       font-size: var(--testo-corpo);

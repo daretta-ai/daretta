@@ -31,7 +31,7 @@ const { didascalia, voci, nota } = Astro.props;
     background: var(--cemento-rilievo);
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: var(--space-6);
   }
   figcaption,
   .nota {
@@ -54,7 +54,7 @@ const { didascalia, voci, nota } = Astro.props;
   }
   li {
     display: flex;
-    gap: 14px;
+    gap: var(--space-4);
     align-items: center;
     padding: var(--space-4) 0;
     border-top: 1px solid var(--filetto-neutro);

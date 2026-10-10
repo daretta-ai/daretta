@@ -95,7 +95,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     grid-column: span 7;
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: var(--space-8);
   }
   .hero-sfera {
     grid-column: span 5;
@@ -141,7 +141,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     align-items: center;
     height: 56px;
     --h: 56px;
-    padding: 0 28px;
+    padding: 0 var(--space-6);
     --fondo: var(--arancio);
     color: var(--cemento);
     text-decoration: none;
@@ -167,14 +167,14 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     grid-column: span 6;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--space-6);
   }
   .chi-destra {
     grid-column: 8 / span 5;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding-top: 38px;
+    gap: var(--space-6);
+    padding-top: var(--space-10);
   }
   .breve {
     margin: 0;
@@ -200,10 +200,10 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     padding: var(--space-2) var(--space-2) 0;
   }
   .scritti :global(.etichetta) {
-    padding-bottom: 20px;
+    padding-bottom: var(--space-6);
   }
   .vuoto {
-    padding: 40px 0;
+    padding: var(--space-10) 0;
     border-top: 1px solid var(--filetto);
     border-bottom: 1px solid var(--filetto);
     color: var(--inchiostro-corpo);
@@ -232,7 +232,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   .progetti {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: var(--space-8);
   }
   .progetti-testa,
   .curiosita-testa {
@@ -243,7 +243,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   }
   .legenda {
     display: flex;
-    gap: 20px;
+    gap: var(--space-6);
   }
   .card {
     display: grid;
@@ -288,7 +288,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   @media (max-width: 720px) {
     .hero {
       min-height: 0;
-      gap: 20px;
+      gap: var(--space-6);
     }
     .hero-testo {
       display: contents;
@@ -335,7 +335,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
       padding: var(--space-3) var(--space-3) 0;
     }
     .vuoto {
-      padding: 20px 0;
+      padding: var(--space-6) 0;
       font-size: var(--testo-titolo);
       line-height: 1.3;
     }

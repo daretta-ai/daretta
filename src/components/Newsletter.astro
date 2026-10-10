@@ -142,7 +142,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 20px;
+    gap: var(--space-6);
   }
   /* Sul petrolio pieno onda non si legge: il titolo di sezione resta carta */
   .etichetta-nl {
@@ -175,9 +175,9 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 6px;
+    gap: var(--space-2);
     min-height: 56px; /* quanto la riga del campo: il modulo non salta */
-    padding: 14px var(--space-6);
+    padding: var(--space-4) var(--space-6);
     background: color-mix(in srgb, var(--petrolio-scuro) 60%, transparent);
     clip-path: var(--ritaglio-campo);
     color: var(--carta);
@@ -261,7 +261,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   button {
     height: 56px;
     --h: 56px;
-    padding: 0 28px;
+    padding: 0 var(--space-6);
     --fondo: var(--arancio);
     --anello: var(--carta);
     color: var(--cemento);
@@ -273,7 +273,7 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
   }
   @media (max-width: 720px) {
     .newsletter {
-      gap: 14px;
+      gap: var(--space-3);
     }
     /* Nella tavola mobile la newsletter non ha l'etichetta */
     .etichetta-nl {
@@ -294,11 +294,11 @@ const testo = articolo ? nl.articoloTesto : nl.testo;
     }
     input {
       font-size: var(--testo-piccolo);
-      padding: 0 20px;
+      padding: 0 var(--space-6);
     }
     .esito {
       min-height: 52px;
-      padding: 12px 20px;
+      padding: var(--space-3) var(--space-6);
     }
     .esito-testo {
       font-size: var(--testo-piccolo);

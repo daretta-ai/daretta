@@ -50,7 +50,7 @@ function senzaLoop(figli: RenderableTreeNode[]): RenderableTreeNode[] | null {
 
 <style>
   .elenco-testo {
-    margin: 12px 0; /* con il gap di 20px del testo fa 32px dai paragrafi */
+    margin: var(--space-3) 0; /* con il gap di 20px del testo fa 32px dai paragrafi */
     padding: 0;
     list-style: none;
     border-top: 1px solid var(--filetto);
@@ -105,7 +105,7 @@ function senzaLoop(figli: RenderableTreeNode[]): RenderableTreeNode[] | null {
   @media (max-width: 720px) {
     .voce {
       grid-template-columns: 56px minmax(0, 1fr);
-      padding: 12px 0;
+      padding: var(--space-3) 0;
       font-size: var(--testo-corpo);
       line-height: 1.65;
     }

@@ -26,7 +26,7 @@ const { voci } = Astro.props;
   .voce {
     clip-path: var(--ritaglio-card);
     background: var(--cemento-rilievo);
-    padding: 28px;
+    padding: var(--space-8);
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
@@ -47,7 +47,7 @@ const { voci } = Astro.props;
   }
   @media (max-width: 720px) {
     .voce {
-      padding: 20px;
+      padding: var(--space-6);
     }
     .cifra {
       font-size: 40px;
