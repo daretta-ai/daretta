@@ -25,7 +25,7 @@ export async function progetto(): Promise<Rimando[]> {
 
 export const chiSono: Rimando = {
   etichetta: 'Chi sono',
-  testo: 'Uno scalino più su.',
+  testo: 'La versione lunga.',
   href: '/chi-sono',
 };
 
