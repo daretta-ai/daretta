@@ -1,18 +1,27 @@
 // Le righe della chiusura (design system, «La chiusura»). Ogni pagina ne sceglie due:
 // la prima porta alla cosa successiva dello stesso tipo, la seconda verso progetti o scritti.
-import { getArticoli, getMicrotesti } from './cms';
+import { getArticoli, getMicrotesti, getProgetti, type Progetto } from './cms';
 
 export interface Rimando {
   etichetta: string;
   testo: string;
   href: string;
+  descrizione?: string; // sotto il testo, in piccolo: la frase della card per i progetti
+  tutti?: { etichetta: string; href: string }; // link a destra dell'etichetta
 }
 
-export const progetti: Rimando = {
-  etichetta: 'Progetti',
-  testo: 'Quello che porto avanti la sera.',
-  href: '/#progetti',
-};
+const tuttiIProgetti = { etichetta: 'Vedi tutti', href: '/#progetti' };
+
+/** Un progetto preciso, mai la sezione: il nome dice poco, quindi sotto c'è la frase della card. */
+export function rigaProgetto(p: Progetto, etichetta = 'Progetti'): Rimando {
+  return { etichetta, testo: p.nome, descrizione: p.card, href: `/progetti/${p.slug}`, tutti: tuttiIProgetti };
+}
+
+/** Il primo progetto nell'ordine della home. */
+export async function progetto(): Promise<Rimando> {
+  const [primo] = await getProgetti();
+  return rigaProgetto(primo);
+}
 
 export const chiSono: Rimando = {
   etichetta: 'Chi sono',

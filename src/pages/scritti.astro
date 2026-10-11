@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
 import ListaScritti from '../components/ListaScritti.astro';
 import Chiusura from '../components/Chiusura.astro';
-import { progetti, chiSono } from '../rimandi';
+import { progetto, chiSono } from '../rimandi';
 import { getArticoli, getMicrotesti } from '../cms';
 
 const [articoli, micro] = await Promise.all([getArticoli(), getMicrotesti()]);
@@ -31,7 +31,7 @@ const vuoto = articoli.length === 0;
     )
   }
 
-  <Chiusura rimandi={[progetti, chiSono]} />
+  <Chiusura rimandi={[await progetto(), chiSono]} />
 </Base>
 
 <style>

@@ -19,12 +19,18 @@ const { rimandi, articolo = false } = Astro.props;
       {
         rimandi.map((r) => (
           <li>
-            <a href={r.href}>
+            <a class="principale" href={r.href}>
               <span class="etichetta">
                 {r.etichetta} <span class="freccia" aria-hidden="true">→</span>
               </span>
               <span class="titolo-lista testo-rimando">{r.testo}</span>
+              {r.descrizione && <span class="descrizione">{r.descrizione}</span>}
             </a>
+            {r.tutti && (
+              <a class="etichetta tutti" href={r.tutti.href}>
+                {r.tutti.etichetta} <span class="freccia" aria-hidden="true">→</span>
+              </a>
+            )}
           </li>
         ))
       }
@@ -48,9 +54,10 @@ const { rimandi, articolo = false } = Astro.props;
     border-bottom: 1px solid var(--filetto);
   }
   li {
+    position: relative;
     border-top: 1px solid var(--filetto);
   }
-  a {
+  .principale {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -65,9 +72,24 @@ const { rimandi, articolo = false } = Astro.props;
     text-underline-offset: 8px;
     transition: text-decoration-color 0.2s;
   }
-  a:hover .testo-rimando,
-  a:focus-visible .testo-rimando {
+  .principale:hover .testo-rimando,
+  .principale:focus-visible .testo-rimando {
     text-decoration-color: currentColor;
+  }
+  .descrizione {
+    font-size: var(--testo-piccolo);
+    line-height: 1.5;
+    color: var(--inchiostro-secondario);
+  }
+  /* «Vedi tutti» sulla riga dell'etichetta, a destra: un link a sé, fuori dalla riga principale */
+  .tutti {
+    position: absolute;
+    top: var(--space-10);
+    right: 0;
+    text-decoration: none;
+  }
+  .tutti:hover {
+    color: var(--inchiostro);
   }
   .nl {
     grid-column: 7 / span 6;
@@ -84,9 +106,17 @@ const { rimandi, articolo = false } = Astro.props;
     .nl {
       grid-column: 1 / -1;
     }
-    a {
+    .principale {
       gap: var(--space-2);
       padding: var(--space-6) 0;
+    }
+    /* Bersaglio da 44px per il dito, centrato sulla riga dell'etichetta */
+    .tutti {
+      top: calc(var(--space-6) - var(--space-3) - 2px);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
     }
   }
 </style>

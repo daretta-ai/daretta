@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import TestataProgetto from '../../components/TestataProgetto.astro';
 import Corpo from '../../components/Corpo.astro';
 import Chiusura from '../../components/Chiusura.astro';
-import { ultimoScritto } from '../../rimandi';
+import { rigaProgetto, ultimoScritto } from '../../rimandi';
 import { progetto as schemaProgetto } from '../../dati-strutturati';
 import { getProgetti, corpo, type Progetto } from '../../cms';
 
@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 const { progetto, prossimo } = Astro.props as { progetto: Progetto; prossimo: Progetto };
 const nodi = corpo(progetto.body, { stato: progetto.stato });
 
-const rimandoProssimo = { etichetta: 'Prossimo progetto', testo: prossimo.nome, href: `/progetti/${prossimo.slug}` };
+const rimandoProssimo = rigaProgetto(prossimo, 'Prossimo progetto');
 ---
 
 <Base

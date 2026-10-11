@@ -4,7 +4,7 @@
 import Base from '../../layouts/Base.astro';
 import Corpo from '../../components/Corpo.astro';
 import Chiusura from '../../components/Chiusura.astro';
-import { progetti, tuttiGliScritti } from '../../rimandi';
+import { progetto, tuttiGliScritti } from '../../rimandi';
 import Sfera from '../../components/Sfera.astro';
 import { articolo as schemaArticolo } from '../../dati-strutturati';
 import { getArticoli, getMicrotesti, corpo, minutiDiLettura, paragrafi } from '../../cms';
@@ -74,7 +74,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     articolo
     rimandi={[
       prossimo ? { etichetta: 'Prossimo', testo: prossimo.titolo, href: `/scritti/${prossimo.slug}` } : tuttiGliScritti,
-      progetti,
+      await progetto(),
     ]}
   />
 </Base>
