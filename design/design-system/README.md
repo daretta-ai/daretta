@@ -11,7 +11,7 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 - **Sì:** frasi brevi, un'opinione per frase, l'autoironia. «Il database non è lento. La tua query sì.»
 - **No:** superlativi, entusiasmo di maniera, gergo da LinkedIn, punti esclamativi, emoji.
 - **dàretta si scrive sempre così:** minuscolo, con l'accento grave. Se si spiega, si spiega solo così: «dà retta… a un cretino». Mai con «ascoltami» o simili; non si traduce e non si italianizza mai in «dammi retta».
-- I titoli in Doto sono minuscoli e finiscono con il punto: «una mail al mese.»
+- I titoli in Doto sono minuscoli e finiscono con il punto: «dà retta a un cretino.»
 - Le etichette sono in mono maiuscolo, le sezioni numerate tra parentesi quadre: `[ 003 ] CHIACCHIERE`. Dentro una pagina, le sottosezioni hanno due cifre: `[ 01 ] LA VERSIONE BREVE`.
 - **I titoli di sezione sono in `onda`**, con la stessa misura e lo stesso carattere delle altre etichette: è il colore dei punti quando la sfera ascolta. Valgono come titoli le etichette numerate delle sezioni e delle sottosezioni e quella delle testate. Restano dentro il loro modulo, senza filetti sopra. Sul modulo newsletter sono `carta`.
 
