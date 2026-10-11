@@ -71,7 +71,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   </article>
 
   <Chiusura
-    articolo
+    variante="articolo"
     rimandi={[
       prossimo ? { etichetta: 'Prossimo', testo: prossimo.titolo, href: `/scritti/${prossimo.slug}` } : tuttiGliScritti,
       await progetto(),

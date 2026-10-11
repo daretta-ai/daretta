@@ -9,9 +9,9 @@ import type { Rimando } from '../rimandi';
 // Una riga può essere un gruppo di alternative: se ne mostra una a caso (es. un progetto).
 interface Props {
   rimandi: (Rimando | Rimando[])[];
-  articolo?: boolean; // in fondo agli articoli la newsletter ha titolo e testo propri
+  variante?: 'articolo' | 'progetto'; // la newsletter ha titolo e testo propri
 }
-const { rimandi, articolo = false } = Astro.props;
+const { rimandi, variante } = Astro.props;
 // Ogni voce diventa un gruppo; nei gruppi da più righe, senza JavaScript resta visibile la prima.
 const gruppi = rimandi.map((r) => (Array.isArray(r) ? r : [r]));
 ---
@@ -41,7 +41,7 @@ const gruppi = rimandi.map((r) => (Array.isArray(r) ? r : [r]));
       }
     </ul>
   </nav>
-  <div class="nl"><Newsletter articolo={articolo} /></div>
+  <div class="nl"><Newsletter variante={variante} /></div>
 </section>
 
 <script>

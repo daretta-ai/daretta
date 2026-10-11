@@ -46,6 +46,8 @@ export interface Newsletter {
   etichettaErrore: string;
   articoloTitolo: string;
   articoloTesto: string;
+  progettoTitolo: string;
+  progettoTesto: string;
   benvenutoTitolo: string;
   benvenutoTesto: string;
 }

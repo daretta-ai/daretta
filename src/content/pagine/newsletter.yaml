@@ -14,7 +14,15 @@ etichettaInviato: verifica la mail
 etichettaGiaIscritto: di nuovo?
 etichettaMailNonValida: mail sbagliata?
 etichettaErrore: azz
-articoloTitolo: ti è servito?
-articoloTesto: Il prossimo arriva via mail, una volta al mese.
+articoloTitolo: ti è piaciuto?
+articoloTesto: |-
+  Una volta al mese ti mando il prossimo articolo, qualche spunto dai miei progetti e qualche opinione… se mi scappa.
+
+  Non ti vendo niente, ma se leggendo ti viene voglia di fare qualcosa insieme, rispondi alla mail, vediamo cosa ne esce.
+progettoTitolo: ti interessa?
+progettoTesto: |-
+  Una volta al mese ti racconto come vanno i miei progetti, con gli articoli e qualche opinione… se mi scappa.
+
+  Non ti vendo niente, ma se leggendo ti viene voglia di fare qualcosa insieme, rispondi alla mail, vediamo cosa ne esce.
 benvenutoTitolo: benvenuto.
 benvenutoTesto: Da adesso, una mail al mese. In fondo a ognuna c'è il modo per andartene… senza rancore.

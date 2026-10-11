@@ -223,6 +223,8 @@ export default config({
         etichettaErrore: riga('Etichetta errore generico'),
         articoloTitolo: titoloDoto('In fondo agli articoli, titolo'),
         articoloTesto: testoLungo('In fondo agli articoli, testo'),
+        progettoTitolo: titoloDoto('In fondo ai progetti, titolo'),
+        progettoTesto: testoLungo('In fondo ai progetti, testo'),
         benvenutoTitolo: titoloDoto('Pagina di conferma, titolo'),
         benvenutoTesto: testoLungo('Pagina di conferma, testo'),
       },
