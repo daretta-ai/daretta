@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
 import ListaScritti from '../components/ListaScritti.astro';
 import Chiusura from '../components/Chiusura.astro';
+import { progetti, chiSono } from '../rimandi';
 import { getArticoli, getMicrotesti } from '../cms';
 
 const [articoli, micro] = await Promise.all([getArticoli(), getMicrotesti()]);
@@ -30,12 +31,7 @@ const vuoto = articoli.length === 0;
     )
   }
 
-  <Chiusura
-    rimandi={[
-      { etichetta: '[ 004 ] Progetti', testo: 'Quello che porto avanti la sera.', href: '/#progetti' },
-      { etichetta: '[ 005 ] Curiosità', testo: 'Il resto, quello che non va nel curriculum.', href: '/curiosita' },
-    ]}
-  />
+  <Chiusura rimandi={[progetti, chiSono]} />
 </Base>
 
 <style>

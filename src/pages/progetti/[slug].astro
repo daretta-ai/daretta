@@ -4,21 +4,23 @@ import Base from '../../layouts/Base.astro';
 import TestataProgetto from '../../components/TestataProgetto.astro';
 import Corpo from '../../components/Corpo.astro';
 import Chiusura from '../../components/Chiusura.astro';
+import { ultimoScritto } from '../../rimandi';
 import { progetto as schemaProgetto } from '../../dati-strutturati';
 import { getProgetti, corpo, type Progetto } from '../../cms';
 
 export async function getStaticPaths() {
   const progetti = await getProgetti();
-  return progetti.map((progetto) => ({ params: { slug: progetto.slug }, props: { progetto } }));
+  // Il prossimo progetto segue l'ordine della home; dopo l'ultimo si ricomincia dal primo.
+  return progetti.map((progetto, i) => ({
+    params: { slug: progetto.slug },
+    props: { progetto, prossimo: progetti[(i + 1) % progetti.length] },
+  }));
 }
 
-const { progetto } = Astro.props as { progetto: Progetto };
+const { progetto, prossimo } = Astro.props as { progetto: Progetto; prossimo: Progetto };
 const nodi = corpo(progetto.body, { stato: progetto.stato });
 
-const secondo = {
-  'chi-sono': { etichetta: '[ 002 ] Chi sono', testo: 'Uno scalino più su.', href: '/chi-sono' },
-  curiosita: { etichetta: '[ 005 ] Curiosità', testo: 'Il resto, quello che non va nel curriculum.', href: '/curiosita' },
-}[progetto.rimando];
+const rimandoProssimo = { etichetta: 'Prossimo progetto', testo: prossimo.nome, href: `/progetti/${prossimo.slug}` };
 ---
 
 <Base
@@ -38,7 +40,5 @@ const secondo = {
 
   <Corpo nodi={nodi} />
 
-  <Chiusura
-    rimandi={[{ etichetta: '[ 004 ] Altri progetti', testo: 'Quello che porto avanti la sera.', href: '/#progetti' }, secondo]}
-  />
+  <Chiusura rimandi={[rimandoProssimo, await ultimoScritto()]} />
 </Base>

@@ -30,7 +30,6 @@ const progetti = defineCollection({
     fase: facoltativo,
     credito: facoltativo,
     link: facoltativo,
-    rimando: z.enum(['chi-sono', 'curiosita']).default('chi-sono'),
   }),
 });
 

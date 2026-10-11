@@ -310,15 +310,6 @@ export default config({
         fase: fields.text({ label: 'Fase', description: 'Accanto allo stato, facoltativa: «Alpha», «Alpha interna».' }),
         credito: fields.text({ label: 'Con chi', description: 'Facoltativo: «Con Gianpaolo Ansalone».' }),
         link: fields.url({ label: 'Sito del progetto', description: 'Quando è online, il nome diventa un link.' }),
-        rimando: fields.select({
-          label: 'Seconda card in fondo',
-          description: 'La prima porta sempre agli altri progetti.',
-          options: [
-            { label: 'Chi sono', value: 'chi-sono' },
-            { label: 'Curiosità', value: 'curiosita' },
-          ],
-          defaultValue: 'chi-sono',
-        }),
         corpo: corpo('Testo della pagina'),
       },
     }),

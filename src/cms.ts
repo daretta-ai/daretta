@@ -21,7 +21,6 @@ export interface Progetto {
   fase?: string;
   credito?: string;
   link?: string;
-  rimando: 'chi-sono' | 'curiosita';
   body: string;
 }
 
