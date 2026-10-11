@@ -6,19 +6,23 @@
 import Newsletter from './Newsletter.astro';
 import type { Rimando } from '../rimandi';
 
+// Una riga può essere un gruppo di alternative: se ne mostra una a caso (es. un progetto).
 interface Props {
-  rimandi: Rimando[];
+  rimandi: (Rimando | Rimando[])[];
   articolo?: boolean; // in fondo agli articoli la newsletter ha titolo e testo propri
 }
 const { rimandi, articolo = false } = Astro.props;
+// Ogni voce diventa un gruppo; nei gruppi da più righe, senza JavaScript resta visibile la prima.
+const gruppi = rimandi.map((r) => (Array.isArray(r) ? r : [r]));
 ---
 
 <section class="griglia chiusura">
   <nav class="rimandi" aria-label="Prosegui">
     <ul>
       {
-        rimandi.map((r) => (
-          <li>
+        gruppi.flatMap((gruppo, g) =>
+          gruppo.map((r, i) => (
+          <li data-gruppo={gruppo.length > 1 ? g : undefined} hidden={i > 0}>
             <a class="principale" href={r.href}>
               <span class="etichetta">
                 {r.etichetta} <span class="freccia" aria-hidden="true">→</span>
@@ -32,12 +36,26 @@ const { rimandi, articolo = false } = Astro.props;
               </a>
             )}
           </li>
-        ))
+          ))
+        )
       }
     </ul>
   </nav>
   <div class="nl"><Newsletter articolo={articolo} /></div>
 </section>
+
+<script>
+  // Nei gruppi di alternative se ne accende una a caso, a ogni visita.
+  const gruppi = new Map<string, HTMLElement[]>();
+  for (const li of document.querySelectorAll<HTMLElement>('.chiusura li[data-gruppo]')) {
+    const chiave = li.dataset.gruppo!;
+    gruppi.set(chiave, [...(gruppi.get(chiave) ?? []), li]);
+  }
+  for (const righe of gruppi.values()) {
+    const scelta = Math.floor(Math.random() * righe.length);
+    righe.forEach((li, i) => (li.hidden = i !== scelta));
+  }
+</script>
 
 <style>
   .chiusura {

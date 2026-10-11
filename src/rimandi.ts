@@ -17,10 +17,10 @@ export function rigaProgetto(p: Progetto, etichetta = 'Progetti'): Rimando {
   return { etichetta, testo: p.nome, descrizione: p.card, href: `/progetti/${p.slug}`, tutti: tuttiIProgetti };
 }
 
-/** Il primo progetto nell'ordine della home. */
-export async function progetto(): Promise<Rimando> {
-  const [primo] = await getProgetti();
-  return rigaProgetto(primo);
+/** Un progetto a caso, scelto nel browser a ogni visita (vedi Chiusura.astro).
+ *  Si passano tutti: senza JavaScript resta il primo nell'ordine della home. */
+export async function progetto(): Promise<Rimando[]> {
+  return (await getProgetti()).map((p) => rigaProgetto(p));
 }
 
 export const chiSono: Rimando = {
