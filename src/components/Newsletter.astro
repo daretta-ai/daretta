@@ -161,12 +161,14 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
   .riga[hidden] {
     display: none;
   }
+  /* Più staccato dal pulsante: 32px sotto la riga del campo (24 su mobile) */
   .privacy {
     align-self: flex-start;
+    margin-top: var(--space-2);
     color: var(--carta);
     font-family: var(--font-mono);
     font-size: var(--testo-meta);
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     text-decoration-style: dotted;
     text-underline-offset: 4px;
@@ -276,15 +278,14 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
     .newsletter {
       gap: var(--space-3);
     }
-    /* Nella tavola mobile la newsletter non ha l'etichetta */
-    .etichetta-nl {
-      display: none;
-    }
     p {
       font-size: var(--testo-attacco);
     }
     .riga {
       flex-direction: column;
+    }
+    .privacy {
+      margin-top: var(--space-3);
     }
     input,
     button {
