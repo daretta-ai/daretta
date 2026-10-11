@@ -1,9 +1,10 @@
 ---
 // Un articolo (tavola Articolo): colonna di lettura sul fondo, metadati nel margine,
-// barra di avanzamento a punti sotto l'header, newsletter e prossimo articolo in fondo.
+// barra di avanzamento a punti sotto l'header, in fondo la chiusura (prossimo articolo, progetti, newsletter).
 import Base from '../../layouts/Base.astro';
 import Corpo from '../../components/Corpo.astro';
-import Newsletter from '../../components/Newsletter.astro';
+import Chiusura from '../../components/Chiusura.astro';
+import { progetto, tuttiGliScritti } from '../../rimandi';
 import Sfera from '../../components/Sfera.astro';
 import { articolo as schemaArticolo } from '../../dati-strutturati';
 import { getArticoli, getMicrotesti, corpo, minutiDiLettura, paragrafi } from '../../cms';
@@ -69,13 +70,13 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     }
   </article>
 
-  <section class="griglia chiusura">
-    <div class="nl"><Newsletter articolo /></div>
-    <a class="prossimo smussato" href={prossimo ? `/scritti/${prossimo.slug}` : '/scritti'}>
-      <span class="etichetta-prossimo">{prossimo ? 'Prossimo' : 'Tutti gli scritti'} <span class="freccia" aria-hidden="true">→</span></span>
-      <span class="titolo-prossimo">{prossimo ? prossimo.titolo : 'Torna all\'elenco.'}</span>
-    </a>
-  </section>
+  <Chiusura
+    articolo
+    rimandi={[
+      prossimo ? { etichetta: 'Prossimo', testo: prossimo.titolo, href: `/scritti/${prossimo.slug}` } : tuttiGliScritti,
+      await progetto(),
+    ]}
+  />
 </Base>
 
 <style>
@@ -176,41 +177,6 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     font-size: var(--testo-piccolo);
     color: var(--inchiostro-secondario);
   }
-  .chiusura {
-    padding-top: var(--space-24);
-    align-items: stretch;
-  }
-  .nl {
-    grid-column: span 7;
-    display: flex;
-  }
-  .nl :global(.newsletter) {
-    flex-grow: 1;
-  }
-  .prossimo {
-    grid-column: span 5;
-    --s: var(--modulo-smusso);
-    --fondo: radial-gradient(700px 400px at 90% -20%, #16292c 0%, var(--cemento-rilievo) 70%);
-    padding: var(--space-10) var(--space-10);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: var(--space-6);
-    text-decoration: none;
-  }
-  .etichetta-prossimo {
-    font-family: var(--font-mono);
-    font-size: var(--testo-etichetta);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--inchiostro-muto);
-  }
-  .titolo-prossimo {
-    font-size: var(--testo-titolo);
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: -0.5px;
-  }
   @media (max-width: 720px) {
     .apertura {
       padding-top: var(--space-8);
@@ -240,15 +206,6 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
     }
     .filetto-apertura {
       margin-top: var(--space-10);
-    }
-    .chiusura {
-      padding-top: var(--space-14);
-    }
-    .prossimo {
-      padding: var(--space-6);
-    }
-    .titolo-prossimo {
-      font-size: var(--testo-titolo);
     }
   }
 </style>

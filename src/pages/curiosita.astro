@@ -5,6 +5,8 @@ import Base from '../layouts/Base.astro';
 import Sezione from '../components/Sezione.astro';
 import Sfera from '../components/Sfera.astro';
 import Tabellone from '../components/Tabellone.astro';
+import Chiusura from '../components/Chiusura.astro';
+import { progetto, ultimoScritto } from '../rimandi';
 import { getCollection } from 'astro:content';
 
 const curiosita = (await getCollection('curiosita')).sort((a, b) => a.id.localeCompare(b.id));
@@ -54,6 +56,8 @@ const lettere = (s: string) => s.split('');
       </ol>
     </div>
   </section>
+
+  <Chiusura rimandi={[await progetto(), await ultimoScritto()]} />
 </Base>
 
 <style>
