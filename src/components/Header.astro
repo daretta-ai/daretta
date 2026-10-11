@@ -257,9 +257,16 @@ const voci = [
   }
 
   @media (max-width: 900px) {
-    /* Su mobile la metà dei punti: la barra resta leggibile */
-    .avanzamento span:nth-child(even) {
-      display: none;
+    /* Su mobile la barra resta una barra: tutti i 72 punti, piccoli e fitti, attaccati all'header */
+    .con-avanzamento {
+      row-gap: var(--space-2);
+    }
+    .avanzamento {
+      padding-top: 0;
+    }
+    .avanzamento span {
+      width: 2px;
+      height: 2px;
     }
     .header {
       justify-content: space-between;
