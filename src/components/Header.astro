@@ -162,10 +162,12 @@ const voci = [
   .avanzamento span:global(.letto) {
     background: var(--punti);
   }
+  /* Quando la pagina scorre, il testo sotto l'header si sfoca: vetro smerigliato, non un fondo pieno.
+     Solo la regola senza prefisso: il -webkit- lo aggiunge la build (scritto a mano, la build
+     teneva solo quello e Chrome restava senza sfocatura). Cemento al 60%. */
   .header.staccato {
-    background: rgb(17 19 20 / 0.86);
+    background: rgb(17 19 20 / 0.6);
     backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
   }
   .logo {
     font-family: var(--font-punti);
@@ -384,7 +386,6 @@ const voci = [
     .aperto.header {
       background: transparent;
       backdrop-filter: none;
-      -webkit-backdrop-filter: none;
     }
     .aperto.senza-logo .logo,
     .aperto.senza-logo .cta {
