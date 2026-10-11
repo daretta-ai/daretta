@@ -8,4 +8,4 @@ La luce petrolio che riceve dipende da quanto è vicino alla sfera:
 - **Distanza media** (Chi sono): gradiente radiale da `petrolio-alone`, con il centro fuori dal modulo, dalla parte della sfera.
 - **Lontano** (Progetti): quasi solo `cemento-rilievo`, un velo di alone al massimo.
 
-Non tutto va in un modulo: liste di scritti e curiosità stanno direttamente sul fondo.
+Non tutto va in un modulo: la lista delle chiacchiere e le curiosità stanno direttamente sul fondo.

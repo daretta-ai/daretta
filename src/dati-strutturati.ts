@@ -44,7 +44,7 @@ export const paginaProfilo: Nodo = {
   isPartOf: { '@id': ID_SITO },
 };
 
-/** Un articolo di /scritti. */
+/** Un articolo di /chiacchiere. */
 export function articolo(a: {
   slug: string;
   titolo: string;
@@ -53,7 +53,7 @@ export function articolo(a: {
   aggiornato?: Date;
   tag?: string;
 }): Nodo {
-  const url = assoluto(`/scritti/${a.slug}`);
+  const url = assoluto(`/chiacchiere/${a.slug}`);
   return {
     '@type': 'BlogPosting',
     '@id': `${url}#articolo`,
@@ -61,7 +61,7 @@ export function articolo(a: {
     mainEntityOfPage: url,
     headline: a.titolo,
     description: a.attacco,
-    image: assoluto(`/og/scritti/${a.slug}.png`),
+    image: assoluto(`/og/chiacchiere/${a.slug}.png`),
     datePublished: a.data.toISOString().slice(0, 10),
     dateModified: (a.aggiornato ?? a.data).toISOString().slice(0, 10),
     inLanguage: 'it',

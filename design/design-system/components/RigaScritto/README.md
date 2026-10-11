@@ -1,6 +1,6 @@
 # RigaScritto
 
-Una riga della lista degli scritti, posata direttamente sul fondo `cemento`, senza modulo.
+Una riga della lista delle chiacchiere (gli articoli), posata direttamente sul fondo `cemento`, senza modulo.
 
 - Titolo in `titolo-lista` (40px, 24px su mobile), data in `meta` a destra (sotto su mobile).
 - Righe separate da `filetto`, con filetto anche in fondo alla lista.

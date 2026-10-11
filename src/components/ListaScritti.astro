@@ -12,7 +12,7 @@ const data = (d: Date) => d.toLocaleDateString('it-IT', { day: 'numeric', month:
   {
     articoli.map((a) => (
       <li>
-        <a href={`/scritti/${a.slug}`}>
+        <a href={`/chiacchiere/${a.slug}`}>
           <span class="titolo-lista">{a.titolo}</span>
           <time class="meta" datetime={a.data.toISOString().slice(0, 10)}>{data(a.data)}</time>
         </a>

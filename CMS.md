@@ -14,9 +14,9 @@ I testi del sito si scrivono in Keystatic. Keystatic salva file normali dentro `
 | Home | `pagine/home.yaml` | frase della hero, presentazione, pulsante |
 | Chi sono | `pagine/chi-sono.mdoc` | titolo, attacco (anche in home), il percorso, la versione breve (anche in home), il resto della pagina |
 | Newsletter | `pagine/newsletter.yaml` | il modulo, i messaggi dell'iscrizione, la pagina di conferma, la chiusa degli articoli |
-| Microtesti | `pagine/microtesti.yaml` | footer, Scritti vuoto, 404, frasi degli stati, firma degli articoli |
+| Microtesti | `pagine/microtesti.yaml` | footer, Chiacchiere vuoto, 404, frasi degli stati, firma degli articoli |
 | Progetti | `progetti/*.mdoc` | card in home e pagina `/progetti/…` |
-| Articoli | `articoli/*.mdoc` | lista in home e in `/scritti`, pagina `/scritti/…` (solo se «Pubblicato») |
+| Articoli | `articoli/*.mdoc` | lista in home e in `/chiacchiere`, pagina `/chiacchiere/…` (solo se «Pubblicato») |
 | Curiosità | `curiosita/*.json` | tabellone e `/curiosita` |
 
 Etichette di sezione, rimandi in fondo alle pagine e voci di menu restano nel codice: sono interfaccia, non testo.

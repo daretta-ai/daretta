@@ -2,7 +2,7 @@
 // Header, dalle tavole Main/ChiSono (desktop) e *-Mobile (mobile).
 // In home il logotipo compare solo quando la hero esce dallo schermo.
 interface Props {
-  attiva?: 'scritti' | 'progetti' | 'chi-sono';
+  attiva?: 'chiacchiere' | 'progetti' | 'chi-sono';
   home?: boolean;
   avanzamento?: boolean; // negli articoli: la barra di lettura a punti sotto l'header
 }
@@ -12,7 +12,7 @@ const PUNTI = 72;
 // Non c'è una pagina indice dei progetti nelle tavole: PROGETTI porta al blocco in home.
 // Curiosità non sta nel menu (decisione di Patrizio, 2 ott 2026): ci si arriva da «Vedi tutte» e dal footer.
 const voci = [
-  { id: 'scritti', etichetta: 'Scritti', href: '/scritti' },
+  { id: 'chiacchiere', etichetta: 'Chiacchiere', href: '/chiacchiere' },
   { id: 'progetti', etichetta: 'Progetti', href: '/#progetti' },
   { id: 'chi-sono', etichetta: 'Chi sono', href: '/chi-sono' },
 ] as const;

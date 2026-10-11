@@ -8,13 +8,13 @@ export async function GET(context: APIContext) {
   const articoli = await getArticoli();
   return rss({
     title: 'dàretta',
-    description: 'Gli scritti di Patrizio Bartolozzi.',
+    description: 'Le chiacchiere di Patrizio Bartolozzi.',
     site: context.site!,
     items: articoli.map((a) => ({
       title: a.titolo,
       description: a.attacco,
       pubDate: a.data,
-      link: `/scritti/${a.slug}`,
+      link: `/chiacchiere/${a.slug}`,
       categories: a.tag ? [a.tag] : undefined,
     })),
     customData: '<language>it-it</language>',

@@ -1,5 +1,5 @@
 ---
-// Scritti (tavola Scritti). Finché non c'è un articolo pubblicato, la pagina dice che arriva.
+// Chiacchiere (tavola Scritti). Finché non c'è un articolo pubblicato, la pagina dice che arriva.
 import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
 import ListaScritti from '../components/ListaScritti.astro';
@@ -12,12 +12,12 @@ const vuoto = articoli.length === 0;
 ---
 
 <Base
-  titolo="Scritti"
+  titolo="Chiacchiere"
   descrizione={vuoto ? 'Gli articoli di Patrizio Bartolozzi. Il primo arriva presto.' : 'Gli articoli di Patrizio Bartolozzi.'}
-  attiva="scritti"
+  attiva="chiacchiere"
 >
-  <Testata titolo="scritti.">
-    <span slot="etichetta" class="etichetta">[ 003 ] Scritti</span>
+  <Testata titolo="quattro chiacchiere.">
+    <span slot="etichetta" class="etichetta">[ 003 ] Chiacchiere</span>
     {vuoto && <p class="attacco">{micro.scrittiVuoto}</p>}
   </Testata>
 

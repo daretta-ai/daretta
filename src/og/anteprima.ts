@@ -177,10 +177,10 @@ export function progetto(p: { nome: string; card: string; stato: Stato }): Nodo 
 export function articolo(a: { titolo: string; data: Date; minuti: number }): Nodo {
   const data = a.data.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
   return voce({
-    etichetta: '[ 003 ] Scritti',
+    etichetta: '[ 003 ] Chiacchiere',
     accanto: h('span', mono, `${data} · ${a.minuti} min`),
     titolo: a.titolo,
-    dominio: 'DARETTA.IT/SCRITTI',
+    dominio: 'DARETTA.IT/CHIACCHIERE',
   });
 }
 

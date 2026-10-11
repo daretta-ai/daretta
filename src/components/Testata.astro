@@ -1,5 +1,5 @@
 ---
-// Modulo-testata delle pagine interne (tavole ChiSono, Progetto*, Scritti, Curiosita, 404).
+// Modulo-testata delle pagine interne (tavole ChiSono, Progetto*, Scritti (Chiacchiere), Curiosita, 404).
 // Etichetta, titolo in Doto, frase d'attacco; su desktop a destra la sfera piccola.
 import Modulo from './Modulo.astro';
 import Sfera from './Sfera.astro';
@@ -7,15 +7,17 @@ import Sfera from './Sfera.astro';
 interface Props {
   titolo: string;
   sfera?: boolean;
-  compatta?: boolean; // testata bassa, senza altezza minima (Scritti, 404)
+  compatta?: boolean; // testata bassa, senza altezza minima (Chiacchiere, 404)
 }
 const { titolo, sfera = true, compatta = false } = Astro.props;
+// La parola più lunga del titolo: su mobile il Doto si stringe quanto basta perché ci stia (mai sotto i 28px).
+const parola = Math.max(...titolo.split(/\s+/).map((p) => [...p].length));
 ---
 
 <Modulo luce="forte" class:list={['griglia', 'testata', { compatta }]}>
   <div class="testo">
     <div class="riga-etichetta"><slot name="etichetta" /></div>
-    <h1 class="punti-pagina">{titolo}</h1>
+    <h1 class="punti-pagina" style={`--parola: ${parola}`}>{titolo}</h1>
     <slot />
   </div>
   {
@@ -51,6 +53,15 @@ const { titolo, sfera = true, compatta = false } = Astro.props;
     grid-column: span 4;
     display: flex;
     justify-content: center;
+  }
+  @media (max-width: 720px) {
+    .testo {
+      container-type: inline-size;
+    }
+    /* Ogni carattere di Doto 900 è largo circa 0,6 volte la misura: la parola più lunga deve stare nella colonna. */
+    .testo h1 {
+      font-size: max(28px, min(56px, calc(100cqi / (var(--parola) * 0.6))));
+    }
   }
   @media (max-width: 1100px) {
     .testo {

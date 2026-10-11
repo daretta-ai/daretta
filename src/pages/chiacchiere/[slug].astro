@@ -11,7 +11,7 @@ import { getArticoli, getMicrotesti, corpo, minutiDiLettura, paragrafi } from '.
 
 export async function getStaticPaths() {
   const articoli = await getArticoli();
-  // Il prossimo da leggere è quello uscito prima; dopo il più vecchio, si torna agli scritti.
+  // Il prossimo da leggere è quello uscito prima; dopo il più vecchio, si torna all'elenco.
   return articoli.map((articolo, i) => ({
     params: { slug: articolo.slug },
     props: { articolo, prossimo: articoli[i + 1] },
@@ -28,16 +28,16 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
 <Base
   titolo={articolo.titolo}
   descrizione={articolo.attacco}
-  attiva="scritti"
+  attiva="chiacchiere"
   avanzamento
   articolo={{ data: articolo.data }}
-  immagine={`/og/scritti/${articolo.slug}.png`}
+  immagine={`/og/chiacchiere/${articolo.slug}.png`}
   schema={schemaArticolo(articolo)}
 >
   <article class="articolo" data-articolo>
     <header class="griglia apertura">
       <div class="meta-margine">
-        <a class="torna" href="/scritti"><span class="freccia freccia-indietro" aria-hidden="true">←</span> Scritti</a>
+        <a class="torna" href="/chiacchiere"><span class="freccia freccia-indietro" aria-hidden="true">←</span> Chiacchiere</a>
         {articolo.tag && <span class="tag smussato contornato">{articolo.tag}</span>}
         <time datetime={articolo.data.toISOString().slice(0, 10)}>{data}</time>
         <span>{minutiDiLettura(articolo.body)} min di lettura</span>
@@ -73,7 +73,7 @@ const data = articolo.data.toLocaleDateString('it-IT', { day: 'numeric', month: 
   <Chiusura
     variante="articolo"
     rimandi={[
-      prossimo ? { etichetta: 'Prossimo', testo: prossimo.titolo, href: `/scritti/${prossimo.slug}` } : tuttiGliScritti,
+      prossimo ? { etichetta: 'Prossimo', testo: prossimo.titolo, href: `/chiacchiere/${prossimo.slug}` } : tuttiGliScritti,
       await progetto(),
     ]}
   />

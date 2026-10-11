@@ -1,4 +1,4 @@
-// Immagini di anteprima per i social: /og/sito.png, /og/progetti/<slug>.png, /og/scritti/<slug>.png.
+// Immagini di anteprima per i social: /og/sito.png, /og/progetti/<slug>.png, /og/chiacchiere/<slug>.png.
 // Si generano durante la build (le pagine sono statiche), dai testi in Keystatic.
 import type { APIRoute, GetStaticPaths } from 'astro';
 import { getArticoli, getProgetti, minutiDiLettura } from '../../cms';
@@ -14,7 +14,7 @@ export const getStaticPaths = (async () => {
       props: { disegno: () => progetto(p) },
     })),
     ...articoli.map((a) => ({
-      params: { percorso: `scritti/${a.slug}` },
+      params: { percorso: `chiacchiere/${a.slug}` },
       props: { disegno: () => articolo({ titolo: a.titolo, data: a.data, minuti: minutiDiLettura(a.body) }) },
     })),
   ];

@@ -241,7 +241,7 @@ export default config({
           },
           { label: 'Footer' }
         ),
-        scrittiVuoto: testoLungo('Scritti, finché è vuoto', 'In home e nella pagina Scritti.'),
+        scrittiVuoto: testoLungo('Chiacchiere, finché è vuoto', 'In home e nella pagina Chiacchiere.'),
         firma: fields.text({
           label: 'Firma degli articoli',
           description: 'Una riga su chi scrive, sotto ogni articolo accanto alla foto. Vuota, la firma non compare.',
@@ -325,7 +325,7 @@ export default config({
       schema: {
         titolo: fields.slug({
           name: { label: 'Titolo', description: 'La tesi dell\'articolo, un\'affermazione.' },
-          slug: { label: 'Indirizzo', description: 'Diventa /scritti/indirizzo. Non cambiarlo dopo la pubblicazione.' },
+          slug: { label: 'Indirizzo', description: 'Diventa /chiacchiere/indirizzo. Non cambiarlo dopo la pubblicazione.' },
         }),
         pubblicato: fields.checkbox({
           label: 'Pubblicato',

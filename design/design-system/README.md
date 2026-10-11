@@ -12,7 +12,7 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 - **No:** superlativi, entusiasmo di maniera, gergo da LinkedIn, punti esclamativi, emoji.
 - **dàretta si scrive sempre così:** minuscolo, con l'accento grave. Se si spiega, si spiega solo così: «dà retta… a un cretino». Mai con «ascoltami» o simili; non si traduce e non si italianizza mai in «dammi retta».
 - I titoli in Doto sono minuscoli e finiscono con il punto: «una mail al mese.»
-- Le etichette sono in mono maiuscolo, le sezioni numerate tra parentesi quadre: `[ 003 ] SCRITTI`. Dentro una pagina, le sottosezioni hanno due cifre: `[ 01 ] LA VERSIONE BREVE`.
+- Le etichette sono in mono maiuscolo, le sezioni numerate tra parentesi quadre: `[ 003 ] CHIACCHIERE`. Dentro una pagina, le sottosezioni hanno due cifre: `[ 01 ] LA VERSIONE BREVE`.
 - **I titoli di sezione sono in `onda`**, con la stessa misura e lo stesso carattere delle altre etichette: è il colore dei punti quando la sfera ascolta. Valgono come titoli le etichette numerate delle sezioni e delle sottosezioni e quella delle testate. Restano dentro il loro modulo, senza filetti sopra. Sul modulo newsletter sono `carta`.
 
 ## Tre regole di colore
@@ -32,7 +32,7 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 | Token | Desktop | Mobile | Dove |
 | --- | --- | --- | --- |
 | `testo-articolo` | 64 | 40 | titolo della pagina di un articolo |
-| `testo-titolo` | 32 | 24 | titoli di Scritti, frase del Chi sono in home, rimandi in chiusura, nome nella testata dei progetti, voci del menu mobile |
+| `testo-titolo` | 32 | 24 | titoli delle Chiacchiere, frase del Chi sono in home, rimandi in chiusura, nome nella testata dei progetti, voci del menu mobile |
 | `testo-attacco` | 24 | 20 | frase della hero, attacchi di testate e articoli, testo della newsletter, nomi nelle card progetto |
 | `testo-corpo` | 20 | 18 | tutti i paragrafi, elenchi compresi |
 | `testo-piccolo` | 16 | 16 | descrizioni delle card, campo email, messaggi dei form, codice |
@@ -43,13 +43,13 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 
 ## Composizione
 
-- **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`smusso-modulo`, padding `space-10`); Scritti e Curiosità sono posate direttamente sul fondo. Scritti è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
+- **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`smusso-modulo`, padding `space-10`); Chiacchiere e Curiosità sono posate direttamente sul fondo. Chiacchiere è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
 - **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi. di solito non i miei.». Da desktop ogni frase resta intera sulla sua riga. È la frase da usare ovunque (sito, LinkedIn, bio), quindi deve reggere anche da sola. A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
-- **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con la fascia di chiusura (vedi «La chiusura»).
+- **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Su mobile il titolo si stringe quanto basta perché la sua parola più lunga stia nella colonna, mai sotto i 28px (oggi succede con «quattro chiacchiere.»). Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con la fascia di chiusura (vedi «La chiusura»).
 - **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto escono dalla colonna. Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `punti`, gli altri in `filetto-neutro`. Sono i punti della sfera che si accendono mentre leggi: uno stato, non un'azione, quindi niente arancio (faceva concorrenza a ISCRIVITI e al logotipo) e niente `onda` (troppo chiara, sembrava un secondo accento). Tra letti e spenti serve almeno 3:1 (oggi 3,3:1), così il confine si vede.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
-- **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono in Geist alla misura dei titoli (`testo-titolo`, 24px), separate da `filetto`, con il numero nel margine in mono (`[ 01 ] Scritti`); il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
+- **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono in Geist alla misura dei titoli (`testo-titolo`, 24px), separate da `filetto`, con il numero nel margine in mono (`[ 01 ] Chiacchiere`); il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
 - **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `smusso-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
 - **Stacco tra le sezioni.** Tra una sezione e l'altra lo spazio è più largo del gap: 96px (`space-24`) su desktop, 56px (`space-14`) su mobile (`--stacco`). Il gap resta per ciò che sta insieme, come le card di Progetti.
 - **Una scala sola per gli spazi.** Margini, padding e gap usano solo i token `space-*`, su tre livelli. Dentro un elemento 4, 8, 12, 16 (etichetta e testo, chip, righe); tra elementi 24, 32, 40 (gap e padding di card e moduli: card a 32, moduli a 40 sui lati); tra blocchi 56, 72, 96 (blocchi, figure e citazioni negli articoli a 72, chiusure e stacco a 96). Un valore fuori scala va al gradino più vicino. Eccezioni volute: le righe degli elenchi a 14px, e le misure funzionali (tessere del tabellone, spazio del menu sotto l'header).
@@ -127,18 +127,18 @@ La fascia prima del footer, uguale in tutte le pagine tranne 404, privacy e benv
 
 - **A destra, sempre la newsletter** (colonne 7–12), l'unico modulo pieno della fascia. In fondo agli articoli e ai progetti cambiano il titolo («ti è piaciuto?», «ti interessa?») e la prima frase, che mette davanti la cosa appena letta; il resto del testo è quello della home. L'etichetta c'è sempre: `[ 006 ] NEWSLETTER`, numerata solo in home, dove le sezioni sono numerate; altrove è solo `NEWSLETTER`.
 - **A sinistra, il prosegui** (colonne 1–5), sempre posato sul fondo, mai in un box: il vuoto accanto al pieno, come in home. In home c'è il tabellone delle curiosità; nelle altre pagine due righe di rimando.
-- **Le righe:** filetto sopra e sotto come la lista di Scritti, etichetta in mono senza numero con la freccia, sotto il testo in `testo-titolo` (`inchiostro-corpo`, sottolineato all'hover). Per un progetto, sotto il nome la frase della card in `testo-piccolo`, perché il nome da solo dice poco; a destra dell'etichetta «VEDI TUTTI →», un link a sé verso i progetti in home (44px di bersaglio su mobile).
-- **Cosa ci va.** Le righe portano sempre verso progetti e scritti, le due cose che lavorano per gli obiettivi del sito; Chi sono è nel menu, e le curiosità sono un regalo da trovare, non una destinazione. Un progetto è sempre un progetto preciso, mai la sezione.
+- **Le righe:** filetto sopra e sotto come la lista delle Chiacchiere, etichetta in mono senza numero con la freccia, sotto il testo in `testo-titolo` (`inchiostro-corpo`, sottolineato all'hover). Per un progetto, sotto il nome la frase della card in `testo-piccolo`, perché il nome da solo dice poco; a destra dell'etichetta «VEDI TUTTI →», un link a sé verso i progetti in home (44px di bersaglio su mobile).
+- **Cosa ci va.** Le righe portano sempre verso progetti e articoli, le due cose che lavorano per gli obiettivi del sito; Chi sono è nel menu, e le curiosità sono un regalo da trovare, non una destinazione. Un progetto è sempre un progetto preciso, mai la sezione.
 
 | Pagina | Prima riga | Seconda riga |
 | --- | --- | --- |
-| Articolo | il prossimo articolo (se non c'è, «Tutti gli scritti») | un progetto |
-| Progetto | il prossimo progetto, nell'ordine della home | l'ultimo scritto |
-| Chi sono | un progetto | l'ultimo scritto |
-| Scritti | un progetto | Chi sono |
-| Curiosità | un progetto | l'ultimo scritto |
+| Articolo | il prossimo articolo (se non c'è, «Tutte le chiacchiere») | un progetto |
+| Progetto | il prossimo progetto, nell'ordine della home | l'ultimo articolo |
+| Chi sono | un progetto | l'ultimo articolo |
+| Chiacchiere | un progetto | Chi sono |
+| Curiosità | un progetto | l'ultimo articolo |
 
-- **Un progetto a caso.** Dove la riga dice «un progetto», la pagina li contiene tutti e uno script ne accende uno a caso a ogni visita; senza JavaScript resta il primo nell'ordine della home. «L'ultimo scritto» è il titolo dell'articolo più recente; finché non ce n'è, la frase di Scritti vuoto.
+- **Un progetto a caso.** Dove la riga dice «un progetto», la pagina li contiene tutti e uno script ne accende uno a caso a ogni visita; senza JavaScript resta il primo nell'ordine della home. «L'ultimo articolo» è il titolo del più recente; finché non ce n'è, la frase di Chiacchiere vuoto.
 - **Su mobile** l'ordine resta lo stesso: prima il prosegui, poi la newsletter, poi il footer. Sopra la fascia, lo stacco delle sezioni.
 - Costruzione: `src/components/Chiusura.astro`, righe in `src/rimandi.ts`.
 
@@ -180,7 +180,7 @@ Foto spontanee, scattate da Patrizio, mai in posa da studio. Tutte hanno lo stes
 - **Moduli foto.** Formato quadrato, il viso nel terzo alto. Le foto di Patrizio sono quasi tutte orizzontali: il quadrato ne tiene tre quarti, e con loro il posto (il mare, il paese di notte), mentre un verticale ne butterebbe via metà. Non orizzontale vero, perché nella colonna da quattro su desktop il viso diventerebbe troppo piccolo. Nel sito in webp a 480 e 800px, con `srcset`, `loading="lazy"`, `aspect-ratio: 1`, `object-fit: cover` e `object-position` puntato sul viso. Angoli `smusso-modulo` (`smusso-modulo-mobile` su mobile), nessun bordo, nessuna didascalia. Peso indicativo sotto i 150 KB.
 - **Avatar.** Quadrato 1024px, viso al centro e testa intera dentro il cerchio. Si controlla a 40px: se il viso non si riconosce, si stringe il taglio. Niente occhiali da sole nell'avatar, perché da piccoli diventano due macchie.
 - **Testo alternativo** breve e descrittivo, senza battute: «Patrizio di notte, davanti a un paese illuminato».
-- **Dove sono oggi.** Home, accanto a Scritti: la foto con i pini e gli occhiali da sole. Chi sono, accanto a «Perché ora»: la foto di notte. Avatar (LinkedIn, newsletter): la foto di notte, tagliata stretta.
+- **Dove sono oggi.** Home, accanto a Chiacchiere: la foto con i pini e gli occhiali da sole. Chi sono, accanto a «Perché ora»: la foto di notte. Avatar (LinkedIn, newsletter): la foto di notte, tagliata stretta.
 
 ## Logotipo
 

@@ -246,7 +246,7 @@ a {
   text-transform: uppercase;
   color: var(--inchiostro-muto);
 }
-/* Titoli di sezione ([ 003 ] SCRITTI, [ 01 ] LA VERSIONE BREVE, l'etichetta delle testate):
+/* Titoli di sezione ([ 003 ] CHIACCHIERE, [ 01 ] LA VERSIONE BREVE, l'etichetta delle testate):
    stessa misura e carattere delle etichette, nel colore dei punti della sfera quando ascolta.
    Su tutti i fondi del sito resta sopra 4,5:1 (4,8:1 sul petrolio-luce delle testate). */
 .etichetta-sezione,
