@@ -45,7 +45,7 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 
 - **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`smusso-modulo`, padding `space-10`); Scritti e Curiosità sono posate direttamente sul fondo. Scritti è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
 - **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi. di solito non i miei.». Da desktop ogni frase resta intera sulla sua riga. È la frase da usare ovunque (sito, LinkedIn, bio), quindi deve reggere anche da sola. A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
-- **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con newsletter e rimandi ad altre pagine in card.
+- **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto a tutta griglia, una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con la fascia di chiusura (vedi «La chiusura»).
 - **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto escono dalla colonna. Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `punti`, gli altri in `filetto-neutro`. Sono i punti della sfera che si accendono mentre leggi: uno stato, non un'azione, quindi niente arancio (faceva concorrenza a ISCRIVITI e al logotipo) e niente `onda` (troppo chiara, sembrava un secondo accento). Tra letti e spenti serve almeno 3:1 (oggi 3,3:1), così il confine si vede.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
@@ -121,6 +121,27 @@ L'unico momento «wow» del sito, ed è legato al nome: la sfera *ascolta*.
 
 Implementazione: canvas 2D, nessuna libreria, pochi KB. Rispetta `prefers-reduced-motion` (resta ferma). Il sito deve caricarsi all'istante: la sfera non può rallentarlo; nelle pagine interne si carica dopo il testo.
 
+## La chiusura
+
+La fascia prima del footer, uguale in tutte le pagine tranne 404, privacy e benvenuto. Chi arriva in fondo ha finito quello che stava facendo e ha due mosse: proseguire o restare in contatto. La fascia offre esattamente queste due, sempre nello stesso posto.
+
+- **A destra, sempre la newsletter** (colonne 7–12), l'unico modulo pieno della fascia. Negli articoli ha titolo e testo propri («ti è servito?»). L'etichetta `[ 006 ] NEWSLETTER` è numerata solo in home, dove le sezioni sono numerate; altrove è solo `NEWSLETTER`.
+- **A sinistra, il prosegui** (colonne 1–5), sempre posato sul fondo, mai in un box: il vuoto accanto al pieno, come in home. In home c'è il tabellone delle curiosità; nelle altre pagine due righe di rimando.
+- **Le righe:** filetto sopra e sotto come la lista di Scritti, etichetta in mono senza numero con la freccia, sotto il testo in `testo-titolo` (`inchiostro-corpo`, sottolineato all'hover). Per un progetto, sotto il nome la frase della card in `testo-piccolo`, perché il nome da solo dice poco; a destra dell'etichetta «VEDI TUTTI →», un link a sé verso i progetti in home (44px di bersaglio su mobile).
+- **Cosa ci va.** Le righe portano sempre verso progetti e scritti, le due cose che lavorano per gli obiettivi del sito; Chi sono è nel menu, e le curiosità sono un regalo da trovare, non una destinazione. Un progetto è sempre un progetto preciso, mai la sezione.
+
+| Pagina | Prima riga | Seconda riga |
+| --- | --- | --- |
+| Articolo | il prossimo articolo (se non c'è, «Tutti gli scritti») | un progetto |
+| Progetto | il prossimo progetto, nell'ordine della home | l'ultimo scritto |
+| Chi sono | un progetto | l'ultimo scritto |
+| Scritti | un progetto | Chi sono |
+| Curiosità | un progetto | l'ultimo scritto |
+
+- **Un progetto a caso.** Dove la riga dice «un progetto», la pagina li contiene tutti e uno script ne accende uno a caso a ogni visita; senza JavaScript resta il primo nell'ordine della home. «L'ultimo scritto» è il titolo dell'articolo più recente; finché non ce n'è, la frase di Scritti vuoto.
+- **Su mobile** l'ordine resta lo stesso: prima il prosegui, poi la newsletter, poi il footer. Sopra la fascia, lo stacco delle sezioni.
+- Costruzione: `src/components/Chiusura.astro`, righe in `src/rimandi.ts`.
+
 ## Il movimento
 
 Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa è cambiato, cosa hai appena fatto. Deve dare l'idea di una grande cura per ogni dettaglio, essere gradevole e sorprendere piano, senza mai mettersi in mezzo alla lettura. La meraviglia resta alla sfera.
@@ -188,6 +209,8 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Doto per paragrafi, etichette o titoli degli articoli.
 - Misure di testo fuori dalla scala `testo-*`, spazi fuori dalla scala `space-*`.
 - Un box attorno a ogni sezione.
+- Rimandi di chiusura in box o con contorno, o con il numero di una sezione della home.
+- La newsletter a sinistra nella chiusura.
 - Una pagina interna fatta solo di una colonna di testo.
 - La sfera nelle pagine interne su mobile.
 - Angoli arrotondati su moduli, card, pulsanti o campi: tondi sono solo la sfera e gli stati.
