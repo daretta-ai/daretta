@@ -12,10 +12,10 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// Cloudflare Web Analytics: lo script lo inietta Cloudflare (static.cloudflareinsights.com)
-// e i dati partono verso cloudflareinsights.com.
-const ANALYTICS_SCRIPT = 'https://static.cloudflareinsights.com';
-const ANALYTICS_DATI = 'https://cloudflareinsights.com';
+// Umami Cloud: lo script arriva da cloud.umami.is (in Base.astro) e i dati partono verso
+// gateway.umami.is/api/send.
+const ANALYTICS_SCRIPT = 'https://cloud.umami.is';
+const ANALYTICS_DATI = 'https://gateway.umami.is';
 
 async function pagineHtml(cartella) {
   const voci = await readdir(cartella, { withFileTypes: true, recursive: true });
