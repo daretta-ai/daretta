@@ -7,7 +7,6 @@ interface Props {
   avanzamento?: boolean; // negli articoli: la barra di lettura a punti sotto l'header
 }
 const { attiva, home = false, avanzamento = false } = Astro.props;
-const PUNTI = 72;
 
 // Non c'è una pagina indice dei progetti nelle tavole: PROGETTI porta al blocco in home.
 // Curiosità non sta nel menu (decisione di Patrizio, 2 ott 2026): ci si arriva da «Vedi tutte» e dal footer.
@@ -52,9 +51,7 @@ const voci = [
 
   {
     avanzamento && (
-      <div class="avanzamento" role="progressbar" aria-label="Avanzamento della lettura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-avanzamento>
-        {Array.from({ length: PUNTI }, () => <span />)}
-      </div>
+      <div class="avanzamento" role="progressbar" aria-label="Avanzamento della lettura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-avanzamento></div>
     )
   }
 </header>
@@ -74,7 +71,18 @@ const voci = [
     const barra = header.querySelector<HTMLElement>('[data-avanzamento]');
     const articolo = document.querySelector<HTMLElement>('[data-articolo]');
     if (barra && articolo) {
-      const punti = [...barra.children];
+      // Passo fisso (scelta di Patrizio, 12 ott 2026): un punto ogni --passo, quanti ne stanno.
+      // La trama è la stessa su ogni schermo, cambia solo il numero di punti.
+      let punti: HTMLElement[] = [];
+      const costruisci = () => {
+        const stile = getComputedStyle(barra);
+        const punto = parseFloat(stile.getPropertyValue('--punto')) || 2;
+        const passo = parseFloat(stile.getPropertyValue('--passo')) || 8;
+        const n = Math.max(1, Math.floor((barra.clientWidth - punto) / passo) + 1);
+        if (n === punti.length) return;
+        punti = Array.from({ length: n }, () => document.createElement('span'));
+        barra.replaceChildren(...punti);
+      };
       const aggiorna = () => {
         const r = articolo.getBoundingClientRect();
         const totale = r.height - innerHeight;
@@ -83,9 +91,13 @@ const voci = [
         punti.forEach((p, i) => p.classList.toggle('letto', i < accesi));
         barra.setAttribute('aria-valuenow', String(Math.round(quota * 100)));
       };
+      costruisci();
       aggiorna();
       addEventListener('scroll', aggiorna, { passive: true });
-      addEventListener('resize', aggiorna);
+      addEventListener('resize', () => {
+        costruisci();
+        aggiorna();
+      });
     }
 
     // Fondo dell'header solo quando la pagina scorre
@@ -144,22 +156,28 @@ const voci = [
     flex-wrap: wrap;
     row-gap: var(--space-3);
   }
+  /* Barra di lettura: un punto da 2px ogni 8px, uguale su desktop e mobile. I punti li conta lo script dalla larghezza */
   .avanzamento {
+    --punto: 2px;
+    --passo: 8px;
     flex-basis: 100%;
+    height: var(--punto);
     order: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: var(--space-2);
   }
-  .avanzamento span {
-    width: 5px;
-    height: 5px;
+  /* I punti li crea lo script, quindi lo stile non può essere quello con lo scope di Astro */
+  .avanzamento :global(span) {
+    flex: none;
+    width: var(--punto);
+    height: var(--punto);
     border-radius: var(--radius-tondo);
     background: var(--filetto-neutro);
     transition: background-color 0.2s;
   }
-  .avanzamento span:global(.letto) {
+  .avanzamento :global(span.letto) {
     background: var(--punti);
   }
   /* Quando la pagina scorre, il testo sotto l'header si sfoca: vetro smerigliato, non un fondo pieno.
@@ -259,16 +277,12 @@ const voci = [
   }
 
   @media (max-width: 900px) {
-    /* Su mobile la barra resta una barra: tutti i 72 punti, piccoli e fitti, attaccati all'header */
+    /* Su mobile la barra si attacca all'header; punto e passo restano quelli del desktop */
     .con-avanzamento {
       row-gap: var(--space-2);
     }
     .avanzamento {
       padding-top: 0;
-    }
-    .avanzamento span {
-      width: 2px;
-      height: 2px;
     }
     .header {
       justify-content: space-between;
