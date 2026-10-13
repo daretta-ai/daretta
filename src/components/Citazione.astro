@@ -1,37 +1,47 @@
 ---
-// Citazione in Doto a tutta griglia, con una riga in mono sotto.
+// Citazione o passaggio in evidenza: una frase in Doto (punti-motto) dalla colonna 3 alla 11,
+// una colonna oltre il testo per lato, allineata a sinistra. La riga sotto è facoltativa:
+// c'è quando le parole sono di qualcun altro (la fonte), manca quando è una frase del testo.
 interface Props {
   testo: string;
-  didascalia: string;
+  didascalia?: string;
 }
 const { testo, didascalia } = Astro.props;
 ---
 
-<blockquote class="citazione">
-  <p class="frase">{testo}</p>
-  <p class="didascalia">— {didascalia}</p>
-</blockquote>
+<figure class="griglia citazione">
+  <div class="fascia">
+    <blockquote>
+      <p class="frase">{testo}</p>
+    </blockquote>
+    {didascalia && <figcaption class="didascalia">— {didascalia}</figcaption>}
+  </div>
+</figure>
 
 <style>
   .citazione {
     margin: 0;
-    padding: var(--space-18) var(--space-2);
+    /* 72px sopra; sotto 32, che col blocco di testo che segue (40) torna a 72 */
+    padding: var(--space-18) var(--space-2) var(--space-8);
+  }
+  .fascia {
+    grid-column: 3 / span 9;
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
-    border-bottom: 1px solid var(--filetto);
+    gap: var(--space-4);
   }
-  p {
+  blockquote {
     margin: 0;
   }
   .frase {
-    max-width: 1200px;
+    margin: 0;
     font-family: var(--font-punti);
     font-weight: 900;
-    font-size: 96px;
-    line-height: 0.98;
-    letter-spacing: -3px;
-    text-wrap: balance;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--inchiostro);
+    text-wrap: pretty;
   }
   .didascalia {
     font-family: var(--font-mono);
@@ -42,16 +52,12 @@ const { testo, didascalia } = Astro.props;
   }
   @media (max-width: 720px) {
     .citazione {
-      padding: var(--space-10) var(--space-2);
-      gap: var(--space-4);
+      /* 40 sopra; sotto 8, che col testo che segue (32 su mobile) torna a 40 */
+      padding-top: var(--space-10);
+      padding-bottom: var(--space-2);
     }
     .frase {
-      font-size: 44px;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-    .didascalia {
-      font-size: var(--testo-meta);
+      font-size: 34px;
     }
   }
 </style>

@@ -29,7 +29,7 @@ Progetti, Chi sono e articoli hanno un corpo fatto di blocchi, gli stessi delle 
 - **Numero in evidenza:** un numero vero in Doto, con didascalia.
 - **Paragrafo con figura:** barre a punti o elenco.
 - **Paragrafo con foto:** solo foto già trattate con `scripts/tratta-foto.py` (oggi «notte» e «pini»).
-- **Citazione:** una frase in Doto a tutta pagina.
+- **Citazione:** una frase in Doto, dalla colonna 3 alla 11. La riga sotto è facoltativa: la fonte, se le parole sono di altri; vuota, se è una frase del testo.
 - **Prima e dopo:** numeri a confronto, in card (pensato per gli articoli).
 
 I numeri `[ 01 ]`, `[ 02 ]` li mette il sito, in ordine: spostando un blocco si rinumera da solo. Il testo scritto fuori dai blocchi finisce nella colonna di lettura, senza etichetta. Nelle pagine progetto, «Mostra lo stato del progetto» mette lo stato sotto il testo di quel blocco.
