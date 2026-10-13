@@ -31,8 +31,8 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
     margin-top: var(--space-14);
     align-items: start;
   }
-  /* Su desktop il modulo ha lo stesso passo laterale dei blocchi (8px), così le sue colonne
-     coincidono con quelle del testo; il respiro interno lo danno margine e oggetto. */
+  /* Su desktop il box va da filo a filo dei contenuti e dentro ha lo stesso rientro dei blocchi (8px):
+     le sue colonne coincidono con quelle del testo e l'etichetta sta sulla linea delle altre. */
   @media (min-width: 721px) {
     .modulo-numero.modulo-numero {
       padding: var(--space-14) var(--space-2);
@@ -40,7 +40,6 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
     .modulo-numero :global(.margine) {
       grid-column: 1 / span 3;
       grid-row: 1;
-      padding-left: var(--space-8);
       padding-top: var(--space-2);
     }
     .testo {
@@ -50,7 +49,6 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
     .oggetto {
       grid-column: 10 / span 3;
       grid-row: 1;
-      padding-right: var(--space-8);
     }
   }
   .oggetto {

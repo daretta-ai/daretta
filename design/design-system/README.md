@@ -110,6 +110,7 @@ Tutti i testi lunghi (pagine interne e articoli) usano la stessa griglia, su des
 
 - **Il testo non si sposta mai.** A rompere il ritmo sono gli oggetti, non il testo: niente testo che parte dalla colonna 1 o dalla 7 perché accanto c'è qualcosa.
 - **Nei moduli** (es. il modulo con il numero) il box resta a tutta larghezza e dentro segue la stessa griglia: l'etichetta nel margine, il testo in 4–9, il numero in 10–12 con la luce che parte da lui.
+- **Due fili.** Etichette e testi hanno un rientro di 8px, sulla stessa linea del logotipo e del footer, anche dentro i box: il box non aggiunge padding laterale. I box e gli oggetti con un fondo (moduli, figure, foto) arrivano invece al filo dei contenuti, come la newsletter nella chiusura: chi sta in colonna 1 senza rientro a sinistra, chi sta in colonna 12 senza rientro a destra.
 - **Il numero accanto al testo** è in `punti-pagina` (104px), perché deve stare in tre colonne («1/10»). `punti-numero` (168px) resta per un numero da solo.
 - **Su mobile** tutto torna in una colonna: etichetta, oggetto (il numero) o testo, nell'ordine di lettura.
 - Costruzione: `Blocco`, `ModuloNumero`, `BloccoFigura`, `BloccoFoto`, `Citazione` in `src/components`, testata degli articoli in `src/pages/chiacchiere/[slug].astro`.

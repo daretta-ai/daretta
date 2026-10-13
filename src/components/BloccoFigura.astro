@@ -45,6 +45,12 @@ const { numero, etichetta } = Astro.props;
   .figura {
     grid-column: 10 / span 3;
   }
+  /* La figura in colonna 12 arriva al filo destro dei contenuti, come i box a tutta larghezza */
+  @media (min-width: 721px) {
+    .figura {
+      margin-right: calc(var(--space-2) * -1);
+    }
+  }
   @media (max-width: 720px) {
     .blocco-figura {
       padding: var(--space-8) var(--space-2) 0;

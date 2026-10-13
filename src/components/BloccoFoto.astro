@@ -63,6 +63,13 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
     object-fit: cover;
     background: var(--cemento-alto);
   }
+  /* La figura in colonna 12 arriva al filo destro dei contenuti, come i box a tutta larghezza */
+  @media (min-width: 721px) {
+    .foto {
+      width: calc(100% + var(--space-2));
+      max-width: none;
+    }
+  }
   @media (max-width: 720px) {
     .blocco-foto {
       padding-top: var(--space-8);
