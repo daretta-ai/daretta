@@ -100,13 +100,15 @@ Negli articoli e nei testi lunghi, puntati o numerati, con la stessa struttura. 
 
 ## I link
 
-Niente sottolineatura: i testi cliccabili hanno una riga di punti, gli stessi della barra di avanzamento degli articoli e del segno degli elenchi. Quadretti da 2px ogni 6px, 0,1em sotto la linea di base, dove Geist mette la sua sottolineatura; ogni riga di un link che va a capo ha la sua.
+Niente sottolineatura: i testi cliccabili hanno una riga di punti, gli stessi della barra di avanzamento degli articoli e del segno degli elenchi. Quadretti da 2px ogni 6px, 0,1em sotto la linea di base, dove Geist mette la sua sottolineatura; ogni riga di un link che va a capo ha la sua. È una regola sola, per tutto il sito: un link nuovo nel testo la prende da solo, senza che nessuno se ne ricordi.
 
-- **Link nel testo** (articoli, Chi sono, progetti, rimandi alle curiosità, nome del progetto nella testata, 404). Testo in `inchiostro`; fermi, i punti sono spenti in `bordo`. All'hover e al focus si accendono in `punti` da sinistra a destra, nella direzione della lettura, come la barra che si riempie.
+- **Link nel testo.** Fermi, i punti sono spenti; all'hover e al focus si accendono da sinistra a destra, nella direzione della lettura, come la barra che si riempie (240ms).
 - **Titoli cliccabili** (lista delle Chiacchiere, righe della chiusura). Fermi non hanno niente, perché la riga intera si capisce già cliccabile; all'hover del link arrivano i punti accesi.
-- **I colori sono quelli della barra.** Spento `bordo`, acceso `punti`: niente arancio, niente `onda`. `bordo` sul cemento fa 2,4:1, sotto il 3:1 dei segni grafici, per scelta: i punti spenti devono restare un sussurro, e il link si riconosce anche per la forma della riga e per il testo in `inchiostro`. Più chiari di `punti` non si può, altrimenti all'hover la riga si spegnerebbe. Punti più piccoli non aiutano: un segno più sottile si vede meno.
-- **Fuori:** le etichette in mono con la freccia (hanno il loro passo), la navigazione e il link all'informativa nel modulo newsletter, che sul petrolio pieno resta puntinato in `carta`.
-- **Costruzione.** È uno sfondo, non `text-decoration`, così passo e colore sono nostri: `.link-punti` per i link nel testo, `.riga-punti` su uno span in linea dentro i titoli (in un flex o in una griglia il link diventa un blocco, e i punti finirebbero sotto tutto il riquadro). Regole in `src/styles/token.css`, movimento in `src/styles/movimento.css`.
+- **I colori sono token, e li decide il fondo.** `--link-testo`, `--link-spento` e `--link-acceso`. Sul cemento sono `inchiostro`, `bordo` e `punti`, i colori della barra. Sul petrolio pieno della newsletter tutto passa a `carta`, con i punti spenti al 45%. Un elemento non sceglie i suoi colori: se un fondo nuovo ne ha bisogno, cambia i token su quel fondo.
+- **Il contrasto, per scelta.** `bordo` sul cemento fa 2,4:1, sotto il 3:1 dei segni grafici: i punti spenti devono restare un sussurro, e il link si riconosce anche per la forma della riga e per il testo in `inchiostro`. Più chiari di `punti` non si può, altrimenti all'hover la riga si spegnerebbe; punti più piccoli non aiutano, perché un segno più sottile si vede meno.
+- **Chi li riceve.** Da solo, ogni link senza classe dentro un paragrafo o il testo di una voce di elenco (articoli, Chi sono, progetti, privacy, rimandi alle curiosità). Con `.link-punti`, un link nel testo che ha anche una classe sua (il nome del progetto nella testata, «torna al via» nella 404, l'informativa nella newsletter). Con `.riga-punti`, lo span in linea dentro un titolo cliccabile: in un flex o in una griglia il link diventa un blocco, e i punti finirebbero sotto tutto il riquadro.
+- **Fuori:** la navigazione (header, menu, footer, esclusi anche se i link non hanno classe), le etichette in mono con la freccia, che hanno il loro passo, i pulsanti e le card.
+- **Costruzione.** È uno sfondo, non `text-decoration`, così passo e colore sono nostri. Regole e token in `src/styles/token.css`, movimento in `src/styles/movimento.css`.
 
 ## La griglia del testo
 
@@ -257,7 +259,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - La sfera nelle pagine interne su mobile.
 - Angoli arrotondati su moduli, card, pulsanti o campi: tondi sono solo la sfera e gli stati.
 - Pallini tondi negli elenchi.
-- Sottolineature normali sui link, o punti accesi in arancio o in `onda`.
+- Sottolineature normali sui link, punti accesi in arancio o in `onda`, o colori dei link scelti dal singolo elemento invece che dai token del fondo.
 - Un contorno attorno all'hamburger del menu mobile.
 - Smussi fatti con `corner-shape` o `border-radius` di ripiego: il segno deve essere uguale su ogni browser.
 - Foto a colori, ritoccate, o con un trattamento diverso da luce petrolio.

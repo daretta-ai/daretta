@@ -52,7 +52,7 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
     <span class="esito-etichetta" data-esito-etichetta></span>
     <span class="esito-testo" data-esito-testo></span>
   </div>
-  <a class="privacy" href="/privacy">{nl.privacy}</a>
+  <a class="privacy link-punti" href="/privacy">{nl.privacy}</a>
 </Modulo>
 
 <script>
@@ -165,13 +165,10 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
   .privacy {
     align-self: flex-start;
     margin-top: var(--space-2);
-    color: var(--carta);
     font-family: var(--font-mono);
     font-size: var(--testo-meta);
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    text-decoration-style: dotted;
-    text-underline-offset: 4px;
   }
   /* La striscia del messaggio: smusso dei campi, petrolio scuro sopra il petrolio del modulo */
   .esito {

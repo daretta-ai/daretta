@@ -144,6 +144,7 @@ a:focus-visible .freccia-indietro {
   inherits: false;
   initial-value: 0%;
 }
+:where(p, .voce-testo) a:not([class], :where(header, nav, footer) *),
 .link-punti,
 .riga-punti {
   transition: --acceso 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -167,6 +168,7 @@ a:focus-visible .freccia-indietro {
     navigation: none;
   }
   .freccia,
+  :where(p, .voce-testo) a:not([class], :where(header, nav, footer) *),
   .link-punti,
   .riga-punti {
     transition: none;
