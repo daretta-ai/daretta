@@ -1,6 +1,6 @@
 ---
 // Citazione o passaggio in evidenza: una frase in Doto (punti-motto) nella colonna del testo
-// (4–10), allineata a sinistra come i paragrafi. La riga sotto è facoltativa:
+// (4–9), allineata a sinistra come i paragrafi. La riga sotto è facoltativa:
 // c'è quando le parole sono di qualcun altro (la fonte), manca quando è una frase del testo.
 interface Props {
   testo: string;
@@ -25,7 +25,7 @@ const { testo, didascalia } = Astro.props;
     padding: var(--space-18) var(--space-2) var(--space-8);
   }
   .fascia {
-    grid-column: 4 / span 7;
+    grid-column: 4 / span 6;
     display: flex;
     flex-direction: column;
     gap: var(--space-4);

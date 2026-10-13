@@ -45,8 +45,8 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 
 - **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`smusso-modulo`, padding `space-10`); Chiacchiere e Curiosità sono posate direttamente sul fondo. Chiacchiere è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
 - **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi. di solito non i miei.». Da desktop ogni frase resta intera sulla sua riga. È la frase da usare ovunque (sito, LinkedIn, bio), quindi deve reggere anche da sola. A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
-- **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Su mobile il titolo si stringe quanto basta perché la sua parola più lunga stia nella colonna, mai sotto i 28px (oggi succede con «quattro chiacchiere.»). Il testo lungo sta a destra (colonne 4–10) e le etichette delle sottosezioni nel margine a sinistra (colonne 1–3). Almeno ogni due o tre paragrafi qualcosa rompe la colonna: un modulo con un numero in `punti-numero`, una citazione in Doto (vedi «Le citazioni»), una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con la fascia di chiusura (vedi «La chiusura»).
-- **Articoli:** colonna di lettura di 760px (colonne 4–10) direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto restano nella colonna (vedi «Le citazioni»). Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `punti`, gli altri in `filetto-neutro`. Sono i punti della sfera che si accendono mentre leggi: uno stato, non un'azione, quindi niente arancio (faceva concorrenza a ISCRIVITI e al logotipo) e niente `onda` (troppo chiara, sembrava un secondo accento). Tra letti e spenti serve almeno 3:1 (oggi 3,3:1), così il confine si vede. È una barra, non un elemento della pagina: punti tondi da 2px, uno ogni 8px, quanti ne stanno nella larghezza, uguali su desktop e mobile. Il passo è fisso e il numero no (circa 160 punti su desktop, una quarantina su un telefono), così la trama è la stessa su ogni schermo e resta una riga punteggiata sottile, non una fila di bottoni.
+- **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Su mobile il titolo si stringe quanto basta perché la sua parola più lunga stia nella colonna, mai sotto i 28px (oggi succede con «quattro chiacchiere.»). La griglia del testo è una sola, in tutte le pagine interne e negli articoli (vedi «La griglia del testo»). Almeno ogni due o tre paragrafi qualcosa rompe il ritmo: un modulo con un numero, una citazione in Doto (vedi «Le citazioni»), una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con la fascia di chiusura (vedi «La chiusura»).
+- **Articoli:** colonna di lettura di circa 650px (colonne 4–9, vedi «La griglia del testo») direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) e numeri di sezione nel margine; le citazioni in Doto restano nella colonna (vedi «Le citazioni»). Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `punti`, gli altri in `filetto-neutro`. Sono i punti della sfera che si accendono mentre leggi: uno stato, non un'azione, quindi niente arancio (faceva concorrenza a ISCRIVITI e al logotipo) e niente `onda` (troppo chiara, sembrava un secondo accento). Tra letti e spenti serve almeno 3:1 (oggi 3,3:1), così il confine si vede. È una barra, non un elemento della pagina: punti tondi da 2px, uno ogni 8px, quanti ne stanno nella larghezza, uguali su desktop e mobile. Il passo è fisso e il numero no (circa 160 punti su desktop, una quarantina su un telefono), così la trama è la stessa su ogni schermo e resta una riga punteggiata sottile, non una fila di bottoni.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
 - **L'header quando la pagina scorre** è vetro smerigliato, non un fondo pieno: cemento al 60% con `backdrop-filter: blur(14px)`. Sotto si vede che qualcosa scorre, ma non si legge. Nel CSS si scrive solo la regola standard: il prefisso per Safari lo aggiunge la build.
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
@@ -98,11 +98,27 @@ Negli articoli e nei testi lunghi, puntati o numerati, con la stessa struttura. 
 - **Accessibilità:** `ul` e `ol` veri; il segno è `aria-hidden`, la numerazione arriva allo screen reader dall'`ol`.
 - Voci speciali di un solo articolo restano nell'articolo, non nel sistema. Oggi c'è il ritorno all'inizio di «Due giorni di chat VS trenta secondi di telefonata»: una voce che comincia con ↻ ha il segno `[ ↻ ]` e il resto in mono (nel testo «↻ da capo»).
 
+## La griglia del testo
+
+Tutti i testi lunghi (pagine interne e articoli) usano la stessa griglia, su desktop. Chi legge la impara al primo blocco, e il testo non cambia mai bordo.
+
+| Colonne | Cosa ci va |
+| --- | --- |
+| 1–3 | etichette delle sottosezioni e metadati, in mono |
+| 4–9 | il testo, circa 650px: in Geist a 20px fa circa 65 caratteri per riga, la misura comoda; anche citazioni, elenchi e codice |
+| 10–12 | gli oggetti accanto al testo: il numero, la figura, la foto. Quando non ci sono, resta vuoto |
+
+- **Il testo non si sposta mai.** A rompere il ritmo sono gli oggetti, non il testo: niente testo che parte dalla colonna 1 o dalla 7 perché accanto c'è qualcosa.
+- **Nei moduli** (es. il modulo con il numero) il box resta a tutta larghezza e dentro segue la stessa griglia: l'etichetta nel margine, il testo in 4–9, il numero in 10–12 con la luce che parte da lui.
+- **Il numero accanto al testo** è in `punti-pagina` (104px), perché deve stare in tre colonne («1/10»). `punti-numero` (168px) resta per un numero da solo.
+- **Su mobile** tutto torna in una colonna: etichetta, oggetto (il numero) o testo, nell'ordine di lettura.
+- Costruzione: `Blocco`, `ModuloNumero`, `BloccoFigura`, `BloccoFoto`, `Citazione` in `src/components`, testata degli articoli in `src/pages/chiacchiere/[slug].astro`.
+
 ## Le citazioni
 
 Una frase messa in evidenza dentro un testo lungo (articoli, Chi sono, progetti). Può essere una frase del testo stesso, un passaggio, o parole di qualcun altro: la regola è la stessa.
 
-- **Dove sta.** Nella colonna del testo (4–10), con lo stesso bordo sinistro dei paragrafi: un solo allineamento per tutta la pagina. L'evidenza la danno il Doto, la misura e lo spazio, non la larghezza. Mai a tutta griglia, mai fuori dalla colonna.
+- **Dove sta.** Nella colonna del testo (4–9), con lo stesso bordo sinistro dei paragrafi: un solo allineamento per tutta la pagina. L'evidenza la danno il Doto, la misura e lo spazio, non la larghezza. Mai a tutta griglia, mai fuori dalla colonna.
 - **Come si scrive.** Doto in `punti-motto` (48px, 34px su mobile), `inchiostro`, allineata a sinistra, righe piene fino al bordo destro della colonna (niente bilanciamento delle righe: lascerebbe un vuoto a destra). Minuscola, con il punto. Niente box, niente filetti.
 - **La riga sotto è facoltativa.** C'è quando le parole sono di qualcun altro, ed è la fonte, in Geist Mono `testo-meta`, `inchiostro-muto`, preceduta da «—». Manca quando è una frase del testo.
 - **Spazi.** 72px sopra e sotto su desktop, 40px su mobile.
@@ -188,7 +204,7 @@ Foto spontanee, scattate da Patrizio, mai in posa da studio. Tutte hanno lo stes
 - **Uno strumento solo.** Il trattamento si fa con `scripts/tratta-foto.py` nel repository, mai a occhio con un filtro. I valori stanno lì e qui; se cambiano, cambiano in tutti e due i posti e si ritrattano tutte le foto.
 - **Niente ritocchi al viso.** Se un'espressione o un dettaglio non convince, si cambia foto, non si corregge.
 - **Solo Patrizio.** Foto in cui è da solo: niente altre persone riconoscibili, e niente figlio.
-- **Moduli foto.** Formato quadrato, il viso nel terzo alto. Le foto di Patrizio sono quasi tutte orizzontali: il quadrato ne tiene tre quarti, e con loro il posto (il mare, il paese di notte), mentre un verticale ne butterebbe via metà. Non orizzontale vero, perché nella colonna da quattro su desktop il viso diventerebbe troppo piccolo. Nel sito in webp a 480 e 800px, con `srcset`, `loading="lazy"`, `aspect-ratio: 1`, `object-fit: cover` e `object-position` puntato sul viso. Angoli `smusso-modulo` (`smusso-modulo-mobile` su mobile), nessun bordo, nessuna didascalia. Peso indicativo sotto i 150 KB.
+- **Moduli foto.** Formato quadrato, il viso nel terzo alto. Le foto di Patrizio sono quasi tutte orizzontali: il quadrato ne tiene tre quarti, e con loro il posto (il mare, il paese di notte), mentre un verticale ne butterebbe via metà. Non orizzontale vero, perché nelle tre colonne degli oggetti, su desktop, il viso diventerebbe troppo piccolo. Nel sito in webp a 480 e 800px, con `srcset`, `loading="lazy"`, `aspect-ratio: 1`, `object-fit: cover` e `object-position` puntato sul viso. Angoli `smusso-modulo` (`smusso-modulo-mobile` su mobile), nessun bordo, nessuna didascalia. Peso indicativo sotto i 150 KB.
 - **Avatar.** Quadrato 1024px, viso al centro e testa intera dentro il cerchio. Si controlla a 40px: se il viso non si riconosce, si stringe il taglio. Niente occhiali da sole nell'avatar, perché da piccoli diventano due macchie.
 - **Testo alternativo** breve e descrittivo, senza battute: «Patrizio di notte, davanti a un paese illuminato».
 - **Dove sono oggi.** Home, accanto a Chiacchiere: la foto con i pini e gli occhiali da sole. Chi sono, accanto a «Perché ora»: la foto di notte. Avatar (LinkedIn, newsletter): la foto di notte, tagliata stretta.
@@ -219,6 +235,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Gradienti viola-blu, card con bordo sinistro colorato, emoji.
 - Doto per paragrafi, etichette o titoli degli articoli.
 - Citazioni a tutta griglia, o fuori dalla colonna del testo.
+- Testo lungo fuori dalle colonne 4–9, o spostato per fare posto a un oggetto.
 - Misure di testo fuori dalla scala `testo-*`, spazi fuori dalla scala `space-*`.
 - Un box attorno a ogni sezione.
 - Rimandi di chiusura in box o con contorno, o con il numero di una sezione della home.

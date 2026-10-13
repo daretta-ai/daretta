@@ -1,5 +1,7 @@
 ---
-// Modulo con un numero vero in evidenza (punti-numero), luce da sinistra.
+// Modulo con un numero vero in evidenza: etichetta nel margine (colonne 1–3), testo al centro (4–9),
+// numero a destra (10–12) in punti-pagina, con la luce che parte da lui.
+// Su mobile: etichetta, numero, testo.
 // Tavole: Chi sono (1/10), valdinievole (11), Skill Bloom (5), BalillaLand (30%).
 import Modulo from './Modulo.astro';
 import Sezione from './Sezione.astro';
@@ -13,13 +15,13 @@ interface Props {
 const { numero, etichetta, cifra, didascalia } = Astro.props;
 ---
 
-<Modulo luce="sinistra" class="griglia modulo-numero">
-  <div class="sinistra">
-    <Sezione numero={numero} cifre={2} class="etichetta-numero">{etichetta}</Sezione>
+<Modulo luce="media" class="griglia modulo-numero">
+  <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>
+  <div class="oggetto">
     <span class="cifra">{cifra}</span>
     <span class="didascalia">{didascalia}</span>
   </div>
-  <div class="destra">
+  <div class="testo">
     <slot />
   </div>
 </Modulo>
@@ -27,23 +29,41 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
 <style>
   .modulo-numero {
     margin-top: var(--space-14);
-    align-items: center;
+    align-items: start;
   }
-  .sinistra {
-    grid-column: span 5;
+  /* Su desktop il modulo ha lo stesso passo laterale dei blocchi (8px), così le sue colonne
+     coincidono con quelle del testo; il respiro interno lo danno margine e oggetto. */
+  @media (min-width: 721px) {
+    .modulo-numero.modulo-numero {
+      padding: var(--space-14) var(--space-2);
+    }
+    .modulo-numero :global(.margine) {
+      grid-column: 1 / span 3;
+      grid-row: 1;
+      padding-left: var(--space-8);
+      padding-top: var(--space-2);
+    }
+    .testo {
+      grid-column: 4 / span 6;
+      grid-row: 1;
+    }
+    .oggetto {
+      grid-column: 10 / span 3;
+      grid-row: 1;
+      padding-right: var(--space-8);
+    }
+  }
+  .oggetto {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
   }
-  .sinistra :global(.etichetta-numero) {
-    margin-bottom: var(--space-3);
-  }
   .cifra {
     font-family: var(--font-punti);
     font-weight: 900;
-    font-size: 168px;
-    line-height: 0.85;
-    letter-spacing: -6px;
+    font-size: 104px;
+    line-height: 0.92;
+    letter-spacing: -3px;
   }
   .didascalia {
     font-family: var(--font-mono);
@@ -52,13 +72,12 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
     text-transform: uppercase;
     color: var(--inchiostro-corpo);
   }
-  .destra {
-    grid-column: 7 / span 6;
+  .testo {
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
   }
-  .destra :global(p) {
+  .testo :global(p) {
     margin: 0;
     font-size: var(--testo-corpo);
     line-height: 1.7;
@@ -69,23 +88,14 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
       margin-top: var(--space-8);
       gap: var(--space-4);
     }
-    .sinistra {
-      gap: var(--space-4);
-    }
-    .sinistra :global(.etichetta-numero) {
-      margin-bottom: var(--space-2);
-    }
     .cifra {
       font-size: 104px;
       letter-spacing: -4px;
     }
-    .didascalia {
-      font-size: var(--testo-meta);
-    }
-    .destra {
+    .testo {
       margin-top: var(--space-2);
     }
-    .destra :global(p) {
+    .testo :global(p) {
       font-size: var(--testo-corpo);
       line-height: 1.65;
     }

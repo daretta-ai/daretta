@@ -1,5 +1,5 @@
 ---
-// Blocco con foto: etichetta e testo a sinistra (7 colonne), foto quadrata a destra (4 colonne).
+// Blocco con foto: etichetta nel margine (colonne 1–3), testo al centro (4–9), foto quadrata a destra (10–12).
 // Tavola ChiSono, «Perché ora». Le foto stanno in public/foto, trattate con scripts/tratta-foto.py.
 import Sezione from './Sezione.astro';
 
@@ -14,15 +14,15 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
 ---
 
 <section class="griglia blocco-foto">
+  <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>
   <div class="testo">
-    <Sezione numero={numero} cifre={2}>{etichetta}</Sezione>
     <slot />
   </div>
   <img
     class="foto"
     src={`/foto/${foto}-800.webp`}
     srcset={`/foto/${foto}-480.webp 480w, /foto/${foto}-800.webp 800w`}
-    sizes="(max-width: 720px) 100vw, 33vw"
+    sizes="(max-width: 720px) 100vw, 25vw"
     width="800"
     height="800"
     alt={alt}
@@ -37,8 +37,12 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
     align-items: stretch;
     padding: var(--space-18) var(--space-2) 0;
   }
+  .blocco-foto :global(.margine) {
+    grid-column: 1 / span 3;
+    padding-top: var(--space-2);
+  }
   .testo {
-    grid-column: span 7;
+    grid-column: 4 / span 6;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
@@ -50,7 +54,7 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
     color: var(--inchiostro-corpo);
   }
   .foto {
-    grid-column: 9 / span 4;
+    grid-column: 10 / span 3;
     clip-path: var(--ritaglio-modulo);
     width: 100%;
     aspect-ratio: 1;
@@ -63,6 +67,9 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
     .blocco-foto {
       padding-top: var(--space-8);
       gap: var(--space-4);
+    }
+    .blocco-foto :global(.margine) {
+      padding-top: 0;
     }
     .testo {
       gap: var(--space-4);
