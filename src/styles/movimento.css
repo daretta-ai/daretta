@@ -3,7 +3,8 @@
      1. Il passaggio tra le pagine: la pagina sfuma, header e sfera restano al loro posto.
      2. Il riscontro sulle azioni: la freccia dei rimandi fa un passo avanti.
      3. I moduli sotto la piega salgono appena, una volta sola (lo script è in Base.astro).
-     4. I segni degli elenchi si aprono quando l'elenco entra nello schermo; il testo resta fermo.
+     4. I segni degli elenchi si aprono quando l'elenco entra nello schermo, e all'hover le parentesi
+        si stringono appena; il testo resta fermo.
    Si anima solo transform e opacity: nessun ricalcolo del layout, nessun peso in più.
    Con prefers-reduced-motion non si muove niente. */
 
@@ -113,6 +114,24 @@ a:focus-visible .freccia-indietro {
   transition:
     opacity 320ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 60ms + 120ms),
     transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 60ms + 120ms);
+}
+
+/* All'hover sulla voce le parentesi si stringono di 2px sul segno, come a dire «questa».
+   È il gesto opposto all'entrata (che le apre), così non sembra un replay; il cursore non cambia
+   e il testo resta fermo. Vale quando l'elenco è fermo: finita l'entrata (.fermo, dallo script
+   in Base.astro) o se l'entrata non c'è stata (senza JavaScript, da un'ancora, tornando indietro).
+   Solo con un mouse, e mai con prefers-reduced-motion. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .elenco-testo:not(.visto) .parentesi,
+  .elenco-testo.fermo .parentesi {
+    transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .elenco-testo:is(.fermo, :not(.visto)) .voce:is(:hover, :focus-within) .apre {
+    transform: translateX(2px);
+  }
+  .elenco-testo:is(.fermo, :not(.visto)) .voce:is(:hover, :focus-within) .chiude {
+    transform: translateX(-2px);
+  }
 }
 
 @media print {

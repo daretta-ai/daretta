@@ -192,6 +192,11 @@ const datiStrutturati = schema ? grafo(schema) : home ? grafo() : null;
               if (!v.isIntersecting) continue;
               v.target.classList.add('visto');
               segni.unobserve(v.target);
+              // Finita l'entrata (60ms di scarto per voce, 120ms al segno, 320ms di corsa),
+              // l'elenco è fermo: da qui vale il riscontro all'hover, senza i ritardi dell'entrata.
+              const ultima = v.target.children.length - 1;
+              const el = v.target;
+              setTimeout(() => el.classList.add('fermo'), ultima * 60 + 120 + 320);
             }
           },
           { rootMargin: '0px 0px -6% 0px' },
