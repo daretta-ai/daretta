@@ -1,5 +1,5 @@
 ---
-// Blocco con figura: etichetta nel margine (colonne 1–3), testo al centro (4–9), figura a destra (10–12).
+// Blocco con figura: etichetta nel margine (colonne 1–3), testo accanto (4–8), figura a destra (9–12).
 // Su mobile: etichetta, testo, figura.
 // La figura va nello slot "figura".
 import Sezione from './Sezione.astro';
@@ -31,7 +31,7 @@ const { numero, etichetta } = Astro.props;
     padding-top: var(--space-2);
   }
   .testo {
-    grid-column: 4 / span 6;
+    grid-column: 4 / span 5;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
@@ -43,7 +43,7 @@ const { numero, etichetta } = Astro.props;
     color: var(--inchiostro-corpo);
   }
   .figura {
-    grid-column: 10 / span 3;
+    grid-column: 9 / span 4;
   }
   /* La figura in colonna 12 arriva al filo destro dei contenuti, come i box a tutta larghezza */
   @media (min-width: 721px) {

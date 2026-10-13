@@ -1,5 +1,5 @@
 ---
-// Blocco con foto: etichetta nel margine (colonne 1–3), testo al centro (4–9), foto quadrata a destra (10–12).
+// Blocco con foto: etichetta nel margine (colonne 1–3), testo accanto (4–8), foto quadrata a destra (9–12).
 // Tavola ChiSono, «Perché ora». Le foto stanno in public/foto, trattate con scripts/tratta-foto.py.
 import Sezione from './Sezione.astro';
 
@@ -22,7 +22,7 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
     class="foto"
     src={`/foto/${foto}-800.webp`}
     srcset={`/foto/${foto}-480.webp 480w, /foto/${foto}-800.webp 800w`}
-    sizes="(max-width: 720px) 100vw, 25vw"
+    sizes="(max-width: 720px) 100vw, 33vw"
     width="800"
     height="800"
     alt={alt}
@@ -42,7 +42,7 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
     padding-top: var(--space-2);
   }
   .testo {
-    grid-column: 4 / span 6;
+    grid-column: 4 / span 5;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
@@ -54,7 +54,7 @@ const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
     color: var(--inchiostro-corpo);
   }
   .foto {
-    grid-column: 10 / span 3;
+    grid-column: 9 / span 4;
     clip-path: var(--ritaglio-modulo);
     width: 100%;
     aspect-ratio: 1;
