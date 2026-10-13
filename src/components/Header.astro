@@ -233,9 +233,17 @@ const voci = [
   .menu-piede {
     display: none;
   }
-  /* Pallino della voce attiva: l'unico dettaglio di stato in arancio */
+  .menu a {
+    position: relative;
+  }
+  /* Pallino della voce attiva: l'unico dettaglio di stato in arancio.
+     Sta fuori dal flusso, nello spazio tra le voci: comparire o sparire non sposta niente. */
   .menu a[aria-current]::before {
     content: '';
+    position: absolute;
+    top: 50%;
+    right: calc(100% + var(--space-2));
+    transform: translateY(-50%);
     width: 6px;
     height: 6px;
     border-radius: var(--radius-tondo);
@@ -373,6 +381,8 @@ const voci = [
     }
     /* Il pallino della voce attiva va dopo la parola, come uno stato */
     .menu a[aria-current]::before {
+      position: static;
+      transform: none;
       order: 2;
     }
     .menu-piede {
