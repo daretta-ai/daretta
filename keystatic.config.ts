@@ -119,7 +119,7 @@ const blocchi = {
   }),
   citazione: block({
     label: 'Citazione',
-    description: 'Una frase in evidenza, in Doto, appena più larga del testo. Minuscola, con il punto.',
+    description: 'Una frase in evidenza, in Doto, nella colonna del testo. Minuscola, con il punto.',
     schema: {
       testo: fields.text({ label: 'Frase', validation: { length: { min: 1 } } }),
       didascalia: fields.text({
