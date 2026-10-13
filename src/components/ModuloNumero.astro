@@ -1,6 +1,6 @@
 ---
 // Modulo con un numero vero in evidenza: etichetta nel margine (colonne 1–3), testo accanto (4–8),
-// numero a destra (9–12) in punti-numero: il blocco sta al filo destro, numero e didascalia partono insieme, con la luce che parte da lui.
+// numero a destra (9–12) in punti-numero: il blocco sta al centro delle sue colonne, numero e didascalia partono insieme, con la luce che parte da lui.
 // Su mobile: etichetta, numero, testo.
 // Tavole: Chi sono (1/10), valdinievole (11), Skill Bloom (5), BalillaLand (30%).
 import Modulo from './Modulo.astro';
@@ -49,8 +49,10 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
     .oggetto {
       grid-column: 9 / span 4;
       grid-row: 1;
-      /* Il blocco sta a destra; numero e didascalia dentro partono insieme, a sinistra */
-      justify-self: end;
+      /* Il blocco sta al centro delle colonne 9–12, in orizzontale e in verticale rispetto al testo;
+         numero e didascalia dentro partono insieme, a sinistra */
+      justify-self: center;
+      align-self: center;
       max-width: 100%;
     }
   }

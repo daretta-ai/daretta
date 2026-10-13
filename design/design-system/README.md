@@ -110,9 +110,9 @@ Tutti i testi lunghi (pagine interne e articoli) usano la stessa griglia, su des
 | 10–12 | senza oggetti resta vuoto |
 
 - **Il testo non si sposta mai.** A rompere il ritmo sono gli oggetti, non il testo: il bordo sinistro resta sempre alla colonna 4, solo quello destro si accorcia di una colonna accanto a un oggetto. Niente testo che parte dalla colonna 1 o dalla 7.
-- **Nei moduli** (es. il modulo con il numero) il box resta a tutta larghezza e dentro segue la stessa griglia: l'etichetta nel margine, il testo in 4–8, il numero in 9–12, con il suo blocco al filo destro (numero e didascalia partono insieme, a sinistra), con la luce che parte da lui.
+- **Nei moduli** (es. il modulo con il numero) il box resta a tutta larghezza e dentro segue la stessa griglia: l'etichetta nel margine, il testo in 4–8, il numero in 9–12, con il suo blocco al centro delle colonne 9–12 e del testo accanto (numero e didascalia partono insieme, a sinistra), con la luce che parte da lui.
 - **Due fili.** Etichette e testi hanno un rientro di 8px, sulla stessa linea del logotipo e del footer, anche dentro i box: il box non aggiunge padding laterale. I box e gli oggetti con un fondo (moduli, figure, foto) arrivano invece al filo dei contenuti, come la newsletter nella chiusura: chi sta in colonna 1 senza rientro a sinistra, chi sta in colonna 12 senza rientro a destra.
-- **Il numero accanto al testo** è in `punti-numero` (168px, 104px su mobile), in un blocco al filo destro: numero e didascalia dentro partono insieme.
+- **Il numero accanto al testo** è in `punti-numero` (168px, 104px su mobile), in un blocco centrato nelle colonne 9–12: numero e didascalia dentro partono insieme.
 - **Su mobile** tutto torna in una colonna: etichetta, oggetto (il numero) o testo, nell'ordine di lettura.
 - Costruzione: `Blocco`, `ModuloNumero`, `BloccoFigura`, `BloccoFoto`, `Citazione` in `src/components`, testata degli articoli in `src/pages/chiacchiere/[slug].astro`.
 
