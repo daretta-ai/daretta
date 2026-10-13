@@ -90,12 +90,12 @@ const Self = Astro.self;
       case 'codice':
         return <Codice codice={a.content} linguaggio={a.language} />;
       case 'a': {
-        // I rimandi alle curiosità (/curiosita#013) hanno il loro tratto; i link esterni si aprono qui.
+        // Tutti i link nel testo, rimandi alle curiosità compresi, hanno i punti (link-punti in token.css).
         const interno = typeof a.href === 'string' && a.href.startsWith('/');
         return (
           <a
             href={a.href}
-            class={a.href?.startsWith('/curiosita#') ? 'rimando-curiosita' : undefined}
+            class="link-punti"
             rel={interno ? undefined : 'noopener'}
           >
             <Self nodi={children} />

@@ -322,12 +322,39 @@ a {
   }
 }
 
-/* Rimando a una curiosità dentro un testo (/curiosita#013) */
-.rimando-curiosita {
+/* I link a punti, al posto della sottolineatura. Quadretti da 2px ogni 6px, come la barra
+   di avanzamento degli articoli e il segno degli elenchi, e con i suoi stessi colori.
+   - .link-punti: un link dentro un testo. Fermo ha i punti spenti in bordo; all'hover e al focus
+     si accendono in punti, da sinistra a destra.
+   - .riga-punti: il testo di un titolo cliccabile (liste delle Chiacchiere, chiusure). Fermo non ha
+     niente, i punti accesi arrivano all'hover del link che lo contiene. Va su uno span in linea:
+     dentro un flex o una griglia il link diventa un blocco e i punti finirebbero sotto tutto il riquadro.
+   I punti stanno 0,1em sotto la linea di base, dove Geist mette la sua sottolineatura: il testo scende
+   di 0,22em sotto la base, quindi la riga parte 0,12em - 2px dal fondo. Con clone ogni riga di un link
+   che va a capo ha la sua. Il movimento (--acceso) è in movimento.css. */
+.link-punti,
+.riga-punti {
+  --punti-accesi: repeating-linear-gradient(to right, var(--punti) 0 2px, transparent 2px 6px);
+  text-decoration: none;
+  background-image: var(--punti-accesi);
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 0.12em + 2px);
+  background-size: var(--acceso, 0%) 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.link-punti {
   color: var(--inchiostro);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 4px;
+  background-image:
+    var(--punti-accesi),
+    repeating-linear-gradient(to right, var(--bordo) 0 2px, transparent 2px 6px);
+  background-size:
+    var(--acceso, 0%) 2px,
+    100% 2px;
+}
+.link-punti:is(:hover, :focus-visible),
+a:is(:hover, :focus-visible) .riga-punti {
+  --acceso: 100%;
 }
 
 .solo-lettori {

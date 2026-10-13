@@ -27,7 +27,7 @@ const gruppi = rimandi.map((r) => (Array.isArray(r) ? r : [r]));
               <span class="etichetta">
                 {r.etichetta} <span class="freccia" aria-hidden="true">→</span>
               </span>
-              <span class="titolo-lista testo-rimando">{r.testo}</span>
+              <span class="titolo-lista testo-rimando"><span class="riga-punti">{r.testo}</span></span>
               {r.descrizione && <span class="descrizione">{r.descrizione}</span>}
             </a>
             {r.tutti && (
@@ -84,15 +84,6 @@ const gruppi = rimandi.map((r) => (Array.isArray(r) ? r : [r]));
   }
   .testo-rimando {
     color: var(--inchiostro-corpo);
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 8px;
-    transition: text-decoration-color 0.2s;
-  }
-  .principale:hover .testo-rimando,
-  .principale:focus-visible .testo-rimando {
-    text-decoration-color: currentColor;
   }
   .descrizione {
     font-size: var(--testo-piccolo);

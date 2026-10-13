@@ -1,11 +1,13 @@
 /* Movimento del sito: poco, e solo dove spiega qualcosa.
-   La meraviglia resta alla sfera; qui ci sono tre cose sole.
+   La meraviglia resta alla sfera; qui ci sono poche cose sole.
      1. Il passaggio tra le pagine: la pagina sfuma, header e sfera restano al loro posto.
      2. Il riscontro sulle azioni: la freccia dei rimandi fa un passo avanti.
      3. I moduli sotto la piega salgono appena, una volta sola (lo script è in Base.astro).
      4. I segni degli elenchi si aprono quando l'elenco entra nello schermo, e all'hover le parentesi
         si stringono appena; il testo resta fermo.
-   Si anima solo transform e opacity: nessun ricalcolo del layout, nessun peso in più.
+     5. I punti sotto i link si accendono da sinistra a destra all'hover.
+   Si anima solo transform e opacity (tranne i punti dei link, che sono uno sfondo):
+   nessun ricalcolo del layout, nessun peso in più.
    Con prefers-reduced-motion non si muove niente. */
 
 /* 1. Passaggio tra le pagine (View Transitions tra documenti: Chrome, Edge, Safari 18.2+).
@@ -134,6 +136,19 @@ a:focus-visible .freccia-indietro {
   }
 }
 
+/* 5. Link a punti: all'hover i punti si accendono da sinistra a destra, nella direzione della lettura
+   (regole in token.css). Si anima lo sfondo, non solo transform e opacity: cambia solo il disegno,
+   il layout no. Dove @property non c'è, i punti si accendono senza transizione. */
+@property --acceso {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+.link-punti,
+.riga-punti {
+  transition: --acceso 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
 @media print {
   [data-segni='attesa'] .elenco-testo .parentesi,
   [data-segni='attesa'] .elenco-testo .dentro,
@@ -151,7 +166,9 @@ a:focus-visible .freccia-indietro {
   @view-transition {
     navigation: none;
   }
-  .freccia {
+  .freccia,
+  .link-punti,
+  .riga-punti {
     transition: none;
   }
 }

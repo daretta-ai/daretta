@@ -17,7 +17,7 @@ const { nonTrovato } = await getMicrotesti();
   <section class="griglia resto">
     <div class="colonna">
       <Tabellone />
-      <p class="via">{nonTrovato.prima} <a href="/">{nonTrovato.link}</a>.</p>
+      <p class="via">{nonTrovato.prima} <a class="link-punti" href="/">{nonTrovato.link}</a>.</p>
     </div>
   </section>
 </Base>
@@ -45,11 +45,6 @@ const { nonTrovato } = await getMicrotesti();
     font-size: var(--testo-corpo);
     line-height: 1.6;
     color: var(--inchiostro-corpo);
-  }
-  .via a {
-    color: var(--inchiostro);
-    text-decoration-style: dotted;
-    text-underline-offset: 4px;
   }
   @media (max-width: 1100px) {
     .colonna {

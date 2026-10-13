@@ -13,7 +13,7 @@ const data = (d: Date) => d.toLocaleDateString('it-IT', { day: 'numeric', month:
     articoli.map((a) => (
       <li>
         <a href={`/chiacchiere/${a.slug}`}>
-          <span class="titolo-lista">{a.titolo}</span>
+          <span class="titolo-lista"><span class="riga-punti">{a.titolo}</span></span>
           <time class="meta" datetime={a.data.toISOString().slice(0, 10)}>{data(a.data)}</time>
         </a>
       </li>
@@ -41,14 +41,6 @@ const data = (d: Date) => d.toLocaleDateString('it-IT', { day: 'numeric', month:
   }
   .titolo-lista {
     color: var(--inchiostro-corpo);
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 8px;
-    transition: text-decoration-color 0.2s;
-  }
-  a:hover .titolo-lista {
-    text-decoration-color: currentColor;
   }
   .meta {
     flex-shrink: 0;
