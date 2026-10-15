@@ -323,12 +323,13 @@ a {
 }
 
 /* I link a punti, al posto della sottolineatura: una regola sola per tutto il sito.
-   Quadretti da 2px ogni 6px, come la barra di avanzamento degli articoli e il segno degli elenchi.
+   Quadretti da 2px ogni 4px (--link-passo), parenti della barra di avanzamento e del segno degli elenchi.
+   Il passo è corto perché il passo è fisso: l'ultimo punto cade al massimo 2px prima della fine del testo.
    Fermi i punti sono spenti, all'hover e al focus si accendono da sinistra a destra.
 
    I colori sono token, e li cambia il fondo, non il singolo elemento:
      --link-testo   il colore del testo del link
-     --link-spento  i punti fermi (sul cemento bordo, come i punti non letti della barra)
+     --link-spento  i punti fermi (sul cemento petrolio-acceso, 3,5:1, più scuro di punti)
      --link-acceso  i punti accesi (sul cemento punti, come i punti letti della barra)
    Sul petrolio pieno della newsletter tutto passa a carta (vedi .luce-pieno qui sotto).
 
@@ -342,12 +343,14 @@ a {
    Restano fuori la navigazione (header, nav, footer: esclusi anche se senza classe) e le etichette
    in mono con la freccia.
 
-   I punti stanno 0,1em sotto la linea di base, dove Geist mette la sua sottolineatura: il testo scende
-   di 0,22em sotto la base, quindi la riga parte 0,12em - 2px dal fondo. Con clone ogni riga di un link
-   che va a capo ha la sua. Il movimento (--acceso) è in movimento.css. */
+   I punti stanno 0,2em sotto la linea di base, appena sotto le gambe di g, p e q (in Geist scendono
+   fino a 0,16em): 4px nel testo, 6px nei titoli. Il testo scende di 0,22em sotto la base; 2px di padding
+   sotto (che su un elemento in linea non sposta le righe) fanno posto ai punti, che partono 0,02em
+   dal fondo. Con clone ogni riga di un link che va a capo ha la sua. Il movimento (--acceso) è in movimento.css. */
 :root {
   --link-testo: var(--inchiostro);
-  --link-spento: var(--bordo);
+  --link-spento: var(--petrolio-acceso);
+  --link-passo: 4px;
   --link-acceso: var(--punti);
 }
 .luce-pieno {
@@ -359,9 +362,10 @@ a {
 .link-punti,
 .riga-punti {
   text-decoration: none;
-  background-image: repeating-linear-gradient(to right, var(--link-acceso) 0 2px, transparent 2px 6px);
+  background-image: repeating-linear-gradient(to right, var(--link-acceso) 0 2px, transparent 2px var(--link-passo));
   background-repeat: no-repeat;
-  background-position: 0 calc(100% - 0.12em + 2px);
+  padding-bottom: 2px;
+  background-position: 0 calc(100% - 0.02em);
   background-size: var(--acceso, 0%) 2px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -370,8 +374,8 @@ a {
 .link-punti {
   color: var(--link-testo);
   background-image:
-    repeating-linear-gradient(to right, var(--link-acceso) 0 2px, transparent 2px 6px),
-    repeating-linear-gradient(to right, var(--link-spento) 0 2px, transparent 2px 6px);
+    repeating-linear-gradient(to right, var(--link-acceso) 0 2px, transparent 2px var(--link-passo)),
+    repeating-linear-gradient(to right, var(--link-spento) 0 2px, transparent 2px var(--link-passo));
   background-size:
     var(--acceso, 0%) 2px,
     100% 2px;
