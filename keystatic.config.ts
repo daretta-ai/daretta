@@ -313,7 +313,17 @@ export default config({
         card: testoLungo('Testo della card', 'Una frase. Compare in home e sotto il nome nella pagina.'),
         titolo: titoloDoto(),
         fase: fields.text({ label: 'Fase', description: 'Accanto allo stato, facoltativa: «Alpha», «Alpha interna».' }),
-        credito: fields.text({ label: 'Con chi', description: 'Facoltativo: «Con Gianpaolo Ansalone».' }),
+        collaboratori: fields.array(
+          fields.object({
+            nome: fields.text({ label: 'Nome e cognome' }),
+            link: fields.url({ label: 'Profilo', description: 'Facoltativo, solo con il suo ok: LinkedIn o il suo sito.' }),
+          }),
+          {
+            label: 'Con chi',
+            description: 'Facoltativo. Nella testata diventa «Con Nome Cognome e Nome Cognome», con i nomi linkati al profilo.',
+            itemLabel: (p) => p.fields.nome.value || 'Collaboratore',
+          },
+        ),
         link: fields.url({ label: 'Sito del progetto', description: 'Quando è online, il nome diventa un link.' }),
         corpo: corpo('Testo della pagina'),
       },

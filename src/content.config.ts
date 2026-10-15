@@ -28,7 +28,10 @@ const progetti = defineCollection({
     card: z.string(),
     titolo: z.string(),
     fase: facoltativo,
-    credito: facoltativo,
+    collaboratori: z
+      .array(z.object({ nome: z.string(), link: facoltativo }))
+      .nullish()
+      .transform((v) => v ?? []),
     link: facoltativo,
   }),
 });

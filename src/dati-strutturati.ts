@@ -74,23 +74,22 @@ export function articolo(a: {
 
 const STATI = { online: 'Online', 'in-sviluppo': 'In sviluppo', concept: 'Concept' } as const;
 
-/** Un progetto di /progetti. «credito» è la riga «Con Nome Cognome e Nome Cognome». */
+/** Un progetto di /progetti. I collaboratori diventano contributor, con il profilo in sameAs. */
 export function progetto(p: {
   slug: string;
   nome: string;
   card: string;
   stato: keyof typeof STATI;
   fase?: string;
-  credito?: string;
+  collaboratori?: { nome: string; link?: string }[];
   link?: string;
 }): Nodo {
   const url = assoluto(`/progetti/${p.slug}`);
-  const collaboratori = (p.credito ?? '')
-    .replace(/^con\s+/i, '')
-    .split(/\s*(?:,|\be\b|\bed\b)\s*/)
-    .map((nome) => nome.trim())
-    .filter(Boolean)
-    .map((name) => ({ '@type': 'Person', name }));
+  const collaboratori = (p.collaboratori ?? []).map((c) => ({
+    '@type': 'Person',
+    name: c.nome,
+    ...(c.link && { sameAs: c.link }),
+  }));
   return {
     '@type': 'CreativeWork',
     '@id': `${url}#progetto`,

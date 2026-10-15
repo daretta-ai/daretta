@@ -2,16 +2,22 @@
 // Testata di una pagina progetto (tavole Progetto*).
 import Testata from './Testata.astro';
 import Stato from './Stato.astro';
-import type { Progetto } from '../cms';
+import type { Progetto, Collaboratore } from '../cms';
 
 interface Props {
   progetto: Progetto;
   titolo: string; // la frase in Doto
   fase?: string; // es. "Alpha", accanto allo stato
-  credito?: string; // es. "Con Gianpaolo Ansalone"
+  collaboratori?: Collaboratore[]; // la riga «Con Nome Cognome e Nome Cognome»
   link?: string; // il sito del progetto, quando è online
 }
-const { progetto, titolo, fase, credito, link } = Astro.props;
+const { progetto, titolo, fase, collaboratori = [], link } = Astro.props;
+// Tra gli ultimi due nomi «e» (o «ed» davanti a vocale), tra gli altri la virgola.
+const separatore = (i: number) => {
+  if (i === 0) return '';
+  if (i < collaboratori.length - 1) return ', ';
+  return /^[aeiou]/i.test(collaboratori[i].nome) ? ' ed ' : ' e ';
+};
 ---
 
 <Testata titolo={titolo}>
@@ -29,7 +35,19 @@ const { progetto, titolo, fase, credito, link } = Astro.props;
     </span>
     <p class="attacco">{progetto.card}</p>
   </div>
-  {credito && <span class="credito">{credito}</span>}
+  {
+    collaboratori.length > 0 && (
+      <span class="credito">
+        Con{' '}
+        {collaboratori.map((c, i) => (
+          <Fragment>
+            {separatore(i)}
+            {c.link ? <a class="link-punti" href={c.link}>{c.nome}</a> : c.nome}
+          </Fragment>
+        ))}
+      </span>
+    )
+  }
 </Testata>
 
 <style>

@@ -11,6 +11,12 @@ const { Tag } = Markdoc;
 
 export type Stato = 'online' | 'in-sviluppo' | 'concept';
 
+/** Chi porta avanti un progetto con Patrizio; il link (facoltativo) è il suo profilo. */
+export interface Collaboratore {
+  nome: string;
+  link?: string;
+}
+
 export interface Progetto {
   slug: string;
   nome: string;
@@ -19,7 +25,7 @@ export interface Progetto {
   card: string;
   titolo: string;
   fase?: string;
-  credito?: string;
+  collaboratori: Collaboratore[];
   link?: string;
   body: string;
 }
