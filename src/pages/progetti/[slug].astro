@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { progetto, prossimo } = Astro.props as { progetto: Progetto; prossimo: Progetto };
-const nodi = corpo(progetto.body, { stato: progetto.stato });
+const nodi = corpo(progetto.body, { stato: progetto.stato, link: progetto.link ?? undefined });
 
 const rimandoProssimo = rigaProgetto(prossimo, 'Prossimo progetto');
 ---

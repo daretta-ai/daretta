@@ -117,6 +117,21 @@ const blocchi = {
       posizione: fields.text({ label: 'Punto della foto da tenere al centro', description: 'Es. 70% 45%. Serve a tenere il viso nel quadrato.', defaultValue: '50% 50%' }),
     },
   }),
+  sito: wrapper({
+    label: 'Invito al sito del progetto',
+    description: 'Testo a sinistra con il pulsante, anteprime del sito a destra. Il link è il campo «Sito del progetto»: se è vuoto, il pulsante non compare.',
+    schema: {
+      etichetta,
+      meta: fields.text({ label: 'Riga sopra il nome', description: 'Facoltativa, in mono maiuscolo: «Apre a breve», «Online da ottobre».' }),
+      pulsante: fields.text({ label: 'Pulsante', defaultValue: 'Vai al sito' }),
+      anteprime: fields.select({
+        label: 'Anteprime',
+        description: 'Gli screenshot desktop e mobile stanno in public/anteprime (vedi scripts/anteprime.py).',
+        options: [{ label: 'valdinievole.online', value: 'valdinievole-online' }],
+        defaultValue: 'valdinievole-online',
+      }),
+    },
+  }),
   citazione: block({
     label: 'Citazione',
     description: 'Una frase in evidenza, in Doto, nella colonna del testo. Minuscola, con il punto.',

@@ -14,6 +14,7 @@ export const config: Config = {
     },
     figura: { render: 'figura', attributes: { etichetta: testo, figura: { type: Object } } },
     foto: { render: 'foto', attributes: { etichetta: testo, foto: testo, alt: testo, posizione: testo } },
+    sito: { render: 'sito', attributes: { etichetta: testo, meta: testo, pulsante: testo, anteprime: testo } },
     citazione: { render: 'citazione', selfClosing: true, attributes: { testo, didascalia: testo } },
     confronto: { render: 'confronto', selfClosing: true, attributes: { voci: { type: Array } } },
   },

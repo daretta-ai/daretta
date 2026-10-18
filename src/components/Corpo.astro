@@ -7,6 +7,7 @@ import BloccoFigura from './BloccoFigura.astro';
 import BloccoFoto from './BloccoFoto.astro';
 import ModuloNumero from './ModuloNumero.astro';
 import Citazione from './Citazione.astro';
+import InvitoSito from './InvitoSito.astro';
 import Confronto from './Confronto.astro';
 import Codice from './Codice.astro';
 import FiguraBarre from './FiguraBarre.astro';
@@ -74,6 +75,19 @@ const Self = Astro.self;
           <BloccoFoto numero={a.n} etichetta={a.etichetta} foto={a.foto} alt={a.alt} posizione={a.posizione}>
             <Self nodi={children} />
           </BloccoFoto>
+        );
+      case 'sito':
+        return (
+          <InvitoSito
+            numero={a.n}
+            etichetta={a.etichetta}
+            meta={a.meta || undefined}
+            pulsante={a.pulsante || undefined}
+            anteprime={a.anteprime}
+            link={a.link}
+          >
+            <Self nodi={children} />
+          </InvitoSito>
         );
       case 'citazione':
         return <Citazione testo={a.testo} didascalia={a.didascalia} />;

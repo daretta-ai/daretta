@@ -184,6 +184,18 @@ La fascia prima del footer, uguale in tutte le pagine tranne 404, privacy e benv
 - **Su mobile** l'ordine resta lo stesso: prima il prosegui, poi la newsletter, poi il footer. Sopra la fascia, lo stacco delle sezioni.
 - Costruzione: `src/components/Chiusura.astro`, righe in `src/rimandi.ts`.
 
+## L'invito al sito
+
+Quando un progetto ha un suo sito, anche solo una pagina d'attesa, il testo del progetto si chiude con un modulo che invita a visitarlo, prima della fascia di chiusura.
+
+- **Com'è fatto.** Un modulo come quello con il numero: etichetta nel margine (`[ 06 ] IL SITO`), nelle colonne 4–8 una riga in mono (`testo-meta`, facoltativa: «APRE A BREVE»), il dominio in `testo-titolo`, una frase in `testo-corpo` e il pulsante fantasma «VAI AL SITO →»; nelle colonne 9–12 le anteprime, il desktop e davanti il telefono. La luce petrolio parte dalle anteprime.
+- **Il pulsante è fantasma, non arancio.** L'arancio resta a Iscrivimi, nella newsletter subito sotto: due CTA arancio vicine si farebbero concorrenza.
+- **Le anteprime sono a colori.** Sono il sito dell'altro progetto, non foto di Patrizio: niente luce petrolio. Angoli `smusso-card`, il telefono in una cornice `cemento-rilievo` di 4px. Screenshot veri, fatti con `scripts/anteprime.py` (desktop 1280×800, telefono 390×844) e serviti in webp da `public/anteprime`.
+- **Il movimento.** Quando il modulo entra nello schermo, una volta sola, le schede salgono di 12px e sfumano dentro (320ms, il telefono 80ms dopo). A entrata finita, con il mouse, si inclinano verso il cursore (vedi «Il movimento»). Su touch resta solo l'entrata.
+- **Su mobile:** etichetta, testo, anteprime, pulsante a tutta larghezza.
+- **Accessibilità.** Il link vero è il pulsante; le anteprime portano allo stesso indirizzo ma sono `aria-hidden` e fuori dal tab, così chi usa tastiera o screen reader trova un solo link.
+- Costruzione: `src/components/InvitoSito.astro`, blocco «Invito al sito del progetto» in Keystatic; il link è il campo «Sito del progetto».
+
 ## Il movimento
 
 Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa è cambiato, cosa hai appena fatto. Deve dare l'idea di una grande cura per ogni dettaglio, essere gradevole e sorprendere piano, senza mai mettersi in mezzo alla lettura. La meraviglia resta alla sfera.
@@ -192,8 +204,9 @@ Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa 
 - **Riscontro sulle azioni.** Le frecce dei rimandi fanno un passo di 4px verso dove portano, all'hover e al focus (200ms). I punti sotto i link si accendono da sinistra a destra (240ms, vedi «I link»). Hover e focus sempre tra 150 e 200ms. I messaggi dei form arrivano come descritto in «I messaggi dei form».
 - **Moduli sotto la piega.** Salgono di 12px e sfumano dentro, una volta sola, quando entrano nello schermo. Mai la testata o la hero, mai i paragrafi, mai gli articoli, mai il tabellone (si muove già da solo). Niente animazione se si arriva da un'ancora o tornando indietro. Senza JavaScript tutto è già visibile.
 - **Segni degli elenchi.** L'unica eccezione dentro gli articoli: si anima il segno (`[ ■ ]`, `[ 01 ]`), mai il testo della voce. Stesse condizioni dei moduli: una volta sola, niente animazione da un'ancora o tornando indietro, senza JavaScript tutto visibile. All'hover le parentesi si stringono appena: un riscontro piccolo, come le palette del tabellone, che non tocca la lettura. Le misure sono in «Gli elenchi».
+- **Rotazione, solo sugli elementi visivi.** Un'immagine o un oggetto visivo può inclinarsi di pochi gradi (al massimo 6°) verso il cursore, soprattutto quando ci sono due piani sovrapposti, come le anteprime desktop e telefono nell'invito al sito: il piano davanti si stacca appena (al massimo 12px). Solo con il mouse, solo a entrata finita, e torna dritto quando il cursore esce (420ms). Deve restare discreta: dà il senso di cura, non fa scena. Mai sui testi.
 - **Parallasse, solo sugli oggetti.** Foto e indicatori di stato possono scorrere appena più piano o più veloci della pagina, per dare profondità: pochi pixel (al massimo 24px su tutta la corsa), legati allo scorrimento, mai a scatti. Mai sui testi: un paragrafo o un titolo che scorre a un'altra velocità si legge peggio.
-- **Le misure.** Spostamenti tra 4 e 12px (unica eccezione, i 3px delle parentesi degli elenchi all'hover: un riscontro, non un arrivo), durate tra 140 e 450ms, uscita veloce e ingresso morbido (`cubic-bezier(0.2, 0.7, 0.2, 1)`). Mai rimbalzi, mai elastici.
+- **Le misure.** Spostamenti tra 4 e 12px (unica eccezione, i 3px delle parentesi degli elenchi all'hover: un riscontro, non un arrivo), rotazioni entro 6° (solo gli elementi visivi, vedi sopra), durate tra 140 e 450ms, uscita veloce e ingresso morbido (`cubic-bezier(0.2, 0.7, 0.2, 1)`). Mai rimbalzi, mai elastici.
 - **Costruzione.** Solo `transform` e `opacity` (unica eccezione, lo sfondo dei punti sotto i link, che cambia il disegno ma non il layout), solo CSS e qualche riga di script, nessuna libreria: il sito resta istantaneo (Lighthouse e CLS invariati). Tutto in `src/styles/movimento.css`; il reveal è in `Base.astro`. Con `prefers-reduced-motion` non si muove niente.
 - **Per ogni nuovo movimento** la domanda è una: spiega qualcosa, o fa solo scena? Se fa solo scena, non si fa. Prima si prova su una pagina, poi si estende.
 
@@ -266,6 +279,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Foto a colori, ritoccate, o con un trattamento diverso da luce petrolio.
 - Animare ogni blocco in entrata, i paragrafi, la hero o il testo degli articoli (negli elenchi si muove solo il segno).
 - Rimbalzi, elastici, transizioni che durano più di mezzo secondo.
+- Rotazioni sui testi, o oltre i 6°; anteprime dei siti in luce petrolio o con un pulsante arancio accanto alla newsletter.
 - Parallasse sui testi (titoli, paragrafi, etichette).
 - Messaggi dei form come semplice riga di testo, o colorati di rosso o di arancio.
 - `onda` per testo che non sia un titolo di sezione: resta per l'ascolto della sfera, i titoli e l'anello di focus.
