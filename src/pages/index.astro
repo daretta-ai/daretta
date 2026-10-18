@@ -29,7 +29,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
         {home.motto.split(/(?<=\.)\s+/).map((frase, i) => (i ? <> <span>{frase}</span></> : <span>{frase}</span>))}
       </p>
       <p class="presentazione">{home.presentazione}</p>
-      <a class="cta-hero smussato" href="#newsletter">{home.pulsante}</a>
+      <a class="cta-hero smussato" href="#newsletter"><span class="trama" aria-hidden="true"></span>{home.pulsante}</a>
     </div>
     <div class="hero-sfera">
       <Sfera />
@@ -143,6 +143,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
     --h: 56px;
     padding: 0 var(--space-6);
     --fondo: var(--arancio);
+    --punto: var(--arancio-trama);
     color: var(--cemento);
     text-decoration: none;
     font-family: var(--font-mono);

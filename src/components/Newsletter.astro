@@ -42,7 +42,7 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
   <div class="riga">
     <label class="solo-lettori" for="newsletter-mail">La tua email</label>
     <span class="campo smussato"><input id="newsletter-mail" name="email" type="email" autocomplete="email" required placeholder={nl.segnaposto} aria-describedby="newsletter-esito" /></span>
-    <button class="smussato" type="submit">{nl.pulsante}</button>
+    <button class="smussato" type="submit"><span class="trama" aria-hidden="true"></span>{nl.pulsante}</button>
   </div>
   <!-- Trappola per i bot: nascosta a chi legge e a chi usa lo screen reader -->
   <input class="trappola" name="sito" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
@@ -263,6 +263,7 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
     --h: 56px;
     padding: 0 var(--space-6);
     --fondo: var(--arancio);
+    --punto: var(--arancio-trama);
     --anello: var(--carta);
     color: var(--cemento);
     font-family: var(--font-mono);

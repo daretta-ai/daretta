@@ -33,6 +33,7 @@ const Anteprime = link ? 'a' : 'div';
   {
     link && (
       <a class="pulsante smussato contornato" href={link}>
+        <span class="trama" aria-hidden="true"></span>
         {pulsante} <span class="freccia" aria-hidden="true">→</span>
       </a>
     )
@@ -166,9 +167,6 @@ const Anteprime = link ? 'a' : 'div';
     letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration: none;
-  }
-  .pulsante:hover {
-    --riempimento: var(--cemento-alto);
   }
 
   .anteprime {
