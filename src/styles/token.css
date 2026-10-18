@@ -62,6 +62,9 @@
   /* Griglia */
   --margine: var(--space-14);
   --gap: var(--space-6);
+  /* Su desktop i box dentro i testi lunghi sbordano oltre il filo dei contenuti: le etichette restano
+     sulla linea di quelle fuori e dentro il box c'è aria (scelta di Patrizio, 18 ott 2026) */
+  --sbordo: var(--space-8);
   /* Stacco tra una sezione e l'altra: più largo del gap, che resta per ciò che sta insieme */
   --stacco: var(--space-24);
 
@@ -284,6 +287,31 @@ a {
 .etichetta-sezione,
 .riga-etichetta > .etichetta {
   color: var(--onda);
+}
+/* Il segno delle etichette di sezione: [ ■ ], lo stesso degli elenchi puntati (Segno.astro).
+   Il quadretto prende il colore dell'etichetta: onda sul cemento, carta sulla newsletter.
+   Il movimento (entrata e stretta all'hover) è in movimento.css. */
+.segno-etichetta {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.6em;
+  white-space: nowrap;
+  vertical-align: top;
+}
+.segno-etichetta .parentesi,
+.segno-etichetta .dentro {
+  display: inline-block;
+}
+.segno-etichetta .dentro {
+  min-width: 22px;
+  text-align: center;
+}
+.segno-etichetta .quadretto {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  vertical-align: middle;
+  background: currentColor;
 }
 .meta {
   font-family: var(--font-mono);

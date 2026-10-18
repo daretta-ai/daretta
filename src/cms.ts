@@ -124,14 +124,13 @@ export const minutiDiLettura = (testo: string) =>
 // ── Corpo a blocchi ─────────────────────────────────────────────────────────
 // I blocchi sono quelli di keystatic.config.ts; gli attributi da tenere stanno in src/markdoc.ts.
 
-const NUMERATI = new Set(['blocco', 'numero', 'figura', 'foto', 'sito']);
-const BLOCCHI = new Set([...NUMERATI, 'citazione', 'confronto']);
+const BLOCCHI = new Set(['blocco', 'numero', 'figura', 'foto', 'sito', 'citazione', 'confronto']);
 
 /**
  * Trasforma il corpo scritto in Keystatic nell'albero che Corpo.astro disegna.
- * Numera i blocchi in ordine (da `inizio`) e passa stato e sito del progetto a chi li mostra.
+ * Passa stato e sito del progetto ai blocchi che li mostrano.
  */
-export function corpo(body: string, opzioni: { inizio?: number; stato?: Stato; link?: string } = {}): RenderableTreeNode[] {
+export function corpo(body: string, opzioni: { stato?: Stato; link?: string } = {}): RenderableTreeNode[] {
   const ast = Markdoc.parse(body);
   const errori = Markdoc.validate(ast, config).filter((e) => e.error.level === 'error' || e.error.level === 'critical');
   if (errori.length) {
@@ -150,10 +149,8 @@ export function corpo(body: string, opzioni: { inizio?: number; stato?: Stato; l
       else figli.push(new Tag('blocco', { libero: true, spazio: 'piccolo' }, [nodo]));
     }
   }
-  let n = opzioni.inizio ?? 1;
   for (const nodo of figli) {
     if (!Tag.isTag(nodo)) continue;
-    if (NUMERATI.has(nodo.name) && !nodo.attributes.libero) nodo.attributes.n = n++;
     // L'invito al sito prende il link dal campo «Sito del progetto»
     if (nodo.name === 'sito') nodo.attributes.link = opzioni.link;
     if (nodo.attributes.stato) nodo.attributes.stato = opzioni.stato;

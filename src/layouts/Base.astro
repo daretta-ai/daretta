@@ -202,6 +202,22 @@ const datiStrutturati = schema ? grafo(schema) : home ? grafo() : null;
           { rootMargin: '0px 0px -6% 0px' },
         );
         document.querySelectorAll('.elenco-testo').forEach((el) => segni.observe(el));
+
+        // Etichette di sezione: stesso gesto, un segno solo. Fuori la prima sezione della pagina,
+        // dove il segno è già al suo posto (regole in movimento.css).
+        const etichette = new IntersectionObserver(
+          (voci) => {
+            for (const v of voci) {
+              if (!v.isIntersecting) continue;
+              const el = v.target;
+              el.classList.add('visto');
+              etichette.unobserve(el);
+              setTimeout(() => el.classList.add('fermo'), 120 + 320);
+            }
+          },
+          { rootMargin: '0px 0px -6% 0px' },
+        );
+        document.querySelectorAll('main > :not(:first-child) .anima-segno').forEach((el) => etichette.observe(el));
       }
     </script>
   </body>

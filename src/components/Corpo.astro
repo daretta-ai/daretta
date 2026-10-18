@@ -34,14 +34,14 @@ const Self = Astro.self;
     switch (name) {
       case 'blocco':
         return (
-          <Blocco numero={a.n} etichetta={a.libero ? undefined : a.etichetta} spazio={a.spazio || 'grande'}>
+          <Blocco etichetta={a.libero ? undefined : a.etichetta} spazio={a.spazio || 'grande'}>
             <Self nodi={children} />
             {stato}
           </Blocco>
         );
       case 'numero':
         return (
-          <ModuloNumero numero={a.n} etichetta={a.etichetta} cifra={a.cifra} didascalia={a.didascalia}>
+          <ModuloNumero etichetta={a.etichetta} cifra={a.cifra} didascalia={a.didascalia}>
             <Self nodi={children} />
             {stato}
           </ModuloNumero>
@@ -49,7 +49,7 @@ const Self = Astro.self;
       case 'figura': {
         const f = a.figura?.value ?? {};
         return (
-          <BloccoFigura numero={a.n} etichetta={a.etichetta}>
+          <BloccoFigura etichetta={a.etichetta}>
             <Self nodi={children} />
             {a.figura?.discriminant === 'elenco' ? (
               <FiguraElenco slot="figura" didascalia={f.didascalia} voci={f.voci ?? []} nota={f.nota || undefined} />
@@ -72,14 +72,13 @@ const Self = Astro.self;
       }
       case 'foto':
         return (
-          <BloccoFoto numero={a.n} etichetta={a.etichetta} foto={a.foto} alt={a.alt} posizione={a.posizione}>
+          <BloccoFoto etichetta={a.etichetta} foto={a.foto} alt={a.alt} posizione={a.posizione}>
             <Self nodi={children} />
           </BloccoFoto>
         );
       case 'sito':
         return (
           <InvitoSito
-            numero={a.n}
             etichetta={a.etichetta}
             meta={a.meta || undefined}
             pulsante={a.pulsante || undefined}

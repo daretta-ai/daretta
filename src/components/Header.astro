@@ -6,6 +6,8 @@ interface Props {
   home?: boolean;
   avanzamento?: boolean; // negli articoli: la barra di lettura a punti sotto l'header
 }
+import Segno from './Segno.astro';
+
 const { attiva, home = false, avanzamento = false } = Astro.props;
 
 // Non c'è una pagina indice dei progetti nelle tavole: PROGETTI porta al blocco in home.
@@ -20,13 +22,13 @@ const voci = [
 <header class:list={['header', { 'in-home': home, 'con-avanzamento': avanzamento }]}>
   <a class="logo" href="/" aria-label="dàretta, home">d<span>à</span>retta</a>
 
-  <!-- Su mobile il menu copre tutta la pagina (scelta di Patrizio, 10 ott 2026): numeri delle voci e piede si vedono solo lì -->
+  <!-- Su mobile il menu copre tutta la pagina (scelta di Patrizio, 10 ott 2026): segni delle voci e piede si vedono solo lì -->
   <nav class="menu" id="menu" aria-label="Principale">
     <ul>
       {voci.map((v, i) => (
         <li style={`--i: ${i}`}>
           <a href={v.href} aria-current={attiva === v.id ? 'page' : undefined}>
-            <span class="numero" aria-hidden="true">[ {String(i + 1).padStart(2, '0')} ]</span>
+            <span class="numero"><Segno /></span>
             <span class="testo">{v.etichetta}</span>
           </a>
         </li>

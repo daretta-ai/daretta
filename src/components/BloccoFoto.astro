@@ -4,17 +4,16 @@
 import Sezione from './Sezione.astro';
 
 interface Props {
-  numero: number;
   etichetta: string;
   foto: string; // nome del file senza misura: «notte» → notte-480.webp, notte-800.webp
   alt: string;
   posizione?: string; // object-position, per tenere il viso nel quadrato
 }
-const { numero, etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
+const { etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
 ---
 
 <section class="griglia blocco-foto">
-  <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>
+  <Sezione segno class="margine">{etichetta}</Sezione>
   <div class="testo">
     <slot />
   </div>

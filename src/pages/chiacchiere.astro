@@ -2,6 +2,7 @@
 // Chiacchiere (tavola Scritti). Finché non c'è un articolo pubblicato, la pagina dice che arriva.
 import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
+import Segno from '../components/Segno.astro';
 import ListaScritti from '../components/ListaScritti.astro';
 import Chiusura from '../components/Chiusura.astro';
 import { progetto, chiSono } from '../rimandi';
@@ -17,7 +18,7 @@ const vuoto = articoli.length === 0;
   attiva="chiacchiere"
 >
   <Testata titolo="quattro chiacchiere.">
-    <span slot="etichetta" class="etichetta">[ 003 ] Chiacchiere</span>
+    <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Chiacchiere</span></span>
     {vuoto && <p class="attacco">{micro.scrittiVuoto}</p>}
   </Testata>
 

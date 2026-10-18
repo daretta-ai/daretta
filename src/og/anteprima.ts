@@ -121,6 +121,17 @@ function sito(): Nodo {
   );
 }
 
+// L'etichetta con il segno [ ■ ] del sito: il quadretto è un riquadro pieno, non un carattere.
+const etichettaSegno = (nome: string) =>
+  h(
+    'div',
+    { display: 'flex', alignItems: 'center', ...mono },
+    h('span', {}, '['),
+    h('div', { display: 'flex', width: 7, height: 7, margin: '0 12px', background: C.inchiostroMuto }),
+    h('span', { marginRight: 14 }, ']'),
+    h('span', {}, nome),
+  );
+
 interface Voce {
   etichetta: string;
   accanto: Nodo;
@@ -136,7 +147,7 @@ function voce({ etichetta, accanto, titolo, sotto, dominio }: Voce): Nodo {
     h(
       'div',
       { display: 'flex', flexDirection: 'column', position: 'absolute', left: 0, top: 0, width: L, height: A, padding: '64px 72px' },
-      h('div', { display: 'flex', alignItems: 'center', gap: 22 }, h('span', mono, etichetta), accanto),
+      h('div', { display: 'flex', alignItems: 'center', gap: 22 }, etichettaSegno(etichetta), accanto),
       h(
         'div',
         {
@@ -166,7 +177,7 @@ function voce({ etichetta, accanto, titolo, sotto, dominio }: Voce): Nodo {
 
 export function progetto(p: { nome: string; card: string; stato: Stato }): Nodo {
   return voce({
-    etichetta: '[ 004 ] Progetti',
+    etichetta: 'Progetti',
     accanto: h('div', { display: 'flex', alignItems: 'center', gap: 12, ...mono }, segnoStato(p.stato), NOMI_STATO[p.stato]),
     titolo: p.nome,
     sotto: p.card,
@@ -177,7 +188,7 @@ export function progetto(p: { nome: string; card: string; stato: Stato }): Nodo 
 export function articolo(a: { titolo: string; data: Date; minuti: number }): Nodo {
   const data = a.data.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
   return voce({
-    etichetta: '[ 003 ] Chiacchiere',
+    etichetta: 'Chiacchiere',
     accanto: h('span', mono, `${data} · ${a.minuti} min`),
     titolo: a.titolo,
     dominio: 'DARETTA.IT/CHIACCHIERE',

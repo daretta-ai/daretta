@@ -10,21 +10,20 @@ import Modulo from './Modulo.astro';
 import Sezione from './Sezione.astro';
 
 interface Props {
-  numero: number;
   etichetta: string;
   meta?: string;
   pulsante?: string;
   anteprime: string;
   link?: string; // il sito del progetto, dal campo «Sito del progetto»
 }
-const { numero, etichetta, meta, pulsante = 'Vai al sito', anteprime, link } = Astro.props;
+const { etichetta, meta, pulsante = 'Vai al sito', anteprime, link } = Astro.props;
 const dominio = link ? new URL(link).hostname.replace(/^www\./, '') : undefined;
 const base = `/anteprime/${anteprime}`;
 const Anteprime = link ? 'a' : 'div';
 ---
 
 <Modulo luce="media" class="griglia invito-sito">
-  <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>
+  <Sezione segno class="margine">{etichetta}</Sezione>
   <div class="testo">
     {meta && <span class="meta">{meta}</span>}
     {dominio && <span class="nome">{dominio}</span>}
@@ -233,9 +232,10 @@ const Anteprime = link ? 'a' : 'div';
   }
 
   @media (min-width: 721px) {
-    /* Come il modulo con il numero: da filo a filo, dentro lo stesso rientro dei blocchi */
+    /* Come il modulo con il numero: sborda oltre il filo dei contenuti, dentro lo stesso rientro dei blocchi */
     .invito-sito.invito-sito {
-      padding: var(--space-14) var(--space-2);
+      margin-inline: calc(-1 * var(--sbordo));
+      padding: var(--space-14) calc(var(--sbordo) + var(--space-2));
       row-gap: var(--space-8);
     }
     .invito-sito :global(.margine) {

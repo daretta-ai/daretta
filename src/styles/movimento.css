@@ -3,8 +3,8 @@
      1. Il passaggio tra le pagine: la pagina sfuma, header e sfera restano al loro posto.
      2. Il riscontro sulle azioni: la freccia dei rimandi fa un passo avanti.
      3. I moduli sotto la piega salgono appena, una volta sola (lo script è in Base.astro).
-     4. I segni degli elenchi si aprono quando l'elenco entra nello schermo, e all'hover le parentesi
-        si stringono appena; il testo resta fermo.
+     4. I segni degli elenchi e delle etichette di sezione si aprono quando entrano nello schermo,
+        e all'hover le parentesi si stringono appena; il testo resta fermo.
      5. I punti sotto i link si accendono da sinistra a destra all'hover.
    Si anima solo transform e opacity (tranne i punti dei link, che sono uno sfondo):
    nessun ricalcolo del layout, nessun peso in più.
@@ -118,6 +118,35 @@ a:focus-visible .freccia-indietro {
     transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i, 0) * 60ms + 120ms);
 }
 
+/* Il segno delle etichette di sezione ([ ■ ] CHIACCHIERE) fa lo stesso gesto degli elenchi:
+   quando l'etichetta entra nello schermo, una volta sola, le parentesi si aprono e compaiono,
+   e 120ms dopo cresce il quadretto. Mai nella prima sezione della pagina (hero, testata,
+   apertura delle Curiosità): lì il segno è già al suo posto. Stesse condizioni degli elenchi. */
+[data-segni='attesa'] main > :not(:first-child) .anima-segno:not(.visto) .parentesi,
+[data-segni='attesa'] main > :not(:first-child) .anima-segno:not(.visto) .dentro {
+  opacity: 0;
+}
+[data-segni='attesa'] main > :not(:first-child) .anima-segno:not(.visto) .apre {
+  transform: translateX(4px);
+}
+[data-segni='attesa'] main > :not(:first-child) .anima-segno:not(.visto) .chiude {
+  transform: translateX(-4px);
+}
+[data-segni='attesa'] main > :not(:first-child) .anima-segno:not(.visto) .quadretto {
+  transform: scale(0);
+}
+.anima-segno.visto .parentesi {
+  transition:
+    opacity 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.anima-segno.visto .dentro,
+.anima-segno.visto .quadretto {
+  transition:
+    opacity 320ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms,
+    transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms;
+}
+
 /* All'hover sulla voce le parentesi si stringono di 3px sul segno, come a dire «questa».
    È il gesto opposto all'entrata (che le apre), così non sembra un replay; il cursore non cambia
    e il testo resta fermo. Vale quando l'elenco è fermo: finita l'entrata (.fermo, dallo script
@@ -132,6 +161,23 @@ a:focus-visible .freccia-indietro {
     transform: translateX(3px);
   }
   .elenco-testo:is(.fermo, :not(.visto)) .voce:is(:hover, :focus-within) .chiude {
+    transform: translateX(-3px);
+  }
+
+  /* Etichette di sezione: la stessa stretta all'hover sull'etichetta. È un riscontro sulla
+     decorazione, non dice che l'etichetta è un link; il cursore non cambia. */
+  .segno-etichetta .parentesi {
+    transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .anima-segno.visto:not(.fermo) .segno-etichetta .parentesi {
+    transition:
+      opacity 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  :is(.etichetta:not(.anima-segno), .anima-segno:is(.fermo, :not(.visto))):is(:hover, :focus-visible) > .segno-etichetta .apre {
+    transform: translateX(3px);
+  }
+  :is(.etichetta:not(.anima-segno), .anima-segno:is(.fermo, :not(.visto))):is(:hover, :focus-visible) > .segno-etichetta .chiude {
     transform: translateX(-3px);
   }
 }
@@ -153,7 +199,10 @@ a:focus-visible .freccia-indietro {
 @media print {
   [data-segni='attesa'] .elenco-testo .parentesi,
   [data-segni='attesa'] .elenco-testo .dentro,
-  [data-segni='attesa'] .elenco-testo .quadretto {
+  [data-segni='attesa'] .elenco-testo .quadretto,
+  [data-segni='attesa'] .anima-segno .parentesi,
+  [data-segni='attesa'] .anima-segno .dentro,
+  [data-segni='attesa'] .anima-segno .quadretto {
     opacity: 1;
     transform: none;
   }

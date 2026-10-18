@@ -39,7 +39,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   <!-- Chi sono -->
   <Modulo luce="media" class="griglia chi-sono">
     <div class="chi-sinistra">
-      <Sezione numero={2}>Chi sono</Sezione>
+      <Sezione segno>Chi sono</Sezione>
       <p class="titolo-modulo">{chiSono.attacco}</p>
     </div>
     <div class="chi-destra">
@@ -51,7 +51,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   <!-- Chiacchiere e foto -->
   <section class="griglia scritti-foto">
     <div class="scritti">
-      <Sezione numero={3}>Chiacchiere</Sezione>
+      <Sezione segno>Chiacchiere</Sezione>
       {articoli.length ? <ListaScritti articoli={articoli.slice(0, 3)} /> : <p class="titolo-lista vuoto">{micro.scrittiVuoto}</p>}
     </div>
     <img class="foto" src="/foto/pini-800.webp" srcset="/foto/pini-480.webp 480w, /foto/pini-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="800" alt="Patrizio con gli occhiali da sole, davanti al mare e ai pini" loading="lazy" decoding="async" style="object-position: 50% 40%" />
@@ -60,7 +60,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   <!-- Progetti -->
   <Modulo luce="velo" class="progetti" id="progetti">
     <div class="progetti-testa">
-      <Sezione numero={4}>Progetti</Sezione>
+      <Sezione segno>Progetti</Sezione>
       <div class="legenda" aria-hidden="true">
         <Stato stato="online" frase={false} />
         <Stato stato="in-sviluppo" frase={false} />
@@ -76,12 +76,12 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   <section class="griglia curiosita-newsletter">
     <div class="curiosita">
       <div class="curiosita-testa">
-        <Sezione numero={5}>Curiosità</Sezione>
+        <Sezione segno>Curiosità</Sezione>
         <a class="link-etichetta" href="/curiosita">Vedi tutte <span class="freccia" aria-hidden="true">→</span></a>
       </div>
       <Tabellone />
     </div>
-    <div class="nl-home"><Newsletter numero /></div>
+    <div class="nl-home"><Newsletter /></div>
   </section>
 </Base>
 

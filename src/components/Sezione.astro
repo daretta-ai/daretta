@@ -1,14 +1,17 @@
 ---
-// Etichetta di sezione: [ 003 ] CHIACCHIERE in home, [ 01 ] LA VERSIONE BREVE dentro una pagina.
-// Senza numero diventa un'etichetta semplice (es. IL PERCORSO).
+// Etichetta di sezione: [ ■ ] CHIACCHIERE, lo stesso segno degli elenchi puntati, in onda.
+// Senza segno diventa un'etichetta semplice (es. IL PERCORSO), in inchiostro-muto.
+// Il segno si apre quando l'etichetta entra nello schermo e all'hover le parentesi si stringono
+// (movimento.css, script in Base.astro), come negli elenchi.
+import Segno from './Segno.astro';
+
 interface Props {
-  numero?: number;
-  cifre?: 2 | 3;
+  segno?: boolean;
   as?: string;
   id?: string;
   class?: string;
 }
-const { numero, cifre = 3, as: Tag = 'h2', id, class: classe } = Astro.props;
+const { segno = false, as: Tag = 'h2', id, class: classe } = Astro.props;
 ---
 
-<Tag class:list={['etichetta', numero !== undefined && 'etichetta-sezione', classe]} id={id}>{numero !== undefined && <span class="etichetta-numero">{`[ ${String(numero).padStart(cifre, '0')} ] `}</span>}<span class="etichetta-nome"><slot /></span></Tag>
+<Tag class:list={['etichetta', segno && ['etichetta-sezione', 'anima-segno'], classe]} id={id}>{segno && <Segno />}<span class="etichetta-nome"><slot /></span></Tag>

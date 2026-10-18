@@ -3,6 +3,7 @@
 import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
 import Sezione from '../components/Sezione.astro';
+import Segno from '../components/Segno.astro';
 import Blocco from '../components/Blocco.astro';
 import Corpo from '../components/Corpo.astro';
 import Chiusura from '../components/Chiusura.astro';
@@ -25,12 +26,12 @@ const ruoli = pagina.ruoli.map((nome, i, tutti) => ({ nome, colore: sfuma(i, tut
 const passo = 100 / Math.max(ruoli.length, 1);
 
 // La versione breve è il blocco 01; il resto del corpo continua da 02.
-const nodi = corpo(pagina.body, { inizio: 2 });
+const nodi = corpo(pagina.body);
 ---
 
 <Base titolo="Chi sono" descrizione={pagina.attacco} attiva="chi-sono" schema={paginaProfilo}>
   <Testata titolo={pagina.titolo}>
-    <span slot="etichetta" class="etichetta">[ 002 ] Chi sono</span>
+    <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Chi sono</span></span>
     <p class="attacco">{pagina.attacco}</p>
   </Testata>
 
@@ -50,7 +51,7 @@ const nodi = corpo(pagina.body, { inizio: 2 });
     </ol>
   </section>
 
-  <Blocco numero={1} etichetta="La versione breve" spazio="piccolo">
+  <Blocco etichetta="La versione breve" spazio="piccolo">
     <p>{pagina.breve}</p>
   </Blocco>
 

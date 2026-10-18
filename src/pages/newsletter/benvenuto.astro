@@ -3,6 +3,7 @@
 // Diventa l'indirizzo di ritorno quando colleghiamo Kit (passo 6).
 import Base from '../../layouts/Base.astro';
 import Modulo from '../../components/Modulo.astro';
+import Segno from '../../components/Segno.astro';
 import { getNewsletter } from '../../cms';
 
 const nl = await getNewsletter();
@@ -10,7 +11,7 @@ const nl = await getNewsletter();
 
 <Base titolo="Benvenuto" nascosta>
   <Modulo luce="pieno" class="benvenuto">
-    <span class="etichetta etichetta-nl">[ 006 ] Newsletter</span>
+    <span class="etichetta etichetta-nl"><Segno /><span class="etichetta-nome">Newsletter</span></span>
     <h1 class="punti-pagina">{nl.benvenutoTitolo}</h1>
     <p>{nl.benvenutoTesto}</p>
   </Modulo>

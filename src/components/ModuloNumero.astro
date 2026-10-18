@@ -7,16 +7,15 @@ import Modulo from './Modulo.astro';
 import Sezione from './Sezione.astro';
 
 interface Props {
-  numero: number;
   etichetta: string;
   cifra: string;
   didascalia: string;
 }
-const { numero, etichetta, cifra, didascalia } = Astro.props;
+const { etichetta, cifra, didascalia } = Astro.props;
 ---
 
 <Modulo luce="media" class="griglia modulo-numero">
-  <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>
+  <Sezione segno class="margine">{etichetta}</Sezione>
   <div class="oggetto">
     <span class="cifra">{cifra}</span>
     <span class="didascalia">{didascalia}</span>
@@ -31,11 +30,13 @@ const { numero, etichetta, cifra, didascalia } = Astro.props;
     margin-top: var(--space-14);
     align-items: start;
   }
-  /* Su desktop il box va da filo a filo dei contenuti e dentro ha lo stesso rientro dei blocchi (8px):
-     le sue colonne coincidono con quelle del testo e l'etichetta sta sulla linea delle altre. */
+  /* Su desktop il box sborda di --sbordo oltre il filo dei contenuti e dentro rientra di --sbordo + 8px:
+     le sue colonne coincidono con quelle del testo, l'etichetta sta sulla linea delle altre
+     e dal bordo del box c'è aria. */
   @media (min-width: 721px) {
     .modulo-numero.modulo-numero {
-      padding: var(--space-14) var(--space-2);
+      margin-inline: calc(-1 * var(--sbordo));
+      padding: var(--space-14) calc(var(--sbordo) + var(--space-2));
     }
     .modulo-numero :global(.margine) {
       grid-column: 1 / span 3;

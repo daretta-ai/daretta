@@ -2,6 +2,7 @@
 // Testata di una pagina progetto (tavole Progetto*).
 import Testata from './Testata.astro';
 import Stato from './Stato.astro';
+import Segno from './Segno.astro';
 import type { Progetto, Collaboratore } from '../cms';
 
 interface Props {
@@ -22,7 +23,7 @@ const separatore = (i: number) => {
 
 <Testata titolo={titolo}>
   <Fragment slot="etichetta">
-    <a class="etichetta torna" href="/#progetti">[ 004 ] Progetti</a>
+    <a class="etichetta torna" href="/#progetti"><Segno /><span class="etichetta-nome">Progetti</span></a>
     <span class="stato-riga">
       <Stato stato={progetto.stato} focusabile />
       {fase && <span class="fase">· {fase}</span>}

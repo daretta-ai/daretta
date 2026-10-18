@@ -18,7 +18,7 @@ const pagina = await getPrivacy();
 
   {
     pagina.sezioni.map((s, i) => (
-      <Blocco numero={i + 1} etichetta={s.titolo} spazio={i === 0 ? 'medio' : 'piccolo'}>
+      <Blocco etichetta={s.titolo} spazio={i === 0 ? 'medio' : 'piccolo'}>
         <p set:html={s.testo.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!).replace(/dimmipure@daretta\.it/g, '<a href="mailto:dimmipure@daretta.it">dimmipure@daretta.it</a>')} />
       </Blocco>
     ))

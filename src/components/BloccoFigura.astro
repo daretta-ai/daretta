@@ -5,14 +5,13 @@
 import Sezione from './Sezione.astro';
 
 interface Props {
-  numero: number;
   etichetta: string;
 }
-const { numero, etichetta } = Astro.props;
+const { etichetta } = Astro.props;
 ---
 
 <section class="griglia blocco-figura">
-  <Sezione numero={numero} cifre={2} class="margine">{etichetta}</Sezione>
+  <Sezione segno class="margine">{etichetta}</Sezione>
   <div class="testo">
     <slot />
   </div>
