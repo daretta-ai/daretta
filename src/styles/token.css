@@ -234,6 +234,18 @@ a {
   padding: 0 var(--margine);
 }
 
+/* Box che sborda (Modulo con sborda): su desktop esce di --sbordo oltre il filo dei contenuti
+   e dentro rientra di --sbordo + 8px, così etichette e testi restano sulla linea di quelli fuori.
+   Su mobile niente sbordo: il box tiene il padding del modulo. */
+@media (min-width: 721px) {
+  .modulo.sborda.sborda {
+    margin-left: calc(-1 * var(--sbordo));
+    margin-right: calc(-1 * var(--sbordo));
+    padding-left: calc(var(--sbordo) + var(--space-2));
+    padding-right: calc(var(--sbordo) + var(--space-2));
+  }
+}
+
 .griglia {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));

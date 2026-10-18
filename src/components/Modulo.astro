@@ -7,16 +7,18 @@
 //   velo     Progetti in home
 //   pieno    newsletter, l'unico modulo petrolio pieno
 //   contorno card di rimando senza fondo
+// sborda: su desktop esce di --sbordo oltre il filo dei contenuti (regole in token.css)
 interface Props {
   luce?: 'forte' | 'media' | 'sinistra' | 'velo' | 'pieno' | 'contorno' | 'nessuna';
   as?: string;
+  sborda?: boolean;
   class?: string;
   [attr: string]: unknown;
 }
-const { luce = 'nessuna', as: Tag = 'section', class: classe, ...resto } = Astro.props;
+const { luce = 'nessuna', as: Tag = 'section', sborda = false, class: classe, ...resto } = Astro.props;
 ---
 
-<Tag class:list={['modulo', `luce-${luce}`, classe]} {...resto}>
+<Tag class:list={['modulo', `luce-${luce}`, { sborda }, classe]} {...resto}>
   <slot />
 </Tag>
 
