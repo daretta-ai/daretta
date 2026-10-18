@@ -94,9 +94,20 @@
     --s        lo smusso, da impostare solo per ciò che non è un pulsante (card, rimandi, campi)
     --fondo    il fondo (colore o gradiente)
     --anello   il colore dell'anello (default onda; carta sul modulo newsletter)
-  Con .contornato il ::before disegna solo il contorno di 1px, in --contorno (default bordo).
+  Con .contornato il ::before disegna solo il contorno di 1px, in --contorno (default bordo),
+  e sotto il contorno c'è il riempimento, smussato, in --riempimento (default trasparente).
+  All'hover si cambia --riempimento: il contorno resta dov'è e il fondo sfuma dentro in 150ms.
+  (Prima l'hover passava il ::before da anello a pieno: la forma cambiava di colpo, il colore no,
+  e per un istante il pulsante si riempiva del colore chiaro del bordo.)
   Sta in un layer, così gli stili dei componenti vincono sempre.
 */
+/* Registrata come colore perché la transizione funzioni anche dentro i gradienti del riempimento */
+@property --riempimento {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
 @layer smusso {
   .smussato {
     --h: 56px;
@@ -132,6 +143,17 @@
   .smussato.contornato::before {
     background: var(--contorno);
     clip-path: var(--forma-contorno);
+  }
+  /* Il riempimento è il fondo dell'elemento stesso, smussato con quattro gradienti (uno per angolo):
+     l'elemento non si può ritagliare, perché il ritaglio taglierebbe l'anello di focus. */
+  .smussato.contornato {
+    --riempimento: transparent;
+    background:
+      linear-gradient(135deg, transparent calc(var(--s) * 0.7071), var(--riempimento) 0) top left / 51% 51% no-repeat,
+      linear-gradient(225deg, transparent calc(var(--s) * 0.7071), var(--riempimento) 0) top right / 51% 51% no-repeat,
+      linear-gradient(315deg, transparent calc(var(--s) * 0.7071), var(--riempimento) 0) bottom right / 51% 51% no-repeat,
+      linear-gradient(45deg, transparent calc(var(--s) * 0.7071), var(--riempimento) 0) bottom left / 51% 51% no-repeat;
+    transition: --riempimento 0.15s;
   }
   .smussato::after {
     inset: -5px;

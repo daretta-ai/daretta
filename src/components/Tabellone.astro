@@ -135,10 +135,9 @@ const prima = dati[0];
     text-transform: uppercase;
     cursor: pointer;
   }
-  /* All'hover il contorno diventa un fondo pieno */
-  .pulsante:hover::before {
-    background: var(--cemento-alto);
-    clip-path: var(--forma);
+  /* All'hover sotto il contorno sfuma dentro il fondo (token.css, .contornato) */
+  .pulsante:hover {
+    --riempimento: var(--cemento-alto);
   }
   .icona {
     flex: none;
