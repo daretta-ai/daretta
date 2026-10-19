@@ -62,9 +62,10 @@ const gruppi = rimandi.map((r) => (Array.isArray(r) ? r : [r]));
     margin-top: var(--stacco);
     align-items: start;
   }
+  /* Colonne 1–6, rientrate da tutti e due i lati come i testi: 64px dalla newsletter */
   .rimandi {
-    grid-column: 1 / span 5;
-    padding-left: var(--rientro);
+    grid-column: 1 / span 6;
+    padding-inline: var(--rientro);
   }
   ul {
     list-style: none;
@@ -115,10 +116,6 @@ const gruppi = rimandi.map((r) => (Array.isArray(r) ? r : [r]));
     .rimandi,
     .nl {
       grid-column: 1 / -1;
-    }
-    /* Su mobile le righe occupano tutta la larghezza: rientrano da tutti e due i lati, come i testi */
-    .rimandi {
-      padding-right: var(--rientro);
     }
     .principale {
       gap: var(--space-2);
