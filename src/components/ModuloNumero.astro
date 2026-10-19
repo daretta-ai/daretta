@@ -14,7 +14,7 @@ interface Props {
 const { etichetta, cifra, didascalia } = Astro.props;
 ---
 
-<Modulo luce="media" sborda class="griglia modulo-numero">
+<Modulo luce="media" class="griglia modulo-numero">
   <Sezione segno class="margine">{etichetta}</Sezione>
   <div class="oggetto">
     <span class="cifra">{cifra}</span>
@@ -30,8 +30,8 @@ const { etichetta, cifra, didascalia } = Astro.props;
     margin-top: var(--space-14);
     align-items: start;
   }
-  /* Su desktop il box sborda (Modulo sborda): le sue colonne coincidono con quelle del testo,
-     l'etichetta sta sulla linea delle altre e dal bordo del box c'è aria. */
+  /* Su desktop il box rientra di --rientro come i blocchi di testo: le sue colonne coincidono con quelle
+     del testo e l'etichetta sta sulla linea delle altre. */
   @media (min-width: 721px) {
     .modulo-numero.modulo-numero {
       padding-top: var(--space-14);

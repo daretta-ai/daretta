@@ -34,7 +34,7 @@ const { etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
 <style>
   .blocco-foto {
     align-items: stretch;
-    padding: var(--space-18) var(--space-2) 0;
+    padding: var(--space-18) var(--rientro) 0;
   }
   .blocco-foto :global(.margine) {
     grid-column: 1 / span 3;
@@ -65,7 +65,7 @@ const { etichetta, foto, alt, posizione = '50% 50%' } = Astro.props;
   /* La figura in colonna 12 arriva al filo destro dei contenuti, come i box a tutta larghezza */
   @media (min-width: 721px) {
     .foto {
-      width: calc(100% + var(--space-2));
+      width: calc(100% + var(--rientro));
       max-width: none;
     }
   }

@@ -22,7 +22,7 @@ const base = `/anteprime/${anteprime}`;
 const Anteprime = link ? 'a' : 'div';
 ---
 
-<Modulo luce="media" sborda class="griglia invito-sito">
+<Modulo luce="media" class="griglia invito-sito">
   <Sezione segno class="margine">{etichetta}</Sezione>
   <div class="testo">
     {meta && <span class="meta">{meta}</span>}
@@ -232,7 +232,7 @@ const Anteprime = link ? 'a' : 'div';
   }
 
   @media (min-width: 721px) {
-    /* Come il modulo con il numero: sborda (Modulo sborda), dentro lo stesso rientro dei blocchi */
+    /* Come il modulo con il numero: dentro lo stesso rientro dei blocchi */
     .invito-sito.invito-sito {
       padding-top: var(--space-14);
       padding-bottom: var(--space-14);

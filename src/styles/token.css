@@ -62,9 +62,10 @@
   /* Griglia */
   --margine: var(--space-14);
   --gap: var(--space-6);
-  /* Su desktop i box dentro i testi lunghi sbordano oltre il filo dei contenuti: le etichette restano
-     sulla linea di quelle fuori e dentro il box c'è aria (scelta di Patrizio, 18 ott 2026) */
-  --sbordo: var(--space-8);
+  /* Due linee: i fondi (box, foto, figure) arrivano al filo dei contenuti, tutto ciò che si legge
+     (etichette, titoli, testi, logotipo, footer) rientra di --rientro, dentro e fuori dai box
+     (scelta di Patrizio, 19 ott 2026). Su mobile resta il rientro stretto di 8px. */
+  --rientro: var(--space-10);
   /* Stacco tra una sezione e l'altra: più largo del gap, che resta per ciò che sta insieme */
   --stacco: var(--space-24);
 
@@ -86,6 +87,7 @@
     --stacco: var(--space-14);
     --modulo-smusso: var(--smusso-modulo-mobile);
     --card-smusso: var(--smusso-card-mobile);
+    --rientro: var(--space-2);
   }
 }
 
@@ -232,18 +234,6 @@ a {
   flex-direction: column;
   gap: var(--gap);
   padding: 0 var(--margine);
-}
-
-/* Box che sborda (Modulo con sborda): su desktop esce di --sbordo oltre il filo dei contenuti
-   e dentro rientra di --sbordo + 8px, così etichette e testi restano sulla linea di quelli fuori.
-   Su mobile niente sbordo: il box tiene il padding del modulo. */
-@media (min-width: 721px) {
-  .modulo.sborda.sborda {
-    margin-left: calc(-1 * var(--sbordo));
-    margin-right: calc(-1 * var(--sbordo));
-    padding-left: calc(var(--sbordo) + var(--space-2));
-    padding-right: calc(var(--sbordo) + var(--space-2));
-  }
 }
 
 .griglia {

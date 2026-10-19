@@ -23,7 +23,7 @@ const { etichetta } = Astro.props;
 <style>
   .blocco-figura {
     align-items: start;
-    padding: var(--space-18) var(--space-2) 0;
+    padding: var(--space-18) var(--rientro) 0;
   }
   .blocco-figura :global(.margine) {
     grid-column: 1 / span 3;
@@ -47,12 +47,12 @@ const { etichetta } = Astro.props;
   /* La figura in colonna 12 arriva al filo destro dei contenuti, come i box a tutta larghezza */
   @media (min-width: 721px) {
     .figura {
-      margin-right: calc(var(--space-2) * -1);
+      margin-right: calc(var(--rientro) * -1);
     }
   }
   @media (max-width: 720px) {
     .blocco-figura {
-      padding: var(--space-8) var(--space-2) 0;
+      padding: var(--space-8) var(--rientro) 0;
     }
     .blocco-figura {
       gap: var(--space-4);
@@ -68,7 +68,7 @@ const { etichetta } = Astro.props;
       line-height: 1.65;
     }
     .figura {
-      margin: 0 calc(var(--space-2) * -1);
+      margin: 0 calc(var(--rientro) * -1);
     }
   }
 </style>

@@ -7,30 +7,29 @@
 //   velo     Progetti in home
 //   pieno    newsletter, l'unico modulo petrolio pieno
 //   contorno card di rimando senza fondo
-// sborda: su desktop esce di --sbordo oltre il filo dei contenuti (regole in token.css)
+// Sui lati il modulo rientra di --rientro, come tutti i testi: il fondo arriva al filo, il testo sulla linea dei testi.
 interface Props {
   luce?: 'forte' | 'media' | 'sinistra' | 'velo' | 'pieno' | 'contorno' | 'nessuna';
   as?: string;
-  sborda?: boolean;
   class?: string;
   [attr: string]: unknown;
 }
-const { luce = 'nessuna', as: Tag = 'section', sborda = false, class: classe, ...resto } = Astro.props;
+const { luce = 'nessuna', as: Tag = 'section', class: classe, ...resto } = Astro.props;
 ---
 
-<Tag class:list={['modulo', `luce-${luce}`, { sborda }, classe]} {...resto}>
+<Tag class:list={['modulo', `luce-${luce}`, classe]} {...resto}>
   <slot />
 </Tag>
 
 <style>
   .modulo {
     position: relative;
-    padding: var(--space-10);
+    padding: var(--space-10) var(--rientro);
     clip-path: var(--ritaglio-modulo);
     background: var(--cemento-rilievo);
   }
   .luce-forte {
-    padding: var(--space-14);
+    padding: var(--space-14) var(--rientro);
     background: radial-gradient(760px 640px at 79% 50%, var(--petrolio-luce) 0%, #173134 45%, var(--cemento-rilievo) 85%);
     /* Su petrolio-luce inchiostro-muto arriva a 3,5:1, sotto il 4,5:1 del testo piccolo:
        dentro i moduli più carichi le etichette passano a inchiostro-secondario (4,8:1) */
@@ -40,14 +39,14 @@ const { luce = 'nessuna', as: Tag = 'section', sborda = false, class: classe, ..
     background: radial-gradient(1000px 520px at 84% -12%, #1a444a 0%, #1a1f21 62%, var(--cemento-rilievo) 100%);
   }
   .luce-sinistra {
-    padding: var(--space-14) var(--space-10);
+    padding: var(--space-14) var(--rientro);
     background: radial-gradient(900px 520px at 12% 0%, #1a444a 0%, #1a1f21 60%, var(--cemento-rilievo) 100%);
   }
   .luce-velo {
     background: radial-gradient(1100px 420px at 92% -40%, #16292c 0%, var(--cemento-rilievo) 70%);
   }
   .luce-pieno {
-    padding: var(--space-10);
+    padding: var(--space-10) var(--rientro);
     background: linear-gradient(135deg, var(--petrolio-acceso) 0%, var(--petrolio-scuro) 100%);
     color: var(--carta);
   }

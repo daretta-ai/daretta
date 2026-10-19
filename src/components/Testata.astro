@@ -14,7 +14,7 @@ const { titolo, sfera = true, compatta = false } = Astro.props;
 const parola = Math.max(...titolo.split(/\s+/).map((p) => [...p].length));
 ---
 
-<Modulo luce="forte" sborda class:list={['griglia', 'testata', { compatta }]}>
+<Modulo luce="forte" class:list={['griglia', 'testata', { compatta }]}>
   <div class="testo">
     <div class="riga-etichetta"><slot name="etichetta" /></div>
     <h1 class="punti-pagina" style={`--parola: ${parola}`}>{titolo}</h1>
