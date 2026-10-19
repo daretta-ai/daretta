@@ -64,7 +64,7 @@
   --gap: var(--space-6);
   /* Due linee: i fondi (box, foto, figure) arrivano al filo dei contenuti, tutto ciò che si legge
      (etichette, titoli, testi, logotipo, footer) rientra di --rientro, dentro e fuori dai box
-     (scelta di Patrizio, 19 ott 2026). Su mobile resta il rientro stretto di 8px. */
+     (scelta di Patrizio, 19 ott 2026). Su mobile 24px, lo stesso padding dei moduli. */
   --rientro: var(--space-10);
   /* Stacco tra una sezione e l'altra: più largo del gap, che resta per ciò che sta insieme */
   --stacco: var(--space-24);
@@ -87,7 +87,7 @@
     --stacco: var(--space-14);
     --modulo-smusso: var(--smusso-modulo-mobile);
     --card-smusso: var(--smusso-card-mobile);
-    --rientro: var(--space-2);
+    --rientro: var(--space-6);
   }
 }
 
