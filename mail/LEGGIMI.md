@@ -20,7 +20,7 @@ Come la chiusura del sito: filetto sopra e sotto, etichetta in mono con la frecc
 
 ## Come si scrive in Kit
 
-- **I titoli delle sezioni** («L'opinione non richiesta», «Già che ci siamo…», «Una cosa che ho letto») si scrivono come **titolo H2**, non in grassetto. Il template li trasforma nelle etichette del sito: mono maiuscolo in `onda`. H1 è un titolo grande in Geist, H3 un sottotitolo, H4 un'etichetta grigia.
+- **I titoli delle sezioni** («L'opinione non richiesta», «Già che ci siamo…», «Una cosa che ho letto») si scrivono come **titolo H2**, non in grassetto. Il template li trasforma nelle etichette del sito: mono maiuscolo in `onda`. Anche H1 diventa un'etichetta (l'editor di Kit usa spesso H1 come «titolo»); H3 è un sottotitolo in Geist, H4 un'etichetta grigia.
 - **Le citazioni** (blocco citazione di Kit) diventano la frase in evidenza: Geist grande, `inchiostro`, senza filetto a sinistra.
 - **Il pulsante**: nell'editor di Kit colore `#FF4F1A`, testo `#111314`, nessun bordo, nessun arrotondamento. Kit scrive i colori direttamente sul pulsante, e dove gli stili del template non arrivano (Gmail con indirizzi non Google) restano quelli.
 - **Le immagini** escono ad angoli vivi, a tutta colonna. Le foto di Patrizio vanno trattate prima con `scripts/tratta-foto.py`.
