@@ -36,6 +36,13 @@ const { etichetta, spazio = 'grande' } = Astro.props;
     grid-column: span 3;
     padding-top: var(--space-2);
   }
+  /* Se il testo comincia con un elenco, la prima riga sta sotto il margine dell'elenco (12px), il filetto e i 14px della voce:
+     l'etichetta scende di altrettanto, così resta sulla prima riga di testo. Su mobile sta sopra, non serve. */
+  @media (min-width: 721px) {
+    .blocco:has(> .testo > :global(.elenco-testo:first-child)) :global(.margine) {
+      padding-top: calc(var(--space-2) + var(--space-3) + 15px);
+    }
+  }
   .testo {
     grid-column: 4 / span 6;
     display: flex;
