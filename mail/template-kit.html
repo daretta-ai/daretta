@@ -1,72 +1,164 @@
 <!DOCTYPE html>
-<html lang="it" xmlns="http://www.w3.org/1999/xhtml">
-
+<html lang="it" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
   <meta name="color-scheme" content="dark" />
   <meta name="supported-color-schemes" content="dark" />
   <title>dàretta</title>
+  <!--[if mso]>
+  <noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+  <style>
+    body, table, td, p, li, h1, h2, h3, h4, blockquote { font-family: Arial, Helvetica, sans-serif !important; mso-line-height-rule: exactly; }
+    .mono, .corpo h2, .corpo h4, .corpo code, .corpo pre, .corpo a.email-button, .piede-link { font-family: 'Courier New', Courier, monospace !important; }
+    .corpo ul, .corpo ol { margin-left: 24px !important; padding-left: 0 !important; }
+  </style>
+  <![endif]-->
   <style>
     :root { color-scheme: dark; supported-color-schemes: dark; }
-    body { margin: 0; padding: 0; background: #111314; }
-    .corpo { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.6; color: #D2D4CE; }
-    .corpo p { margin: 0 0 20px; }
-    .corpo h1, .corpo h2, .corpo h3 { color: #ECECE7; font-weight: 600; line-height: 1.25; margin: 32px 0 12px; }
-    .corpo h1 { font-size: 28px; }
-    .corpo h2 { font-size: 22px; }
-    .corpo h3 { font-size: 18px; }
-    .corpo a { color: #ECECE7; text-decoration: underline; text-underline-offset: 3px; }
-    .corpo strong { color: #ECECE7; }
-    .corpo blockquote { margin: 24px 0; padding: 0 0 0 20px; border-left: 2px solid #2E3A3C; color: #ECECE7; }
-    .corpo img { max-width: 100%; height: auto; }
-    .corpo hr { border: 0; border-top: 1px solid #2A2F31; margin: 32px 0; }
-    .corpo a.btn, .corpo a.button, .corpo .btn a, .corpo .button a, .corpo a[class*="button"],
-    .corpo [class*="button"], .corpo [class*="btn"] {
-      background: #FF4F1A !important; background-color: #FF4F1A !important; color: #111314 !important;
-      border: 0 !important; border-color: #FF4F1A !important; border-radius: 0 !important;
-      font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important;
-      font-size: 14px !important; letter-spacing: 1px !important; text-transform: uppercase !important;
-      text-decoration: none !important; padding: 16px 28px !important; display: inline-block !important;
+    body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #111314; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table { border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; }
+    img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+    .corpo { font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 18px; line-height: 1.7; color: #d2d4ce; }
+    .corpo p { margin: 0 0 24px; }
+    .corpo strong, .corpo b { color: #ecece7; font-weight: 600; }
+    .corpo em, .corpo i { font-style: italic; }
+    .corpo h1 { margin: 0 0 24px; font-size: 32px; line-height: 1.2; font-weight: 600; color: #ecece7; letter-spacing: -0.5px; }
+    .corpo h2 { margin: 56px 0 16px; font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size: 14px; line-height: 1.5; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #6ccbd3; }
+    .corpo h3 { margin: 40px 0 16px; font-size: 24px; line-height: 1.3; font-weight: 600; color: #ecece7; }
+    .corpo h4 { margin: 40px 0 12px; font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size: 14px; line-height: 1.5; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #9aa3a4; }
+    .corpo h1:first-child, .corpo h2:first-child, .corpo h3:first-child, .corpo h4:first-child { margin-top: 0; }
+    .corpo a { color: #ecece7; text-decoration: underline; text-decoration-color: #22767e; text-underline-offset: 4px; }
+    .corpo ul, .corpo ol { margin: 0 0 32px; padding: 0 0 0 24px; border-bottom: 1px solid #2e3a3c; }
+    .corpo ul { list-style-type: square; }
+    .corpo ol { list-style-type: decimal-leading-zero; padding-left: 40px; }
+    .corpo li { margin: 0; padding: 14px 0 14px 8px; border-top: 1px solid #2e3a3c; }
+    .corpo li p { margin: 0; }
+    .corpo li ul, .corpo li ol { margin: 14px 0 0; border-bottom: 0; }
+    .corpo blockquote, .corpo .blockquotes { margin: 40px 0; padding: 0; border: 0; font-size: 24px; line-height: 1.4; color: #ecece7; }
+    .corpo blockquote p, .corpo .blockquotes-line { margin: 0 0 16px; font-size: 24px; line-height: 1.4; color: #ecece7; font-family: inherit; }
+    .corpo hr { height: 1px; margin: 40px 0; border: 0; background-color: #2e3a3c; color: #2e3a3c; }
+    .corpo img { display: block; max-width: 100% !important; height: auto !important; margin: 32px 0; border-radius: 0 !important; }
+    .corpo code { padding: 2px 4px; font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size: 16px; color: #ecece7; background-color: #1a1d1f; }
+    .corpo pre { margin: 0 0 32px; padding: 24px; overflow-x: auto; background-color: #1a1d1f; white-space: pre-wrap; }
+    .corpo pre code { padding: 0; background-color: transparent; }
+    .corpo a.email-button, .corpo a.button, .corpo a.btn, .corpo .button a, .corpo .btn a {
+      display: inline-block !important; margin: 8px 0 32px !important; padding: 20px 32px !important;
+      background: #ff4f1a !important; background-color: #ff4f1a !important; color: #111314 !important;
+      border: 0 !important; border-radius: 0 !important;
+      font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace !important;
+      font-size: 14px !important; line-height: 16px !important; font-weight: 500 !important;
+      letter-spacing: 1px !important; text-transform: uppercase !important; text-decoration: none !important;
     }
-    .piede { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 12px; line-height: 1.7; letter-spacing: 0.5px; color: #9AA3A4; }
-    .piede a { color: #9AA3A4 !important; text-decoration: underline; }
-    .indirizzo, .indirizzo a, .indirizzo span { color: #9AA3A4 !important; text-decoration: none !important; pointer-events: none; }
-    a[x-apple-data-detectors], u + #body a, #MessageViewBody a { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
-    @media (max-width: 620px) {
-      .contenitore { padding: 32px 20px !important; }
-      .corpo { font-size: 16px !important; }
+    .piede { font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #9aa3a4; }
+    .piede strong { color: #ecece7; font-weight: 600; }
+    .piede a { color: #ecece7; text-decoration: underline; text-decoration-color: #22767e; text-underline-offset: 3px; }
+    .piede .piede-link a { color: #9aa3a4; text-decoration: none; }
+    .piede-link { font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size: 13px; line-height: 1.6; letter-spacing: 1px; text-transform: uppercase; color: #9aa3a4; }
+    .indirizzo { font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size: 12px; line-height: 1.6; letter-spacing: 1px; text-transform: uppercase; color: #9aa3a4; }
+    .indirizzo a, .indirizzo span { color: #9aa3a4 !important; text-decoration: none !important; }
+    @media only screen and (max-width: 620px) {
+      .cornice { padding: 40px 24px 48px !important; }
+      .corpo h1 { font-size: 24px !important; }
+      .corpo h3, .corpo blockquote, .corpo blockquote p, .corpo .blockquotes-line { font-size: 20px !important; }
+      .corpo a.email-button, .corpo a.button, .corpo a.btn, .corpo .button a, .corpo .btn a { display: block !important; text-align: center !important; }
     }
   </style>
+  <style>
+    @media screen {
+      @font-face { font-family: 'Geist'; font-style: normal; font-weight: 400; font-display: swap; src: url('https://daretta.it/mail/font/geist-400.woff2') format('woff2'); }
+      @font-face { font-family: 'Geist'; font-style: normal; font-weight: 600; font-display: swap; src: url('https://daretta.it/mail/font/geist-600.woff2') format('woff2'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('https://daretta.it/mail/font/geist-mono-400.woff2') format('woff2'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('https://daretta.it/mail/font/geist-mono-500.woff2') format('woff2'); }
+    }
+  </style>
+  <style>
+    .corpo a[class*="button"], .corpo a[class*="btn"] {
+      display: inline-block !important; padding: 20px 32px !important; background: #ff4f1a !important; background-color: #ff4f1a !important;
+      color: #111314 !important; border: 0 !important; border-radius: 0 !important; text-decoration: none !important;
+      font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace !important;
+      font-size: 14px !important; line-height: 16px !important; letter-spacing: 1px !important; text-transform: uppercase !important;
+    }
+    @media only screen and (max-width: 620px) {
+      .corpo a[class*="button"], .corpo a[class*="btn"] { display: block !important; text-align: center !important; }
+    }
+    a[x-apple-data-detectors], .indirizzo a[href], u + #body .indirizzo a, #MessageViewBody .indirizzo a {
+      color: #9aa3a4 !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important;
+    }
+  </style>
+  <style>
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+      .corpo a:not([class*="button"]):not([class*="btn"]), .piede .testo-link a {
+        text-decoration: none;
+        background-image: linear-gradient(to right, #22767e 2px, transparent 2px);
+        background-size: 4px 2px; background-repeat: repeat-x; background-position: 0 100%;
+        padding-bottom: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+      }
+      .corpo a:not([class*="button"]):not([class*="btn"]):hover, .piede .testo-link a:hover {
+        background-image: linear-gradient(to right, #2c8a93 2px, transparent 2px);
+      }
+      .corpo ul { list-style-type: '[ \25A0 ]  '; padding-left: 56px; }
+      .corpo ul ul { list-style-type: square; padding-left: 24px; }
+      .corpo li::marker { color: #9aa3a4; font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace; font-size: 14px; }
+      .piede .piede-link a:hover { color: #ecece7; }
+    }
+  </style>
+  <style>
+    [data-ogsc] .corpo, [data-ogsc] .corpo p, [data-ogsc] .corpo li { color: #d2d4ce !important; }
+    [data-ogsc] .corpo strong, [data-ogsc] .corpo a, [data-ogsc] .corpo h1, [data-ogsc] .corpo h3, [data-ogsc] .corpo blockquote { color: #ecece7 !important; }
+    [data-ogsc] .corpo h2 { color: #6ccbd3 !important; }
+    [data-ogsc] .piede, [data-ogsc] .piede-link, [data-ogsc] .indirizzo { color: #9aa3a4 !important; }
+    [data-ogsb] .sfondo { background-color: #111314 !important; }
+  </style>
 </head>
-<body id="body" style="margin:0; padding:0; background:#111314;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#111314;" bgcolor="#111314">
-    <tr>
-      <td align="center" style="padding:0;">
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;">
-          <tr>
-            <td class="contenitore" style="padding:48px 40px;">
-              <a href="https://daretta.it" style="text-decoration:none;">
-                <img src="https://daretta.it/mail/logotipo.png" width="150" height="31" alt="dàretta" style="display:block; border:0; width:150px; height:auto; color:#ECECE7; font-size:24px; font-weight:600;" />
-              </a>
-              <div style="height:40px; line-height:40px;">&nbsp;</div>
-
-              <div class="corpo" style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:17px; line-height:1.6; color:#D2D4CE;">
-                {{ message_content }}
-              </div>
-
-              <div style="height:24px; line-height:24px;">&nbsp;</div>
-              <div style="border-top:1px solid #2A2F31; height:24px; line-height:24px;">&nbsp;</div>
-              <div class="piede" style="font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size:12px; line-height:1.7; letter-spacing:0.5px; color:#9AA3A4;">
-                <a href="{{ unsubscribe_url }}" style="color:#9AA3A4; text-decoration:underline;">Vuoi andartene? Basta un clic, senza rancore.</a><br />
-                <a href="https://daretta.it/privacy" style="color:#9AA3A4; text-decoration:underline;">Come tratto la tua email</a><br />
-                <span class="indirizzo" style="color:#9AA3A4; text-decoration:none;">{{ address }}</span>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+<body class="body" id="body" style="margin:0; padding:0; width:100%; background-color:#111314; word-spacing:normal;">
+  <div role="article" aria-roledescription="email" aria-label="dàretta" lang="it" dir="ltr" class="sfondo" style="background-color:#111314;">
+    <table role="presentation" class="sfondo" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#111314" style="width:100%; background-color:#111314;">
+      <tr>
+        <td align="center" style="padding:0;">
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;">
+            <tr>
+              <td class="cornice" align="left" style="padding:56px 40px 56px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+                  <tr>
+                    <td style="padding:0 0 32px;">
+                      <a href="https://daretta.it" style="text-decoration:none;"><img src="https://daretta.it/mail/logotipo.png" width="120" height="25" alt="dàretta" style="display:block; width:120px; height:auto; border:0; color:#ecece7; font-family:'Courier New', Courier, monospace; font-size:20px; font-weight:bold; line-height:25px;" /></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td height="1" bgcolor="#2e3a3c" style="height:1px; font-size:1px; line-height:1px; background-color:#2e3a3c;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:40px 0 0;">
+                      <div class="corpo" style="font-family:'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:18px; line-height:1.7; color:#d2d4ce;">
+                        {{ message_content }}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td height="32" style="height:32px; font-size:32px; line-height:32px;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td height="1" bgcolor="#2a2f31" style="height:1px; font-size:1px; line-height:1px; background-color:#2a2f31;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="piede" style="padding:24px 0 0; font-family:'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:14px; line-height:1.6; color:#9aa3a4;">
+                      <p class="testo-link" style="margin:0 0 8px;"><strong style="color:#ecece7; font-weight:600;">dàretta.</strong> Ti arriva perché ti sei iscritto su daretta.it. Se te l'hanno girata, <a href="https://daretta.it/#newsletter" style="color:#ecece7; text-decoration:underline;">ti iscrivi da qui</a>.</p>
+                      <p class="testo-link" style="margin:0 0 24px;"><a href="{{ unsubscribe_url }}" style="color:#ecece7; text-decoration:underline;">Vuoi andartene? Basta un clic, senza rancore.</a></p>
+                      <p class="piede-link" style="margin:0 0 8px; font-family:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size:13px; line-height:1.6; letter-spacing:1px; text-transform:uppercase; color:#9aa3a4;"><a href="https://daretta.it" style="color:#9aa3a4; text-decoration:none;">daretta.it</a> &middot; <a href="https://www.linkedin.com/in/patriziobartolozzi" style="color:#9aa3a4; text-decoration:none;">LinkedIn</a> &middot; <a href="https://daretta.it/privacy" style="color:#9aa3a4; text-decoration:none;">Come tratto i tuoi dati</a></p>
+                      <p class="indirizzo" style="margin:0; font-family:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size:12px; line-height:1.6; letter-spacing:1px; text-transform:uppercase; color:#9aa3a4;"><span style="color:#9aa3a4; text-decoration:none;">{{ address }}</span></p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
 </body>
 </html>

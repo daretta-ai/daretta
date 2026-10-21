@@ -18,8 +18,11 @@
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 /og/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+# I caratteri della mail (mail/font) li carica il programma di posta da un'altra origine:
+# senza Access-Control-Allow-Origin alcuni li scartano. Sono file pubblici, quindi * va bene.
 /mail/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Access-Control-Allow-Origin: *
 /favicon.svg
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 /favicon.ico
