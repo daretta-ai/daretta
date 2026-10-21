@@ -6,6 +6,7 @@ import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import csp from './src/integrazioni/csp.mjs';
 import linkEsterni from './src/integrazioni/link-esterni.mjs';
+import newsletterUltima from './src/integrazioni/newsletter-ultima.mjs';
 
 // Le pagine del sito sono statiche: si caricano all'istante.
 // Solo l'admin di Keystatic gira sul server.
@@ -43,5 +44,7 @@ export default defineConfig({
     // Content-Security-Policy con gli hash degli script in linea, in fondo a _headers (vedi il file).
     // Non serve con `npm run cms`, dove non c'è Cloudflare a leggere _headers.
     ...(cmsLocale ? [] : [csp()]),
+    // /newsletter/ultima porta all'ultimo numero pubblicato, in dist/client/_redirects (vedi il file).
+    ...(cmsLocale ? [] : [newsletterUltima()]),
   ],
 });

@@ -15,7 +15,7 @@ Variabili obbligatorie, una volta sola ciascuna: `{{ message_content }}`, `{{ un
 
 Come la chiusura del sito: filetto sopra e sotto, etichetta in mono con la freccia, testo grande. Stanno sopra il piede, separate dai link istituzionali.
 
-- **Guarda la versione web** porta al numero su daretta.it. L'indirizzo si cambia a mano nel template a ogni invio (scelta di Patrizio, 21 ottobre 2026): in `template-kit.html` cercare `daretta.it/newsletter/` e mettere il mese del numero, `AAAA-MM`. Il numero deve essere online quando parte la mail (campo «Pubblicato» in Keystatic), altrimenti il link porta alla 404.
+- **Guarda la versione web** porta a `daretta.it/newsletter/ultima`, un indirizzo fisso: a ogni build Cloudflare lo manda (302) all'ultimo numero pubblicato (`src/integrazioni/newsletter-ultima.mjs`, regola in `dist/client/_redirects`). Il numero deve essere online quando parte la mail, con «Pubblicato» acceso in Keystatic; senza numeri pubblicati l'indirizzo dà la 404. Chi apre una mail vecchia dopo l'uscita di un numero nuovo arriva al numero nuovo.
 - **Tutte le newsletter** porta a `/newsletter`, con il testo del sito «Guarda cosa ti sei perso.». Prima che ci sia un numero pubblicato porta alla 404.
 
 ## Come si scrive in Kit
