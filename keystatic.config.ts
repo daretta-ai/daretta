@@ -143,6 +143,19 @@ const blocchi = {
       }),
     },
   }),
+  battito: block({
+    label: 'Linea del tempo',
+    description: 'Il battito: le tappe di una linea del tempo disegnate come un\'onda. Le tappe si scrivono in «Linee del tempo».',
+    schema: {
+      etichetta,
+      storia: fields.relationship({
+        label: 'Linea del tempo',
+        description: 'Quale storia raccontare.',
+        collection: 'tempi',
+        validation: { isRequired: true },
+      }),
+    },
+  }),
   confronto: block({
     label: 'Prima e dopo',
     description: 'Due o più numeri a confronto, in card.',
@@ -190,7 +203,7 @@ export default config({
     brand: { name: 'dàretta' },
     navigation: {
       Pagine: ['home', 'chiSono', 'newsletter', 'microtesti', 'privacy'],
-      Contenuti: ['progetti', 'articoli', 'numeri', 'curiosita'],
+      Contenuti: ['progetti', 'articoli', 'numeri', 'tempi', 'curiosita'],
     },
   },
   singletons: {
@@ -414,6 +427,73 @@ export default config({
           },
           components: { blocco: blocchi.blocco, citazione: blocchi.citazione },
         }),
+      },
+    }),
+    tempi: collection({
+      label: 'Linee del tempo',
+      slugField: 'titolo',
+      path: 'src/content/tempi/*',
+      format: { data: 'yaml' },
+      columns: ['titolo', 'conclusa'],
+      schema: {
+        titolo: fields.slug({
+          name: { label: 'Titolo', description: 'Compare in testa all\'onda, con gli anni: «valdinievole.online, 2026», «Codever, 2016–2026».' },
+          slug: { label: 'Indirizzo', description: 'Serve solo a sceglierla nel blocco «Linea del tempo». Non cambiarlo dopo averla usata.' },
+        }),
+        adesso: fields.text({
+          label: 'Cosa succede adesso',
+          description: 'Facoltativo. Accanto a «Siamo qui», es. «La prima versione». Vuoto, scrive «Oggi».',
+        }),
+        conclusa: fields.checkbox({
+          label: 'Storia conclusa',
+          description: 'Acceso, l\'onda finisce all\'ultima data e «Siamo qui» non compare.',
+          defaultValue: false,
+        }),
+        tappe: fields.array(
+          fields.object({
+            data: fields.date({
+              label: 'Data',
+              description: 'Anche indicativa: decide dove cade la tappa. Le tappe dopo oggi restano spente.',
+              validation: { isRequired: true },
+            }),
+            quando: fields.text({
+              label: 'Come dirla',
+              description: 'Facoltativo, prende il posto del mese: «A breve», «Estate 2027».',
+            }),
+            titolo: fields.text({ label: 'Titolo', validation: { length: { min: 1 } } }),
+            testo: fields.text({
+              label: 'Una riga',
+              description: 'Facoltativa. Non compare sul grafico: la leggono gli screen reader.',
+              multiline: true,
+            }),
+            peso: fields.select({
+              label: 'Peso',
+              description: 'Quanto alza l\'onda. Le tappe grandi hanno l\'etichetta anche nella panoramica degli anni.',
+              options: [
+                { label: 'Piccola', value: '1' },
+                { label: 'Media', value: '2' },
+                { label: 'Grande', value: '3' },
+              ],
+              defaultValue: '2',
+            }),
+          }),
+          {
+            label: 'Tappe',
+            description: 'Con l\'etichetta sul grafico. L\'ordine lo decidono le date.',
+            itemLabel: (t) => [t.fields.data.value, t.fields.titolo.value].filter(Boolean).join(' · ') || 'Tappa',
+          },
+        ),
+        aggiornamenti: fields.array(
+          fields.object({
+            data: fields.date({ label: 'Data', validation: { isRequired: true } }),
+            nota: fields.text({ label: 'Nota per te', description: 'Facoltativa, non compare sul sito.' }),
+          }),
+          {
+            label: 'Aggiornamenti',
+            description: 'Facoltativi. Giorni di lavoro senza una tappa: non hanno etichetta, ma fanno battere l\'onda.',
+            itemLabel: (a) => [a.fields.data.value, a.fields.nota.value].filter(Boolean).join(' · ') || 'Aggiornamento',
+          },
+        ),
       },
     }),
     curiosita: collection({

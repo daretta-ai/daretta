@@ -17,6 +17,7 @@ export const config: Config = {
     sito: { render: 'sito', attributes: { etichetta: testo, meta: testo, pulsante: testo, anteprime: testo } },
     citazione: { render: 'citazione', selfClosing: true, attributes: { testo, didascalia: testo } },
     confronto: { render: 'confronto', selfClosing: true, attributes: { voci: { type: Array } } },
+    battito: { render: 'battito', selfClosing: true, attributes: { etichetta: testo, storia: testo } },
   },
   nodes: {
     fence: { render: 'codice', attributes: { content: testo, language: testo } },

@@ -18,6 +18,7 @@ I testi del sito si scrivono in Keystatic. Keystatic salva file normali dentro `
 | Progetti | `progetti/*.mdoc` | card in home e pagina `/progetti/…` |
 | Articoli | `articoli/*.mdoc` | lista in home e in `/chiacchiere`, pagina `/chiacchiere/…` (solo se «Pubblicato») |
 | Newsletter inviate | `numeri/AAAA-MM.mdoc` | archivio `/newsletter` e pagina `/newsletter/AAAA-MM` (solo se «Pubblicato»), link «Guarda cosa ti sei perso» nel modulo |
+| Linee del tempo | `tempi/*.yaml` | il blocco «Linea del tempo» (il battito), dove lo inserisci |
 | Curiosità | `curiosita/*.json` | tabellone e `/curiosita` |
 
 Etichette di sezione, rimandi in fondo alle pagine e voci di menu restano nel codice: sono interfaccia, non testo.
@@ -27,6 +28,16 @@ Etichette di sezione, rimandi in fondo alle pagine e voci di menu restano nel co
 Ogni numero inviato si copia in **Newsletter inviate**, con il testo identico alla mail. L'indirizzo è anno e mese di uscita (`2026-11`), il numero è progressivo. Le sezioni della mail («L'opinione non richiesta», «Già che ci siamo…», «Una cosa che ho letto») sono paragrafi con l'etichetta nel margine. La «Descrizione» non compare nella pagina: la leggono motori di ricerca, AI e social.
 
 «Pubblicato» si accende qualche giorno dopo l'invio, così chi è iscritto la legge prima. Finché non c'è almeno un numero pubblicato, `/newsletter` non esiste e il link nel modulo non compare. I numeri vanno nella sitemap ma non nel feed RSS, che resta degli articoli. Titolo e frase dell'archivio e testo del link stanno nella pagina Newsletter.
+
+## Le linee del tempo
+
+Il battito è una linea del tempo disegnata come un'onda di quadretti (design system, «Il battito»). Una storia si scrive in **Linee del tempo** e si mostra con il blocco «Linea del tempo» nel corpo di una pagina (progetti, Chi sono, articoli), scegliendola dall'elenco.
+
+- **Tappe:** data, titolo, una riga facoltativa (la legge solo lo screen reader) e un peso. Il peso alza l'onda: le tappe «Grandi» hanno l'etichetta anche nella panoramica degli anni. «Come dirla» prende il posto del mese sotto il numero («A breve», «Estate 2027»): la data serve comunque, anche indicativa, perché decide dove cade la tappa.
+- **Aggiornamenti:** solo una data, e una nota che resta per te. Non hanno etichetta, ma fanno battere l'onda nei periodi di lavoro senza tappe. Sono facoltativi: senza, l'onda batte solo sulle tappe.
+- **Siamo qui** è il giorno in cui il sito viene costruito, cioè l'ultimo salvataggio. Dopo, l'onda finisce e resta una riga di quadretti spenti, con le tappe future più grandi. «Cosa succede adesso» è la frase accanto a «Siamo qui». Con «Storia conclusa» acceso, l'onda finisce all'ultima data e «Siamo qui» non c'è.
+
+La grana la sceglie il sito dalla durata: una storia che sta in un anno si vede a settimane; se dura di più, sopra c'è la panoramica (a mesi fino a quattro anni, a trimestri oltre) e le parentesi fanno da lente sull'anno aperto sotto. I conti sono in `src/battito.ts`, il disegno in `src/components/Battito.astro`.
 
 ## Il corpo a blocchi
 
@@ -38,6 +49,7 @@ Progetti, Chi sono e articoli hanno un corpo fatto di blocchi, gli stessi delle 
 - **Paragrafo con foto:** solo foto già trattate con `scripts/tratta-foto.py` (oggi «notte» e «pini»).
 - **Citazione:** una frase in Doto, nella colonna del testo. La riga sotto è facoltativa: la fonte, se le parole sono di altri; vuota, se è una frase del testo.
 - **Prima e dopo:** numeri a confronto, in card (pensato per gli articoli).
+- **Linea del tempo:** il battito di una storia scritta in «Linee del tempo» (vedi sopra).
 
 I numeri `[ 01 ]`, `[ 02 ]` li mette il sito, in ordine: spostando un blocco si rinumera da solo. Il testo scritto fuori dai blocchi finisce nella colonna di lettura, senza etichetta. Nelle pagine progetto, «Mostra lo stato del progetto» mette lo stato sotto il testo di quel blocco.
 

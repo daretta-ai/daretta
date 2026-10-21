@@ -14,6 +14,7 @@ import FiguraBarre from './FiguraBarre.astro';
 import FiguraElenco from './FiguraElenco.astro';
 import Elenco from './Elenco.astro';
 import Stato from './Stato.astro';
+import Battito from './Battito.astro';
 
 interface Props {
   nodi: RenderableTreeNode[];
@@ -92,6 +93,8 @@ const Self = Astro.self;
         return <Citazione testo={a.testo} didascalia={a.didascalia} />;
       case 'confronto':
         return <Confronto voci={a.voci ?? []} />;
+      case 'battito':
+        return <Battito etichetta={a.etichetta} storia={a.storia} />;
       case 'ul':
       case 'ol': {
         // Elenchi del testo: ogni voce con il suo segno nel margine (Elenco.astro)

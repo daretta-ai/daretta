@@ -212,6 +212,18 @@ Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa 
 - **Costruzione.** Solo `transform` e `opacity` (due eccezioni: lo sfondo dei punti sotto i link, che cambia il disegno ma non il layout, e il `clip-path` della trama dei pulsanti, accettato perché i pulsanti sono piccoli), solo CSS e qualche riga di script, nessuna libreria: il sito resta istantaneo (Lighthouse e CLS invariati). Tutto in `src/styles/movimento.css`; il reveal è in `Base.astro`. Con `prefers-reduced-motion` non si muove niente.
 - **Per ogni nuovo movimento** la domanda è una: spiega qualcosa, o fa solo scena? Se fa solo scena, non si fa. Prima si prova su una pagina, poi si estende.
 
+## Il battito
+
+Una linea del tempo disegnata come un'onda di quadretti. È il gesto della sfera che ascolta, portato su una storia: le tappe sono i picchi, i periodi fermi tornano a un solo quadretto sull'asse.
+
+- **L'onda nasce dalle date.** Non si disegna a mano: ogni tappa (peso 1, 2 o 3) e ogni aggiornamento lascia un'eco sulle colonne vicine, più forte al centro; dove gli eventi si avvicinano le eco si sommano. A riposo resta un quadretto sull'asse. Quadretti in `punti`, mai arancio, mai `onda`.
+- **Siamo qui.** L'anello dello stato IN SVILUPPO sull'asse. Dopo, l'onda finisce: resta una riga di quadretti spenti in `bordo`, uno per colonna, e le tappe future sono quadretti spenti più grandi sulla stessa riga. In una storia conclusa l'anello non c'è.
+- **Le etichette.** Sopra l'onda, su tre livelli: riga in mono (`[ 07 ] · FEB`, o «Siamo qui») e titolo in Geist `testo-piccolo`. Un filo di punti scende dall'etichetta all'onda, in `punti` (in `bordo` per le tappe future). Un'etichetta non copre un'altra e non è attraversata da un filo; se due cadono nella stessa colonna, una sta a sinistra del filo e l'altra a destra.
+- **La grana cambia con la durata, non la misura.** Una storia in un anno: l'anno a settimane (52 colonne, quadretti da 6px ogni 10px). Più anni: la lente. Sopra la panoramica, a mesi fino a quattro anni e a trimestri oltre (quadretti da 4px); hanno l'etichetta solo le tappe grandi. Le parentesi quadre, il segno del sito, inquadrano un anno e scorrono quando se ne sceglie un altro (320ms); due linee di punti si allargano verso l'anno aperto sotto, a settimane.
+- **Su mobile** il tempo scende: una settimana ogni 8px, quadretti da 4px ogni 7px, l'onda si allarga ai due lati dell'asse, i mesi nel margine a sinistra, le etichette a destra. Se due tappe sono troppo vicine, la seconda scende e il filo fa un gomito. La panoramica resta orizzontale in cima, con gli anni abbreviati (’16) come zone da toccare alte almeno 44px.
+- **Accessibilità.** Il grafico è decorativo per lo screen reader, che legge l'elenco delle tappe con data, titolo e riga facoltativa. Gli anni della lente sono pulsanti con `aria-pressed`. Senza JavaScript resta aperto l'anno di «Siamo qui».
+- Costruzione: `src/battito.ts` (i conti), `src/components/Battito.astro` (il disegno, SVG con pattern), collezione «Linee del tempo» e blocco «Linea del tempo» in Keystatic.
+
 ## Le curiosità
 
 Un tabellone delle partenze, meccanico e sobrio. La meraviglia resta alla sfera: il tabellone è il dettaglio che fa sorridere.

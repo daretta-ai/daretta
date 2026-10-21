@@ -1,0 +1,536 @@
+---
+// Il battito (design system, «Il battito»): una linea del tempo disegnata come un'onda di quadretti.
+// I conti stanno in src/battito.ts; le tappe si scrivono in Keystatic, «Linee del tempo».
+//
+// Desktop: il tempo scorre in orizzontale. Se la storia dura più di un anno sopra c'è la panoramica
+// (a mesi o a trimestri) e le parentesi quadre fanno da lente sull'anno aperto sotto, a settimane.
+// Mobile: la panoramica resta orizzontale, l'anno aperto scende in verticale con le etichette a destra.
+// Dopo «Siamo qui» l'onda finisce: resta una riga di quadretti spenti, con le tappe future più grandi.
+// Il grafico è aria-hidden: lo screen reader legge l'elenco delle tappe.
+import Modulo from './Modulo.astro';
+import Sezione from './Sezione.astro';
+import { getStoria } from '../cms';
+import { calcola, livelli, spinte, SETTIMANE, type Colonna } from '../battito';
+
+interface Props {
+  etichetta: string;
+  storia: string;
+}
+const { etichetta, storia: slug } = Astro.props;
+const storia = await getStoria(slug);
+const b = calcola({ ...storia, tappe: storia.tappe.map((t) => ({ ...t, peso: t.peso as 1 | 2 | 3 })) });
+const n = b.anni.length;
+const id = `battito-${slug}`;
+const anni = b.primo === b.ultimo ? `${b.primo}` : `${b.primo}–${b.ultimo}`;
+
+// ── Geometria (in unità SVG) ────────────────────────────────────────────────
+// Anno a settimane, desktop: colonne da 24, quadretti da 6 ogni 10, asse a 63.
+const D = { larghezza: SETTIMANE * 24, alto: 130, passo: 24, asse: 63, quadro: 6, riga: 10 };
+// Anno a settimane, mobile: una riga ogni 8, quadretti da 4 ogni 7, asse verticale a 84.
+const M = { larghezza: 152, alto: SETTIMANE * 8 + 8, riga: 8, asse: 84, quadro: 4, passo: 7, fine: 150 };
+const altezzaD = (a: number) => (2 * a + 1) * D.riga - (D.riga - D.quadro);
+const mezzaM = (a: number) => ((2 * a + 1) * M.passo - (M.passo - M.quadro)) / 2;
+
+// Panoramica: desktop su 1248, mobile a passo 7
+const pan = b.panoramica;
+const P = pan && {
+  d: { larghezza: 1248, passo: 1248 / pan.colonne.length, alto: 64, asse: 32, quadro: 4, riga: 7, massimo: 4 },
+  m: { larghezza: pan.colonne.length * 7, passo: 7, alto: 40, asse: 18.5, quadro: 3, riga: 5, massimo: 3 },
+};
+const tipo = (c: Colonna) => c.tipo;
+const alt = (c: Colonna) => (c.tipo === 'accesa' ? c.a : 0);
+
+const dataLunga = (d: Date) => d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const posOra = b.anni[b.scelto].colonne.findIndex((c) => c.tipo === 'ora');
+const luceX = posOra >= 0 ? `${((posOra + 0.5) / SETTIMANE) * 100}%` : '80%';
+---
+
+<Modulo
+  class="battito"
+  data-battito
+  data-n={n}
+  style={`--n: ${n}; --i: ${b.scelto}; --luce-x: ${luceX}`}
+  aria-labelledby={`${id}-titolo`}
+>
+  <div class="testa">
+    <Sezione segno class="margine" id={`${id}-titolo`}>{etichetta}</Sezione>
+    <p class="nome">{b.titolo}, {anni}</p>
+    <p class="meta destra" aria-hidden="true">
+      {pan ? <>Lente sul <span data-anno-testo>{b.anni[b.scelto].anno}</span></> : 'Settimana per settimana'}
+    </p>
+  </div>
+
+  <ol class="solo-lettori">
+    {
+      b.tappe.map((t) => (
+        <li>
+          {t.quando || dataLunga(t.data)}: {t.titolo}.{t.testo && ` ${t.testo}`}{t.futura && ' (prossima tappa)'}
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    pan && P && (
+      <div class="panoramica">
+        <div class="pan-etichette solo-desktop" aria-hidden="true">
+          {pan.etichette.map((e) => (
+            <span class:list={['meta', 'pan-etichetta', e.x > 0.7 && 'a-destra']} style={e.x > 0.7 ? `right: ${(1 - e.x) * 100}%` : `left: ${e.x * 100}%`}>
+              {e.testo}
+            </span>
+          ))}
+        </div>
+        <div class="striscia">
+          {(['d', 'm'] as const).map((v) => {
+            const g = P[v];
+            const pid = `${id}-pan-${v}`;
+            return (
+              <svg
+                class:list={['onda-pan', v === 'd' ? 'solo-desktop' : 'solo-mobile']}
+                viewBox={`0 0 ${g.larghezza} ${g.alto}`}
+                aria-hidden="true"
+                focusable="false"
+              >
+                <defs>
+                  <pattern id={pid} width={g.passo} height={g.riga} patternUnits="userSpaceOnUse" y={(g.asse - g.quadro / 2) % g.riga}>
+                    <rect class="q-acceso" x={g.passo / 2 - g.quadro / 2} y="0" width={g.quadro} height={g.quadro} />
+                  </pattern>
+                </defs>
+                {pan.colonne.map((c, i) => {
+                  const cx = i * g.passo + g.passo / 2;
+                  if (tipo(c) === 'accesa') {
+                    const a = Math.min(g.massimo, alt(c));
+                    const top = g.asse - g.quadro / 2 - a * g.riga;
+                    return <rect x={i * g.passo} y={top} width={g.passo} height={(2 * a + 1) * g.riga - (g.riga - g.quadro)} fill={`url(#${pid})`} />;
+                  }
+                  if (tipo(c) === 'spenta') return <rect class="q-spento" x={cx - g.quadro / 2} y={g.asse - g.quadro / 2} width={g.quadro} height={g.quadro} />;
+                  if (tipo(c) === 'ora') return <circle class="anello" cx={cx} cy={g.asse} r={g.quadro + 1} />;
+                  return null;
+                })}
+              </svg>
+            );
+          })}
+          <nav class="anni" aria-label="Scegli l'anno">
+            {b.anni.map((a, i) => (
+              <button
+                type="button"
+                class="anno-scegli"
+                data-anno-scegli={i}
+                aria-pressed={i === b.scelto ? 'true' : 'false'}
+                aria-label={`Apri il ${a.anno} settimana per settimana`}
+              >
+                <span class="meta solo-desktop">{a.anno}</span>
+                <span class="meta solo-mobile">’{String(a.anno).slice(2)}</span>
+              </button>
+            ))}
+          </nav>
+          <span class="lente" aria-hidden="true"><span></span><span></span></span>
+        </div>
+        <svg class="raccordo" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <line data-raccordo="sx" x1={(b.scelto / n) * 1000} y1="0" x2="0" y2="40" vector-effect="non-scaling-stroke" />
+          <line data-raccordo="dx" x1={((b.scelto + 1) / n) * 1000} y1="0" x2="1000" y2="40" vector-effect="non-scaling-stroke" />
+        </svg>
+      </div>
+    )
+  }
+
+  {
+    b.anni.map((anno, i) => {
+      const pid = `${id}-${anno.anno}`;
+      const sopra = livelli(anno.voci);
+      const lato = spinte(anno.voci, M.riga);
+      return (
+        <div class="anno" data-anno-dettaglio={i} hidden={i !== b.scelto} aria-hidden="true">
+          {/* Desktop: il tempo in orizzontale */}
+          <div class="orizzontale solo-desktop">
+            <div class="etichette">
+              {sopra.map((v) => {
+                const x = (v.x / D.larghezza) * 100;
+                return (
+                  <>
+                    <span class:list={['filo', v.futura && 'filo-futuro']} style={`left: ${x}%; top: ${v.livello * 44 + 44}px`} />
+                    <span
+                      class:list={['voce', v.destra && 'a-destra']}
+                      style={`top: ${v.livello * 44}px; ${v.destra ? `right: ${100 - (v.a / D.larghezza) * 100}%` : `left: ${(v.da / D.larghezza) * 100}%`}`}
+                    >
+                      <span class:list={['meta', v.ora && 'meta-ora']}>{v.meta}</span>
+                      <span class:list={['titolo', v.futura && 'titolo-futuro']}>{v.titolo}</span>
+                    </span>
+                  </>
+                );
+              })}
+            </div>
+            <svg class="onda" viewBox={`0 0 ${D.larghezza} ${D.alto}`} focusable="false">
+              <defs>
+                <pattern id={`${pid}-d`} width={D.passo} height={D.riga} patternUnits="userSpaceOnUse">
+                  <rect class="q-acceso" x={(D.passo - D.quadro) / 2} y="0" width={D.quadro} height={D.quadro} />
+                </pattern>
+              </defs>
+              {sopra.map((v) => {
+                const c = anno.colonne[v.w];
+                const fine = v.ora || v.futura ? D.asse - 7 : D.asse - D.quadro / 2 - alt(c) * D.riga - 6;
+                return fine > 0 && <line class:list={['filo-svg', v.futura && 'filo-futuro']} x1={v.x} y1="0" x2={v.x} y2={fine} />;
+              })}
+              {anno.colonne.map((c, w) => {
+                const cx = w * D.passo + D.passo / 2;
+                if (c.tipo === 'accesa') {
+                  const top = D.asse - D.quadro / 2 - c.a * D.riga;
+                  return <rect x={w * D.passo} y={top} width={D.passo} height={altezzaD(c.a)} fill={`url(#${pid}-d)`} />;
+                }
+                if (c.tipo === 'spenta') return <rect class="q-spento" x={cx - D.quadro / 2} y={D.asse - D.quadro / 2} width={D.quadro} height={D.quadro} />;
+                if (c.tipo === 'futura') return <rect class="q-spento" x={cx - 5} y={D.asse - 5} width="10" height="10" />;
+                if (c.tipo === 'ora') return <circle class="anello" cx={cx} cy={D.asse} r="5" />;
+                return null;
+              })}
+            </svg>
+            <div class="mesi">
+              {Array.from({ length: 12 }, (_, m) => (
+                <span class="meta" style={`left: ${((Math.floor((m * SETTIMANE) / 12) * D.passo + 8) / D.larghezza) * 100}%`}>
+                  {['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'][m]}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile: il tempo scende in verticale */}
+          <div class="verticale solo-mobile" style={`height: ${Math.max(M.alto, (lato.at(-1)?.top ?? 0) + 70)}px`}>
+            {Array.from({ length: 12 }, (_, m) => (
+              <span class="meta mese-v" style={`top: ${Math.floor((m * SETTIMANE) / 12) * M.riga - 6}px`}>
+                {['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'][m]}
+              </span>
+            ))}
+            <svg class="onda-v" width={M.larghezza} height="100%" viewBox={`0 0 ${M.larghezza} ${Math.max(M.alto, (lato.at(-1)?.top ?? 0) + 70)}`} focusable="false">
+              <defs>
+                <pattern id={`${pid}-m`} width={M.passo} height={M.riga} patternUnits="userSpaceOnUse" x={(M.asse - M.quadro / 2) % M.passo}>
+                  <rect class="q-acceso" x="0" y="0" width={M.quadro} height={M.quadro} />
+                </pattern>
+              </defs>
+              {anno.colonne.map((c, w) => {
+                const y = w * M.riga;
+                if (c.tipo === 'accesa') {
+                  const h = mezzaM(c.a);
+                  return <rect x={M.asse - h} y={y} width={2 * h} height={M.quadro} fill={`url(#${pid}-m)`} />;
+                }
+                if (c.tipo === 'spenta') return <rect class="q-spento" x={M.asse - M.quadro / 2} y={y} width={M.quadro} height={M.quadro} />;
+                if (c.tipo === 'futura') return <rect class="q-spento" x={M.asse - 4} y={y - 2} width="8" height="8" />;
+                if (c.tipo === 'ora') return <circle class="anello" cx={M.asse} cy={y + 2} r="5" />;
+                return null;
+              })}
+              {lato.map((v) => {
+                const c = anno.colonne[v.w];
+                const da = M.asse + (v.ora ? 6 : v.futura ? 4 : mezzaM(alt(c))) + 6;
+                const gomito = v.top > v.centro - 8;
+                return (
+                  <>
+                    <line class:list={['filo-svg', v.futura && 'filo-futuro']} x1={da} y1={v.centro} x2={M.fine} y2={v.centro} />
+                    {gomito && <line class:list={['filo-svg', v.futura && 'filo-futuro']} x1={M.fine} y1={v.centro} x2={M.fine} y2={v.top + 8.5} />}
+                  </>
+                );
+              })}
+            </svg>
+            {lato.map((v) => (
+              <span class="voce-v" style={`top: ${v.top}px`}>
+                <span class:list={['meta', v.ora && 'meta-ora']}>{v.meta}</span>
+                <span class:list={['titolo', v.futura && 'titolo-futuro']}>{v.titolo}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      );
+    })
+  }
+</Modulo>
+
+<script>
+  // La lente: un pulsante per anno sposta le parentesi e apre quell'anno a settimane.
+  // Senza JavaScript resta aperto l'anno di «Siamo qui».
+  for (const radice of document.querySelectorAll<HTMLElement>('[data-battito]')) {
+    const n = Number(radice.dataset.n);
+    const pulsanti = radice.querySelectorAll<HTMLButtonElement>('[data-anno-scegli]');
+    const anni = radice.querySelectorAll<HTMLElement>('[data-anno-dettaglio]');
+    const testo = radice.querySelector<HTMLElement>('[data-anno-testo]');
+    const sx = radice.querySelector<SVGLineElement>('[data-raccordo="sx"]');
+    const dx = radice.querySelector<SVGLineElement>('[data-raccordo="dx"]');
+    for (const p of pulsanti) {
+      p.addEventListener('click', () => {
+        const i = Number(p.dataset.annoScegli);
+        radice.style.setProperty('--i', String(i));
+        pulsanti.forEach((q) => q.setAttribute('aria-pressed', String(q === p)));
+        anni.forEach((a) => (a.hidden = Number(a.dataset.annoDettaglio) !== i));
+        if (testo) testo.textContent = p.querySelector('.solo-desktop')?.textContent ?? '';
+        sx?.setAttribute('x1', String((i / n) * 1000));
+        dx?.setAttribute('x1', String(((i + 1) / n) * 1000));
+      });
+    }
+  }
+</script>
+
+<style>
+  .battito {
+    margin-top: var(--space-14);
+    background: radial-gradient(760px 420px at var(--luce-x) 70%, var(--petrolio-alone) 0%, var(--cemento-rilievo) 78%);
+  }
+
+  /* Testa: etichetta nel margine, nome con gli anni, a destra la riga in mono */
+  .testa {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gap);
+    align-items: baseline;
+  }
+  .testa :global(.margine) {
+    grid-column: 1 / span 3;
+  }
+  .nome {
+    grid-column: 4 / span 5;
+    margin: 0;
+    font-size: var(--testo-attacco);
+    line-height: 1.4;
+    color: var(--inchiostro);
+  }
+  .destra {
+    grid-column: 9 / span 4;
+    margin: 0;
+    text-align: right;
+    color: var(--inchiostro-secondario);
+  }
+
+  /* Colori dei segni */
+  .q-acceso {
+    fill: var(--punti);
+  }
+  .q-spento {
+    fill: var(--bordo);
+  }
+  .anello {
+    fill: var(--petrolio-alone);
+    stroke: var(--inchiostro-muto);
+    stroke-width: 2;
+  }
+  .filo-svg {
+    stroke: var(--punti);
+    stroke-width: 2;
+    stroke-dasharray: 2 4;
+  }
+  .filo-svg.filo-futuro {
+    stroke: var(--bordo);
+  }
+
+  /* Panoramica e lente */
+  .panoramica {
+    margin-top: var(--space-10);
+  }
+  .pan-etichette {
+    position: relative;
+    height: 24px;
+  }
+  .pan-etichetta {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    color: var(--inchiostro-secondario);
+  }
+  .striscia {
+    position: relative;
+    padding-bottom: 28px;
+  }
+  .onda-pan {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .anni {
+    position: absolute;
+    inset: -8px 0 0;
+    display: grid;
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  }
+  .anno-scegli {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 0 4px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .anno-scegli .meta {
+    transition: color 180ms ease;
+  }
+  .anno-scegli:hover .meta,
+  .anno-scegli[aria-pressed='true'] .meta {
+    color: var(--inchiostro);
+  }
+  .anno-scegli:focus-visible {
+    outline: 2px solid var(--onda);
+    outline-offset: -2px;
+  }
+  /* Le parentesi della lente: lo stesso segno delle etichette, grande quanto un anno */
+  .lente {
+    position: absolute;
+    top: -8px;
+    bottom: 0;
+    left: calc(var(--i) / var(--n) * 100%);
+    width: calc(100% / var(--n));
+    pointer-events: none;
+    transition: left 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .lente > span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    border: 1.5px solid var(--inchiostro);
+  }
+  .lente > span:first-child {
+    left: 0;
+    border-right: 0;
+  }
+  .lente > span:last-child {
+    right: 0;
+    border-left: 0;
+  }
+  .raccordo {
+    display: block;
+    width: 100%;
+    height: 40px;
+    margin-top: var(--space-2);
+  }
+  .raccordo line {
+    stroke: var(--bordo);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 5;
+  }
+
+  /* L'anno a settimane, desktop */
+  .anno {
+    margin-top: var(--space-10);
+  }
+  .panoramica + .anno,
+  .panoramica ~ .anno {
+    margin-top: var(--space-2);
+  }
+  .orizzontale {
+    position: relative;
+  }
+  .etichette {
+    position: relative;
+    height: 132px;
+  }
+  .filo {
+    position: absolute;
+    bottom: 0;
+    width: 2px;
+    margin-left: -1px;
+    background: radial-gradient(circle at 1px 1px, var(--punti) 1px, transparent 1.2px) 0 0 / 2px 6px repeat-y;
+  }
+  .filo-futuro {
+    background-image: radial-gradient(circle at 1px 1px, var(--bordo) 1px, transparent 1.2px);
+  }
+  .voce {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    white-space: nowrap;
+  }
+  .voce.a-destra {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .meta-ora {
+    color: var(--inchiostro-secondario);
+  }
+  .titolo {
+    font-size: var(--testo-piccolo);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--inchiostro);
+  }
+  .titolo-futuro {
+    color: var(--inchiostro-secondario);
+  }
+  .onda {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .mesi {
+    position: relative;
+    height: 17px;
+    margin-top: var(--space-4);
+  }
+  .mesi .meta {
+    position: absolute;
+    top: 0;
+  }
+
+  /* L'anno a settimane, mobile: il tempo scende */
+  .verticale {
+    position: relative;
+  }
+  .mese-v {
+    position: absolute;
+    left: 0;
+  }
+  .onda-v {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: visible;
+  }
+  .voce-v {
+    position: absolute;
+    left: 160px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .solo-mobile {
+    display: none;
+  }
+  @media (max-width: 720px) {
+    .solo-desktop {
+      display: none;
+    }
+    .solo-mobile {
+      display: block;
+    }
+    .anno-scegli .solo-mobile {
+      display: inline;
+    }
+    .testa {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2);
+    }
+    .testa > * {
+      grid-column: 1 / -1 !important;
+    }
+    .destra {
+      text-align: left;
+    }
+    .panoramica {
+      margin-top: var(--space-6);
+    }
+    .striscia {
+      padding-bottom: 24px;
+    }
+    .lente > span {
+      width: 5px;
+    }
+    .raccordo {
+      height: 28px;
+    }
+    .anno {
+      margin-top: var(--space-6);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lente {
+      transition: none;
+    }
+  }
+</style>

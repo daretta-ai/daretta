@@ -60,6 +60,33 @@ const numeri = defineCollection({
   }),
 });
 
+// Le linee del tempo del battito (src/battito.ts): tappe con data e peso, aggiornamenti con la sola data.
+const data = z.coerce.date();
+const tempi = defineCollection({
+  loader: glob({ pattern: '*.yaml', base: './src/content/tempi' }),
+  schema: z.object({
+    titolo: z.string(),
+    adesso: facoltativo,
+    conclusa: z.boolean().default(false),
+    tappe: z
+      .array(
+        z.object({
+          data,
+          quando: facoltativo,
+          titolo: z.string(),
+          testo: facoltativo,
+          peso: z.coerce.number().int().min(1).max(3).default(2),
+        }),
+      )
+      .nullish()
+      .transform((v) => v ?? []),
+    aggiornamenti: z
+      .array(z.object({ data, nota: facoltativo }))
+      .nullish()
+      .transform((v) => v ?? []),
+  }),
+});
+
 // Pagine singole: home, newsletter, microtesti (yaml) e chi sono (con il corpo a blocchi).
 const pagine = defineCollection({
   loader: glob({ pattern: '*.yaml', base: './src/content/pagine' }),
@@ -76,4 +103,4 @@ const testiPagine = defineCollection({
   }),
 });
 
-export const collections = { curiosita, progetti, articoli, numeri, pagine, testiPagine };
+export const collections = { curiosita, progetti, articoli, numeri, tempi, pagine, testiPagine };

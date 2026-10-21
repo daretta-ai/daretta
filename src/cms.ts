@@ -124,6 +124,15 @@ export async function getNumeri() {
     .map((v) => ({ slug: v.id, ...v.data, body: v.body ?? '' }));
 }
 
+// ── Linee del tempo ─────────────────────────────────────────────────────────
+
+/** Una linea del tempo del battito, per indirizzo (il nome del file in src/content/tempi). */
+export async function getStoria(slug: string) {
+  const voce = await getEntry('tempi', slug);
+  if (!voce) throw new Error(`Manca la linea del tempo «${slug}» (src/content/tempi/${slug}.yaml).`);
+  return voce.data;
+}
+
 // ── Testi ───────────────────────────────────────────────────────────────────
 
 /** Divide un testo su più paragrafi (una riga vuota tra l'uno e l'altro). */
@@ -140,7 +149,7 @@ export const minutiDiLettura = (testo: string) =>
 // ── Corpo a blocchi ─────────────────────────────────────────────────────────
 // I blocchi sono quelli di keystatic.config.ts; gli attributi da tenere stanno in src/markdoc.ts.
 
-const BLOCCHI = new Set(['blocco', 'numero', 'figura', 'foto', 'sito', 'citazione', 'confronto']);
+const BLOCCHI = new Set(['blocco', 'numero', 'figura', 'foto', 'sito', 'citazione', 'confronto', 'battito']);
 
 /**
  * Trasforma il corpo scritto in Keystatic nell'albero che Corpo.astro disegna.
