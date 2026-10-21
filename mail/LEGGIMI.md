@@ -3,7 +3,7 @@
 Due template dàretta per Kit, uguali tranne una riga:
 
 - `template-kit.html`, per le newsletter: è il predefinito dell'account.
-- `template-kit-conferma.html`, per la mail di conferma dell'iscrizione: non ha «Leggila sul sito», perché lì non c'è un numero da leggere.
+- `template-kit-conferma.html`, per la mail di conferma dell'iscrizione: non ha «Guarda la versione web», perché lì non c'è un numero da leggere.
 
 Se si cambia uno, si cambia anche l'altro.
 
@@ -15,7 +15,7 @@ Variabili obbligatorie, una volta sola ciascuna: `{{ message_content }}`, `{{ un
 
 Come la chiusura del sito: filetto sopra e sotto, etichetta in mono con la freccia, testo grande. Stanno sopra il piede, separate dai link istituzionali.
 
-- **Leggila sul sito** porta a `/newsletter/AAAA-MM` del mese d'invio. L'indirizzo lo calcola Kit al momento dell'invio con Liquid (`"now"`, ora di Roma): funziona perché ogni numero esce a fine del mese che gli dà il nome. Per questo il numero deve essere online su daretta.it quando parte la mail (campo «Pubblicato» in Keystatic acceso prima dell'invio), altrimenti il link porta alla 404. Se un giorno un numero esce nel mese dopo, il link va corretto a mano.
+- **Guarda la versione web** porta al numero su daretta.it. L'indirizzo si cambia a mano nel template a ogni invio (scelta di Patrizio, 21 ottobre 2026): in `template-kit.html` cercare `daretta.it/newsletter/` e mettere il mese del numero, `AAAA-MM`. Il numero deve essere online quando parte la mail (campo «Pubblicato» in Keystatic), altrimenti il link porta alla 404.
 - **Tutte le newsletter** porta a `/newsletter`, con il testo del sito «Guarda cosa ti sei perso.». Prima che ci sia un numero pubblicato porta alla 404.
 
 ## Come si scrive in Kit
