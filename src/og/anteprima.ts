@@ -195,6 +195,16 @@ export function articolo(a: { titolo: string; data: Date; minuti: number }): Nod
   });
 }
 
+export function numero(n: { oggetto: string; numero: number; inviata: Date }): Nodo {
+  const mese = n.inviata.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+  return voce({
+    etichetta: 'Newsletter',
+    accanto: h('span', mono, `N° ${n.numero} · ${mese}`.toUpperCase()),
+    titolo: n.oggetto,
+    dominio: 'DARETTA.IT/NEWSLETTER',
+  });
+}
+
 export { sito };
 
 // resvg in WebAssembly: gira uguale in Node, nella build di Cloudflare e in ogni sistema, senza binari nativi

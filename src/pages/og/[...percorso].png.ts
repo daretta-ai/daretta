@@ -1,12 +1,14 @@
-// Immagini di anteprima per i social: /og/sito.png, /og/progetti/<slug>.png, /og/chiacchiere/<slug>.png.
+// Immagini di anteprima per i social: /og/sito.png, /og/progetti/<slug>.png, /og/chiacchiere/<slug>.png,
+// /og/newsletter/<AAAA-MM>.png.
 // Si generano durante la build (le pagine sono statiche), dai testi in Keystatic.
 import type { APIRoute, GetStaticPaths } from 'astro';
-import { getArticoli, getProgetti, minutiDiLettura } from '../../cms';
-import { articolo, png, progetto, sito } from '../../og/anteprima';
+import { getArticoli, getNumeri, getProgetti, minutiDiLettura } from '../../cms';
+import { articolo, numero, png, progetto, sito } from '../../og/anteprima';
 
 export const getStaticPaths = (async () => {
   const progetti = await getProgetti();
   const articoli = await getArticoli();
+  const numeri = await getNumeri();
   return [
     { params: { percorso: 'sito' }, props: { disegno: () => sito() } },
     ...progetti.map((p) => ({
@@ -16,6 +18,10 @@ export const getStaticPaths = (async () => {
     ...articoli.map((a) => ({
       params: { percorso: `chiacchiere/${a.slug}` },
       props: { disegno: () => articolo({ titolo: a.titolo, data: a.data, minuti: minutiDiLettura(a.body) }) },
+    })),
+    ...numeri.map((n) => ({
+      params: { percorso: `newsletter/${n.slug}` },
+      props: { disegno: () => numero(n) },
     })),
   ];
 }) satisfies GetStaticPaths;

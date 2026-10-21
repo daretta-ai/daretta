@@ -1,0 +1,66 @@
+---
+// Un numero della newsletter, uguale alla mail: stessa apertura e stessa colonna degli articoli.
+// Le sezioni della mail («L'opinione non richiesta», «Già che ci siamo…») sono paragrafi con l'etichetta nel margine.
+// In fondo la chiusura: il numero prima (o l'archivio) e l'ultimo articolo.
+import Base from '../../layouts/Base.astro';
+import Apertura from '../../components/Apertura.astro';
+import Corpo from '../../components/Corpo.astro';
+import Firma from '../../components/Firma.astro';
+import Chiusura from '../../components/Chiusura.astro';
+import { tutteLeNewsletter, ultimoScritto } from '../../rimandi';
+import { numero as schemaNumero } from '../../dati-strutturati';
+import { getNumeri, corpo, minutiDiLettura } from '../../cms';
+
+export async function getStaticPaths() {
+  const numeri = await getNumeri();
+  // Il prossimo da leggere è quello uscito prima; dopo il primo numero, si torna all'archivio.
+  return numeri.map((numero, i) => ({
+    params: { numero: numero.slug },
+    props: { numero, precedente: numeri[i + 1] },
+  }));
+}
+
+type Numero = Awaited<ReturnType<typeof getNumeri>>[number];
+const { numero, precedente } = Astro.props as { numero: Numero; precedente?: Numero };
+const nodi = corpo(numero.body);
+---
+
+<Base
+  titolo={numero.oggetto}
+  descrizione={numero.descrizione}
+  avanzamento
+  articolo={{ data: numero.inviata }}
+  immagine={`/og/newsletter/${numero.slug}.png`}
+  schema={schemaNumero(numero)}
+>
+  <article class="numero" data-articolo>
+    <Apertura
+      torna={{ href: '/newsletter', testo: 'Newsletter' }}
+      tag={`N° ${numero.numero}`}
+      data={numero.inviata}
+      formato="mese"
+      minuti={minutiDiLettura(numero.body)}
+      titolo={numero.oggetto}
+    />
+
+    <Corpo nodi={nodi} />
+
+    <Firma />
+  </article>
+
+  <Chiusura
+    rimandi={[
+      precedente
+        ? { etichetta: 'Numero precedente', testo: precedente.oggetto, href: `/newsletter/${precedente.slug}` }
+        : tutteLeNewsletter,
+      await ultimoScritto(),
+    ]}
+  />
+</Base>
+
+<style>
+  .numero {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

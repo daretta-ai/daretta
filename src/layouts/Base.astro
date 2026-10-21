@@ -21,7 +21,7 @@ interface Props {
   // Immagine di anteprima per i social (1200×630), generata da src/pages/og. Di base quella del sito.
   immagine?: string;
   // Nodo schema.org della pagina (articolo, progetto), da src/dati-strutturati.ts
-  schema?: Record<string, unknown>;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -45,7 +45,7 @@ const immagineAssoluta = new URL(immagine, Astro.site).href;
 
 // Dati strutturati (src/dati-strutturati.ts): in home chi è Patrizio e qual è il suo sito;
 // articoli e progetti passano il proprio nodo, che si aggiunge a quei due.
-const datiStrutturati = schema ? grafo(schema) : home ? grafo() : null;
+const datiStrutturati = schema ? grafo(...[schema].flat()) : home ? grafo() : null;
 ---
 
 <!doctype html>

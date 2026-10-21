@@ -17,9 +17,16 @@ I testi del sito si scrivono in Keystatic. Keystatic salva file normali dentro `
 | Microtesti | `pagine/microtesti.yaml` | footer, Chiacchiere vuoto, 404, frasi degli stati, firma degli articoli |
 | Progetti | `progetti/*.mdoc` | card in home e pagina `/progetti/…` |
 | Articoli | `articoli/*.mdoc` | lista in home e in `/chiacchiere`, pagina `/chiacchiere/…` (solo se «Pubblicato») |
+| Newsletter inviate | `numeri/AAAA-MM.mdoc` | archivio `/newsletter` e pagina `/newsletter/AAAA-MM` (solo se «Pubblicato»), link «Guarda cosa ti sei perso» nel modulo |
 | Curiosità | `curiosita/*.json` | tabellone e `/curiosita` |
 
 Etichette di sezione, rimandi in fondo alle pagine e voci di menu restano nel codice: sono interfaccia, non testo.
+
+## L'archivio della newsletter
+
+Ogni numero inviato si copia in **Newsletter inviate**, con il testo identico alla mail. L'indirizzo è anno e mese di uscita (`2026-11`), il numero è progressivo. Le sezioni della mail («L'opinione non richiesta», «Già che ci siamo…», «Una cosa che ho letto») sono paragrafi con l'etichetta nel margine. La «Descrizione» non compare nella pagina: la leggono motori di ricerca, AI e social.
+
+«Pubblicato» si accende qualche giorno dopo l'invio, così chi è iscritto la legge prima. Finché non c'è almeno un numero pubblicato, `/newsletter` non esiste e il link nel modulo non compare. I numeri vanno nella sitemap ma non nel feed RSS, che resta degli articoli. Titolo e frase dell'archivio e testo del link stanno nella pagina Newsletter.
 
 ## Il corpo a blocchi
 

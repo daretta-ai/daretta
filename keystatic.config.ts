@@ -190,7 +190,7 @@ export default config({
     brand: { name: 'dàretta' },
     navigation: {
       Pagine: ['home', 'chiSono', 'newsletter', 'microtesti', 'privacy'],
-      Contenuti: ['progetti', 'articoli', 'curiosita'],
+      Contenuti: ['progetti', 'articoli', 'numeri', 'curiosita'],
     },
   },
   singletons: {
@@ -231,6 +231,9 @@ export default config({
         segnaposto: riga('Segnaposto del campo'),
         pulsante: riga('Pulsante'),
         privacy: riga('Link all\'informativa', 'Sotto il campo, porta alla pagina Privacy.'),
+        archivio: riga('Link all\'archivio', 'Sotto il campo, porta ai numeri già inviati. Compare solo quando ce n\'è almeno uno pubblicato.'),
+        archivioTitolo: titoloDoto('Archivio, titolo'),
+        archivioTesto: testoLungo('Archivio, frase d\'attacco', 'Sotto il titolo della pagina /newsletter.'),
         inviato: testoLungo('Dopo l\'invio del modulo'),
         giaIscritto: testoLungo('Già iscritto'),
         mailNonValida: testoLungo('Email non valida'),
@@ -368,6 +371,49 @@ export default config({
         tag: fields.text({ label: 'Tag', description: 'Uno solo, es. PERFORMANCE.' }),
         attacco: testoLungo('Frase d\'attacco', 'Sotto il titolo. Serve anche per i social e i motori di ricerca.'),
         corpo: corpo('Testo', true),
+      },
+    }),
+    numeri: collection({
+      label: 'Newsletter inviate',
+      slugField: 'oggetto',
+      path: 'src/content/numeri/*',
+      format: { contentField: 'corpo' },
+      entryLayout: 'content',
+      columns: ['oggetto', 'inviata', 'pubblicato'],
+      schema: {
+        oggetto: fields.slug({
+          name: { label: 'Oggetto', description: 'Come nella mail. Diventa il titolo della pagina.' },
+          slug: {
+            label: 'Indirizzo',
+            description: 'Anno e mese di uscita, es. 2026-11: diventa /newsletter/2026-11. Non cambiarlo dopo la pubblicazione.',
+          },
+        }),
+        numero: fields.integer({ label: 'Numero', description: 'Progressivo: 1, 2, 3…', validation: { isRequired: true, min: 1 } }),
+        pubblicato: fields.checkbox({
+          label: 'Pubblicato',
+          description: 'Finché è spento il numero non compare nel sito. Si accende qualche giorno dopo l\'invio: chi è iscritto la legge prima.',
+          defaultValue: false,
+        }),
+        inviata: fields.date({ label: 'Inviata il', validation: { isRequired: true } }),
+        descrizione: testoLungo(
+          'Descrizione',
+          'Una frase su cosa c\'è nel numero. Non compare nella pagina: la leggono motori di ricerca, AI e social.'
+        ),
+        corpo: fields.markdoc({
+          label: 'Testo',
+          description: 'Identico alla mail. Le sezioni («L\'opinione non richiesta», «Già che ci siamo…») sono paragrafi con l\'etichetta.',
+          options: {
+            heading: false,
+            blockquote: false,
+            table: false,
+            image: false,
+            divider: false,
+            strikethrough: false,
+            codeBlock: false,
+            code: false,
+          },
+          components: { blocco: blocchi.blocco, citazione: blocchi.citazione },
+        }),
       },
     }),
     curiosita: collection({

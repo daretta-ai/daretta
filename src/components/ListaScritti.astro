@@ -1,20 +1,33 @@
 ---
 // Lista degli scritti (design system, RigaScritto): titolo e data, righe separate dal filetto,
-// posata sul fondo senza modulo.
+// posata sul fondo senza modulo. La usano anche i numeri della newsletter, con il mese al posto del giorno.
 interface Props {
-  articoli: { slug: string; titolo: string; data: Date }[];
+  articoli: { slug: string; titolo: string; data: Date; prima?: string }[];
+  percorso?: string; // dove porta ogni riga: /chiacchiere/<slug>, /newsletter/<slug>
+  formato?: 'giorno' | 'mese';
 }
-const { articoli } = Astro.props;
-const data = (d: Date) => d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+const { articoli, percorso = '/chiacchiere', formato = 'giorno' } = Astro.props;
+const data = (d: Date) =>
+  d.toLocaleDateString(
+    'it-IT',
+    formato === 'mese' ? { month: 'long', year: 'numeric' } : { day: 'numeric', month: 'long', year: 'numeric' }
+  );
+const iso = (d: Date) => d.toISOString().slice(0, formato === 'mese' ? 7 : 10);
 ---
 
 <ol class="lista-scritti">
   {
     articoli.map((a) => (
       <li>
-        <a href={`/chiacchiere/${a.slug}`}>
+        <a href={`${percorso}/${a.slug}`}>
           <span class="titolo-lista"><span class="riga-punti">{a.titolo}</span></span>
-          <time class="meta" datetime={a.data.toISOString().slice(0, 10)}>{data(a.data)}</time>
+          {a.prima ? (
+            <span class="meta">
+              {a.prima} · <time datetime={iso(a.data)}>{data(a.data)}</time>
+            </span>
+          ) : (
+            <time class="meta" datetime={iso(a.data)}>{data(a.data)}</time>
+          )}
         </a>
       </li>
     ))

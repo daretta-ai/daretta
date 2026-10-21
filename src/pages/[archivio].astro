@@ -1,0 +1,68 @@
+---
+// L'archivio della newsletter: i numeri già inviati, dal più recente.
+// Un numero compare qualche giorno dopo l'invio, quando in Keystatic si accende «Pubblicato».
+// Finché non ce n'è uno pubblicato la pagina non esiste: niente archivio vuoto in giro, né nella sitemap.
+// Per questo è una rotta con parametro: getStaticPaths genera /newsletter solo quando c'è un numero.
+// (Le pagine con un nome fisso, come /chi-sono, vengono sempre prima di questa.)
+import Base from '../layouts/Base.astro';
+import Testata from '../components/Testata.astro';
+import Segno from '../components/Segno.astro';
+import ListaScritti from '../components/ListaScritti.astro';
+import Chiusura from '../components/Chiusura.astro';
+import { progetto, ultimoScritto } from '../rimandi';
+import { archivio } from '../dati-strutturati';
+import { getNewsletter, getNumeri } from '../cms';
+
+export async function getStaticPaths() {
+  return (await getNumeri()).length ? [{ params: { archivio: 'newsletter' } }] : [];
+}
+
+const [nl, numeri] = await Promise.all([getNewsletter(), getNumeri()]);
+
+const descrizione =
+  'Tutti i numeri della newsletter di Patrizio Bartolozzi: una mail al mese con i suoi progetti, gli articoli e qualche opinione.';
+---
+
+<Base titolo="Archivio della newsletter" descrizione={descrizione} schema={archivio(numeri, descrizione)}>
+  <Testata titolo={nl.archivioTitolo} compatta>
+    <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Newsletter</span></span>
+    <p class="attacco">{nl.archivioTesto}</p>
+  </Testata>
+
+  <section class="griglia elenco">
+    <div class="colonna">
+      <ListaScritti
+        articoli={numeri.map((n) => ({ slug: n.slug, titolo: n.oggetto, data: n.inviata, prima: `N° ${n.numero}` }))}
+        percorso="/newsletter"
+        formato="mese"
+      />
+    </div>
+  </section>
+
+  <Chiusura rimandi={[await progetto(), await ultimoScritto()]} />
+</Base>
+
+<style>
+  .attacco {
+    margin: 0;
+    max-width: 680px;
+    font-size: var(--testo-attacco);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+  .elenco {
+    padding: var(--space-18) var(--rientro) 0;
+  }
+  .colonna {
+    grid-column: 1 / span 10;
+  }
+  @media (max-width: 720px) {
+    .attacco {
+      line-height: 1.35;
+    }
+    .elenco {
+      padding-top: var(--space-8);
+    }
+  }
+</style>

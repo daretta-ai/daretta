@@ -3,9 +3,11 @@
 // Invia a /api/iscrizione, che passa l'email a Kit (passo 6). I messaggi di esito sono in Keystatic.
 import Modulo from './Modulo.astro';
 import Segno from './Segno.astro';
-import { getNewsletter, paragrafi } from '../cms';
+import { getNewsletter, getNumeri, paragrafi } from '../cms';
 
-const nl = await getNewsletter();
+const [nl, numeri] = await Promise.all([getNewsletter(), getNumeri()]);
+// Il link all'archivio c'è solo quando c'è almeno un numero pubblicato, e non nelle pagine della newsletter stessa.
+const archivio = numeri.length > 0 && !Astro.url.pathname.startsWith('/newsletter');
 
 interface Props {
   etichetta?: boolean;
@@ -52,7 +54,10 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
     <span class="esito-etichetta" data-esito-etichetta></span>
     <span class="esito-testo" data-esito-testo></span>
   </div>
-  <a class="privacy link-punti" href="/privacy">{nl.privacy}</a>
+  <div class="collegamenti">
+    {archivio && <a class="link-punti" href="/newsletter">{nl.archivio}</a>}
+    <a class="link-punti" href="/privacy">{nl.privacy}</a>
+  </div>
 </Modulo>
 
 <script>
@@ -161,9 +166,12 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
   .riga[hidden] {
     display: none;
   }
-  /* Più staccato dal pulsante: 32px sotto la riga del campo (24 su mobile) */
-  .privacy {
-    align-self: flex-start;
+  /* Più staccati dal pulsante: 32px sotto la riga del campo (24 su mobile).
+     L'archivio (quando c'è) e l'informativa, sulla stessa riga. */
+  .collegamenti {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-8);
     margin-top: var(--space-2);
     font-family: var(--font-mono);
     font-size: var(--testo-meta);
@@ -282,7 +290,7 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
     .riga {
       flex-direction: column;
     }
-    .privacy {
+    .collegamenti {
       margin-top: var(--space-3);
     }
     input,

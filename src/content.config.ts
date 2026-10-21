@@ -48,6 +48,18 @@ const articoli = defineCollection({
   }),
 });
 
+// I numeri della newsletter già inviati: l'indirizzo è il nome del file, AAAA-MM.
+const numeri = defineCollection({
+  loader: glob({ pattern: '*.mdoc', base: './src/content/numeri' }),
+  schema: z.object({
+    oggetto: z.string(),
+    numero: z.number().int().min(1),
+    pubblicato: z.boolean().default(false),
+    inviata: z.coerce.date(),
+    descrizione: z.string(),
+  }),
+});
+
 // Pagine singole: home, newsletter, microtesti (yaml) e chi sono (con il corpo a blocchi).
 const pagine = defineCollection({
   loader: glob({ pattern: '*.yaml', base: './src/content/pagine' }),
@@ -64,4 +76,4 @@ const testiPagine = defineCollection({
   }),
 });
 
-export const collections = { curiosita, progetti, articoli, pagine, testiPagine };
+export const collections = { curiosita, progetti, articoli, numeri, pagine, testiPagine };

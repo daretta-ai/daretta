@@ -1,0 +1,55 @@
+---
+// La firma in fondo ai testi da leggere (articoli e newsletter): foto, nome, una riga dai Microtesti.
+// Se la riga è vuota, la firma non compare.
+import { getMicrotesti } from '../cms';
+
+const { firma } = await getMicrotesti();
+---
+
+{
+  firma && (
+    <section class="griglia firma">
+      <div class="riga-firma">
+        <img src="/foto/notte-480.webp" width="72" height="72" alt="" loading="lazy" decoding="async" />
+        <div>
+          <span class="nome">Patrizio Bartolozzi</span>
+          <span class="chi">{firma}</span>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .firma {
+    padding: var(--space-18) var(--rientro) 0;
+  }
+  .riga-firma {
+    grid-column: 4 / span 6;
+    display: flex;
+    gap: var(--space-6);
+    align-items: center;
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--filetto);
+  }
+  .riga-firma img {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-tondo);
+    object-fit: cover;
+    object-position: 70% 40%;
+  }
+  .riga-firma div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .nome {
+    font-size: var(--testo-corpo);
+    font-weight: 600;
+  }
+  .chi {
+    font-size: var(--testo-piccolo);
+    color: var(--inchiostro-secondario);
+  }
+</style>

@@ -42,6 +42,9 @@ export interface Newsletter {
   segnaposto: string;
   pulsante: string;
   privacy: string;
+  archivio: string;
+  archivioTitolo: string;
+  archivioTesto: string;
   inviato: string;
   giaIscritto: string;
   mailNonValida: string;
@@ -105,6 +108,19 @@ export async function getArticoli() {
   const voci = await getCollection('articoli', (a) => a.data.pubblicato || import.meta.env.DEV);
   return voci
     .sort((a, b) => b.data.data.getTime() - a.data.data.getTime())
+    .map((v) => ({ slug: v.id, ...v.data, body: v.body ?? '' }));
+}
+
+/** I numeri della newsletter pubblicati, dal più recente. In locale anche quelli spenti, per controllarli. */
+export async function getNumeri() {
+  const voci = await getCollection('numeri', (n) => n.data.pubblicato || import.meta.env.DEV);
+  for (const v of voci) {
+    if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(v.id)) {
+      throw new Error(`Il numero «${v.data.oggetto}» ha l'indirizzo «${v.id}»: deve essere anno e mese, es. 2026-11.`);
+    }
+  }
+  return voci
+    .sort((a, b) => b.data.inviata.getTime() - a.data.inviata.getTime() || b.data.numero - a.data.numero)
     .map((v) => ({ slug: v.id, ...v.data, body: v.body ?? '' }));
 }
 

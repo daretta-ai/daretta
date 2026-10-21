@@ -43,3 +43,9 @@ export async function ultimoScritto(): Promise<Rimando> {
     ? { etichetta: 'Ultimo articolo', testo: ultimo.titolo, href: `/chiacchiere/${ultimo.slug}` }
     : { etichetta: 'Chiacchiere', testo: micro.scrittiVuoto, href: '/chiacchiere' };
 }
+
+export const tutteLeNewsletter: Rimando = {
+  etichetta: 'Tutte le newsletter',
+  testo: "Torna all'elenco.",
+  href: '/newsletter',
+};

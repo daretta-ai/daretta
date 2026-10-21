@@ -72,6 +72,61 @@ export function articolo(a: {
   };
 }
 
+// La newsletter: una serie di numeri. L'archivio è la pagina della serie, ogni numero ne fa parte.
+export const ID_NEWSLETTER = `${SITO}/newsletter#serie`;
+
+const serie: Nodo = {
+  '@type': 'CreativeWorkSeries',
+  '@id': ID_NEWSLETTER,
+  name: 'La newsletter di dàretta',
+  url: assoluto('/newsletter'),
+  inLanguage: 'it',
+  author: { '@id': ID_PATRIZIO },
+  isPartOf: { '@id': ID_SITO },
+};
+
+/** La pagina /newsletter: l'elenco dei numeri pubblicati. */
+export function archivio(numeri: { slug: string; oggetto: string }[], descrizione: string): Nodo[] {
+  const url = assoluto('/newsletter');
+  return [
+    serie,
+    {
+      '@type': 'CollectionPage',
+      '@id': `${url}#pagina`,
+      url,
+      name: 'Archivio della newsletter',
+      description: descrizione,
+      inLanguage: 'it',
+      mainEntity: { '@id': ID_NEWSLETTER },
+      isPartOf: { '@id': ID_SITO },
+      hasPart: numeri.map((n) => ({ '@id': `${assoluto(`/newsletter/${n.slug}`)}#numero` })),
+    },
+  ];
+}
+
+/** Un numero della newsletter, /newsletter/AAAA-MM. Per i motori è un articolo che fa parte della serie. */
+export function numero(n: { slug: string; oggetto: string; descrizione: string; inviata: Date; numero: number }): Nodo[] {
+  const url = assoluto(`/newsletter/${n.slug}`);
+  return [
+    serie,
+    {
+      '@type': 'BlogPosting',
+      '@id': `${url}#numero`,
+      url,
+      mainEntityOfPage: url,
+      headline: n.oggetto,
+      description: n.descrizione,
+      image: assoluto(`/og/newsletter/${n.slug}.png`),
+      datePublished: n.inviata.toISOString().slice(0, 10),
+      position: n.numero,
+      inLanguage: 'it',
+      author: { '@id': ID_PATRIZIO },
+      publisher: { '@id': ID_PATRIZIO },
+      isPartOf: [{ '@id': ID_NEWSLETTER }, { '@id': ID_SITO }],
+    },
+  ];
+}
+
 const STATI = { online: 'Online', 'in-sviluppo': 'In sviluppo', concept: 'Concept' } as const;
 
 /** Un progetto di /progetti. I collaboratori diventano contributor, con il profilo in sameAs. */
