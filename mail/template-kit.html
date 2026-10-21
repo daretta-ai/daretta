@@ -63,6 +63,7 @@
     @media only screen and (max-width: 620px) {
       .cornice { padding: 40px 24px 48px !important; }
       .corpo h1 { font-size: 24px !important; }
+      .rimando-testo { font-size: 20px !important; }
       .corpo h3, .corpo blockquote, .corpo blockquote p, .corpo .blockquotes-line { font-size: 20px !important; }
       .corpo a.email-button, .corpo a.button, .corpo a.btn, .corpo .button a, .corpo .btn a { display: block !important; text-align: center !important; }
     }
@@ -104,13 +105,16 @@
       .corpo ul ul { list-style-type: square; padding-left: 24px; }
       .corpo li::marker { color: #9aa3a4; font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace; font-size: 14px; }
       .piede .piede-link a:hover { color: #ecece7; }
+      .rimando a:hover .rimando-testo { color: #ecece7; background-image: linear-gradient(to right, #2c8a93 2px, transparent 2px); background-size: 4px 2px; background-repeat: repeat-x; background-position: 0 100%; padding-bottom: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; display: inline !important; }
+      .rimando a:hover .freccia { padding-left: 4px; }
     }
   </style>
   <style>
     [data-ogsc] .corpo, [data-ogsc] .corpo p, [data-ogsc] .corpo li { color: #d2d4ce !important; }
     [data-ogsc] .corpo strong, [data-ogsc] .corpo a, [data-ogsc] .corpo h1, [data-ogsc] .corpo h3, [data-ogsc] .corpo blockquote { color: #ecece7 !important; }
     [data-ogsc] .corpo h2 { color: #6ccbd3 !important; }
-    [data-ogsc] .piede, [data-ogsc] .piede-link, [data-ogsc] .indirizzo { color: #9aa3a4 !important; }
+    [data-ogsc] .piede, [data-ogsc] .piede-link, [data-ogsc] .indirizzo, [data-ogsc] .rimando-etichetta { color: #9aa3a4 !important; }
+    [data-ogsc] .rimando-testo { color: #d2d4ce !important; }
     [data-ogsb] .sfondo { background-color: #111314 !important; }
   </style>
 </head>
@@ -139,16 +143,35 @@
                     </td>
                   </tr>
                   <tr>
-                    <td height="32" style="height:32px; font-size:32px; line-height:32px;">&nbsp;</td>
+                    <td height="56" style="height:56px; font-size:56px; line-height:56px;">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td height="1" bgcolor="#2a2f31" style="height:1px; font-size:1px; line-height:1px; background-color:#2a2f31;">&nbsp;</td>
+                    <td height="1" bgcolor="#2e3a3c" style="height:1px; font-size:1px; line-height:1px; background-color:#2e3a3c;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="rimando rimando-online" style="padding:20px 0 24px; border-bottom:1px solid #2e3a3c;">
+                      <a href="https://daretta.it/newsletter/{{ "now" | in_time_zone: "Europe/Rome" | date: "%Y-%m" }}" style="display:block; text-decoration:none; color:#d2d4ce;">
+                        <span class="rimando-etichetta" style="display:block; margin:0 0 8px; font-family:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size:13px; line-height:1.5; letter-spacing:1px; text-transform:uppercase; color:#9aa3a4;">Leggila sul sito&nbsp;<span class="freccia">&rarr;</span></span>
+                        <span class="rimando-testo" style="display:block; font-family:'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:24px; line-height:1.3; font-weight:400; color:#d2d4ce;">La stessa mail, da girare a chi vuoi.</span>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="rimando rimando-archivio" style="padding:20px 0 24px; border-bottom:1px solid #2e3a3c;">
+                      <a href="https://daretta.it/newsletter" style="display:block; text-decoration:none; color:#d2d4ce;">
+                        <span class="rimando-etichetta" style="display:block; margin:0 0 8px; font-family:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size:13px; line-height:1.5; letter-spacing:1px; text-transform:uppercase; color:#9aa3a4;">Tutte le newsletter&nbsp;<span class="freccia">&rarr;</span></span>
+                        <span class="rimando-testo" style="display:block; font-family:'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:24px; line-height:1.3; font-weight:400; color:#d2d4ce;">Guarda cosa ti sei perso.</span>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td height="32" style="height:32px; font-size:32px; line-height:32px;">&nbsp;</td>
                   </tr>
                   <tr>
                     <td class="piede" style="padding:24px 0 0; font-family:'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:14px; line-height:1.6; color:#9aa3a4;">
                       <p class="testo-link" style="margin:0 0 8px;"><strong style="color:#ecece7; font-weight:600;">dàretta.</strong> Ti arriva perché ti sei iscritto su daretta.it. Se te l'hanno girata, <a href="https://daretta.it/#newsletter" style="color:#ecece7; text-decoration:underline;">ti iscrivi da qui</a>.</p>
                       <p class="testo-link" style="margin:0 0 24px;"><a href="{{ unsubscribe_url }}" style="color:#ecece7; text-decoration:underline;">Vuoi andartene? Basta un clic, senza rancore.</a></p>
-                      <p class="piede-link" style="margin:0 0 8px; font-family:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size:13px; line-height:1.6; letter-spacing:1px; text-transform:uppercase; color:#9aa3a4;"><a href="https://daretta.it" style="color:#9aa3a4; text-decoration:none; white-space:nowrap;">daretta.it</a>&nbsp;&middot; <a href="https://daretta.it/newsletter" style="color:#9aa3a4; text-decoration:none; white-space:nowrap;">Guarda cosa ti sei perso</a>&nbsp;&middot; <a href="https://www.linkedin.com/in/patriziobartolozzi" style="color:#9aa3a4; text-decoration:none; white-space:nowrap;">LinkedIn</a>&nbsp;&middot; <a href="https://daretta.it/privacy" style="color:#9aa3a4; text-decoration:none; white-space:nowrap;">Come tratto i tuoi dati</a></p>
+                      <p class="piede-link" style="margin:0 0 8px; font-family:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size:13px; line-height:1.6; letter-spacing:1px; text-transform:uppercase; color:#9aa3a4;"><a href="https://daretta.it" style="color:#9aa3a4; text-decoration:none; white-space:nowrap;">daretta.it</a>&nbsp;&middot; <a href="https://www.linkedin.com/in/patriziobartolozzi" style="color:#9aa3a4; text-decoration:none; white-space:nowrap;">LinkedIn</a>&nbsp;&middot; <a href="https://daretta.it/privacy" style="color:#9aa3a4; text-decoration:none; white-space:nowrap;">Come tratto i tuoi dati</a></p>
                       <p class="indirizzo" style="margin:0; font-family:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace; font-size:12px; line-height:1.6; letter-spacing:1px; text-transform:uppercase; color:#9aa3a4;"><span style="color:#9aa3a4; text-decoration:none;">{{ address }}</span></p>
                     </td>
                   </tr>
