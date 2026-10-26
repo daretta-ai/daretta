@@ -36,7 +36,10 @@ const {
   schema,
 } = Astro.props;
 
-const titoloCompleto = titolo ? `${titolo} · dàretta` : 'dàretta';
+// Il nome di Patrizio sta in ogni titolo, nella stessa forma: è il segnale che fa trovare il sito
+// a chi cerca «Patrizio Bartolozzi» (scelta di Patrizio, 26 ott 2026). og:title resta il solo titolo.
+const NOME_SITO = 'dàretta di Patrizio Bartolozzi';
+const titoloCompleto = titolo ? `${titolo} · ${NOME_SITO}` : NOME_SITO;
 // Indirizzo canonico sempre su daretta.it, anche quando la pagina è servita dall'anteprima
 // Le pagine sono file .html (build.format 'file'), ma si servono senza estensione: /chi-sono, e / per la home.
 const percorso = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '').replace(/(.)\/$/, '$1');

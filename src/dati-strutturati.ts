@@ -14,6 +14,7 @@ export const sito: Nodo = {
   '@id': ID_SITO,
   url: `${SITO}/`,
   name: 'dàretta',
+  alternateName: 'dàretta di Patrizio Bartolozzi',
   inLanguage: 'it',
   author: { '@id': ID_PATRIZIO },
 };
