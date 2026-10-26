@@ -23,7 +23,7 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 
 ## Tipografia
 
-- **Doto** (punti) per il logotipo, la frase della hero, il titolo di apertura delle pagine interne (`punti-pagina`), un numero vero in evidenza (`punti-numero`), le citazioni e il titolo della newsletter. Mai sotto i 28px, mai in un paragrafo, mai per i titoli degli articoli: sono lunghi, a matrice di punti si leggono male.
+- **Doto** (punti) per il logotipo, la frase della hero, il titolo di apertura delle pagine interne (`punti-pagina`), un numero vero in evidenza (`punti-numero`), le citazioni e il titolo della newsletter. Mai sotto i 28px, mai in un paragrafo, mai per i titoli degli articoli: sono lunghi, a matrice di punti si leggono male. La c e il % sono ridisegnati sulla griglia di Doto, perché la c si confondeva con la o e il % sembrava una X (scelta di Patrizio, 26 ottobre 2026): lo fa `scripts/doto-glifi.py`, da ripassare ogni volta che si aggiorna il carattere.
 - **Geist** (sans) per tutto quello che si legge: titoli di liste e articoli, paragrafi, card.
 - **Geist Mono** (mono) per etichette, stati, date, codice. Sempre maiuscolo tranne il codice.
 
