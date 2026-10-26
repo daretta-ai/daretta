@@ -202,7 +202,7 @@ export default config({
   ui: {
     brand: { name: 'dàretta' },
     navigation: {
-      Pagine: ['home', 'chiSono', 'newsletter', 'microtesti', 'privacy'],
+      Pagine: ['home', 'chiSono', 'paginaProgetti', 'newsletter', 'microtesti', 'privacy'],
       Contenuti: ['progetti', 'articoli', 'numeri', 'tempi', 'curiosita'],
     },
   },
@@ -232,6 +232,18 @@ export default config({
         }),
         breve: testoLungo('La versione breve', 'Primo blocco della pagina. Compare anche nella home. I link si scrivono così: [testo](https://…).'),
         corpo: corpo('Il resto della pagina'),
+      },
+    }),
+    paginaProgetti: singleton({
+      label: 'Progetti',
+      path: 'src/content/pagine/progetti',
+      format: { data: 'yaml' },
+      schema: {
+        titolo: titoloDoto(),
+        attacco: testoLungo('Frase d\'attacco', 'Sotto il titolo.'),
+        numeroEtichetta: riga('Etichetta del modulo con il numero', 'Nel margine, in mono.'),
+        numeroDidascalia: riga('Sotto il numero', 'Il numero dei progetti si conta da solo.'),
+        numeroTesto: testoLungo('Testo del modulo con il numero', 'Da aggiornare quando un progetto cambia fase.'),
       },
     }),
     newsletter: singleton({

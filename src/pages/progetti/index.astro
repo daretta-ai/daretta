@@ -1,5 +1,5 @@
 ---
-// Progetti (tavola, proposta del 26 ottobre 2026, da approvare): l'indice dei progetti.
+// Progetti (approvata da Patrizio il 26 ottobre 2026): l'indice dei progetti. Testi in Keystatic, pagina Progetti.
 // Testata, poi la lista posata sul fondo come le Chiacchiere (stato nel margine, nome e frase della card
 // nella colonna del testo), poi il modulo con il numero che rompe il ritmo, poi la chiusura.
 import Base from '../../layouts/Base.astro';
@@ -9,23 +9,20 @@ import Stato from '../../components/Stato.astro';
 import ModuloNumero from '../../components/ModuloNumero.astro';
 import Chiusura from '../../components/Chiusura.astro';
 import { ultimoScritto, chiSono } from '../../rimandi';
-import { getProgetti } from '../../cms';
+import { getProgetti, getPaginaProgetti } from '../../cms';
 
-const progetti = await getProgetti();
+const [progetti, testi] = await Promise.all([getProgetti(), getPaginaProgetti()]);
 const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome).join(' e ');
 ---
 
 <Base
   titolo="Progetti"
-  descrizione="I side project di Patrizio Bartolozzi, portati avanti la sera."
+  descrizione="I side project di Patrizio Bartolozzi, portati avanti di notte."
   attiva="progetti"
 >
-  <Testata titolo="passatempi presi sul serio.">
+  <Testata titolo={testi.titolo}>
     <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Progetti</span></span>
-    <p class="attacco">
-      Side project nati da un bisogno vero, portati avanti di notte. Qualcuno diventerà grande… gli altri almeno
-      mi avranno divertito.
-    </p>
+    <p class="attacco">{testi.attacco}</p>
   </Testata>
 
   <section class="griglia elenco">
@@ -55,11 +52,8 @@ const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome)
     </ol>
   </section>
 
-  <ModuloNumero etichetta="A che punto sono" cifra={String(progetti.length)} didascalia="Progetti aperti">
-    <p>
-      Tutti stanno procedendo, sono in fasi diverse e ognuno ha i suoi tempi. Alcuni sono più vicini alla vita…
-      come valdinievole.online.
-    </p>
+  <ModuloNumero etichetta={testi.numeroEtichetta} cifra={String(progetti.length)} didascalia={testi.numeroDidascalia}>
+    <p>{testi.numeroTesto}</p>
   </ModuloNumero>
 
   <Chiusura rimandi={[await ultimoScritto(), chiSono]} />
