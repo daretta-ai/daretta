@@ -13,9 +13,10 @@ I testi del sito si scrivono in Keystatic. Keystatic salva file normali dentro `
 | --- | --- | --- |
 | Home | `pagine/home.yaml` | frase della hero, presentazione, pulsante |
 | Chi sono | `pagine/chi-sono.mdoc` | titolo, attacco (anche in home), il percorso, la versione breve (anche in home), il resto della pagina |
+| Progetti (pagina) | `pagine/progetti.yaml` | titolo e attacco di `/progetti`, testo del modulo con il numero (da aggiornare quando un progetto cambia fase) |
 | Newsletter | `pagine/newsletter.yaml` | il modulo, i messaggi dell'iscrizione, la pagina di conferma, la chiusa degli articoli |
 | Microtesti | `pagine/microtesti.yaml` | footer, Chiacchiere vuoto, 404, frasi degli stati, firma degli articoli |
-| Progetti | `progetti/*.mdoc` | card in home e pagina `/progetti/…` |
+| Progetti | `progetti/*.mdoc` | card in home, righe di `/progetti` e pagina `/progetti/…` |
 | Articoli | `articoli/*.mdoc` | lista in home e in `/chiacchiere`, pagina `/chiacchiere/…` (solo se «Pubblicato») |
 | Newsletter inviate | `numeri/AAAA-MM.mdoc` | archivio `/newsletter` e pagina `/newsletter/AAAA-MM` (solo se «Pubblicato»), link «Guarda cosa ti sei perso» nel modulo |
 | Linee del tempo | `tempi/*.yaml` | il blocco «Linea del tempo» (il battito), dove lo inserisci |

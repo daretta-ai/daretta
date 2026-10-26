@@ -69,6 +69,14 @@ export interface Microtesti {
   stati: { online: string; inSviluppo: string; concept: string };
 }
 
+export interface PaginaProgetti {
+  titolo: string;
+  attacco: string;
+  numeroEtichetta: string;
+  numeroDidascalia: string;
+  numeroTesto: string;
+}
+
 export interface Privacy {
   titolo: string;
   attacco: string;
@@ -87,6 +95,7 @@ export const getHome = () => pagina<Home>('home');
 export const getNewsletter = () => pagina<Newsletter>('newsletter');
 export const getMicrotesti = () => pagina<Microtesti>('microtesti');
 export const getPrivacy = () => pagina<Privacy>('privacy');
+export const getPaginaProgetti = () => pagina<PaginaProgetti>('progetti');
 
 export async function getChiSono() {
   const voce = await getEntry('testiPagine', 'chi-sono');
