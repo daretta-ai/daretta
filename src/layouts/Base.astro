@@ -95,7 +95,7 @@ const datiStrutturati = schema ? grafo(...[schema].flat()) : home ? grafo() : nu
       // Passaggio tra le pagine: la sfera vola dalla pagina vecchia alla nuova solo se si vede in tutte e due.
       // Se al clic è fuori dallo schermo (es. dai Progetti in home) non le si dà il nome:
       // niente sfera che cala dall'alto, la pagina sfuma e basta. Lo stesso se si arriva a un'ancora
-      // (es. il menu Progetti, /#progetti): al momento del passaggio la pagina nuova non è ancora
+      // (es. un rimando a una curiosità, /curiosita#013): al momento del passaggio la pagina nuova non è ancora
       // scesa all'ancora, e la sfera volerebbe dove poi non c'è. In linea nell'head perché pagereveal
       // arriva prima che partano gli script normali.
       (function () {
