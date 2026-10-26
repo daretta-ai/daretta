@@ -45,6 +45,11 @@
   animation: none;
   opacity: 0;
 }
+/* Rete di sicurezza: se una sola delle due pagine dà il nome alla sfera, quella che resta
+   sola non deve restare ferma a mezz'aria. Sfuma con la pagina. */
+::view-transition-old(sfera):only-child {
+  animation: 140ms ease-in both movimento-esci;
+}
 
 @keyframes movimento-esci {
   to {
