@@ -10,6 +10,7 @@ import ModuloNumero from '../../components/ModuloNumero.astro';
 import Chiusura from '../../components/Chiusura.astro';
 import { ultimoScritto, chiSono } from '../../rimandi';
 import { getProgetti, getPaginaProgetti } from '../../cms';
+import { linkInRiga } from '../../link-in-riga';
 
 const [progetti, testi] = await Promise.all([getProgetti(), getPaginaProgetti()]);
 const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome).join(' e ');
@@ -22,7 +23,7 @@ const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome)
 >
   <Testata titolo={testi.titolo}>
     <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Progetti</span></span>
-    <p class="attacco">{testi.attacco}</p>
+    <p class="attacco" set:html={linkInRiga(testi.attacco)} />
   </Testata>
 
   <section class="griglia elenco">
@@ -53,7 +54,7 @@ const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome)
   </section>
 
   <ModuloNumero etichetta={testi.numeroEtichetta} cifra={String(progetti.length)} didascalia={testi.numeroDidascalia}>
-    <p>{testi.numeroTesto}</p>
+    <p set:html={linkInRiga(testi.numeroTesto)} />
   </ModuloNumero>
 
   <Chiusura rimandi={[await ultimoScritto(), chiSono]} />

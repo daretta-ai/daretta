@@ -240,10 +240,10 @@ export default config({
       format: { data: 'yaml' },
       schema: {
         titolo: titoloDoto(),
-        attacco: testoLungo('Frase d\'attacco', 'Sotto il titolo.'),
+        attacco: testoLungo('Frase d\'attacco', 'Sotto il titolo. I link si scrivono così: [testo](https://…).'),
         numeroEtichetta: riga('Etichetta del modulo con il numero', 'Nel margine, in mono.'),
         numeroDidascalia: riga('Sotto il numero', 'Il numero dei progetti si conta da solo.'),
-        numeroTesto: testoLungo('Testo del modulo con il numero', 'Da aggiornare quando un progetto cambia fase.'),
+        numeroTesto: testoLungo('Testo del modulo con il numero', 'Da aggiornare quando un progetto cambia fase. I link si scrivono così: [testo](https://…), o [testo](/progetti/…) per una pagina del sito.'),
       },
     }),
     newsletter: singleton({
