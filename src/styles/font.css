@@ -4,6 +4,8 @@
   e la pagina non aspetta una connessione a due domini esterni.
   I file sono il sottoinsieme latin (copre l'italiano, «», …) presi da @fontsource:
   per aggiornarli si ricopiano da node_modules/@fontsource/{doto,geist-sans,geist-mono}/files.
+  Doto ha la c e il % ridisegnati sulla sua griglia di punti: dopo averla ricopiata,
+  si ripassa con scripts/doto-glifi.py (anche il .woff delle anteprime social).
 */
 @font-face {
   font-family: 'Doto';

@@ -31,7 +31,8 @@ const font = (pacchetto: string, file: string) =>
 let fontCaricati: Parameters<typeof satori>[1]['fonts'] | undefined;
 function fonts() {
   fontCaricati ??= [
-    { name: 'Doto', data: font('@fontsource/doto', 'doto-latin-900-normal.woff'), weight: 900, style: 'normal' },
+    // Doto è la versione del sito, con la c e il % ridisegnati (scripts/doto-glifi.py)
+    { name: 'Doto', data: readFileSync('src/assets/font/doto-latin-900-normal.woff'), weight: 900, style: 'normal' },
     { name: 'Geist', data: font('@fontsource/geist-sans', 'geist-sans-latin-400-normal.woff'), weight: 400, style: 'normal' },
     { name: 'Geist', data: font('@fontsource/geist-sans', 'geist-sans-latin-600-normal.woff'), weight: 600, style: 'normal' },
     { name: 'Geist Mono', data: font('@fontsource/geist-mono', 'geist-mono-latin-400-normal.woff'), weight: 400, style: 'normal' },
