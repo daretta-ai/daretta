@@ -10,7 +10,7 @@ export interface Rimando {
   tutti?: { etichetta: string; href: string }; // link a destra dell'etichetta
 }
 
-const tuttiIProgetti = { etichetta: 'Vedi tutti', href: '/#progetti' };
+const tuttiIProgetti = { etichetta: 'Vedi tutti', href: '/progetti' };
 
 /** Un progetto preciso, mai la sezione: il nome dice poco, quindi sotto c'è la frase della card. */
 export function rigaProgetto(p: Progetto, etichetta = 'Progetti'): Rimando {

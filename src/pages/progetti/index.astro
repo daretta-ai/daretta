@@ -1,0 +1,157 @@
+---
+// Progetti (tavola, proposta del 26 ottobre 2026, da approvare): l'indice dei progetti.
+// Testata, poi la lista posata sul fondo come le Chiacchiere (stato nel margine, nome e frase della card
+// nella colonna del testo), poi il modulo con il numero che rompe il ritmo, poi la chiusura.
+import Base from '../../layouts/Base.astro';
+import Testata from '../../components/Testata.astro';
+import Segno from '../../components/Segno.astro';
+import Stato from '../../components/Stato.astro';
+import ModuloNumero from '../../components/ModuloNumero.astro';
+import Chiusura from '../../components/Chiusura.astro';
+import { ultimoScritto, chiSono } from '../../rimandi';
+import { getProgetti } from '../../cms';
+
+const progetti = await getProgetti();
+const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome).join(' e ');
+---
+
+<Base
+  titolo="Progetti"
+  descrizione="I side project di Patrizio Bartolozzi, portati avanti la sera."
+  attiva="progetti"
+>
+  <Testata titolo="quello che faccio la sera.">
+    <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Progetti</span></span>
+    <p class="attacco">
+      Side project nati da un bisogno vero, portati avanti quando la casa dorme. Qualcuno diventerà grande… gli
+      altri almeno mi avranno divertito.
+    </p>
+  </Testata>
+
+  <section class="griglia elenco">
+    <ol class="lista-progetti">
+      {
+        progetti.map((p) => (
+          <li>
+            <a href={`/progetti/${p.slug}`} class="riga">
+              <span class="margine">
+                <Stato stato={p.stato} />
+              </span>
+              <span class="testo">
+                <span class="nome">
+                  <span class="riga-punti">{p.nome}</span>
+                  {p.provvisorio && <span class="provvisorio">(nome provvisorio)</span>}
+                </span>
+                <span class="frase">{p.card}</span>
+                {p.collaboratori.length > 0 && <span class="con">Con {con(p)}</span>}
+              </span>
+              <span class="vai" aria-hidden="true">
+                <span class="freccia">→</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <ModuloNumero etichetta="A che punto sono" cifra={String(progetti.length)} didascalia="Progetti aperti">
+    <p>
+      Due ci sto lavorando, due per ora sono idee. Online, per adesso, nessuno… ma valdinievole.online è quello
+      più vicino.
+    </p>
+  </ModuloNumero>
+
+  <Chiusura rimandi={[await ultimoScritto(), chiSono]} />
+</Base>
+
+<style>
+  .attacco {
+    margin: 0;
+    max-width: 680px;
+    font-size: var(--testo-attacco);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+  .elenco {
+    padding: var(--space-18) var(--rientro) 0;
+  }
+  .lista-progetti {
+    grid-column: 1 / -1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--filetto);
+  }
+  li {
+    border-top: 1px solid var(--filetto);
+  }
+  .riga {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gap);
+    padding: var(--space-10) 0;
+    text-decoration: none;
+    color: inherit;
+  }
+  .margine {
+    grid-column: 1 / span 3;
+    padding-top: var(--space-2);
+  }
+  .testo {
+    grid-column: 4 / span 6;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .nome {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    font-size: var(--testo-titolo);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  .provvisorio,
+  .con {
+    font-family: var(--font-mono);
+    font-size: var(--testo-meta);
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  .frase {
+    font-size: var(--testo-corpo);
+    line-height: 1.5;
+    color: var(--inchiostro-corpo);
+  }
+  .vai {
+    grid-column: 12;
+    justify-self: end;
+    padding-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--testo-etichetta);
+    color: var(--inchiostro-muto);
+  }
+  @media (max-width: 720px) {
+    .elenco {
+      padding-top: var(--space-8);
+    }
+    .riga {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-6) 0;
+    }
+    .nome {
+      font-size: var(--testo-titolo);
+    }
+    .vai {
+      display: none;
+    }
+  }
+</style>
