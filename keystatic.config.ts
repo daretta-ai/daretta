@@ -230,7 +230,7 @@ export default config({
           description: 'I gradini della scala, dal primo all\'ultimo.',
           itemLabel: (r) => r.value || 'Ruolo',
         }),
-        breve: testoLungo('La versione breve', 'Primo blocco della pagina. Compare anche nella home.'),
+        breve: testoLungo('La versione breve', 'Primo blocco della pagina. Compare anche nella home. I link si scrivono così: [testo](https://…).'),
         corpo: corpo('Il resto della pagina'),
       },
     }),

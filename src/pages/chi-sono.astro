@@ -1,5 +1,6 @@
 ---
 // Chi sono (tavole ChiSono e ChiSono-Mobile). I testi vengono da Keystatic (pagina «Chi sono»).
+import { linkInRiga } from '../link-in-riga';
 import Base from '../layouts/Base.astro';
 import Testata from '../components/Testata.astro';
 import Sezione from '../components/Sezione.astro';
@@ -52,7 +53,7 @@ const nodi = corpo(pagina.body);
   </section>
 
   <Blocco etichetta="La versione breve" spazio="piccolo">
-    <p>{pagina.breve}</p>
+    <p set:html={linkInRiga(pagina.breve)} />
   </Blocco>
 
   <Corpo nodi={nodi} />
