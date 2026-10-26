@@ -60,6 +60,33 @@ const lettere = (s: string) => s.split('');
   <Chiusura rimandi={[await progetto(), await ultimoScritto()]} />
 </Base>
 
+<script>
+  // La riga dell'ancora resta segnata finché chi legge non la lascia: quando, dopo averla vista,
+  // esce dallo schermo, il fondo si spegne. Senza JavaScript resta segnata (regole sotto).
+  let osservata: Element | null = null;
+  const osserva = new IntersectionObserver((voci) => {
+    for (const v of voci) {
+      if (v.isIntersecting) v.target.setAttribute('data-vista', '');
+      else if (v.target.hasAttribute('data-vista')) {
+        v.target.classList.add('lasciata');
+        osserva.unobserve(v.target);
+      }
+    }
+  });
+  const segna = () => {
+    if (osservata) osserva.unobserve(osservata);
+    document.querySelectorAll('.riga.lasciata, .riga[data-vista]').forEach((r) => {
+      r.classList.remove('lasciata');
+      r.removeAttribute('data-vista');
+    });
+    const id = decodeURIComponent(location.hash.slice(1));
+    osservata = id ? document.getElementById(id) : null;
+    if (osservata?.classList.contains('riga')) osserva.observe(osservata);
+  };
+  segna();
+  addEventListener('hashchange', segna);
+</script>
+
 <style>
   .apertura {
     padding: var(--space-10) var(--rientro) 0;
@@ -109,21 +136,52 @@ const lettere = (s: string) => s.split('');
   .riga {
     padding: var(--space-6) 0;
     border-bottom: 1px solid var(--filetto);
-    scroll-margin-top: 120px;
+    /* Dall'ancora la riga si ferma a circa un terzo dello schermo, lontana dall'header */
+    scroll-margin-top: max(120px, 28vh);
   }
-  /* Chi arriva da un'ancora trova la riga evidenziata per un istante, senza arancio */
-  .riga:target {
-    animation: evidenzia 2.4s ease-out;
+  /* Chi arriva da un'ancora (o tocca il N° di una riga) trova la riga segnata due volte:
+     un fondo smussato con la luce petrolio che parte dal numero (da petrolio verso cemento, come
+     ogni gradiente del sito), che arriva al filo come gli altri fondi e resta finché
+     la riga non esce dallo schermo, e le tessere che rigirano una volta, come al passaggio
+     del mouse. Il giro parte quando la pagina è arrivata, non durante l'entrata. Niente arancio. */
+  .riga {
+    position: relative;
+    isolation: isolate;
   }
-  @keyframes evidenzia {
-    0%,
-    40% {
-      background: var(--cemento-incavo);
-      box-shadow: 0 0 0 12px var(--cemento-incavo);
+  .riga::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(-1 * var(--rientro));
+    z-index: -1;
+    background: radial-gradient(120% 220% at 0 50%, var(--petrolio-alone) 0%, var(--cemento-rilievo) 65%);
+    clip-path: var(--ritaglio-card);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .riga:target::before {
+    opacity: 1;
+    animation: accende 0.32s 0.14s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .riga:target.lasciata::before {
+    animation: spegne 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+  .riga:target .t {
+    animation: gira 0.5s calc(0.45s + var(--i) * 25ms) ease-in-out;
+  }
+  @keyframes accende {
+    from {
+      opacity: 0;
     }
-    100% {
-      background: transparent;
-      box-shadow: 0 0 0 12px transparent;
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes spegne {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
     }
   }
   .cella {
@@ -245,8 +303,13 @@ const lettere = (s: string) => s.split('');
   @media (prefers-reduced-motion: reduce) {
     .riga:hover .t,
     .riga:focus-within .t,
-    .riga:target {
+    .riga:target .t,
+    .riga:target::before {
       animation: none;
+    }
+    .riga:target.lasciata::before {
+      animation: none;
+      opacity: 0;
     }
   }
 </style>
