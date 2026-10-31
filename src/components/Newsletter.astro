@@ -55,8 +55,8 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
     <span class="esito-testo" data-esito-testo></span>
   </div>
   <div class="collegamenti">
-    {archivio && <a class="link-punti" href="/newsletter">{nl.archivio}</a>}
     <a class="link-punti" href="/privacy">{nl.privacy}</a>
+    {archivio && <a class="link-punti" href="/newsletter">{nl.archivio}</a>}
   </div>
 </Modulo>
 
@@ -167,7 +167,7 @@ const testo = { articolo: nl.articoloTesto, progetto: nl.progettoTesto }[variant
     display: none;
   }
   /* Più staccati dal pulsante: 32px sotto la riga del campo (24 su mobile).
-     L'archivio (quando c'è) e l'informativa, sulla stessa riga. */
+     Prima l'informativa, che riguarda il modulo e su mobile resta subito sotto il pulsante, poi l'archivio (quando c'è). */
   .collegamenti {
     display: flex;
     flex-wrap: wrap;
