@@ -1,9 +1,11 @@
 ---
 // Footer, dalle tavole: testi a sinistra, link e copyright a destra.
-import { getMicrotesti } from '../cms';
+import { getMicrotesti, getNumeri } from '../cms';
 
 const linkedin = 'https://www.linkedin.com/in/patriziobartolozzi';
-const { footer } = await getMicrotesti();
+const [{ footer }, numeri] = await Promise.all([getMicrotesti(), getNumeri()]);
+// Newsletter porta all'archivio, che ha anche il modulo nella chiusura; finché non c'è un numero pubblicato, al modulo in home.
+const newsletter = numeri.length > 0 ? '/newsletter' : '/#newsletter';
 ---
 
 <footer class="footer">
@@ -15,7 +17,7 @@ const { footer } = await getMicrotesti();
     <nav aria-label="Link del footer">
       <a href="/curiosita">Curiosità</a>
       <span aria-hidden="true">·</span>
-      <a href="/#newsletter">Newsletter</a>
+      <a href={newsletter}>Newsletter</a>
       <span aria-hidden="true">·</span>
       <a href={linkedin} rel="me noopener">LinkedIn</a>
       <span aria-hidden="true">·</span>
