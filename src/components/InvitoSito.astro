@@ -20,6 +20,9 @@ const { etichetta, meta, pulsante = 'Vai al sito', anteprime, link } = Astro.pro
 const dominio = link ? new URL(link).hostname.replace(/^www\./, '') : undefined;
 const base = `/anteprime/${anteprime}`;
 const Anteprime = link ? 'a' : 'div';
+// Le anteprime sono nascoste agli screen reader (il link vero è il pulsante): il testo alternativo
+// serve a Google e alle AI, che le leggono comunque, e non si sente due volte.
+const alt = (dove: string) => (dominio ? `La home di ${dominio} da ${dove}` : '');
 ---
 
 <Modulo luce="media" class="griglia invito-sito">
@@ -46,7 +49,7 @@ const Anteprime = link ? 'a' : 'div';
           sizes="(max-width: 720px) 85vw, 360px"
           width="1280"
           height="800"
-          alt=""
+          alt={alt('computer')}
           loading="lazy"
           decoding="async"
         />
@@ -60,7 +63,7 @@ const Anteprime = link ? 'a' : 'div';
               sizes="(max-width: 720px) 30vw, 110px"
               width="390"
               height="844"
-              alt=""
+              alt={alt('telefono')}
               loading="lazy"
               decoding="async"
             />
