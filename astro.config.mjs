@@ -7,6 +7,7 @@ import sitemap from '@astrojs/sitemap';
 import csp from './src/integrazioni/csp.mjs';
 import linkEsterni from './src/integrazioni/link-esterni.mjs';
 import newsletterUltima from './src/integrazioni/newsletter-ultima.mjs';
+import { dateDellaSitemap } from './src/integrazioni/sitemap-date.mjs';
 
 // Le pagine del sito sono statiche: si caricano all'istante.
 // Solo l'admin di Keystatic gira sul server.
@@ -16,6 +17,9 @@ const cmsLocale = process.env.CMS_LOCALE === '1';
 
 // Pagine che non vanno nella sitemap: la conferma della newsletter e la 404 non si cercano su Google.
 const fuoriSitemap = ['/newsletter/benvenuto', '/404'];
+// Data di ultima modifica, solo per le pagine che ne hanno una vera (vedi il file).
+const dateSitemap = dateDellaSitemap();
+const percorso = (pagina) => new URL(pagina).pathname.replace(/\/$/, '');
 
 export default defineConfig({
   site: 'https://daretta.it',
@@ -37,7 +41,11 @@ export default defineConfig({
     markdoc(),
     keystatic(),
     sitemap({
-      filter: (pagina) => !fuoriSitemap.some((p) => new URL(pagina).pathname.replace(/\/$/, '') === p),
+      filter: (pagina) => !fuoriSitemap.includes(percorso(pagina)),
+      serialize: (voce) => {
+        const data = dateSitemap.get(percorso(voce.url));
+        return data ? { ...voce, lastmod: data } : voce;
+      },
     }),
     // I link verso altri siti si aprono in una scheda nuova (vedi il file).
     linkEsterni(),

@@ -7,15 +7,20 @@ import ListaScritti from '../components/ListaScritti.astro';
 import Chiusura from '../components/Chiusura.astro';
 import { progetto, chiSono } from '../rimandi';
 import { getArticoli, getMicrotesti } from '../cms';
+import { elenco, idArticolo } from '../dati-strutturati';
 
 const [articoli, micro] = await Promise.all([getArticoli(), getMicrotesti()]);
 const vuoto = articoli.length === 0;
+const descrizione = vuoto
+  ? 'Gli articoli di Patrizio Bartolozzi. Il primo arriva presto.'
+  : 'Quattro chiacchiere sul lavoro e sull\'AI, novità dai miei side project e qualche opinione, quando mi va. Gli articoli di Patrizio Bartolozzi.';
 ---
 
 <Base
   titolo="Chiacchiere"
-  descrizione={vuoto ? 'Gli articoli di Patrizio Bartolozzi. Il primo arriva presto.' : 'Quattro chiacchiere sul lavoro e sull\'AI, novità dai miei side project e qualche opinione, quando mi va. Gli articoli di Patrizio Bartolozzi.'}
+  descrizione={descrizione}
   attiva="chiacchiere"
+  schema={elenco({ percorso: '/chiacchiere', nome: 'Chiacchiere', descrizione, parti: articoli.map((a) => idArticolo(a.slug)) })}
 >
   <Testata titolo="quattro chiacchiere.">
     <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Chiacchiere</span></span>

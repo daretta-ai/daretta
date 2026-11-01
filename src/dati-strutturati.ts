@@ -66,7 +66,8 @@ export function articolo(a: {
     datePublished: a.data.toISOString().slice(0, 10),
     dateModified: (a.aggiornato ?? a.data).toISOString().slice(0, 10),
     inLanguage: 'it',
-    ...(a.tag && { keywords: a.tag }),
+    // Il tag nel CMS è maiuscolo perché è un'etichetta grafica: ai motori va la parola.
+    ...(a.tag && { keywords: a.tag.toLocaleLowerCase('it') }),
     author: { '@id': ID_PATRIZIO },
     publisher: { '@id': ID_PATRIZIO },
     isPartOf: { '@id': ID_SITO },
@@ -119,6 +120,7 @@ export function numero(n: { slug: string; oggetto: string; descrizione: string; 
       description: n.descrizione,
       image: assoluto(`/og/newsletter/${n.slug}.png`),
       datePublished: n.inviata.toISOString().slice(0, 10),
+      dateModified: n.inviata.toISOString().slice(0, 10),
       position: n.numero,
       inLanguage: 'it',
       author: { '@id': ID_PATRIZIO },
@@ -162,6 +164,29 @@ export function progetto(p: {
     isPartOf: { '@id': ID_SITO },
   };
 }
+
+/**
+ * Una pagina elenco (/chiacchiere, /progetti, /curiosita): dice di cosa parla
+ * e, quando ci sono, quali pagine del sito contiene.
+ */
+export function elenco(p: { percorso: string; nome: string; descrizione: string; parti?: string[] }): Nodo {
+  const url = assoluto(p.percorso);
+  return {
+    '@type': 'CollectionPage',
+    '@id': `${url}#pagina`,
+    url,
+    name: p.nome,
+    description: p.descrizione,
+    inLanguage: 'it',
+    about: { '@id': ID_PATRIZIO },
+    isPartOf: { '@id': ID_SITO },
+    ...(p.parti?.length && { hasPart: p.parti.map((id) => ({ '@id': id })) }),
+  };
+}
+
+/** Gli @id usati dalle pagine elenco per puntare agli articoli e ai progetti. */
+export const idArticolo = (slug: string) => `${assoluto(`/chiacchiere/${slug}`)}#articolo`;
+export const idProgetto = (slug: string) => `${assoluto(`/progetti/${slug}`)}#progetto`;
 
 /** Il blocco JSON-LD completo: Patrizio e il sito sempre, più i nodi della pagina. */
 export const grafo = (...nodi: Nodo[]) =>

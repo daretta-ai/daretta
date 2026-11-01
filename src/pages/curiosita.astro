@@ -8,12 +8,18 @@ import Tabellone from '../components/Tabellone.astro';
 import Chiusura from '../components/Chiusura.astro';
 import { progetto, ultimoScritto } from '../rimandi';
 import { getCollection } from 'astro:content';
+import { elenco } from '../dati-strutturati';
 
 const curiosita = (await getCollection('curiosita')).sort((a, b) => a.id.localeCompare(b.id));
+const descrizione = 'Cose che non servono a niente, ma raccontano qualcosa.';
 const lettere = (s: string) => s.split('');
 ---
 
-<Base titolo="Curiosità" descrizione="Cose che non servono a niente, ma raccontano qualcosa.">
+<Base
+  titolo="Curiosità"
+  descrizione={descrizione}
+  schema={elenco({ percorso: '/curiosita', nome: 'Curiosità', descrizione })}
+>
   <section class="griglia apertura">
     <div class="testo">
       <Sezione segno as="p">Curiosità</Sezione>

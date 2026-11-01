@@ -11,15 +11,18 @@ import Chiusura from '../../components/Chiusura.astro';
 import { ultimoScritto, chiSono } from '../../rimandi';
 import { getProgetti, getPaginaProgetti } from '../../cms';
 import { linkInRiga } from '../../link-in-riga';
+import { elenco, idProgetto } from '../../dati-strutturati';
 
 const [progetti, testi] = await Promise.all([getProgetti(), getPaginaProgetti()]);
+const descrizione = 'I side project di Patrizio Bartolozzi, portati avanti di notte.';
 const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome).join(' e ');
 ---
 
 <Base
   titolo="Progetti"
-  descrizione="I side project di Patrizio Bartolozzi, portati avanti di notte."
+  descrizione={descrizione}
   attiva="progetti"
+  schema={elenco({ percorso: '/progetti', nome: 'Progetti', descrizione, parti: progetti.map((p) => idProgetto(p.slug)) })}
 >
   <Testata titolo={testi.titolo}>
     <span slot="etichetta" class="etichetta"><Segno /><span class="etichetta-nome">Progetti</span></span>
