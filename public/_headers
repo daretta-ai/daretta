@@ -5,7 +5,7 @@
 # La cache di /_astro/* (un anno, immutable) la aggiunge l'adapter di Cloudflare.
 
 /*
-  Strict-Transport-Security: max-age=31536000
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
