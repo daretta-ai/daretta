@@ -6,7 +6,7 @@ import geistTesto from '../assets/font/geist-sans-latin-400-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { ANTEPRIMA } from '../sito';
-import { grafo } from '../dati-strutturati';
+import { grafo, DESCRIZIONE_SITO } from '../dati-strutturati';
 
 interface Props {
   titolo?: string;
@@ -26,7 +26,7 @@ interface Props {
 
 const {
   titolo,
-  descrizione = 'Il sito di Patrizio Bartolozzi. Risolvo problemi. Di solito non i miei. Qui racconto i side project che porto avanti la sera.',
+  descrizione = DESCRIZIONE_SITO,
   attiva,
   home = false,
   avanzamento = false,

@@ -9,13 +9,21 @@ export const ID_PATRIZIO = `${SITO}/#patrizio`;
 
 type Nodo = Record<string, unknown>;
 
+// La descrizione della home, la stessa per Google e per il WebSite qui sotto.
+export const DESCRIZIONE_SITO =
+  'Il sito di Patrizio Bartolozzi. Risolvo problemi. Di solito non i miei. Qui racconto i side project che porto avanti la sera.';
+
 export const sito: Nodo = {
   '@type': 'WebSite',
   '@id': ID_SITO,
   url: `${SITO}/`,
   name: 'dàretta',
-  alternateName: 'dàretta di Patrizio Bartolozzi',
+  // Anche senza accento: è come lo scrive chi lo cerca.
+  alternateName: ['daretta', 'dàretta di Patrizio Bartolozzi'],
+  description: DESCRIZIONE_SITO,
   inLanguage: 'it',
+  // È il sito di una persona, non di un'attività: lo dice esplicitamente.
+  about: { '@id': ID_PATRIZIO },
   author: { '@id': ID_PATRIZIO },
 };
 
