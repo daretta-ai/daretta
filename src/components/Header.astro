@@ -204,6 +204,13 @@ const voci = [
     opacity: 0;
     visibility: hidden;
   }
+  /* In home, finché la hero è in vista, ISCRIVITI non c'è: l'invito è il pulsante della hero, e due arancio
+     nella stessa schermata si farebbero concorrenza. Da mobile resta solo il menu (tavola Home-Mobile),
+     da desktop la navigazione (scelta di Patrizio, 3 novembre 2026). Compare con il logotipo. */
+  .senza-logo .cta {
+    opacity: 0;
+    visibility: hidden;
+  }
   .menu {
     margin-left: auto;
   }
@@ -263,6 +270,9 @@ const voci = [
     --fondo: var(--arancio);
     --punto: var(--arancio-trama);
     color: var(--cemento);
+    transition:
+      opacity 0.2s,
+      visibility 0.2s;
   }
   /* Menu mobile: l'hamburger su un fondo smussato in filetto, senza contorno (scelta di Patrizio, 10 ott 2026). */
   .panino {
@@ -311,10 +321,6 @@ const voci = [
     }
     .panino {
       display: inline-flex;
-    }
-    /* In home, finché la hero è in vista, su mobile resta solo il menu (tavola Home-Mobile) */
-    .senza-logo .cta {
-      visibility: hidden;
     }
     /* Menu a tutto schermo: sfuma dentro (320ms) e le voci salgono una dopo l'altra; esce sfumando (140ms) */
     .menu {
