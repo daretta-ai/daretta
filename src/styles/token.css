@@ -17,6 +17,13 @@
   --petrolio-acceso: #22767e;
   --petrolio-scuro: #134349;
   --punti: #2c8a93;
+  /* La scala dei punti delle figure (scala dei ruoli, barre, elenco), dal più spento al più acceso.
+     Non contiene punti (#2c8a93): sta tra il 4 e il 5. */
+  --scala-punti-1: #1f4a50;
+  --scala-punti-2: #235a61;
+  --scala-punti-3: #276b73;
+  --scala-punti-4: #2c7c84;
+  --scala-punti-5: #3a9ca5;
   --onda: #6ccbd3;
   --inchiostro: #ecece7;
   --inchiostro-corpo: #d2d4ce;
@@ -186,6 +193,30 @@
 .smussato:focus-visible,
 .smussato :focus-visible {
   outline: none;
+}
+
+/* Contrasto forzato (Windows, temi a contrasto). Il browser sostituisce i fondi con i colori
+   di sistema, quindi fondo, contorno, trama e anello (tutti background ritagliati) spariscono.
+   Qui lo smusso si perde: si torna a un bordo e a un outline di sistema, rettangolari ma visibili.
+   È una modalità che il visitatore ha scelto, e conta che veda forma e focus. */
+@media (forced-colors: active) {
+  .smussato {
+    border: 1px solid ButtonText;
+  }
+  .smussato::before,
+  .smussato::after,
+  .smussato > .trama {
+    display: none;
+  }
+  .smussato:focus-visible,
+  .smussato:has(:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+  }
+  /* Il campo dentro un contenitore smussato: l'anello sta già sul contenitore */
+  .smussato :focus-visible {
+    outline: none;
+  }
 }
 
 *,

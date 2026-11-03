@@ -332,7 +332,7 @@ const luceX = posOra >= 0 ? `${((posOra + 0.5) / SETTIMANE) * 100}%` : '80%';
   }
   .striscia {
     position: relative;
-    padding-bottom: 28px;
+    padding-bottom: var(--space-6);
   }
   .onda-pan {
     display: block;
@@ -355,15 +355,16 @@ const luceX = posOra >= 0 ? `${((posOra + 0.5) / SETTIMANE) * 100}%` : '80%';
     cursor: pointer;
   }
   .anno-scegli .meta {
-    transition: color 180ms ease;
+    transition: color 180ms cubic-bezier(0.2, 0.7, 0.2, 1);
   }
   .anno-scegli:hover .meta,
   .anno-scegli[aria-pressed='true'] .meta {
     color: var(--inchiostro);
   }
+  /* L'anello di focus come nel resto del sito: 2px di onda staccati di 3px */
   .anno-scegli:focus-visible {
     outline: 2px solid var(--onda);
-    outline-offset: -2px;
+    outline-offset: 3px;
   }
   /* Le parentesi della lente: lo stesso segno delle etichette, grande quanto un anno */
   .lente {
@@ -516,7 +517,7 @@ const luceX = posOra >= 0 ? `${((posOra + 0.5) / SETTIMANE) * 100}%` : '80%';
       margin-top: var(--space-6);
     }
     .striscia {
-      padding-bottom: 24px;
+      padding-bottom: var(--space-6);
     }
     .lente > span {
       width: 5px;

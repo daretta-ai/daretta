@@ -52,6 +52,12 @@ const prima = dati[0];
       --rh: 40px;
     }
   }
+  /* Sui telefoni più stretti DEST. (15 tessere) a 16px non entra nella linea dei testi: 14px fanno 278px su 288 */
+  @media (max-width: 380px) {
+    .tabellone {
+      --tw: 14px;
+    }
+  }
   .testata {
     display: flex;
     flex-wrap: wrap;

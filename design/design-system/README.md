@@ -49,6 +49,8 @@ I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indiri
 - **Articoli:** colonna di lettura di circa 650px (colonne 4–9, vedi «La griglia del testo») direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) ed etichette di sezione nel margine; le citazioni in Doto restano nella colonna (vedi «Le citazioni»). Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `punti`, gli altri in `filetto-neutro`. Sono i punti della sfera che si accendono mentre leggi: uno stato, non un'azione, quindi niente arancio (faceva concorrenza a ISCRIVITI e al logotipo) e niente `onda` (troppo chiara, sembrava un secondo accento). Tra letti e spenti serve almeno 3:1 (oggi 3,3:1), così il confine si vede. È una barra, non un elemento della pagina: punti tondi da 2px, uno ogni 8px, quanti ne stanno nella larghezza, uguali su desktop e mobile. Il passo è fisso e il numero no (circa 160 punti su desktop, una quarantina su un telefono), così la trama è la stessa su ogni schermo e resta una riga punteggiata sottile, non una fila di bottoni.
 - **Indice dei progetti (`/progetti`):** modulo-testata («i miei frankenstein.»), poi la lista dei progetti posata sul fondo come le Chiacchiere, separata da `filetto`: lo stato nel margine (colonne 1–3), nome in `testo-titolo`, frase della card in `testo-corpo` e «Con…» in mono nella colonna del testo (4–9), la freccia in colonna 12. Niente card: in home ci sono già, e una seconda griglia di box sarebbe un doppione. Poi il modulo con il numero dei progetti aperti, che si conta da solo, e la chiusura (l'ultimo articolo e Chi sono). Il menu PROGETTI e «VEDI TUTTI →» portano qui (scelta di Patrizio, 26 ottobre 2026). Testi in Keystatic, pagina Progetti.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
+- **Archivio della newsletter (`/newsletter`):** modulo-testata compatto («quelle che ti sei perso.», etichetta NEWSLETTER), poi la lista dei numeri posata sul fondo come le Chiacchiere, dal più recente, e la chiusura. La pagina esiste solo quando c'è almeno un numero pubblicato: niente archivio vuoto, né in sitemap. Testi in Keystatic, pagina Newsletter.
+- **Numero della newsletter (`/newsletter/AAAA-MM`):** si apre come un articolo (stessa testata, stessa colonna di lettura) con il testo identico alla mail; le sezioni della mail diventano etichette nel margine. Si chiude con la firma, se è accesa, e la chiusura. Testi in Keystatic, «Newsletter inviate».
 - **L'header quando la pagina scorre** è vetro smerigliato, non un fondo pieno: cemento al 60% con `backdrop-filter: blur(14px)`. Sotto si vede che qualcosa scorre, ma non si legge. Nel CSS si scrive solo la regola standard: il prefisso per Safari lo aggiunge la build.
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
 - **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono in Geist alla misura dei titoli (`testo-titolo`, 24px), separate da `filetto`, con il segno nel margine in mono `inchiostro-muto` (`[ ■ ] Chiacchiere`), fermo; il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
@@ -153,6 +155,10 @@ Oggi c'è un solo form, la newsletter, ma la regola vale per tutti. Un messaggio
 - **Il movimento.** La striscia sale di 8px e sfuma dentro (320ms, curva del sito). Nel successo il form sfuma via prima (140ms), poi arriva la striscia, e la striscia è alta almeno quanto la riga del campo, così il modulo non salta. Con `prefers-reduced-motion` il cambio è istantaneo.
 - **Accessibilità.** `role="status"` per il successo, `role="alert"` per gli errori; il campo ha `aria-invalid="true"` ed è collegato al messaggio con `aria-describedby`. Dopo il successo il focus va sulla striscia (`tabindex="-1"`), così chi usa la tastiera non resta su un pulsante sparito.
 
+## La mail della newsletter
+
+La mail segue il sistema dove i programmi di posta lo permettono. Template e istruzioni per Kit stanno in `mail/` (`mail/LEGGIMI.md`, `mail/template-kit.html`, `mail/template-kit-conferma.html`); i testi in testi.md, «La mail della newsletter».
+
 ## La sfera
 
 L'unico momento «wow» del sito, ed è legato al nome: la sfera *ascolta*.
@@ -181,10 +187,21 @@ La fascia prima del footer, uguale in tutte le pagine tranne 404, privacy e benv
 | Chi sono | un progetto | l'ultimo articolo |
 | Chiacchiere | un progetto | Chi sono |
 | Curiosità | un progetto | l'ultimo articolo |
+| Archivio della newsletter | un progetto | l'ultimo articolo |
+| Numero della newsletter | il numero precedente (se non c'è, «Tutte le newsletter») | l'ultimo articolo |
 
 - **Un progetto a caso.** Dove la riga dice «un progetto», la pagina li contiene tutti e uno script ne accende uno a caso a ogni visita; senza JavaScript resta il primo nell'ordine della home. «L'ultimo articolo» è il titolo del più recente; finché non ce n'è, la frase di Chiacchiere vuoto.
 - **Su mobile** l'ordine resta lo stesso: prima il prosegui, poi la newsletter, poi il footer. Sopra la fascia, lo stacco delle sezioni.
 - Costruzione: `src/components/Chiusura.astro`, righe in `src/rimandi.ts`.
+
+## I blocchi del corpo
+
+Gli oggetti che rompono il ritmo dei testi lunghi, oltre a numero, citazione, foto e invito al sito. Tutti nella griglia del testo, tutti scelti come blocchi in Keystatic.
+
+- **Prima e dopo** (`Confronto.astro`). Due o più cifre in card affiancate, `cemento-rilievo` con `smusso-card`: etichetta in mono `testo-meta`, `inchiostro-muto`, sotto la cifra in Doto 900, 56px (40px su mobile). Per un risultato che si legge meglio come confronto che come frase.
+- **Figura a barre** (`FiguraBarre.astro`). Righe con l'etichetta in mono e una barra di punti lunga quanto il valore; tre toni dalla scala dei punti (`--scala-punti-3…5`), dal più spento al più acceso, e una riga può essere accesa (etichetta in `inchiostro`). Le barre sono decorative: il valore sta sempre anche nell'etichetta.
+- **Codice** (`Codice.astro`). Smusso da card, luce petrolio dall'alto a sinistra, codice in Geist Mono `testo-piccolo`, sotto il linguaggio in mono `testo-meta`.
+- **Firma** (`Firma.astro`). In fondo ad articoli e numeri della newsletter: foto 72px, nome e una riga dai Microtesti. Se la riga è vuota la firma non compare (oggi è spenta).
 
 ## L'invito al sito
 
@@ -266,6 +283,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Pulsanti e chip alti almeno 44px su mobile.
 - I punti spenti dei link sono in `petrolio-acceso` (3,5:1), sopra il 3:1 dei segni grafici; accesi in `punti` (4,6:1).
 - L'anello di focus segue lo smusso (vedi «Angoli»): mai un `outline` rettangolare tagliato dal `clip-path`, e mai un elemento senza anello.
+- **Contrasto forzato** (Windows, temi a contrasto). Il browser impone i colori di sistema e cancella i fondi, quindi fondo, contorno, trama e anello dei pulsanti (tutti fondi ritagliati) spariscono. Lì il sistema rinuncia allo smusso: ogni `.smussato` prende un bordo di 1px `ButtonText` e al focus un `outline` di 2px `Highlight` staccato di 3px. Restano forma e focus, si perdono angoli, luce e arancio: è una modalità che il visitatore ha scelto. Costruzione: blocco `@media (forced-colors: active)` in `src/styles/token.css`.
 
 ## Da non fare
 
