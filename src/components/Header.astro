@@ -431,4 +431,18 @@ const voci = [
       transition: none !important;
     }
   }
+  /* Telefoni stretti (360–400px): logotipo, ISCRIVITI e menu non ci stavano e la pagina sbordava.
+     Logotipo al minimo di Doto (28px), gap minimo e padding di ISCRIVITI più corti (scelta di Patrizio, 3 novembre 2026) */
+  @media (max-width: 400px) {
+    /* Il gap è solo il minimo: con space-between lo spazio vero lo decide la larghezza */
+    .header {
+      gap: var(--space-2);
+    }
+    .logo {
+      font-size: 28px;
+    }
+    .cta {
+      padding: 0 var(--space-3);
+    }
+  }
 </style>
