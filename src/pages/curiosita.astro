@@ -172,6 +172,7 @@ const lettere = (s: string) => s.split('');
     animation: spegne 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
   }
   .riga:target .t {
+    /* 500ms ease-in-out: eccezione del tabellone, che è un oggetto meccanico (design system, «Il movimento») */
     animation: gira 0.5s calc(0.45s + var(--i) * 25ms) ease-in-out;
   }
   @keyframes accende {

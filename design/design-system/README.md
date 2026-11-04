@@ -19,7 +19,18 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 
 1. **Il fondo è cemento.** `cemento` per la pagina, `cemento-rilievo` per i moduli, `cemento-incavo` per le card dentro i moduli. Il testo è `inchiostro`; i paragrafi lunghi `inchiostro-corpo`; etichette e date `inchiostro-muto`; i titoli di sezione `onda`.
 2. **Il petrolio è luce, non vernice.** Viene dalla sfera: un alone (`petrolio-alone`) si allarga sul fondo della pagina, e ogni modulo ne prende tanto quanto è vicino alla sfera. La hero e la foto sono le più cariche (`petrolio-luce` al centro), «Chi sono» una dose media, «Progetti» appena un velo. Il gradiente è sempre radiale o lineare *da* petrolio *verso* cemento, mai il contrario, mai tra due colori caldi. Unica eccezione: il modulo newsletter è petrolio pieno (`petrolio-acceso` → `petrolio-scuro`, 135°), perché è l'invito principale.
-3. **L'arancio vuol dire «vivo», e «fai qualcosa».** `arancio` si accende per la à del logotipo, il pallino dei progetti ONLINE e le CTA (Iscriviti nell'header, Iscrivimi nella newsletter). Più un solo dettaglio di stato: il pallino accanto alla voce di menu attiva. Il testo sopra l'arancio è sempre `cemento`, mai `inchiostro` (non raggiunge il contrasto). Mai per link, hover, bordi, tag o decorazione: se un elemento non è la à, uno stato o un'azione, resta spento.
+
+   **Le tappe intermedie non sono token.** Alcuni colori stanno scritti nei componenti: sono passaggi ricavati a occhio dai token, ognuno usato in un posto solo (scelta di Patrizio, 4 novembre 2026). Se cambiano `cemento-rilievo`, `petrolio-luce` o `cemento`, vanno ricontrollati a mano:
+
+   | Colore | Dove | Tra |
+   | --- | --- | --- |
+   | `#173134` | `Modulo.astro`, luce della hero e della foto | `petrolio-luce` → `cemento-rilievo` |
+   | `#1a444a`, `#1a1f21` | `Modulo.astro`, luce di Chi sono | `petrolio-luce` → `cemento-rilievo` |
+   | `#16292c` | `Modulo.astro`, il velo dei Progetti | petrolio → `cemento-rilievo` |
+   | `#17383d` | `Codice.astro`, luce del blocco di codice | `petrolio-luce` → `cemento-rilievo` |
+   | `#161a1b` | `CardProgetto.astro`, fondo della card all'hover | `cemento-incavo` → `cemento-rilievo` |
+   | `#5c6466` | `Newsletter.astro`, testo segnaposto del campo email | più spento di `inchiostro-muto`, sul fondo del campo |
+3. **L'arancio vuol dire «vivo», e «fai qualcosa».** `arancio` si accende per la à del logotipo, il pallino dei progetti ONLINE e le CTA (Iscriviti nell'header, il pulsante della hero, Iscrivimi nella newsletter). Più un solo dettaglio di stato: il pallino accanto alla voce di menu attiva. Il testo sopra l'arancio è sempre `cemento`, mai `inchiostro` (non raggiunge il contrasto). Mai per link, hover, bordi, tag o decorazione: se un elemento non è la à, uno stato o un'azione, resta spento.
 
 ## Tipografia
 
@@ -37,19 +48,22 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 | `testo-corpo` | 20 | 18 | tutti i paragrafi, elenchi compresi |
 | `testo-piccolo` | 16 | 16 | descrizioni delle card, campo email, messaggi dei form, codice |
 | `testo-etichetta` (mono) | 14 | 13 | etichette e titoli di sezione, link, pulsanti, footer |
-| `testo-meta` (mono) | 12 | 12 | stati, date, didascalie, note |
+| `testo-meta` (mono) | 12 | 12 | stati, date, didascalie, note; unica eccezione in Geist, la frase che compare accanto a uno stato all'hover, che deve restare alla misura dello stato (scelta di Patrizio, 4 novembre 2026) |
 
 I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indirizzo IP passa a Google. Sono i file latin di @fontsource (Doto 600, 800, 900; Geist 400, 500, 600; Geist Mono 400, 500) in `src/assets/font`, dichiarati in `src/styles/font.css`.
 
 ## Composizione
 
 - **Pieno e vuoto.** Non tutto sta in un box. Hero, Chi sono, Progetti e Newsletter sono moduli (`smusso-modulo`, padding `space-10`); Chiacchiere e Curiosità sono posate direttamente sul fondo. Chiacchiere è una lista separata da `filetto`; Curiosità ha un solo oggetto fisico, il tabellone, senza box attorno. L'alternanza dà ritmo e gerarchia: se una pagina diventa una griglia di box uguali, qualcosa è andato storto.
-- **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi. di solito non i miei.». Da desktop ogni frase resta intera sulla sua riga. È la frase da usare ovunque (sito, LinkedIn, bio), quindi deve reggere anche da sola. A destra la sfera. Nella home l'header non ripete il logotipo finché non si scorre oltre la hero; nelle altre pagine c'è sempre.
+- **La hero** apre con il logotipo grande (`punti-hero`) e sotto la frase in Doto (`punti-motto`): «risolvo problemi. di solito non i miei.». Da desktop ogni frase resta intera sulla sua riga. È la frase da usare ovunque (sito, LinkedIn, bio), quindi deve reggere anche da sola. A destra la sfera. Nella home l'header non ripete il logotipo né ISCRIVITI finché non si scorre oltre la hero, perché lì l'invito è il pulsante della hero e due arancio nella stessa schermata si farebbero concorrenza (scelta di Patrizio, 3 novembre 2026); nelle altre pagine ci sono sempre.
 - **Pagine interne.** Hanno lo stesso ritmo della home, non una colonna di testo dall'inizio alla fine. Si aprono con un modulo-testata petrolio: etichetta, titolo in `punti-pagina`, frase d'attacco; su desktop a destra la sfera piccola. Su mobile il titolo si stringe quanto basta perché la sua parola più lunga stia nella colonna, mai sotto i 28px (oggi succede con «quattro chiacchiere.»). La griglia del testo è una sola, in tutte le pagine interne e negli articoli (vedi «La griglia del testo»). Almeno ogni due o tre paragrafi qualcosa rompe il ritmo: un modulo con un numero, una citazione in Doto (vedi «Le citazioni»), una foto, una figura a punti (es. la scala dei ruoli in Chi sono). Si chiudono con la fascia di chiusura (vedi «La chiusura»).
 - **Articoli:** colonna di lettura di circa 650px (colonne 4–9, vedi «La griglia del testo») direttamente sul fondo, senza modulo; metadati (tag, data, tempo di lettura) ed etichette di sezione nel margine; le citazioni in Doto restano nella colonna (vedi «Le citazioni»). Gli elenchi seguono le regole di «Gli elenchi». Sotto l'header una barra di avanzamento a punti: i punti letti in `punti`, gli altri in `filetto-neutro`. Sono i punti della sfera che si accendono mentre leggi: uno stato, non un'azione, quindi niente arancio (faceva concorrenza a ISCRIVITI e al logotipo) e niente `onda` (troppo chiara, sembrava un secondo accento). Tra letti e spenti serve almeno 3:1 (oggi 3,3:1), così il confine si vede. È una barra, non un elemento della pagina: punti tondi da 2px, uno ogni 8px, quanti ne stanno nella larghezza, uguali su desktop e mobile. Il passo è fisso e il numero no (circa 160 punti su desktop, una quarantina su un telefono), così la trama è la stessa su ogni schermo e resta una riga punteggiata sottile, non una fila di bottoni.
 - **Indice dei progetti (`/progetti`):** modulo-testata («i miei frankenstein.»), poi la lista dei progetti posata sul fondo come le Chiacchiere, separata da `filetto`: lo stato nel margine (colonne 1–3), nome in `testo-titolo`, frase della card in `testo-corpo` e «Con…» in mono nella colonna del testo (4–9), la freccia in colonna 12. Niente card: in home ci sono già, e una seconda griglia di box sarebbe un doppione. Poi il modulo con il numero dei progetti aperti, che si conta da solo, e la chiusura (l'ultimo articolo e Chi sono). Il menu PROGETTI e «VEDI TUTTI →» portano qui (scelta di Patrizio, 26 ottobre 2026). Testi in Keystatic, pagina Progetti.
 - **Pagina 404:** modulo-testata con titolo in `punti-pagina`, una riga di testo, poi il tabellone delle curiosità posato sul fondo, e sotto il link per tornare alla home. È l'unico posto, oltre a home e `/curiosita`, dove compare il tabellone.
+- **Archivio della newsletter (`/newsletter`):** modulo-testata compatto («quelle che ti sei perso.», etichetta NEWSLETTER), poi la lista dei numeri posata sul fondo come le Chiacchiere, dal più recente, e la chiusura. La pagina esiste solo quando c'è almeno un numero pubblicato: niente archivio vuoto, né in sitemap. Testi in Keystatic, pagina Newsletter.
+- **Numero della newsletter (`/newsletter/AAAA-MM`):** si apre come un articolo (stessa testata, stessa colonna di lettura) con il testo identico alla mail; le sezioni della mail diventano etichette nel margine. Si chiude con la firma, se è accesa, e la chiusura. Testi in Keystatic, «Newsletter inviate».
 - **L'header quando la pagina scorre** è vetro smerigliato, non un fondo pieno: cemento al 60% con `backdrop-filter: blur(14px)`. Sotto si vede che qualcosa scorre, ma non si legge. Nel CSS si scrive solo la regola standard: il prefisso per Safari lo aggiunge la build.
+- **L'header sui telefoni stretti** (fino a 400px): logotipo a 28px (il minimo di Doto), 8px di gap minimo tra logotipo e pulsanti, ISCRIVITI con 12px di padding laterale. Così logotipo, ISCRIVITI e menu stanno su una riga da 360px in su, anche negli articoli con la barra di lettura (scelta di Patrizio, 3 novembre 2026).
 - **Il menu su mobile** è l'hamburger classico, due righe in `inchiostro` su un fondo pieno `filetto`, smussato come ogni pulsante (10,3px su 48px), senza contorno: un contorno accanto a ISCRIVITI pesava troppo, e `cemento-rilievo` sull'header trasparente non si vedeva. L'anello di focus segue lo smusso.
 - **Il menu aperto su mobile copre tutta la pagina.** Fondo `cemento` con l'alone `petrolio-alone` che parte dall'angolo del pulsante; logotipo, ISCRIVITI e la X restano al loro posto. Le voci sono in Geist alla misura dei titoli (`testo-titolo`, 24px), separate da `filetto`, con il segno nel margine in mono `inchiostro-muto` (`[ ■ ] Chiacchiere`), fermo; il pallino arancio della voce attiva sta dopo la parola. In fondo LinkedIn e Mail in mono `inchiostro-muto`. Entra sfumando (320ms) e le voci salgono di 8px una dopo l'altra (60ms di scarto); esce sfumando in 140ms. La pagina sotto non scorre, Esc chiude, con `prefers-reduced-motion` il cambio è istantaneo.
 - **Griglia a 12 colonne** su desktop (1440px, margini `space-14`, gap `space-6`), una colonna su mobile (margini `space-3`, gap `space-3`, moduli `smusso-modulo-mobile`). Su mobile il margine delle etichette si ripiega sopra il paragrafo.
@@ -83,10 +97,10 @@ Nel sito convivono due materiali, e il contrasto tra i due racconta il nome.
 Tre stati, dal più vivo al più lontano. Sempre segno e parola insieme, in Geist Mono maiuscolo.
 
 - **ONLINE:** pallino pieno in `arancio`. È l'unico stato acceso.
-- **IN SVILUPPO:** anello vuoto a tratto continuo in `inchiostro-muto`.
-- **CONCEPT:** anello tratteggiato in `inchiostro-muto`. È un'idea che si sta ancora disegnando: meno di un anello, non ancora un pallino.
+- **IN SVILUPPO:** anello vuoto a tratto continuo in `stato-spento`, più scuro delle etichette: chi non è vivo è più spento (scelta di Patrizio, 4 novembre 2026).
+- **CONCEPT:** anello tratteggiato in `stato-spento`. È un'idea che si sta ancora disegnando: meno di un anello, non ancora un pallino.
 
-**Descrizione all'hover.** Al passaggio del mouse, e al focus da tastiera, accanto allo stato compare una frase breve in Geist, `inchiostro-muto`, senza box né arancio: ONLINE «Si può usare.», IN SVILUPPO «Ci sto lavorando.», CONCEPT «Per ora è un'idea.». La parola dello stato resta sempre visibile; la frase è un di più, e per gli screen reader è la descrizione dello stato (`aria-describedby`). Su touch non compare.
+**Descrizione all'hover.** Al passaggio del mouse, e al focus da tastiera, accanto allo stato compare una frase breve in Geist alla misura dello stato (`testo-meta`), `inchiostro-muto`, senza box né arancio: ONLINE «Si può usare.», IN SVILUPPO «Ci sto lavorando.», CONCEPT «Per ora è un'idea.». La parola dello stato resta sempre visibile; la frase è un di più, e per gli screen reader è la descrizione dello stato (`aria-describedby`). Su touch non compare.
 
 ## Gli elenchi
 
@@ -153,6 +167,10 @@ Oggi c'è un solo form, la newsletter, ma la regola vale per tutti. Un messaggio
 - **Il movimento.** La striscia sale di 8px e sfuma dentro (320ms, curva del sito). Nel successo il form sfuma via prima (140ms), poi arriva la striscia, e la striscia è alta almeno quanto la riga del campo, così il modulo non salta. Con `prefers-reduced-motion` il cambio è istantaneo.
 - **Accessibilità.** `role="status"` per il successo, `role="alert"` per gli errori; il campo ha `aria-invalid="true"` ed è collegato al messaggio con `aria-describedby`. Dopo il successo il focus va sulla striscia (`tabindex="-1"`), così chi usa la tastiera non resta su un pulsante sparito.
 
+## La mail della newsletter
+
+La mail segue il sistema dove i programmi di posta lo permettono. Template e istruzioni per Kit stanno in `mail/` (`mail/LEGGIMI.md`, `mail/template-kit.html`, `mail/template-kit-conferma.html`); i testi in testi.md, «La mail della newsletter».
+
 ## La sfera
 
 L'unico momento «wow» del sito, ed è legato al nome: la sfera *ascolta*.
@@ -181,10 +199,21 @@ La fascia prima del footer, uguale in tutte le pagine tranne 404, privacy e benv
 | Chi sono | un progetto | l'ultimo articolo |
 | Chiacchiere | un progetto | Chi sono |
 | Curiosità | un progetto | l'ultimo articolo |
+| Archivio della newsletter | un progetto | l'ultimo articolo |
+| Numero della newsletter | il numero precedente (se non c'è, «Tutte le newsletter») | l'ultimo articolo |
 
 - **Un progetto a caso.** Dove la riga dice «un progetto», la pagina li contiene tutti e uno script ne accende uno a caso a ogni visita; senza JavaScript resta il primo nell'ordine della home. «L'ultimo articolo» è il titolo del più recente; finché non ce n'è, la frase di Chiacchiere vuoto.
 - **Su mobile** l'ordine resta lo stesso: prima il prosegui, poi la newsletter, poi il footer. Sopra la fascia, lo stacco delle sezioni.
 - Costruzione: `src/components/Chiusura.astro`, righe in `src/rimandi.ts`.
+
+## I blocchi del corpo
+
+Gli oggetti che rompono il ritmo dei testi lunghi, oltre a numero, citazione, foto e invito al sito. Tutti nella griglia del testo, tutti scelti come blocchi in Keystatic.
+
+- **Prima e dopo** (`Confronto.astro`). Due o più cifre in card affiancate, `cemento-rilievo` con `smusso-card`: etichetta in mono `testo-meta`, `inchiostro-muto`, sotto la cifra in Doto 900, 56px (40px su mobile). Per un risultato che si legge meglio come confronto che come frase.
+- **Figura a barre** (`FiguraBarre.astro`). Righe con l'etichetta in mono e una barra di punti lunga quanto il valore; tre toni dalla scala dei punti (`--scala-punti-3…5`), dal più spento al più acceso, e una riga può essere accesa (etichetta in `inchiostro`). Le barre sono decorative: il valore sta sempre anche nell'etichetta.
+- **Codice** (`Codice.astro`). Smusso da card, luce petrolio dall'alto a sinistra, codice in Geist Mono `testo-piccolo`, sotto il linguaggio in mono `testo-meta`.
+- **Firma** (`Firma.astro`). In fondo ad articoli e numeri della newsletter: foto 72px smussata a `smusso-card-mobile` (12px), nome in `testo-corpo` e sotto il motto in `testo-piccolo`, dai Microtesti. Se la riga è vuota la firma non compare. Accesa il 4 novembre 2026, con avatar smussato e motto, scelta di Patrizio.
 
 ## L'invito al sito
 
@@ -209,7 +238,7 @@ Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa 
 - **Segni delle etichette.** Lo stesso gesto, con le stesse misure: quando l'etichetta entra nello schermo, una volta sola, le parentesi si aprono di 4px e compaiono, e 120ms dopo cresce il quadretto (320ms). Mai nella prima sezione della pagina (hero, testata, apertura delle Curiosità), dove il segno è già al suo posto, e mai nel menu mobile. All'hover sull'etichetta le parentesi si stringono di 3px (200ms), anche nella testata: è movimento su una decorazione, non dice che l'etichetta è un link, e il cursore non cambia. Costruzione: `src/components/Segno.astro`, classe `.anima-segno` in `Sezione.astro`.
 - **Rotazione, solo sugli elementi visivi.** Un'immagine o un oggetto visivo può inclinarsi di pochi gradi (al massimo 6°) verso il cursore, soprattutto quando ci sono due piani sovrapposti, come le anteprime desktop e telefono nell'invito al sito: il piano davanti si stacca appena (al massimo 12px). Solo con il mouse, solo a entrata finita, e torna dritto quando il cursore esce (420ms). Deve restare discreta: dà il senso di cura, non fa scena. Mai sui testi.
 - **Parallasse, solo sugli oggetti.** Foto e indicatori di stato possono scorrere appena più piano o più veloci della pagina, per dare profondità: pochi pixel (al massimo 24px su tutta la corsa), legati allo scorrimento, mai a scatti. Mai sui testi: un paragrafo o un titolo che scorre a un'altra velocità si legge peggio.
-- **Le misure.** Spostamenti tra 4 e 12px (unica eccezione, i 3px delle parentesi di elenchi ed etichette all'hover: un riscontro, non un arrivo), rotazioni entro 6° (solo gli elementi visivi, vedi sopra), durate tra 140 e 450ms, uscita veloce e ingresso morbido (`cubic-bezier(0.2, 0.7, 0.2, 1)`). Mai rimbalzi, mai elastici.
+- **Le misure.** Spostamenti tra 4 e 12px (unica eccezione, i 3px delle parentesi di elenchi ed etichette all'hover: un riscontro, non un arrivo), rotazioni entro 6° (solo gli elementi visivi, vedi sopra), durate tra 140 e 450ms, uscita veloce e ingresso morbido (`cubic-bezier(0.2, 0.7, 0.2, 1)`). Mai rimbalzi, mai elastici. Unica eccezione il tabellone delle curiosità: è un oggetto meccanico e ha un passo suo, con il giro delle tessere in 500ms e `ease-in-out`, lento e simmetrico come una palette vera (scelta di Patrizio, 4 novembre 2026).
 - **Costruzione.** Solo `transform` e `opacity` (due eccezioni: lo sfondo dei punti sotto i link, che cambia il disegno ma non il layout, e il `clip-path` della trama dei pulsanti, accettato perché i pulsanti sono piccoli), solo CSS e qualche riga di script, nessuna libreria: il sito resta istantaneo (Lighthouse e CLS invariati). Tutto in `src/styles/movimento.css`; il reveal è in `Base.astro`. Con `prefers-reduced-motion` non si muove niente.
 - **Per ogni nuovo movimento** la domanda è una: spiega qualcosa, o fa solo scena? Se fa solo scena, non si fa. Prima si prova su una pagina, poi si estende.
 
@@ -261,11 +290,12 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Testo ≥4.5:1 sul suo fondo (ogni token di testo dice su quali fondi è verificato); ≥3:1 per testo sopra i 24px, anelli e icone. Sui pulsanti arancio il testo è `cemento`.
 - `inchiostro-muto` su `petrolio-luce` si ferma a 3,5:1: nei moduli più carichi (hero e testate delle pagine interne) le etichette passano a `inchiostro-secondario` (4,8:1).
 - I titoli di sezione in `onda` restano sopra 4,5:1 su tutti i fondi (4,8:1 su `petrolio-luce`), tranne il petrolio pieno della newsletter, dove sono `carta`.
-- Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `inchiostro-muto` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
+- Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `stato-spento` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
 - I messaggi dei form si distinguono per etichetta e comportamento, mai solo per colore, e vengono annunciati (`role="status"` o `role="alert"`).
 - Pulsanti e chip alti almeno 44px su mobile.
 - I punti spenti dei link sono in `petrolio-acceso` (3,5:1), sopra il 3:1 dei segni grafici; accesi in `punti` (4,6:1).
 - L'anello di focus segue lo smusso (vedi «Angoli»): mai un `outline` rettangolare tagliato dal `clip-path`, e mai un elemento senza anello.
+- **Contrasto forzato** (Windows, temi a contrasto). Il browser impone i colori di sistema e cancella i fondi, quindi fondo, contorno, trama e anello dei pulsanti (tutti fondi ritagliati) spariscono. Lì il sistema rinuncia allo smusso: ogni `.smussato` prende un bordo di 1px `ButtonText` e al focus un `outline` di 2px `Highlight` staccato di 3px. Restano forma e focus, si perdono angoli, luce e arancio: è una modalità che il visitatore ha scelto. Costruzione: blocco `@media (forced-colors: active)` in `src/styles/token.css`.
 
 ## Da non fare
 

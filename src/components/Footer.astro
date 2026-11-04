@@ -6,6 +6,8 @@ const linkedin = 'https://www.linkedin.com/in/patriziobartolozzi';
 const [{ footer }, numeri] = await Promise.all([getMicrotesti(), getNumeri()]);
 // Newsletter porta all'archivio, che ha anche il modulo nella chiusura; finché non c'è un numero pubblicato, al modulo in home.
 const newsletter = numeri.length > 0 ? '/newsletter' : '/#newsletter';
+// L'anno della build: il sito si ricostruisce a ogni salvataggio, quindi resta sempre quello corrente.
+const anno = new Date().getFullYear();
 ---
 
 <footer class="footer">
@@ -15,17 +17,15 @@ const newsletter = numeri.length > 0 ? '/newsletter' : '/#newsletter';
   </div>
   <div class="link">
     <nav aria-label="Link del footer">
-      <a href="/curiosita">Curiosità</a>
-      <span aria-hidden="true">·</span>
-      <a href={newsletter}>Newsletter</a>
-      <span aria-hidden="true">·</span>
-      <a href={linkedin} rel="me noopener">LinkedIn</a>
-      <span aria-hidden="true">·</span>
-      <a href="mailto:dimmipure@daretta.it">Mail</a>
-      <span aria-hidden="true">·</span>
-      <a href="/privacy">Privacy</a>
+      <!-- Ogni link ha davanti il suo «·». Il nav sporge a sinistra di un «·» e del gap, e quella fascia è tagliata:
+           così il punto che apre una riga non si vede mai, e nessuna riga finisce con un punto appeso -->
+      <span class="voce"><span aria-hidden="true">·</span><a href="/curiosita">Curiosità</a></span>
+      <span class="voce"><span aria-hidden="true">·</span><a href={newsletter}>Newsletter</a></span>
+      <span class="voce"><span aria-hidden="true">·</span><a href={linkedin} rel="me noopener">LinkedIn</a></span>
+      <span class="voce"><span aria-hidden="true">·</span><a href="mailto:dimmipure@daretta.it">Mail</a></span>
+      <span class="voce"><span aria-hidden="true">·</span><a href="/privacy">Privacy</a></span>
     </nav>
-    <span>© 2026 Patrizio Bartolozzi</span>
+    <span>© {anno} Patrizio Bartolozzi</span>
   </div>
 </footer>
 
@@ -62,6 +62,19 @@ const newsletter = numeri.length > 0 ? '/newsletter' : '/#newsletter';
     letter-spacing: 1px;
     text-transform: uppercase;
   }
+  nav {
+    margin-left: calc(-1ch - var(--space-3));
+    clip-path: inset(-12px -12px -12px calc(1ch + var(--space-3) - 6px));
+    /* 6px di margine a sinistra: l'anello di focus del primo link di ogni riga resta intero */
+  }
+  .voce {
+    display: inline-flex;
+    gap: var(--space-3);
+    white-space: nowrap;
+  }
+  .voce > span {
+    width: 1ch;
+  }
   nav a {
     text-decoration: none;
   }
@@ -81,7 +94,7 @@ const newsletter = numeri.length > 0 ? '/newsletter' : '/#newsletter';
       gap: 0 var(--space-3);
     }
     nav a,
-    nav span {
+    .voce > span {
       display: inline-flex;
       align-items: center;
       min-height: 44px;

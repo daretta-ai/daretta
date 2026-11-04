@@ -186,7 +186,7 @@ const voci = [
      Solo la regola senza prefisso: il -webkit- lo aggiunge la build (scritto a mano, la build
      teneva solo quello e Chrome restava senza sfocatura). Cemento al 60%. */
   .header.staccato {
-    background: rgb(17 19 20 / 0.6);
+    background: color-mix(in srgb, var(--cemento) 60%, transparent);
     backdrop-filter: blur(14px);
   }
   .logo {
@@ -201,6 +201,13 @@ const voci = [
     color: var(--arancio);
   }
   .senza-logo .logo {
+    opacity: 0;
+    visibility: hidden;
+  }
+  /* In home, finché la hero è in vista, ISCRIVITI non c'è: l'invito è il pulsante della hero, e due arancio
+     nella stessa schermata si farebbero concorrenza. Da mobile resta solo il menu (tavola Home-Mobile),
+     da desktop la navigazione (scelta di Patrizio, 3 novembre 2026). Compare con il logotipo. */
+  .senza-logo .cta {
     opacity: 0;
     visibility: hidden;
   }
@@ -263,6 +270,9 @@ const voci = [
     --fondo: var(--arancio);
     --punto: var(--arancio-trama);
     color: var(--cemento);
+    transition:
+      opacity 0.2s,
+      visibility 0.2s;
   }
   /* Menu mobile: l'hamburger su un fondo smussato in filetto, senza contorno (scelta di Patrizio, 10 ott 2026). */
   .panino {
@@ -311,10 +321,6 @@ const voci = [
     }
     .panino {
       display: inline-flex;
-    }
-    /* In home, finché la hero è in vista, su mobile resta solo il menu (tavola Home-Mobile) */
-    .senza-logo .cta {
-      visibility: hidden;
     }
     /* Menu a tutto schermo: sfuma dentro (320ms) e le voci salgono una dopo l'altra; esce sfumando (140ms) */
     .menu {
@@ -429,6 +435,20 @@ const voci = [
     .menu li,
     .menu-piede {
       transition: none !important;
+    }
+  }
+  /* Telefoni stretti (360–400px): logotipo, ISCRIVITI e menu non ci stavano e la pagina sbordava.
+     Logotipo al minimo di Doto (28px), gap minimo e padding di ISCRIVITI più corti (scelta di Patrizio, 3 novembre 2026) */
+  @media (max-width: 400px) {
+    /* Il gap è solo il minimo: con space-between lo spazio vero lo decide la larghezza */
+    .header {
+      gap: var(--space-2);
+    }
+    .logo {
+      font-size: 28px;
+    }
+    .cta {
+      padding: 0 var(--space-3);
     }
   }
 </style>

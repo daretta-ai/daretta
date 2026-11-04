@@ -15,13 +15,12 @@ import { paginaProfilo } from '../dati-strutturati';
 const pagina = await getChiSono();
 
 // La scala dei ruoli: ogni gradino è più alto e più acceso del precedente.
-// Con cinque gradini i colori sono quelli della tavola; con un numero diverso si sfumano tra il primo e l'ultimo.
-const tavola = ['#1f4a50', '#235a61', '#276b73', '#2c7c84', '#3a9ca5'];
+// Con cinque gradini i colori sono quelli della scala dei punti (--scala-punti-*, in token.css);
+// con un numero diverso si sfumano tra il primo e l'ultimo.
 const sfuma = (i: number, n: number) => {
-  if (n === tavola.length) return tavola[i];
+  if (n === 5) return `var(--scala-punti-${i + 1})`;
   const t = n > 1 ? i / (n - 1) : 1;
-  const a = [0x1f, 0x4a, 0x50], b = [0x3a, 0x9c, 0xa5];
-  return '#' + a.map((x, k) => Math.round(x + (b[k] - x) * t).toString(16).padStart(2, '0')).join('');
+  return `color-mix(in srgb, var(--scala-punti-1), var(--scala-punti-5) ${Math.round(t * 100)}%)`;
 };
 const ruoli = pagina.ruoli.map((nome, i, tutti) => ({ nome, colore: sfuma(i, tutti.length) }));
 const passo = 100 / Math.max(ruoli.length, 1);
