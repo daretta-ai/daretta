@@ -97,8 +97,8 @@ Nel sito convivono due materiali, e il contrasto tra i due racconta il nome.
 Tre stati, dal più vivo al più lontano. Sempre segno e parola insieme, in Geist Mono maiuscolo.
 
 - **ONLINE:** pallino pieno in `arancio`. È l'unico stato acceso.
-- **IN SVILUPPO:** anello vuoto a tratto continuo in `inchiostro-muto`.
-- **CONCEPT:** anello tratteggiato in `inchiostro-muto`. È un'idea che si sta ancora disegnando: meno di un anello, non ancora un pallino.
+- **IN SVILUPPO:** anello vuoto a tratto continuo in `stato-spento`, più scuro delle etichette: chi non è vivo è più spento (scelta di Patrizio, 4 novembre 2026).
+- **CONCEPT:** anello tratteggiato in `stato-spento`. È un'idea che si sta ancora disegnando: meno di un anello, non ancora un pallino.
 
 **Descrizione all'hover.** Al passaggio del mouse, e al focus da tastiera, accanto allo stato compare una frase breve in Geist, `inchiostro-muto`, senza box né arancio: ONLINE «Si può usare.», IN SVILUPPO «Ci sto lavorando.», CONCEPT «Per ora è un'idea.». La parola dello stato resta sempre visibile; la frase è un di più, e per gli screen reader è la descrizione dello stato (`aria-describedby`). Su touch non compare.
 
@@ -290,7 +290,7 @@ Il logotipo è tipografico: *dàretta* in Doto 900, `inchiostro`, con la à in `
 - Testo ≥4.5:1 sul suo fondo (ogni token di testo dice su quali fondi è verificato); ≥3:1 per testo sopra i 24px, anelli e icone. Sui pulsanti arancio il testo è `cemento`.
 - `inchiostro-muto` su `petrolio-luce` si ferma a 3,5:1: nei moduli più carichi (hero e testate delle pagine interne) le etichette passano a `inchiostro-secondario` (4,8:1).
 - I titoli di sezione in `onda` restano sopra 4,5:1 su tutti i fondi (4,8:1 su `petrolio-luce`), tranne il petrolio pieno della newsletter, dove sono `carta`.
-- Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `inchiostro-muto` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
+- Gli stati non si distinguono solo per colore: ONLINE è un pallino pieno, IN SVILUPPO un anello vuoto, CONCEPT un anello tratteggiato, sempre con la parola accanto. Il tratteggio deve restare leggibile anche piccolo: segmenti non più corti dello spessore dell'anello, e `stato-spento` ≥3:1 sul fondo della card. La voce di menu attiva ha anche `aria-current`.
 - I messaggi dei form si distinguono per etichetta e comportamento, mai solo per colore, e vengono annunciati (`role="status"` o `role="alert"`).
 - Pulsanti e chip alti almeno 44px su mobile.
 - I punti spenti dei link sono in `petrolio-acceso` (3,5:1), sopra il 3:1 dei segni grafici; accesi in `punti` (4,6:1).
