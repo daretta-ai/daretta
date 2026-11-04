@@ -9,7 +9,7 @@ import Stato from '../../components/Stato.astro';
 import ModuloNumero from '../../components/ModuloNumero.astro';
 import Chiusura from '../../components/Chiusura.astro';
 import { ultimoScritto, chiSono } from '../../rimandi';
-import { getProgetti, getPaginaProgetti } from '../../cms';
+import { aggiornatoA, getProgetti, getPaginaProgetti } from '../../cms';
 import { linkInRiga } from '../../link-in-riga';
 import { elenco, idProgetto } from '../../dati-strutturati';
 
@@ -37,6 +37,7 @@ const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome)
             <a href={`/progetti/${p.slug}`} class="riga">
               <span class="margine">
                 <Stato stato={p.stato} />
+                {p.aggiornato && <span class="aggiornato">{aggiornatoA(p.aggiornato)}</span>}
               </span>
               <span class="testo">
                 <span class="nome">
@@ -96,6 +97,17 @@ const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome)
   .margine {
     grid-column: 1 / span 3;
     padding-top: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .aggiornato {
+    font-family: var(--font-mono);
+    font-size: var(--testo-meta);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
   }
   .testo {
     grid-column: 4 / span 6;

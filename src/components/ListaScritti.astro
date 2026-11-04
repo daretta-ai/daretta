@@ -5,8 +5,9 @@ interface Props {
   articoli: { slug: string; titolo: string; data: Date; prima?: string }[];
   percorso?: string; // dove porta ogni riga: /chiacchiere/<slug>, /newsletter/<slug>
   formato?: 'giorno' | 'mese';
+  nuovi?: boolean; // [ NUOVO ] accanto agli articoli usciti negli ultimi 30 giorni
 }
-const { articoli, percorso = '/chiacchiere', formato = 'giorno' } = Astro.props;
+const { articoli, percorso = '/chiacchiere', formato = 'giorno', nuovi = false } = Astro.props;
 const data = (d: Date) =>
   d.toLocaleDateString(
     'it-IT',
@@ -21,7 +22,12 @@ const iso = (d: Date) => d.toISOString().slice(0, formato === 'mese' ? 7 : 10);
       <li>
         <a href={`${percorso}/${a.slug}`}>
           <span class="titolo-lista"><span class="riga-punti">{a.titolo}</span></span>
-          {a.prima ? (
+          {nuovi ? (
+            <span class="meta riga-meta">
+              <span class="nuovo" data-nuovo={iso(a.data)} hidden>[ Nuovo ]</span>
+              <time datetime={iso(a.data)}>{data(a.data)}</time>
+            </span>
+          ) : a.prima ? (
             <span class="meta">
               {a.prima} · <time datetime={iso(a.data)}>{data(a.data)}</time>
             </span>
@@ -34,7 +40,27 @@ const iso = (d: Date) => d.toISOString().slice(0, formato === 'mese' ? 7 : 10);
   }
 </ol>
 
+<script>
+  // [ NUOVO ] si decide nel browser, così scade da solo anche senza una nuova build:
+  // gli articoli usciti negli ultimi 30 giorni (scelta di Patrizio, 4 novembre 2026). Senza JavaScript non compare.
+  const mese = 30 * 24 * 60 * 60 * 1000;
+  document.querySelectorAll<HTMLElement>('[data-nuovo]').forEach((s) => {
+    const uscito = Date.parse(s.dataset.nuovo ?? '');
+    if (Date.now() - uscito < mese) s.hidden = false;
+  });
+</script>
+
 <style>
+  .riga-meta {
+    display: inline-flex;
+    gap: var(--space-3);
+  }
+  .nuovo {
+    color: var(--inchiostro-secondario);
+  }
+  .nuovo[hidden] {
+    display: none;
+  }
   .lista-scritti {
     list-style: none;
     margin: 0;

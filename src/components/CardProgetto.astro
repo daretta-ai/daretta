@@ -1,7 +1,7 @@
 ---
 // Card di un progetto, dentro il modulo Progetti (tavola Main).
 import Stato from './Stato.astro';
-import type { Progetto } from '../cms';
+import { aggiornatoA, type Progetto } from '../cms';
 
 interface Props {
   progetto: Progetto;
@@ -16,6 +16,7 @@ const { progetto } = Astro.props;
     {progetto.provvisorio && <span class="provvisorio">(nome provvisorio)</span>}
   </span>
   <span class="descrizione">{progetto.card}</span>
+  {progetto.aggiornato && <span class="aggiornato">{aggiornatoA(progetto.aggiornato)}</span>}
 </a>
 
 <style>
@@ -47,6 +48,16 @@ const { progetto } = Astro.props;
     font-family: var(--font-mono);
     font-size: var(--testo-meta);
     font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--inchiostro-muto);
+  }
+  /* In fondo alla card: dice che il progetto è vivo senza scriverlo (scelta di Patrizio, 4 novembre 2026) */
+  .aggiornato {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--testo-meta);
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--inchiostro-muto);

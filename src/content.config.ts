@@ -33,6 +33,7 @@ const progetti = defineCollection({
       .nullish()
       .transform((v) => v ?? []),
     link: facoltativo,
+    aggiornato: z.coerce.date().nullish().transform((v) => v ?? undefined),
   }),
 });
 

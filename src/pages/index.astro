@@ -53,7 +53,7 @@ const [home, chiSono, micro, progetti, articoli] = await Promise.all([
   <section class="griglia scritti-foto">
     <div class="scritti">
       <Sezione segno>Chiacchiere</Sezione>
-      {articoli.length ? <ListaScritti articoli={articoli.slice(0, 3)} /> : <p class="titolo-lista vuoto">{micro.scrittiVuoto}</p>}
+      {articoli.length ? <ListaScritti articoli={articoli.slice(0, 3)} nuovi /> : <p class="titolo-lista vuoto">{micro.scrittiVuoto}</p>}
     </div>
     <img class="foto" src="/foto/pini-800.webp" srcset="/foto/pini-480.webp 480w, /foto/pini-800.webp 800w" sizes="(max-width: 720px) 100vw, 33vw" width="800" height="800" alt="Patrizio con gli occhiali da sole, davanti al mare e ai pini" loading="lazy" decoding="async" style="object-position: 50% 40%" />
   </section>

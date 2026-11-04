@@ -254,6 +254,13 @@ a {
   color: inherit;
 }
 
+/* Niente parola sola sull'ultima riga di paragrafi ed elenchi (scelta di Patrizio, 4 novembre 2026).
+   Dove il browser non lo sa fare, va a capo come prima. */
+p,
+li {
+  text-wrap: pretty;
+}
+
 :focus-visible {
   outline: 2px solid var(--onda);
   outline-offset: 3px;

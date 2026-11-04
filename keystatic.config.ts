@@ -350,6 +350,10 @@ export default config({
         card: testoLungo('Testo della card', 'Una frase. Compare in home e sotto il nome nella pagina.'),
         titolo: titoloDoto(),
         fase: fields.text({ label: 'Fase', description: 'Accanto allo stato, facoltativa: «Alpha», «Alpha interna».' }),
+        aggiornato: fields.date({
+          label: 'Aggiornato il',
+          description: 'L\'ultima volta che il progetto ha fatto un passo avanti. Su card e indice diventa «Aggiornato a ottobre». Vuoto: non compare.',
+        }),
         collaboratori: fields.array(
           fields.object({
             nome: fields.text({ label: 'Nome e cognome' }),

@@ -27,7 +27,15 @@ export interface Progetto {
   fase?: string;
   collaboratori: Collaboratore[];
   link?: string;
+  aggiornato?: Date;
   body: string;
+}
+
+/** «Aggiornato a ottobre»: il mese, e l'anno solo se non è quello in corso. */
+export function aggiornatoA(d: Date): string {
+  const opzioni: Intl.DateTimeFormatOptions =
+    d.getFullYear() === new Date().getFullYear() ? { month: 'long' } : { month: 'long', year: 'numeric' };
+  return `Aggiornato a ${d.toLocaleDateString('it-IT', opzioni)}`;
 }
 
 export interface Home {
