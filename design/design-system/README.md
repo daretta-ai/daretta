@@ -48,7 +48,7 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 | `testo-corpo` | 20 | 18 | tutti i paragrafi, elenchi compresi |
 | `testo-piccolo` | 16 | 16 | descrizioni delle card, campo email, messaggi dei form, codice |
 | `testo-etichetta` (mono) | 14 | 13 | etichette e titoli di sezione, link, pulsanti, footer |
-| `testo-meta` (mono) | 12 | 12 | stati, date, didascalie, note |
+| `testo-meta` (mono) | 12 | 12 | stati, date, didascalie, note; unica eccezione in Geist, la frase che compare accanto a uno stato all'hover, che deve restare alla misura dello stato (scelta di Patrizio, 4 novembre 2026) |
 
 I tre caratteri sono serviti dal sito stesso, mai da Google Fonts: nessun indirizzo IP passa a Google. Sono i file latin di @fontsource (Doto 600, 800, 900; Geist 400, 500, 600; Geist Mono 400, 500) in `src/assets/font`, dichiarati in `src/styles/font.css`.
 
@@ -100,7 +100,7 @@ Tre stati, dal più vivo al più lontano. Sempre segno e parola insieme, in Geis
 - **IN SVILUPPO:** anello vuoto a tratto continuo in `stato-spento`, più scuro delle etichette: chi non è vivo è più spento (scelta di Patrizio, 4 novembre 2026).
 - **CONCEPT:** anello tratteggiato in `stato-spento`. È un'idea che si sta ancora disegnando: meno di un anello, non ancora un pallino.
 
-**Descrizione all'hover.** Al passaggio del mouse, e al focus da tastiera, accanto allo stato compare una frase breve in Geist, `inchiostro-muto`, senza box né arancio: ONLINE «Si può usare.», IN SVILUPPO «Ci sto lavorando.», CONCEPT «Per ora è un'idea.». La parola dello stato resta sempre visibile; la frase è un di più, e per gli screen reader è la descrizione dello stato (`aria-describedby`). Su touch non compare.
+**Descrizione all'hover.** Al passaggio del mouse, e al focus da tastiera, accanto allo stato compare una frase breve in Geist alla misura dello stato (`testo-meta`), `inchiostro-muto`, senza box né arancio: ONLINE «Si può usare.», IN SVILUPPO «Ci sto lavorando.», CONCEPT «Per ora è un'idea.». La parola dello stato resta sempre visibile; la frase è un di più, e per gli screen reader è la descrizione dello stato (`aria-describedby`). Su touch non compare.
 
 ## Gli elenchi
 
