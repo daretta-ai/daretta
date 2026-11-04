@@ -19,6 +19,17 @@ Diretta, secca, sincera, ironica e un po' caustica. Poche parole, molto peso.
 
 1. **Il fondo è cemento.** `cemento` per la pagina, `cemento-rilievo` per i moduli, `cemento-incavo` per le card dentro i moduli. Il testo è `inchiostro`; i paragrafi lunghi `inchiostro-corpo`; etichette e date `inchiostro-muto`; i titoli di sezione `onda`.
 2. **Il petrolio è luce, non vernice.** Viene dalla sfera: un alone (`petrolio-alone`) si allarga sul fondo della pagina, e ogni modulo ne prende tanto quanto è vicino alla sfera. La hero e la foto sono le più cariche (`petrolio-luce` al centro), «Chi sono» una dose media, «Progetti» appena un velo. Il gradiente è sempre radiale o lineare *da* petrolio *verso* cemento, mai il contrario, mai tra due colori caldi. Unica eccezione: il modulo newsletter è petrolio pieno (`petrolio-acceso` → `petrolio-scuro`, 135°), perché è l'invito principale.
+
+   **Le tappe intermedie non sono token.** Alcuni colori stanno scritti nei componenti: sono passaggi ricavati a occhio dai token, ognuno usato in un posto solo (scelta di Patrizio, 4 novembre 2026). Se cambiano `cemento-rilievo`, `petrolio-luce` o `cemento`, vanno ricontrollati a mano:
+
+   | Colore | Dove | Tra |
+   | --- | --- | --- |
+   | `#173134` | `Modulo.astro`, luce della hero e della foto | `petrolio-luce` → `cemento-rilievo` |
+   | `#1a444a`, `#1a1f21` | `Modulo.astro`, luce di Chi sono | `petrolio-luce` → `cemento-rilievo` |
+   | `#16292c` | `Modulo.astro`, il velo dei Progetti | petrolio → `cemento-rilievo` |
+   | `#17383d` | `Codice.astro`, luce del blocco di codice | `petrolio-luce` → `cemento-rilievo` |
+   | `#161a1b` | `CardProgetto.astro`, fondo della card all'hover | `cemento-incavo` → `cemento-rilievo` |
+   | `#5c6466` | `Newsletter.astro`, testo segnaposto del campo email | più spento di `inchiostro-muto`, sul fondo del campo |
 3. **L'arancio vuol dire «vivo», e «fai qualcosa».** `arancio` si accende per la à del logotipo, il pallino dei progetti ONLINE e le CTA (Iscriviti nell'header, il pulsante della hero, Iscrivimi nella newsletter). Più un solo dettaglio di stato: il pallino accanto alla voce di menu attiva. Il testo sopra l'arancio è sempre `cemento`, mai `inchiostro` (non raggiunge il contrasto). Mai per link, hover, bordi, tag o decorazione: se un elemento non è la à, uno stato o un'azione, resta spento.
 
 ## Tipografia
