@@ -244,6 +244,7 @@ Poco, e mai a caso. Il movimento non decora: dice da dove arriva una cosa, cosa 
 - **Le misure.** Spostamenti tra 4 e 12px (unica eccezione, i 3px delle parentesi di elenchi ed etichette all'hover: un riscontro, non un arrivo), rotazioni entro 6° (solo gli elementi visivi, vedi sopra), durate tra 140 e 450ms, uscita veloce e ingresso morbido (`cubic-bezier(0.2, 0.7, 0.2, 1)`). Mai rimbalzi, mai elastici. Unica eccezione il tabellone delle curiosità: è un oggetto meccanico e ha un passo suo, con il giro delle tessere in 500ms e `ease-in-out`, lento e simmetrico come una palette vera (scelta di Patrizio, 4 novembre 2026).
 - **Costruzione.** Solo `transform` e `opacity` (due eccezioni: lo sfondo dei punti sotto i link, che cambia il disegno ma non il layout, e il `clip-path` della trama dei pulsanti, accettato perché i pulsanti sono piccoli), solo CSS e qualche riga di script, nessuna libreria: il sito resta istantaneo (Lighthouse e CLS invariati). Tutto in `src/styles/movimento.css`; il reveal è in `Base.astro`. Con `prefers-reduced-motion` non si muove niente.
 - **Per ogni nuovo movimento** la domanda è una: spiega qualcosa, o fa solo scena? Se fa solo scena, non si fa. Prima si prova su una pagina, poi si estende.
+- **Provato e scartato:** il titolo che vola dalla riga di una lista al titolo della pagina nuova (View Transitions sul titolo, 4 novembre 2026: a Patrizio non piace). Il passaggio tra le pagine resta quello di sopra.
 
 ## Il battito
 
