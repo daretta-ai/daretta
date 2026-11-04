@@ -64,7 +64,6 @@ const blocchi = {
           label: 'Figura',
           options: [
             { label: 'Barre a punti', value: 'barre' },
-            { label: 'Elenco', value: 'elenco' },
           ],
           defaultValue: 'barre',
         }),
@@ -90,11 +89,6 @@ const blocchi = {
               }),
               { label: 'Righe', itemLabel: (r) => r.fields.etichetta.value || 'Riga' }
             ),
-          }),
-          elenco: fields.object({
-            didascalia: fields.text({ label: 'Didascalia in alto' }),
-            voci: fields.array(fields.text({ label: 'Voce' }), { label: 'Voci', itemLabel: (v) => v.value || 'Voce' }),
-            nota: fields.text({ label: 'Nota in basso' }),
           }),
         }
       ),

@@ -11,7 +11,6 @@ import InvitoSito from './InvitoSito.astro';
 import Confronto from './Confronto.astro';
 import Codice from './Codice.astro';
 import FiguraBarre from './FiguraBarre.astro';
-import FiguraElenco from './FiguraElenco.astro';
 import Elenco from './Elenco.astro';
 import Stato from './Stato.astro';
 import Battito from './Battito.astro';
@@ -52,10 +51,7 @@ const Self = Astro.self;
         return (
           <BloccoFigura etichetta={a.etichetta}>
             <Self nodi={children} />
-            {a.figura?.discriminant === 'elenco' ? (
-              <FiguraElenco slot="figura" didascalia={f.didascalia} voci={f.voci ?? []} nota={f.nota || undefined} />
-            ) : (
-              <FiguraBarre
+            <FiguraBarre
                 slot="figura"
                 didascalia={f.didascalia}
                 nota={f.nota || undefined}
@@ -67,7 +63,6 @@ const Self = Astro.self;
                   accesa: r.accesa,
                 }))}
               />
-            )}
           </BloccoFigura>
         );
       }
