@@ -53,7 +53,7 @@ const voci = [
 
   {
     avanzamento && (
-      <div class="avanzamento" role="progressbar" aria-label="Avanzamento della lettura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-avanzamento></div>
+      <div class="avanzamento" aria-hidden="true" data-avanzamento></div>
     )
   }
 </header>
@@ -69,37 +69,20 @@ const voci = [
         rootMargin: '-80px 0px 0px 0px',
       }).observe(hero);
     }
-    // Negli articoli: i punti letti si accendono come i punti della sfera (luce, non azione)
+    // Negli articoli la barra di lettura la muove il CSS, legata allo scorrimento dell'articolo.
+    // Solo dove il browser non sa farlo, lo script aggiorna la quota letta (--letto).
     const barra = header.querySelector<HTMLElement>('[data-avanzamento]');
     const articolo = document.querySelector<HTMLElement>('[data-articolo]');
-    if (barra && articolo) {
-      // Passo fisso (scelta di Patrizio, 12 ott 2026): un punto ogni --passo, quanti ne stanno.
-      // La trama è la stessa su ogni schermo, cambia solo il numero di punti.
-      let punti: HTMLElement[] = [];
-      const costruisci = () => {
-        const stile = getComputedStyle(barra);
-        const punto = parseFloat(stile.getPropertyValue('--punto')) || 2;
-        const passo = parseFloat(stile.getPropertyValue('--passo')) || 8;
-        const n = Math.max(1, Math.floor((barra.clientWidth - punto) / passo) + 1);
-        if (n === punti.length) return;
-        punti = Array.from({ length: n }, () => document.createElement('span'));
-        barra.replaceChildren(...punti);
-      };
+    if (barra && articolo && !CSS.supports('animation-timeline: view()')) {
       const aggiorna = () => {
         const r = articolo.getBoundingClientRect();
         const totale = r.height - innerHeight;
         const quota = totale > 0 ? Math.min(1, Math.max(0, -r.top / totale)) : 1;
-        const accesi = Math.round(quota * punti.length);
-        punti.forEach((p, i) => p.classList.toggle('letto', i < accesi));
-        barra.setAttribute('aria-valuenow', String(Math.round(quota * 100)));
+        barra.style.setProperty('--letto', `${quota * 100}%`);
       };
-      costruisci();
       aggiorna();
       addEventListener('scroll', aggiorna, { passive: true });
-      addEventListener('resize', () => {
-        costruisci();
-        aggiorna();
-      });
+      addEventListener('resize', aggiorna);
     }
 
     // Fondo dell'header solo quando la pagina scorre
@@ -158,29 +141,51 @@ const voci = [
     flex-wrap: wrap;
     row-gap: var(--space-3);
   }
-  /* Barra di lettura: un punto da 2px ogni 8px, uguale su desktop e mobile. I punti li conta lo script dalla larghezza */
+  /* Barra di lettura: punti tondi da 2px ogni 8px, uguali su desktop e mobile (passo fisso, scelta di Patrizio, 12 ott 2026).
+     Un elemento solo, due strati della stessa trama: sotto i punti spenti, sopra quelli letti, larghi quanto la quota letta.
+     La quota (--letto) la muove lo scorrimento dell'articolo (animation-timeline), senza script;
+     dove il browser non lo sa fare, la scrive lo script in Header. È decorativa: per chi usa lo screen reader non dice niente
+     che la pagina non dica già. */
+  @property --letto {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 0%;
+  }
   .avanzamento {
     --punto: 2px;
     --passo: 8px;
     flex-basis: 100%;
     height: var(--punto);
     order: 10;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: var(--space-2);
+    /* Stessa geometria della barra fatta di span: 8px nel layout, i punti a cavallo del fondo */
+    box-sizing: content-box;
+    padding-top: calc(var(--space-2) - 1px);
+    margin-bottom: -1px;
+    background: radial-gradient(circle at 1px 50%, var(--filetto-neutro) 0.75px, transparent 1.25px) 0 100% / var(--passo) var(--punto) repeat-x;
   }
-  /* I punti li crea lo script, quindi lo stile non può essere quello con lo scope di Astro */
-  .avanzamento :global(span) {
-    flex: none;
-    width: var(--punto);
+  .avanzamento::before {
+    content: '';
+    display: block;
+    width: var(--letto);
     height: var(--punto);
-    border-radius: var(--radius-tondo);
-    background: var(--filetto-neutro);
-    transition: background-color 0.2s;
+    background: radial-gradient(circle at 1px 50%, var(--punti) 0.75px, transparent 1.25px) 0 0 / var(--passo) var(--punto) repeat-x;
   }
-  .avanzamento :global(span.letto) {
-    background: var(--punti);
+  /* L'articolo dà la sua linea del tempo (token.css); la barra va da quando il testo arriva in cima
+     a quando la sua fine arriva in fondo allo schermo, come faceva lo script */
+  @supports (animation-timeline: view()) {
+    .avanzamento {
+      animation: legge linear both;
+      animation-timeline: --articolo;
+      animation-range: contain;
+    }
+  }
+  @keyframes legge {
+    from {
+      --letto: 0%;
+    }
+    to {
+      --letto: 100%;
+    }
   }
   /* Quando la pagina scorre, il testo sotto l'header si sfoca: vetro smerigliato, non un fondo pieno.
      Solo la regola senza prefisso: il -webkit- lo aggiunge la build (scritto a mano, la build
@@ -305,6 +310,7 @@ const voci = [
     }
     .avanzamento {
       padding-top: 0;
+      margin-bottom: 0;
     }
     .header {
       justify-content: space-between;

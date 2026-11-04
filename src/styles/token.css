@@ -479,6 +479,16 @@ a:is(:hover, :focus-visible) .riga-punti {
   --acceso: 100%;
 }
 
+/* La linea del tempo della lettura: l'articolo la dà, la barra nell'header la usa (Header.astro) */
+@supports (animation-timeline: view()) {
+  html {
+    timeline-scope: --articolo;
+  }
+  [data-articolo] {
+    view-timeline: --articolo block;
+  }
+}
+
 .solo-lettori {
   position: absolute;
   width: 1px;
