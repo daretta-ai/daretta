@@ -202,7 +202,7 @@ Gli oggetti che rompono il ritmo dei testi lunghi, oltre a numero, citazione, fo
 - **Prima e dopo** (`Confronto.astro`). Due o più cifre in card affiancate, `cemento-rilievo` con `smusso-card`: etichetta in mono `testo-meta`, `inchiostro-muto`, sotto la cifra in Doto 900, 56px (40px su mobile). Per un risultato che si legge meglio come confronto che come frase.
 - **Figura a barre** (`FiguraBarre.astro`). Righe con l'etichetta in mono e una barra di punti lunga quanto il valore; tre toni dalla scala dei punti (`--scala-punti-3…5`), dal più spento al più acceso, e una riga può essere accesa (etichetta in `inchiostro`). Le barre sono decorative: il valore sta sempre anche nell'etichetta.
 - **Codice** (`Codice.astro`). Smusso da card, luce petrolio dall'alto a sinistra, codice in Geist Mono `testo-piccolo`, sotto il linguaggio in mono `testo-meta`.
-- **Firma** (`Firma.astro`). In fondo ad articoli e numeri della newsletter: foto 72px, nome e una riga dai Microtesti. Se la riga è vuota la firma non compare (oggi è spenta).
+- **Firma** (`Firma.astro`). In fondo ad articoli e numeri della newsletter: foto 72px smussata a `smusso-card-mobile` (12px), nome in `testo-corpo` e sotto il motto in `testo-piccolo`, dai Microtesti. Se la riga è vuota la firma non compare. Accesa il 4 novembre 2026, con avatar smussato e motto, scelta di Patrizio.
 
 ## L'invito al sito
 
