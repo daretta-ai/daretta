@@ -29,7 +29,7 @@ const quando = data.toLocaleDateString(
     <span>{minuti} min di lettura</span>
   </div>
   <div class="titoli">
-    <h1>{titolo}</h1>
+    <h1 data-titolo-arrivo>{titolo}</h1>
     {attacco && paragrafi(attacco).map((p) => <p class="attacco">{p}</p>)}
   </div>
   <div class="lato">

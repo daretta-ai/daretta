@@ -115,8 +115,36 @@ const datiStrutturati = schema ? grafo(...[schema].flat()) : home ? grafo() : nu
         var versoAncora = function (e) {
           try { return !!new URL(e.activation.entry.url).hash; } catch (_) { return false; }
         };
+        // Il titolo che ti segue: dalla riga di una lista (Chiacchiere, archivio della newsletter, indice dei progetti)
+        // il titolo vola fino al titolo della pagina nuova. Vola al posto della sfera, che in quel passaggio sfuma:
+        // due cose che volano insieme farebbero scena.
+        var TITOLO = 'titolo-vola';
+        var percorso = function (u) { try { return new URL(u, location.href).pathname.replace(/\.html$/, ''); } catch (_) { return ''; } };
+        addEventListener('pageswap', function (e) {
+          if (!e.viewTransition || !e.activation || !e.activation.entry) return;
+          var verso = percorso(e.activation.entry.url);
+          var riga = Array.prototype.find.call(document.querySelectorAll('[data-titolo-vola]'), function (el) {
+            var a = el.closest('a');
+            return a && percorso(a.href) === verso && inVista(el);
+          });
+          if (!riga) return;
+          riga.style.viewTransitionName = 'titolo';
+          togli();
+          try { sessionStorage.setItem(TITOLO, verso); sessionStorage.setItem(CHIAVE, '1'); } catch (_) {}
+        });
+        addEventListener('pagereveal', function (e) {
+          var verso = '';
+          try { verso = sessionStorage.getItem(TITOLO) || ''; sessionStorage.removeItem(TITOLO); } catch (_) {}
+          if (!e.viewTransition || !verso || verso !== percorso(location.href)) return;
+          var titolo = document.querySelector('[data-titolo-arrivo]');
+          if (!titolo) return;
+          titolo.style.viewTransitionName = 'titolo';
+          var via = function () { titolo.style.viewTransitionName = ''; };
+          e.viewTransition.finished.then(via, via);
+        });
         addEventListener('pageswap', function (e) {
           if (!e.viewTransition) return;
+          if (document.querySelector('[style*="view-transition-name: titolo"]')) return;
           var sfera = document.querySelector('[data-sfera]');
           if (sfera && inVista(sfera) && !versoAncora(e)) return;
           togli();

@@ -40,7 +40,7 @@ const con = (p: (typeof progetti)[number]) => p.collaboratori.map((c) => c.nome)
                 {p.aggiornato && <span class="aggiornato">{aggiornatoA(p.aggiornato)}</span>}
               </span>
               <span class="testo">
-                <span class="nome">
+                <span class="nome" data-titolo-vola>
                   <span class="riga-punti">{p.nome}</span>
                   {p.provvisorio && <span class="provvisorio">(nome provvisorio)</span>}
                 </span>

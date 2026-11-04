@@ -21,7 +21,7 @@ const iso = (d: Date) => d.toISOString().slice(0, formato === 'mese' ? 7 : 10);
     articoli.map((a) => (
       <li>
         <a href={`${percorso}/${a.slug}`}>
-          <span class="titolo-lista"><span class="riga-punti">{a.titolo}</span></span>
+          <span class="titolo-lista" data-titolo-vola><span class="riga-punti">{a.titolo}</span></span>
           {nuovi ? (
             <span class="meta riga-meta">
               <span class="nuovo" data-nuovo={iso(a.data)} hidden>[ Nuovo ]</span>
